@@ -342,7 +342,19 @@ if (!("window" in globalThis)) {
             }
             return results;
         },
-
+        getElementById(id) {
+           function matchingId(node, id) {
+               let results = []
+               for (let child of node.childNodes) {
+                   if (child["id"] == id) {
+                       results.push(child);
+                   }
+                   results = results.concat(matchingId(child, id));
+               }
+               return results;
+           }
+           return matchingId(this, id)
+        },
         createRange: () => new globalThis.Range,
         getSelection: () => new globalThis.Selection,
         activeElement: null,
@@ -354,4 +366,5 @@ if (!("window" in globalThis)) {
 
     globalThis.console.error = globalThis.console.log;
     globalThis.console.warn = globalThis.console.log;
+    globalThis.onhashchange = null
 } // !("window" in globalThis)
