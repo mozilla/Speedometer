@@ -21,7 +21,8 @@ if (!("window" in globalThis)) {
     globalThis.clearTimeout = () => null;
     globalThis.dispatchEvent = () => null;
     globalThis.addEventListener = (type, f) => {
-        print(type);
+    backtrace();
+        print("addEventListener: " + type);
         eventListeners[type] = f
     }
     globalThis.removeEventListener = () => null;
@@ -79,21 +80,43 @@ if (!("window" in globalThis)) {
 
     globalThis.EventTarget = class {
         dispatchEvent(event) {
+            event.target = this;
             if (event.type === "react-invokeguardedcallback") {
                 if (this._react_callback) {
                     for (let cb of this._react_callback) {
                         cb(event);
                     }
                 }
+            } else {
+                let current_target = this;
+                while (current_target) {
+                    print("trying: ", current_target.nodeName);
+                    let event_listeners = current_target.event_listeners;
+                    if (event_listeners && event.type in event_listeners) {
+                        print("dispatching: ", current_target.nodeName);
+
+                        event_listeners[event.type](event);
+                        break;
+                    } else {
+                        current_target = current_target.parentNode;
+                    }
+                }
             }
             return true;
         }
         addEventListener(type, listener) {
+            backtrace();
+            print("EventTarget.addEventListener: " + type + " " + Object.keys(this))
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
                 }
                 this._react_callback.push(listener);
+            } else {
+                if (!this.event_listeners) {
+                    this.event_listeners = {};
+                }
+                this.event_listeners[type] = listener;
             }
         }
         removeEventListener(type, listener) {
@@ -128,9 +151,9 @@ if (!("window" in globalThis)) {
         removeChild(child) {
             this.childNodes = this.childNodes.filter(node => node !== child);
         }
-        insertBefore(childName, ref) {
+        insertBefore(newNode, ref) {
             let idx = this.childNodes.indexOf(ref);
-            this.childNodes.splice(idx, 0, childName);
+            this.childNodes.splice(idx, 0, newNode);
         }
         get firstChild() {
             const nodes = this.childNodes;
