@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "babel --plugins transform-react-jsx js/app.jsx | uglifyjs -o build.min.js"
+    "build": "babel --plugins transform-react-jsx js/app.jsx > build.min.js"
   },
   "dependencies": {
     "classnames": "^2.2.5",
