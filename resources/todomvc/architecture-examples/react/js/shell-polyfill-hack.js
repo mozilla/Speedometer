@@ -235,6 +235,9 @@ if (!("window" in globalThis)) {
         getElementsByClassName(className) {
             let results = []
             for (let child of this.childNodes) {
+                if (!(child instanceof globalThis.Element)) {
+                    continue;
+                }
                 let classList = child["class"]?.split(" ");
                 if (classList && classList.includes(className)) {
                     results.push(child);
@@ -375,6 +378,9 @@ if (!("window" in globalThis)) {
         getElementsByClassName(className) {
             let results = []
             for (let child of this.childNodes) {
+                if (!(child instanceof globalThis.Element)) {
+                    continue;
+                }
                 let classList = child["class"]?.split(" ");
                 if (classList && classList.includes(className)) {
                     results.push(child);
