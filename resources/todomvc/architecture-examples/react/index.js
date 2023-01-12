@@ -21,7 +21,7 @@
         document.body.appendChild(section)
         print(document.documentMode === undefined)
         load("node_modules/classnames/index.js")
-        load("node_modules/director/build/director.js")
+        load("node_modules/director/build/director.min.js")
         load("node_modules/react/dist/react-with-addons.min.js")
         load("node_modules/react-dom/dist/react-dom.min.js")
         load("build.min.js")
