@@ -90,11 +90,8 @@ if (!("window" in globalThis)) {
             } else {
                 let current_target = this;
                 while (current_target) {
-                    print("trying: ", current_target.nodeName);
                     let event_listeners = current_target.event_listeners;
                     if (event_listeners && event.type in event_listeners) {
-                        print("dispatching: " + event.type + " to " + current_target.nodeName);
-
                         event_listeners[event.type](event);
                         break;
                     } else {
@@ -105,7 +102,6 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
-            print("EventTarget.addEventListener: " + type + " " + Object.keys(this))
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
