@@ -366,6 +366,10 @@ if (!("window" in globalThis)) {
             let constructor = _GetElementConstructor(tagName);
             return new (constructor)(tagName);
         },
+        createComment(data) {
+        },
+        createDocumentFragment() {
+        },
         getElementsByClassName(className) {
             let results = []
             for (let child of this.childNodes) {
