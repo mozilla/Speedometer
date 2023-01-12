@@ -71,6 +71,8 @@ if (!("window" in globalThis)) {
                 return globalThis.HTMLIFrameElement;
             case "canvas":
                 return globalThis.HTMLCanvasElement;
+            case "label":
+                return globalThis.HTMLLabelElement;
             case "react":
                 return globalThis.HTMLUnknownElement;
         }
@@ -294,6 +296,7 @@ if (!("window" in globalThis)) {
     globalThis.HTMLLIElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLOListElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLSpanElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLLabelElement = class extends globalThis.HTMLElement { };
     globalThis.CharacterData = class extends globalThis.Node { };
     globalThis.Text = class extends globalThis.CharacterData { };
 
