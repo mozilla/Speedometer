@@ -21,7 +21,7 @@ if (!("window" in globalThis)) {
     globalThis.clearTimeout = () => null;
     globalThis.dispatchEvent = () => null;
     globalThis.addEventListener = (type, f) => {
-    backtrace();
+    //backtrace();
         print("addEventListener: " + type);
         eventListeners[type] = f
     }
@@ -93,7 +93,7 @@ if (!("window" in globalThis)) {
                     print("trying: ", current_target.nodeName);
                     let event_listeners = current_target.event_listeners;
                     if (event_listeners && event.type in event_listeners) {
-                        print("dispatching: ", current_target.nodeName);
+                        print("dispatching: " + event.type + " to " + current_target.nodeName);
 
                         event_listeners[event.type](event);
                         break;
@@ -105,7 +105,6 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
-            backtrace();
             print("EventTarget.addEventListener: " + type + " " + Object.keys(this))
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
@@ -115,6 +114,9 @@ if (!("window" in globalThis)) {
             } else {
                 if (!this.event_listeners) {
                     this.event_listeners = {};
+                }
+                if (type in this.event_listeners) {
+                    throw 'already have listener'
                 }
                 this.event_listeners[type] = listener;
             }
@@ -153,6 +155,14 @@ if (!("window" in globalThis)) {
         }
         insertBefore(newNode, ref) {
             let idx = this.childNodes.indexOf(ref);
+            if (newNode instanceof globalThis.Node) {
+                newNode.parentNode = this;
+                if (this instanceof globalThis.Element) {
+                    newNode.parentElement = this;
+                } else {
+                    newNode.parentElement = null;
+                }
+            }
             this.childNodes.splice(idx, 0, newNode);
         }
         get firstChild() {
@@ -268,7 +278,9 @@ if (!("window" in globalThis)) {
     globalThis.HTMLBodyElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLIFrameElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLScriptElement = class extends globalThis.HTMLElement { };
-    globalThis.HTMLInputElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLInputElement = class extends globalThis.HTMLElement {
+        type = "text"
+    };
     globalThis.HTMLButtonElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLImageElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLCanvasElement = class extends globalThis.HTMLElement {
@@ -381,7 +393,8 @@ if (!("window" in globalThis)) {
         createRange: () => new globalThis.Range,
         getSelection: () => new globalThis.Selection,
         activeElement: null,
-        location: globalThis.location
+        location: globalThis.location,
+        oninput: null
     };
 
     globalThis.document.appendChild(globalThis.document.documentElement);
