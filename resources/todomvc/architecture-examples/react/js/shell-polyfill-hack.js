@@ -236,7 +236,11 @@ if (!("window" in globalThis)) {
                 if (!(child instanceof globalThis.Element)) {
                     continue;
                 }
-                let classList = child["class"]?.split(" ");
+                let classProp = child["class"];
+                let classList;
+                if (classProp) {
+                    classList = classProp.split(" ");
+                }
                 if (classList && classList.includes(className)) {
                     results.push(child);
                 }
@@ -380,7 +384,11 @@ if (!("window" in globalThis)) {
                 if (!(child instanceof globalThis.Element)) {
                     continue;
                 }
-                let classList = child["class"]?.split(" ");
+                let classProp = child["class"];
+                let classList;
+                if (classProp) {
+                    classList = classProp.split(" ");
+                }
                 if (classList && classList.includes(className)) {
                     results.push(child);
                 }
