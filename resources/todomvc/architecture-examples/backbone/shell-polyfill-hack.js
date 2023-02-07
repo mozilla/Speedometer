@@ -147,6 +147,7 @@ if (!("window" in globalThis)) {
                     childNode.parentElement = null;
                 }
             }
+            return childNode;
         }
         removeChild(child) {
             this.childNodes = this.childNodes.filter(node => node !== child);

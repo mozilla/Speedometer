@@ -51,6 +51,7 @@
         </script>
         <!-- <script src="node_modules/todomvc-common/base.js"></script> -->
   */
+        load("shell-polyfill-hack.js")
         load("node_modules/jquery/dist/jquery.js")
         /*<script src="node_modules/underscore/underscore.js"></script>
         <script src="node_modules/backbone/backbone.js"></script>
