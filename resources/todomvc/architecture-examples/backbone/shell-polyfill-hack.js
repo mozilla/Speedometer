@@ -149,6 +149,9 @@ if (!("window" in globalThis)) {
             }
             return childNode;
         }
+        cloneNode() {
+            return new Node; 
+        }
         removeChild(child) {
             this.childNodes = this.childNodes.filter(node => node !== child);
         }
