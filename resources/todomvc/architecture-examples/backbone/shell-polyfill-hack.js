@@ -10,6 +10,7 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
     globalThis.window = globalThis;
+    globalThis.self = globalThis;
 
     let lastTimeoutId = 0;
     globalThis.setTimeout = function (callback, delay) {

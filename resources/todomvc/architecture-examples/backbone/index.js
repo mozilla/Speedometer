@@ -53,9 +53,9 @@
   */
         load("shell-polyfill-hack.js")
         load("node_modules/jquery/dist/jquery.js")
-        /*<script src="node_modules/underscore/underscore.js"></script>
-        <script src="node_modules/backbone/backbone.js"></script>
-        <script src="js/backbone.sync.js"></script>
+        load("node_modules/underscore/underscore.js")
+        load("node_modules/backbone/backbone.js")
+        /*<script src="js/backbone.sync.js"></script>
         <script src="js/models/todo.js"></script>
         <script src="js/collections/todos.js"></script>
         <script src="js/views/todo-view.js"></script>
