@@ -7,6 +7,8 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
     }
 });
 
+var timeoutHandlers = [];
+
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
     globalThis.window = globalThis;
@@ -14,6 +16,7 @@ if (!("window" in globalThis)) {
 
     let lastTimeoutId = 0;
     globalThis.setTimeout = function (callback, delay) {
+        timeoutHandlers.push(callback);
         lastTimeoutId++;
         return lastTimeoutId;
     }
@@ -105,6 +108,7 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
+            console.log("addEventListener: ", type)
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
@@ -425,6 +429,8 @@ if (!("window" in globalThis)) {
         location: globalThis.location,
         oninput: null
     };
+
+    globalThis.document.getElementsByClassName.toString = () => "getElementsByClassName() { [native code ] }"
 
     globalThis.document.appendChild(globalThis.document.documentElement);
     globalThis.document.documentElement.appendChild(globalThis.document.body);

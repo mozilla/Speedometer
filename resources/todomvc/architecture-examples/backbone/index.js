@@ -26,6 +26,16 @@
             <p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
             <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
         </footer>*/
+        var sectionTodoApp = document.createElement("section")
+        sectionTodoApp.class = "todoapp";
+        var main = document.createElement("section")
+        main.class = "main";
+        sectionTodoApp.appendChild(main)
+        document.body.appendChild(sectionTodoApp);
+        var input = document.createElement("input")
+        input.class = "new-todo"
+        main.appendChild(input)
+
         var itemTemplate = document.createElement("script");
         itemTemplate.id = "item-template";
         itemTemplate.innerHTML = `<script type="text/template" id="item-template">
@@ -68,9 +78,33 @@
         load("js/views/app-view.js")
         load("js/routers/router.js")
         load("js/app.js")
+
+        window.Backbone.sync  = () => {};
+        while (timeoutHandlers.length > 0) {
+                let handler = timeoutHandlers.shift();
+                handler();
+        }
+        
+        console.log("done init")
+        let newTodo = document.getElementsByClassName("new-todo")[0];
+        var ENTER_KEY = 13;
+        var numberOfItemsToAdd = 200;
+        let start = performance.now();
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.value = 'Something to do ' + i;
+                newTodo.dispatchEvent({ type: 'input' })
+                newTodo.dispatchEvent({ type: 'keypress', keyCode: ENTER_KEY})
+        }
+        
+        while (timeoutHandlers.length > 0) {
+                let handler = timeoutHandlers.shift();
+                handler();
+        }
+        let end = performance.now();
+        console.log("took: " + (end - start) + "ms");
+
         /*
         <script>
-            window.Backbone.sync  = () => {};
         </script>
-    </body>
-</html>*/
+        </body>
+        </html>*/

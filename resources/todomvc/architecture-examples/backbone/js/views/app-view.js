@@ -28,6 +28,7 @@ var app = app || {};
         // collection, when items are added or changed. Kick things off by
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function () {
+            console.log("app init")
             this.allCheckbox = this.$('.toggle-all')[0];
             this.$input = this.$('.new-todo');
             this.$footer = this.$('.footer');
