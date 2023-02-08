@@ -396,19 +396,6 @@ if (!("window" in globalThis)) {
             }
             return results;
         },
-        getElementById(id) {
-           function matchingId(node, id) {
-               let results = []
-               for (let child of node.childNodes) {
-                   if (child["id"] == id) {
-                       results.push(child);
-                   }
-                   results = results.concat(matchingId(child, id));
-               }
-               return results;
-           }
-           return matchingId(this, id)
-        },
         createRange: () => new globalThis.Range,
         getSelection: () => new globalThis.Selection,
         activeElement: null,
@@ -418,8 +405,14 @@ if (!("window" in globalThis)) {
 
     globalThis.document.appendChild(globalThis.document.documentElement);
     globalThis.document.documentElement.appendChild(globalThis.document.body);
-
+    if (!globalThis.console) {
+	globalThis.console = { log: (msg) => print(msg) }
+    }
     globalThis.console.error = globalThis.console.log;
     globalThis.console.warn = globalThis.console.log;
+    // For JSC
+    if (!globalThis.performance) {
+	globalThis.performance = { now: () => preciseTime()*1000 }
+    }
     globalThis.onhashchange = null
 } // !("window" in globalThis)
