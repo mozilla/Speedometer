@@ -355,6 +355,9 @@ if (!("window" in globalThis)) {
         host: "example.com",
         pathname: "/",
         hash: "",
+        get href() {
+           return "http://" + this.host + this.pathname + this.hash
+        }
     };
 
     globalThis.document = {
