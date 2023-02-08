@@ -1,3 +1,5 @@
+
+        load("shell-polyfill-hack.js")
 /*<!doctype html>
 <html lang="en" data-framework="backbonejs">
     <head>
@@ -23,17 +25,22 @@
             <p>Double-click to edit a todo</p>
             <p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
             <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-        </footer>
-        <script type="text/template" id="item-template">
+        </footer>*/
+        var itemTemplate = document.createElement("script");
+        itemTemplate.id = "item-template";
+        itemTemplate.innerHTML = `<script type="text/template" id="item-template">
             <div class="view">
                 <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
                 <label><%- title %></label>
                 <button class="destroy"></button>
             </div>
             <input class="edit" value="<%- title %>">
-        </script>
-        <script type="text/template" id="stats-template">
-            <span class="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
+        </script>`
+        document.body.appendChild(itemTemplate);
+        var statsTemplate = document.createElement("script");
+        statsTemplate.id = "stats-template"
+        statsTemplate.innerHTML =
+            `<span class="todo-count"><strong><%= remaining %></strong> <%= remaining === 1 ? 'item' : 'items' %> left</span>
             <ul class="filters">
                 <li>
                     <a class="selected" href="#/">All</a>
@@ -47,21 +54,20 @@
             </ul>
             <% if (completed) { %>
             <button class="clear-completed">Clear completed</button>
-            <% } %>
-        </script>
-        <!-- <script src="node_modules/todomvc-common/base.js"></script> -->
-  */
-        load("shell-polyfill-hack.js")
+            <% } %>`
+        document.body.appendChild(statsTemplate)
+
+
         load("node_modules/jquery/dist/jquery.js")
         load("node_modules/underscore/underscore.js")
         load("node_modules/backbone/backbone.js")
-        /*<script src="js/backbone.sync.js"></script>
-        <script src="js/models/todo.js"></script>
-        <script src="js/collections/todos.js"></script>
-        <script src="js/views/todo-view.js"></script>
-        <script src="js/views/app-view.js"></script>
-        <script src="js/routers/router.js"></script>
-        <script src="js/app.js"></script>*/
+        load("js/backbone.sync.js")
+        load("js/models/todo.js")
+        load("js/collections/todos.js")
+        load("js/views/todo-view.js")
+        load("js/views/app-view.js")
+        load("js/routers/router.js")
+        load("js/app.js")
         /*
         <script>
             window.Backbone.sync  = () => {};
