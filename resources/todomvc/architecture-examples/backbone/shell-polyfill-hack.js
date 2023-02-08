@@ -403,14 +403,16 @@ if (!("window" in globalThis)) {
         },
         getElementById(id) {
            function matchingId(node, id) {
-               let results = []
                for (let child of node.childNodes) {
                    if (child["id"] == id) {
-                       results.push(child);
+                       return child;
                    }
-                   results = results.concat(matchingId(child, id));
+                   var result = matchingId(child, id);
+                   if (result) {
+                       return result;
+                   }
                }
-               return results;
+               return null;
            }
            return matchingId(this, id)
         },
