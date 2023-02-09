@@ -108,7 +108,7 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
-            console.log("addEventListener: ", type)
+            //console.log("addEventListener: ", type, listener)
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
@@ -212,6 +212,7 @@ if (!("window" in globalThis)) {
         get nodeType() { return Node.ELEMENT_NODE; };
         get namespaceURI() { return "http://www.w3.org/1999/xhtml"; }
         getAttribute() { return null; }
+        get className() { return this["class"]; }
         setAttribute(key, val) { this[key] = val; }
         get classList() {
             return {
