@@ -218,8 +218,6 @@ if (!("window" in globalThis)) {
 
         get innerHTML() { return this._innerHTML }
         set innerHTML(html) {
-            print(html)
-            
             if (this.tagName == "SCRIPT") {
                 this._innerHTML = html;
                 return;
@@ -254,35 +252,28 @@ if (!("window" in globalThis)) {
                     let newNode = document.createElement(tagName);
           
                     let attributes = buffer.trim().slice(tagName.length + 1).trim();
-                    print(currentNode.tagName, tagName, attributes)
                     if (attributes.length > 0) {
                       let j = 0;
                       while (j < attributes.length) {
                         let key = '';
                         let value = '';
-                        let quote = '';
+                        let quote = '"';
           
-                        while (j < attributes.length && attributes[j].indexOf('=') === -1) {
-                          key += attributes[j] + ' ';
+                        while (j < attributes.length && attributes[j] != '=') {
+                          key += attributes[j];
                           j++;
                         }
           
                         key = key.trim();
-                        if (j < attributes.length) {
-                          quote = attributes[j][attributes[j].length - 1];
-                          value = attributes[j].slice(key.length + 1, -1) + ' ';
-                          j++;
-                        }
+                        j++; // skip '='
+                        j++; // skip '"'
           
-                        while (j < attributes.length && (attributes[j][attributes[j].length - 1] !== quote || value.slice(-1) === '\\')) {
-                          value += attributes[j].slice(0, -1) + ' ';
+                        while (j < attributes.length && attributes[j] !== quote) {
+                          value += attributes[j];
                           j++;
                         }
-          
-                        if (j < attributes.length) {
-                          value += attributes[j].slice(0, -1);
-                          j++;
-                        }
+
+                        j++; // skip '"'
           
                         newNode.setAttribute(key, value);
                       }
