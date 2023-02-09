@@ -46,6 +46,10 @@
         var input = document.createElement("input")
         input.class = "toggle-all"
         main.appendChild(input)
+
+        var ul = document.createElement("ul")
+        ul.class = "todo-list"
+        main.appendChild(ul)
         
         var itemTemplate = document.createElement("script");
         itemTemplate.id = "item-template";
