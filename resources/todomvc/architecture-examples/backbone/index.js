@@ -49,14 +49,13 @@
         
         var itemTemplate = document.createElement("script");
         itemTemplate.id = "item-template";
-        itemTemplate.innerHTML = `<script type="text/template" id="item-template">
+        itemTemplate.innerHTML = `
             <div class="view">
                 <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
                 <label><%- title %></label>
                 <button class="destroy"></button>
             </div>
-            <input class="edit" value="<%- title %>">
-        </script>`
+            <input class="edit" value="<%- title %>">`
         document.body.appendChild(itemTemplate);
         var statsTemplate = document.createElement("script");
         statsTemplate.id = "stats-template"
