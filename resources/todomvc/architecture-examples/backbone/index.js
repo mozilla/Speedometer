@@ -116,7 +116,18 @@
         }
         let end = performance.now();
         console.log("took: " + (end - start) + "ms");
-        print(document.getElementsByClassName("toggle").length)
+        start = performance.now();
+        {
+                let checkboxes = document.getElementsByClassName("toggle");
+                let start = performance.now();
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        checkboxes[i].dispatchEvent({ type: 'click' });
+                }
+
+        }
+        end = performance.now();
+        console.log("clicking took: " + (end - start) + "ms");
+
 
 /*
         <script>
