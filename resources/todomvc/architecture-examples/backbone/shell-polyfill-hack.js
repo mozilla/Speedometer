@@ -227,67 +227,93 @@ if (!("window" in globalThis)) {
             let root = this;
             let currentNode = root;
             let stack = [];
-            
+          
             let state = 'text';
             let buffer = '';
-            
+          
             for (let i = 0; i < html.length; i++) {
-                let char = html[i];
-            
-                switch (state) {
+              let char = html[i];
+          
+              switch (state) {
                 case 'text':
-                    if (char === '<') {
+                  if (char === '<') {
                     if (buffer.trim().length > 0) {
-                        currentNode.appendChild(document.createTextNode(buffer.trim()));
-                        buffer = '';
+                      currentNode.appendChild(document.createTextNode(buffer.trim()));
+                      buffer = '';
                     }
                     state = 'tag';
-                    } else {
+                  } else {
                     buffer += char;
-                    }
-                    break;
+                  }
+                  break;
                 case 'tag':
-                    if (char === '/') {
+                  if (char === '/') {
                     state = 'close-tag';
-                    } else if (char === '>') {
+                  } else if (char === '>') {
                     let tagName = buffer.trim().split(' ')[0];
                     let newNode = document.createElement(tagName);
-            
+          
                     let attributes = buffer.trim().slice(tagName.length + 1).trim();
+                    print(currentNode.tagName, tagName, attributes)
                     if (attributes.length > 0) {
-                        attributes = attributes.split(' ');
-                        for (let j = 0; j < attributes.length; j++) {
-                        let [key, value] = attributes[j].split('=');
-                        newNode.setAttribute(key, value.slice(1, -1));
+                      let j = 0;
+                      while (j < attributes.length) {
+                        let key = '';
+                        let value = '';
+                        let quote = '';
+          
+                        while (j < attributes.length && attributes[j].indexOf('=') === -1) {
+                          key += attributes[j] + ' ';
+                          j++;
                         }
+          
+                        key = key.trim();
+                        if (j < attributes.length) {
+                          quote = attributes[j][attributes[j].length - 1];
+                          value = attributes[j].slice(key.length + 1, -1) + ' ';
+                          j++;
+                        }
+          
+                        while (j < attributes.length && (attributes[j][attributes[j].length - 1] !== quote || value.slice(-1) === '\\')) {
+                          value += attributes[j].slice(0, -1) + ' ';
+                          j++;
+                        }
+          
+                        if (j < attributes.length) {
+                          value += attributes[j].slice(0, -1);
+                          j++;
+                        }
+          
+                        newNode.setAttribute(key, value);
+                      }
                     }
-            
+          
                     currentNode.appendChild(newNode);
                     stack.push(currentNode);
                     currentNode = newNode;
                     buffer = '';
                     state = 'text';
-                    } else {
+                  } else {
                     buffer += char;
-                    }
-                    break;
+                  }
+                  break;
                 case 'close-tag':
-                    if (char === '>') {
-                    let tagName = buffer.trim().slice(1);
+                  if (char === '>') {
+                    let tagName = buffer.trim();
                     if (currentNode.tagName === tagName.toUpperCase()) {
-                        currentNode = stack.pop();
+                      currentNode = stack.pop();
                     }
                     buffer = '';
                     state = 'text';
-                    } else {
+                  } else {
                     buffer += char;
-                    }
-                    break;
-                }
+                  }
+                  break;
+              }
             }
-            
+          
             if (buffer.trim().length > 0) {
-                currentNode.appendChild(document.createTextNode(buffer.trim()));
+              currentNode.appendChild(document.createTextNode(buffer.trim()));
             }
               
         }
