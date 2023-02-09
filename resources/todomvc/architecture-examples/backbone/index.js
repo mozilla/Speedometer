@@ -55,11 +55,11 @@
         itemTemplate.id = "item-template";
         itemTemplate.innerHTML = `
             <div class="view">
-                <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
+                <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>></input>
                 <label><%- title %></label>
                 <button class="destroy"></button>
             </div>
-            <input class="edit" value="<%- title %>">`
+            <input class="edit" value="<%- title %>"></input>`
         document.body.appendChild(itemTemplate);
         var statsTemplate = document.createElement("script");
         statsTemplate.id = "stats-template"
