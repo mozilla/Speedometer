@@ -291,6 +291,7 @@ if (!("window" in globalThis)) {
     globalThis.HTMLBRElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLHeadingElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLBodyElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLHeadElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLIFrameElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLScriptElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLInputElement = class extends globalThis.HTMLElement {
@@ -368,6 +369,7 @@ if (!("window" in globalThis)) {
     globalThis.document = {
         __proto__: globalThis.Node.prototype,
         body: new globalThis.HTMLBodyElement("body"),
+        head: new globalThis.HTMLHeadElement("head"),
         documentElement: new globalThis.HTMLHtmlElement("html"),
         childNodes: [],
         cookie: "",

@@ -26,6 +26,7 @@
             <p>Written by <a href="https://github.com/addyosmani">Addy Osmani</a></p>
             <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
         </footer>*/
+
         var sectionTodoApp = document.createElement("section")
         sectionTodoApp.class = "todoapp";
         document.body.appendChild(sectionTodoApp);
