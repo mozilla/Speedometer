@@ -214,6 +214,7 @@ if (!("window" in globalThis)) {
         getAttribute() { return null; }
         get className() { return this["class"]; }
         setAttribute(key, val) { this[key] = val; }
+        removeAttribute(key) { delete this[key] }
         get classList() {
             return {
                 add: () => null,
