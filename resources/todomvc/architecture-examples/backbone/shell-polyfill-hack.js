@@ -215,6 +215,82 @@ if (!("window" in globalThis)) {
         get className() { return this["class"]; }
         setAttribute(key, val) { this[key] = val; }
         removeAttribute(key) { delete this[key] }
+
+        get innerHTML() { return this._innerHTML }
+        set innerHTML(html) {
+            print(html)
+            
+            if (this.tagName == "SCRIPT") {
+                this._innerHTML = html;
+                return;
+            }
+            let root = this;
+            let currentNode = root;
+            let stack = [];
+            
+            let state = 'text';
+            let buffer = '';
+            
+            for (let i = 0; i < html.length; i++) {
+                let char = html[i];
+            
+                switch (state) {
+                case 'text':
+                    if (char === '<') {
+                    if (buffer.trim().length > 0) {
+                        currentNode.appendChild(document.createTextNode(buffer.trim()));
+                        buffer = '';
+                    }
+                    state = 'tag';
+                    } else {
+                    buffer += char;
+                    }
+                    break;
+                case 'tag':
+                    if (char === '/') {
+                    state = 'close-tag';
+                    } else if (char === '>') {
+                    let tagName = buffer.trim().split(' ')[0];
+                    let newNode = document.createElement(tagName);
+            
+                    let attributes = buffer.trim().slice(tagName.length + 1).trim();
+                    if (attributes.length > 0) {
+                        attributes = attributes.split(' ');
+                        for (let j = 0; j < attributes.length; j++) {
+                        let [key, value] = attributes[j].split('=');
+                        newNode.setAttribute(key, value.slice(1, -1));
+                        }
+                    }
+            
+                    currentNode.appendChild(newNode);
+                    stack.push(currentNode);
+                    currentNode = newNode;
+                    buffer = '';
+                    state = 'text';
+                    } else {
+                    buffer += char;
+                    }
+                    break;
+                case 'close-tag':
+                    if (char === '>') {
+                    let tagName = buffer.trim().slice(1);
+                    if (currentNode.tagName === tagName.toUpperCase()) {
+                        currentNode = stack.pop();
+                    }
+                    buffer = '';
+                    state = 'text';
+                    } else {
+                    buffer += char;
+                    }
+                    break;
+                }
+            }
+            
+            if (buffer.trim().length > 0) {
+                currentNode.appendChild(document.createTextNode(buffer.trim()));
+            }
+              
+        }
         get classList() {
             return {
                 add: () => null,

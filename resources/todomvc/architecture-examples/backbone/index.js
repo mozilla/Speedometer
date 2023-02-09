@@ -116,8 +116,9 @@
         }
         let end = performance.now();
         console.log("took: " + (end - start) + "ms");
+        print(document.getElementsByClassName("toggle").length)
 
-        /*
+/*
         <script>
         </script>
         </body>
