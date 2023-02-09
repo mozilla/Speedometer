@@ -28,14 +28,24 @@
         </footer>*/
         var sectionTodoApp = document.createElement("section")
         sectionTodoApp.class = "todoapp";
+        document.body.appendChild(sectionTodoApp);
+        
+        var header = document.createElement("header")
+        header.class = "header";
+        sectionTodoApp.appendChild(header)
+        
+        var input = document.createElement("input")
+        input.class = "new-todo"
+        header.appendChild(input)
+
         var main = document.createElement("section")
         main.class = "main";
         sectionTodoApp.appendChild(main)
-        document.body.appendChild(sectionTodoApp);
+        
         var input = document.createElement("input")
-        input.class = "new-todo"
+        input.class = "toggle-all"
         main.appendChild(input)
-
+        
         var itemTemplate = document.createElement("script");
         itemTemplate.id = "item-template";
         itemTemplate.innerHTML = `<script type="text/template" id="item-template">
