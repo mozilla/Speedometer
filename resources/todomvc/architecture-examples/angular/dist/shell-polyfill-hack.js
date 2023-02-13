@@ -108,7 +108,7 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
-            console.log("addEventListener: ", this.tagName, type, listener)
+            //console.log("addEventListener: ", this.tagName, type, listener)
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
