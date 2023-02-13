@@ -108,7 +108,7 @@ if (!("window" in globalThis)) {
             return true;
         }
         addEventListener(type, listener) {
-            //console.log("addEventListener: ", type, listener)
+            console.log("addEventListener: ", this.tagName, type, listener)
             if (type === "react-invokeguardedcallback") {
                 if (!this._react_callback) {
                     this._react_callback = [];
@@ -204,7 +204,7 @@ if (!("window" in globalThis)) {
     globalThis.Element = class extends globalThis.Node {
         constructor(tagName) {
             super();
-
+            print("Element cons", tagName)
             this.tagName = tagName.toUpperCase();
             this.nodeName = tagName.toUpperCase();
             this[Symbol.toStringTag] = _GetElementConstructor(tagName).name;
@@ -483,6 +483,7 @@ if (!("window" in globalThis)) {
             return node;
         },
         createElement: (tagName) => {
+            print("createElement", tagName)
             let constructor = _GetElementConstructor(tagName);
             return new (constructor)(tagName);
         },
