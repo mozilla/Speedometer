@@ -406,6 +406,9 @@ if (!("window" in globalThis)) {
     globalThis.HTMLOListElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLSpanElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLLabelElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLMediaElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLFrameSetElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLFrameElement = class extends globalThis.HTMLElement { };
     globalThis.CharacterData = class extends globalThis.Node { };
     globalThis.Text = class extends globalThis.CharacterData { };
 
