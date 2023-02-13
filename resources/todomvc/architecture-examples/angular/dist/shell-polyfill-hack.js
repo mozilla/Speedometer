@@ -310,7 +310,8 @@ if (!("window" in globalThis)) {
         }
         get classList() {
             return {
-                add: () => null,
+                add: (name) => print("addClass", name),
+                remove: (name) => print("removeClass", name)
             };
         }
         get children() {
@@ -490,6 +491,12 @@ if (!("window" in globalThis)) {
         },
         createDocumentFragment() {
            return new Node;
+        },
+        querySelector(sel) {
+           print("querySelector", sel)
+           if (sel == "app-root") {
+                return document.body.childNodes[0]
+           }
         },
         getElementsByClassName(className) {
             let results = []

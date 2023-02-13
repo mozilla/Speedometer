@@ -13,6 +13,7 @@
   <!-- Credits: Addy Osmani -->
 */
 load('shell-polyfill-hack.js')
+document.body.appendChild(document.createElement("app-root"))
 load('inline.3b7f8ce2e6bc2f77dd83.bundle.js')
 load("polyfills.3a2aed82a0c9b24e6585.bundle.js")
 load("vendor.9a296bbc1909830a9106.bundle.js")
