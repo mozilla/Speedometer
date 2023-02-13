@@ -98,7 +98,7 @@ if (!("window" in globalThis)) {
                 while (current_target) {
                     let event_listeners = current_target.event_listeners;
                     if (event_listeners && event.type in event_listeners) {
-                        event_listeners[event.type](event);
+                        event_listeners[event.type].call(current_target, event);
                         break;
                     } else {
                         current_target = current_target.parentNode;
