@@ -121,7 +121,6 @@
         start = performance.now();
         {
                 let checkboxes = document.getElementsByClassName("toggle");
-                let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         checkboxes[i].dispatchEvent({ type: 'click' });
                 }
