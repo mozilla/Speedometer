@@ -47,3 +47,30 @@ var ENTER_KEY = 13;
         }
         let end = performance.now();
         console.log("took: " + (end - start) + "ms");
+        total += end - start;
+
+        start = performance.now();
+        {
+                let checkboxes = document.getElementsByClassName("toggle");
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        checkboxes[i].dispatchEvent({ type: 'click' });
+                }
+
+        }
+        end = performance.now();
+        console.log("clicking took: " + (end - start) + "ms");
+        total += end - start;
+
+        start = performance.now();
+        {
+                let deleteButtons = document.getElementsByClassName("destroy");
+                let start = performance.now();
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        deleteButtons[i].dispatchEvent({ type: 'click' });
+                }
+
+        }
+        end = performance.now();
+        console.log("delete took: " + (end - start) + "ms");
+        total += end - start;
+        console.log(`total: ${total}`)
