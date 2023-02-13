@@ -37,7 +37,7 @@ var ENTER_KEY = 13;
         for (let i = 0; i < numberOfItemsToAdd; i++) {
                 newTodo.value = 'Something to do ' + i;
                 newTodo.dispatchEvent({ type: 'input' })
-                newTodo.dispatchEvent({ type: 'keyup', keyCode: ENTER_KEY})
+                newTodo.dispatchEvent({ type: 'keyup', keyCode: ENTER_KEY, key: 'Enter'})
         }
         drainJobQueue()
 
