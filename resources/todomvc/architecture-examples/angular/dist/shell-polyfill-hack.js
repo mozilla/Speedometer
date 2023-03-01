@@ -139,18 +139,22 @@ if (!("window" in globalThis)) {
         compareDocumentPosition(otherNode) {
             return globalThis.Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC;
         }
-        childNodes = [];
         parentNode = null;
-        parentElement = null;
+        nextSibling = null;
+        previousSibling = null;
         appendChild(childNode) {
-            this.childNodes.push(childNode);
+            // console.assert(this.childNodes.slice(-1)[0] == this.lastChild)
+            if (!this.firstChild) {
+                this.firstChild = childNode;
+                this.lastChild = childNode;
+            } else {
+                childNode.previousSibling = this.lastChild;
+                this.lastChild.nextSibling = childNode;
+                this.lastChild = childNode;
+                // console.assert(this.childNodes.slice(-1)[0] == this.lastChild)
+            }
             if (childNode instanceof globalThis.Node) {
                 childNode.parentNode = this;
-                if (this instanceof globalThis.Element) {
-                    childNode.parentElement = this;
-                } else {
-                    childNode.parentElement = null;
-                }
             }
             return childNode;
         }
@@ -158,47 +162,49 @@ if (!("window" in globalThis)) {
             return new Node; 
         }
         removeChild(child) {
-            this.childNodes = this.childNodes.filter(node => node !== child);
+            // console.assert(child.parentNode == this)
+            if (child.previousSibling) {
+                child.previousSibling.nextSibling = child.nextSibling;
+            } else {
+                child.parentNode.firstChild = child.nextSibling;
+            }
+            if (child.nextSibling) {
+                child.nextSibling.previousSibling = child.previousSibiling;
+            } else {
+                child.parentNode.lastChild = child.previousSibling;
+            }
+            child.parentNode = null;
         }
         insertBefore(newNode, ref) {
-            let idx = this.childNodes.indexOf(ref);
-            if (newNode instanceof globalThis.Node) {
-                newNode.parentNode = this;
-                if (this instanceof globalThis.Element) {
-                    newNode.parentElement = this;
-                } else {
-                    newNode.parentElement = null;
-                }
+            if (!ref) {
+                this.appendChild(newNode)
+            } else {
+                newNode.nextSibling = ref;
+                newNode.previousSibling = ref.previousSibling;
+                ref.previousSibling.nextSibling = newNode;
+                ref.previousSibling = newNode;
+                newNode.parentNode = ref.parentNode;
             }
-            this.childNodes.splice(idx, 0, newNode);
+            return newNode;
         }
-        get firstChild() {
-            const nodes = this.childNodes;
-            if (nodes.length === 0) {
-                return null;
+        get childNodes() {
+            let result = [];
+            let child = this.firstChild;
+            while (child) {
+                result.push(child)
+                child = child.nextSibling;
             }
-            return nodes[0];
-        }
-        get lastChild() {
-            const nodes = this.childNodes;
-            if (nodes.length === 0) {
-                return null;
-            }
-            return nodes[nodes.length - 1];
-        }
-        get nextSibling() {
-            const nodes = this.parentNode.childNodes;
-            const index = nodes.indexOf(this);
-            if (index < 0) {
-                return null;
-            }
-            if (index + 1 >= nodes.length) {
-                return null;
-            }
-            return nodes[index + 1];
+            return result;
         }
         get ownerDocument() {
             return globalThis.document;
+        }
+        get parentElement() {
+            if (this.parentNode instanceof globalThis.Element) {
+                return this.parentNode;
+            } else {
+                return null;
+            }
         }
     };
     globalThis.Element = class extends globalThis.Node {
@@ -469,7 +475,6 @@ if (!("window" in globalThis)) {
         body: new globalThis.HTMLBodyElement("body"),
         head: new globalThis.HTMLHeadElement("head"),
         documentElement: new globalThis.HTMLHtmlElement("html"),
-        childNodes: [],
         cookie: "",
         compatMode: "CSS1Compat",
         host: "example.com",

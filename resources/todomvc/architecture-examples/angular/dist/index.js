@@ -12,6 +12,18 @@
   <app-root>Loading...</app-root>
   <!-- Credits: Addy Osmani -->
 */
+
+if ("drainMicrotasks" in globalThis) {
+   print("jsc")
+   // webkit
+   var drainJobQueue = drainMicrotasks
+} else if ("version" in globalThis) {
+   // v8
+   print("v8")
+   // run with --allow-natives-syntax
+   var drainJobQueue = eval("() => { %PerformMicrotaskCheckpoint(); }")
+}
+performance.measure = function() {}
 load('shell-polyfill-hack.js')
 document.body.appendChild(document.createElement("app-root"))
 /*load('inline.3b7f8ce2e6bc2f77dd83.bundle.js')
@@ -24,11 +36,12 @@ load("polyfills.bundle.js")
 load("vendor.bundle.js")
 load("main.bundle.js")
 
+
 drainJobQueue()        
 let newTodo = document.getElementsByClassName("new-todo")[0];
 
-
 print("dod", newTodo)
+let inShell = false;
 
 var ENTER_KEY = 13;
         var numberOfItemsToAdd = 200;
