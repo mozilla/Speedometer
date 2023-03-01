@@ -48,6 +48,16 @@
                 total += (end - start);
                 console.log("clicking took: " + (end - start) + "ms");
         }
+        {
+                let checkboxes = document.getElementsByClassName("destroy");
+                let start = performance.now();
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        checkboxes[i].dispatchEvent({ type: 'click' });
+                }
+                let end = performance.now();
+                total += (end - start);
+                console.log("deleting took: " + (end - start) + "ms");
+        }
         console.log("total took: " + total + "ms")
 /*        <script>
             window.app.Utils.store = () => {};
