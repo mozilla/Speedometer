@@ -304,6 +304,8 @@ Suites.push({
     ],
 });
 
+
+
 Suites.push({
     name: "Preact-TodoMVC",
     url: "todomvc/architecture-examples/preact/dist/index.html",
@@ -328,6 +330,27 @@ Suites.push({
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "MDN-Details",
+    url: "tentative/layout/mdn_html.html",
+    async prepare(page) {
+    },
+    tests: [
+        new BenchmarkTestStep("Introduction", (page) => {
+            let summary = page.querySelectorAll(".sidebar-inner summary")[0];
+            summary.click();
+        }),
+        new BenchmarkTestStep("Elements", (page) => {
+            let summary = page.querySelectorAll(".sidebar-inner summary")[3];
+            summary.click();
+        }),
+        new BenchmarkTestStep("Attributes", (page) => {
+            let summary = page.querySelectorAll(".sidebar-inner summary")[4];
+            summary.click();
         }),
     ],
 });
