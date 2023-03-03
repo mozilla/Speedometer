@@ -39,7 +39,8 @@
         console.log("adding took: " + (end - start) + "ms");
 
         {
-                let checkboxes = document.getElementsByClassName("toggle");
+                // convert to static array
+                let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("toggle"));
                 let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         checkboxes[i].dispatchEvent({ type: 'click' });
@@ -49,7 +50,8 @@
                 console.log("clicking took: " + (end - start) + "ms");
         }
         {
-                let checkboxes = document.getElementsByClassName("destroy");
+                // convert to static array
+                let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("destroy"));
                 let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         checkboxes[i].dispatchEvent({ type: 'click' });
