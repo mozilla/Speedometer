@@ -314,6 +314,19 @@ if (!("window" in globalThis)) {
             }
               
         }
+
+        insertAdjacentHTML(position, html) {
+            var position = position.toLowerCase();
+            console.assert(position == "beforeend")
+            var el = document.createElement('div');
+            el.innerHTML = html;
+            let curNode = el.firstChild;
+            while (curNode) {
+              let nextNode = curNode.nextSibling;
+              this.appendChild(curNode);
+              curNode = nextNode;
+            }
+        }
         get classList() {
             return {
                 add: (name) => {},
