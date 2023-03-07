@@ -141,7 +141,6 @@ if (!("window" in globalThis)) {
         }
         childNodes = [];
         parentNode = null;
-        style = {};
         parentElement = null;
         appendChild(childNode) {
             this.childNodes.push(childNode);
@@ -210,6 +209,11 @@ if (!("window" in globalThis)) {
             this.tagName = tagName.toUpperCase();
             this.nodeName = tagName.toUpperCase();
             this[Symbol.toStringTag] = _GetElementConstructor(tagName).name;
+        }
+        cloneNode(deep) {
+            var result = new this.constructor(this.tagName)
+            Object.assign(result, this)
+            return result;
         }
         get nodeType() { return Node.ELEMENT_NODE; };
         get namespaceURI() { return "http://www.w3.org/1999/xhtml"; }
