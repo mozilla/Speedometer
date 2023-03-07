@@ -511,6 +511,10 @@ if (!("window" in globalThis)) {
             let constructor = _GetElementConstructor(tagName);
             return new (constructor)(tagName);
         },
+        createElementNS: (ns, tagName) => {
+            let constructor = _GetElementConstructor(tagName);
+            return new (constructor)(tagName);
+        },
         createComment(data) {
            return new Node;
         },
