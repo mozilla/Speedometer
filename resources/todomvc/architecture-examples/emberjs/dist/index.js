@@ -14,6 +14,17 @@
   </head>
   <body>
   */
+
+if ("drainMicrotasks" in globalThis) {
+   print("jsc")
+   // webkit
+   globalThis["drainJobQueue"] = drainMicrotasks
+} else if ("version" in globalThis) {
+   // v8
+   print("v8")
+   // run with --allow-natives-syntax
+   globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
+}
 load('shell-polyfill-hack.js')
 load('assets/vendor.js')
 let meta = document.createElement("meta")
@@ -29,6 +40,28 @@ load('assets/todomvc.js')
                 handler();
         }
 
+        drainJobQueue()
+        console.log("done init")
+
+        let newTodo = document.getElementsByClassName("new-todo")[0];
+        console.log(newTodo)
+        var ENTER_KEY = 13;
+        var numberOfItemsToAdd = 200;
+        let total = 0;
+        let start = performance.now();
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.value = 'Something to do ' + i;
+                newTodo.dispatchEvent({ type: 'input' })
+                newTodo.dispatchEvent({ type: 'keydown', keyCode: ENTER_KEY})
+        }
+
+        while (timeoutHandlers.length > 0) {
+                let handler = timeoutHandlers.shift();
+                handler();
+        }
+        drainJobQueue()
+        let end = performance.now();
+        console.log("took ", end - start)
 /*integrity="sha256-BZHBbf1U21+kgPYmoIK7gLkqHu88v5cwEVFfwUPXojs= sha512-2YWrAbR45p8fk3/y4Qhbok/KUfLE/v6yMSUqIWncTmWqfJbyJj0+AiTkJL03k0oPUMZbFYyQx9SuL6XoXp4sgg==" ></script>
     <script src="assets/todomvc-5d3e8eb3d5b3740a33185edcb11eeb57.js" integrity="sha256-TlR3MSC0+pEW7ypWHo2KbKJ8aGi7ebK3AAyXVdGlGJk= sha512-VrNV9WfIGB3sR8fm1qhLQwIISD4AQbarc5PqrKAddfNg+eNY/NynTA3N/eW0SHWQtOmNxSMOtP+aZlKfLi3r2A==" ></script>
     

@@ -545,9 +545,12 @@ if (!("window" in globalThis)) {
            if (sel == "app-root") {
                 return document.body.childNodes[0]
            }
-           if (sel == "meta[name=\"todomvc/config/environment\"]") {
+           else if (sel == "meta[name=\"todomvc/config/environment\"]") {
                 return document.head.childNodes[0]
+           } else if (sel == "body") {
+                return document.body
            }
+
         },
         querySelectorAll(sel) {
             print("querySelectorAll", sel)
