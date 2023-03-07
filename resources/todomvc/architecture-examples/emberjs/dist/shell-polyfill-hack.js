@@ -9,6 +9,14 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 
 var timeoutHandlers = [];
 
+if (!("assert" in console)) {
+    console["assert"] = function(value) {
+        if (!value) {
+            throw value
+        }
+    }
+}
+
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
     globalThis.window = globalThis;
@@ -217,12 +225,15 @@ if (!("window" in globalThis)) {
         }
         get nodeType() { return Node.ELEMENT_NODE; };
         get namespaceURI() { return "http://www.w3.org/1999/xhtml"; }
-        getAttribute() { return null; }
+        getAttribute(key) { return this[key]; }
         get className() { return this["class"]; }
         setAttribute(key, val) { this[key] = val; }
         removeAttribute(key) { delete this[key] }
 
         get innerHTML() { return this._innerHTML }
+
+        // TODO this doesn't handle '/' in attribute values and probably should switch
+        // to using states for handling attributes.
         set innerHTML(html) {
             if (this.tagName == "SCRIPT") {
                 this._innerHTML = html;
@@ -237,7 +248,6 @@ if (!("window" in globalThis)) {
           
             for (let i = 0; i < html.length; i++) {
               let char = html[i];
-          
               switch (state) {
                 case 'text':
                   if (char === '<') {
@@ -525,6 +535,9 @@ if (!("window" in globalThis)) {
            print("querySelector", sel)
            if (sel == "app-root") {
                 return document.body.childNodes[0]
+           }
+           if (sel == "meta[name=\"todomvc/config/environment\"]") {
+                return document.head.childNodes[0]
            }
         },
         getElementsByClassName(className) {

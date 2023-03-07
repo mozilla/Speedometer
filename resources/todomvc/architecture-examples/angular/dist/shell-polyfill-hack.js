@@ -311,7 +311,6 @@ if (!("window" in globalThis)) {
             if (buffer.trim().length > 0) {
               currentNode.appendChild(document.createTextNode(buffer.trim()));
             }
-              
         }
         get classList() {
             return {
