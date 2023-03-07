@@ -382,6 +382,7 @@ if (!("window" in globalThis)) {
             }
             return results;
         }
+        getAttributeNode() {}
         get style() {
             let self = this;
             return {
@@ -408,7 +409,13 @@ if (!("window" in globalThis)) {
         focus() { }
     };
     globalThis.HTMLHtmlElement = class extends globalThis.HTMLElement { };
-    globalThis.HTMLAnchorElement = class extends globalThis.HTMLElement { };
+    globalThis.HTMLAnchorElement = class extends globalThis.HTMLElement {
+        get protocol() {
+            var proto = this.href.split(":")[0]
+            console.log("get proto", proto)
+            return proto + ":"
+        }
+     };
     globalThis.HTMLDivElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLParagraphElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLHRElement = class extends globalThis.HTMLElement { };
@@ -518,6 +525,8 @@ if (!("window" in globalThis)) {
             return node;
         },
         createElement: (tagName) => {
+            console.log(tagName)
+            if (tagName == "form") { throw tagName }
             let constructor = _GetElementConstructor(tagName);
             return new (constructor)(tagName);
         },
@@ -540,6 +549,10 @@ if (!("window" in globalThis)) {
                 return document.head.childNodes[0]
            }
         },
+        querySelectorAll(sel) {
+            print("querySelectorAll", sel)
+            return []
+        },
         getElementsByClassName(className) {
             let results = []
             for (let child of this.childNodes) {
@@ -555,6 +568,13 @@ if (!("window" in globalThis)) {
                     results.push(child);
                 }
                 results = results.concat(child.getElementsByClassName(className));
+            }
+            return results;
+        },
+        getElementsByTagName(className) {
+            let results = []
+            for (let child of this.childNodes) {
+                results = results.concat(child.getElementsByTagName(className));
             }
             return results;
         },
