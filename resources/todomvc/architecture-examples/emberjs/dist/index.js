@@ -57,7 +57,7 @@ load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
 
         drainJobQueue()
         console.log("done init")
-
+function benchmark() {
         //timeout(2, () => { backtrace(); return false })
         let newTodo = document.getElementsByClassName("new-todo")[0];
         console.log(newTodo)
@@ -65,6 +65,7 @@ load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
         var numberOfItemsToAdd = 200;
         let total = 0;
         let start = performance.now();
+	function addItems() {
         for (let i = 0; i < numberOfItemsToAdd; i++) {
                 newTodo.value = 'Something to do ' + i;
                 newTodo.dispatchEvent({ type: 'input' })
@@ -78,9 +79,13 @@ load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
         drainJobQueue()
         let end = performance.now();
         console.log("took ", end - start)
+
         total = end - start;
+	}
+	addItems()
+
                 start = performance.now();
-        {
+        function toggleItems() {
                 let checkboxes = document.getElementsByClassName("toggle");
                 console.log(checkboxes.length)
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
@@ -88,12 +93,13 @@ load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
                 }
 
         }
+	toggleItems()
         end = performance.now();
         console.log("clicking took: " + (end - start) + "ms");
         total += end - start;
 
         start = performance.now();
-        {
+        function removeItems() {
                 let deleteButtons = document.getElementsByClassName("destroy");
                 let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
@@ -101,10 +107,13 @@ load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
                 }
 
         }
+	removeItems()
         end = performance.now();
         console.log("delete took: " + (end - start) + "ms");
         total += end - start;
         console.log(`total: ${total}`)
+}
+benchmark()
 /*integrity="sha256-BZHBbf1U21+kgPYmoIK7gLkqHu88v5cwEVFfwUPXojs= sha512-2YWrAbR45p8fk3/y4Qhbok/KUfLE/v6yMSUqIWncTmWqfJbyJj0+AiTkJL03k0oPUMZbFYyQx9SuL6XoXp4sgg==" ></script>
     <script src="assets/todomvc-5d3e8eb3d5b3740a33185edcb11eeb57.js" integrity="sha256-TlR3MSC0+pEW7ypWHo2KbKJ8aGi7ebK3AAyXVdGlGJk= sha512-VrNV9WfIGB3sR8fm1qhLQwIISD4AQbarc5PqrKAddfNg+eNY/NynTA3N/eW0SHWQtOmNxSMOtP+aZlKfLi3r2A==" ></script>
     
