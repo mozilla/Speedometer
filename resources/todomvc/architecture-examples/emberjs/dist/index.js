@@ -30,7 +30,8 @@ use_development_environment = false;
 if (use_development_environment) {
    load('assets/vendor.js')
 } else {
-   load('assets/vendor-820919567eb7bd4d9fac358a90a5aac4.js')
+   //load('assets/vendor-820919567eb7bd4d9fac358a90a5aac4.js')
+   load('assets/vendor-f6e6f2e6629b21c0f89208bb38fbf438.js')
 }
 
 let meta = document.createElement("meta")
@@ -39,13 +40,15 @@ if (use_development_environment) {
 // development
 meta.setAttribute("content", "%7B%22modulePrefix%22%3A%22todomvc%22%2C%22environment%22%3A%22development%22%2C%22baseURL%22%3Anull%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22name%22%3A%22todomvc%22%2C%22version%22%3A%220.0.0+24b094d1%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D")
 } else {// production
-meta.setAttribute("content", "%7B%22modulePrefix%22%3A%22todomvc%22%2C%22environment%22%3A%22production%22%2C%22baseURL%22%3Anull%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22name%22%3A%22todomvc%22%2C%22version%22%3A%220.0.0+bc37752f%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D")
+//meta.setAttribute("content", "%7B%22modulePrefix%22%3A%22todomvc%22%2C%22environment%22%3A%22production%22%2C%22baseURL%22%3Anull%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22name%22%3A%22todomvc%22%2C%22version%22%3A%220.0.0+bc37752f%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D")
+meta.setAttribute("content", "%7B%22modulePrefix%22%3A%22todomvc%22%2C%22environment%22%3A%22production%22%2C%22baseURL%22%3Anull%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22name%22%3A%22todomvc%22%2C%22version%22%3A%220.0.0+24b094d1%22%7D%2C%22exportApplicationGlobal%22%3Afalse%7D")
 }
 document.head.appendChild(meta)
 if (use_development_environment) {
 load('assets/todomvc.js')
 } else {
-load('assets/todomvc-5d3e8eb3d5b3740a33185edcb11eeb57.js')
+//load('assets/todomvc-5d3e8eb3d5b3740a33185edcb11eeb57.js')
+load('assets/todomvc-71af486dd179ab5504a3abf9a9b69823.js')
 }
         while (timeoutHandlers.length > 0) {
                 let handler = timeoutHandlers.shift();
