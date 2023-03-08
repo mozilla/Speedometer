@@ -105,7 +105,10 @@ if (!("window" in globalThis)) {
                 let current_target = this;
                 while (current_target) {
                     let event_listeners = current_target.event_listeners;
-                    if (event_listeners && event.type in event_listeners) {
+                    if (event.type == "keydown" && current_target.onkeydown) {
+                        current_target.onkeydown.call(current_target, event)
+                        break;
+                    } else if (event_listeners && event.type in event_listeners) {
                         event_listeners[event.type].call(current_target, event);
                         break;
                     } else {
@@ -216,6 +219,7 @@ if (!("window" in globalThis)) {
             super();
             this.tagName = tagName.toUpperCase();
             this.nodeName = tagName.toUpperCase();
+            this.onkeydown = null;
             this[Symbol.toStringTag] = _GetElementConstructor(tagName).name;
         }
         cloneNode(deep) {
@@ -525,8 +529,6 @@ if (!("window" in globalThis)) {
             return node;
         },
         createElement: (tagName) => {
-            console.log(tagName)
-            if (tagName == "form") { throw tagName }
             let constructor = _GetElementConstructor(tagName);
             return new (constructor)(tagName);
         },

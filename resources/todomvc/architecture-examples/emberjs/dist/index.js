@@ -43,6 +43,7 @@ load('assets/todomvc.js')
         drainJobQueue()
         console.log("done init")
 
+        //timeout(2, () => { backtrace(); return false })
         let newTodo = document.getElementsByClassName("new-todo")[0];
         console.log(newTodo)
         var ENTER_KEY = 13;
