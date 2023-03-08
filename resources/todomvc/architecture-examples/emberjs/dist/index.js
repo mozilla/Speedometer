@@ -63,6 +63,33 @@ load('assets/todomvc.js')
         drainJobQueue()
         let end = performance.now();
         console.log("took ", end - start)
+        total = end - start;
+                start = performance.now();
+        {
+                let checkboxes = document.getElementsByClassName("toggle");
+                console.log(checkboxes.length)
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        checkboxes[i].dispatchEvent({ type: 'click' });
+                }
+
+        }
+        end = performance.now();
+        console.log("clicking took: " + (end - start) + "ms");
+        total += end - start;
+
+        start = performance.now();
+        {
+                let deleteButtons = document.getElementsByClassName("destroy");
+                let start = performance.now();
+                for (let i = 0; i < numberOfItemsToAdd; i++) {
+                        deleteButtons[i].dispatchEvent({ type: 'click' });
+                }
+
+        }
+        end = performance.now();
+        console.log("delete took: " + (end - start) + "ms");
+        total += end - start;
+        console.log(`total: ${total}`)
 /*integrity="sha256-BZHBbf1U21+kgPYmoIK7gLkqHu88v5cwEVFfwUPXojs= sha512-2YWrAbR45p8fk3/y4Qhbok/KUfLE/v6yMSUqIWncTmWqfJbyJj0+AiTkJL03k0oPUMZbFYyQx9SuL6XoXp4sgg==" ></script>
     <script src="assets/todomvc-5d3e8eb3d5b3740a33185edcb11eeb57.js" integrity="sha256-TlR3MSC0+pEW7ypWHo2KbKJ8aGi7ebK3AAyXVdGlGJk= sha512-VrNV9WfIGB3sR8fm1qhLQwIISD4AQbarc5PqrKAddfNg+eNY/NynTA3N/eW0SHWQtOmNxSMOtP+aZlKfLi3r2A==" ></script>
     

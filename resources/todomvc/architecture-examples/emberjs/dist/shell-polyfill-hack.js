@@ -108,6 +108,14 @@ if (!("window" in globalThis)) {
                     if (event.type == "keydown" && current_target.onkeydown) {
                         current_target.onkeydown.call(current_target, event)
                         break;
+                    } else if (event.type == "click" && current_target.tagName == "INPUT" && current_target.type == "checkbox") {
+                        if (current_target.onchange) {
+                            current_target.onchange.call(current_target, event)
+                        }
+                        break;
+                    } else if (event.type == "click" && current_target.onclick) {
+                        current_target.onclick.call(current_target, event)
+                        break; 
                     } else if (event_listeners && event.type in event_listeners) {
                         event_listeners[event.type].call(current_target, event);
                         break;
@@ -220,6 +228,8 @@ if (!("window" in globalThis)) {
             this.tagName = tagName.toUpperCase();
             this.nodeName = tagName.toUpperCase();
             this.onkeydown = null;
+            this.onclick = null;
+            this.onchange = null;
             this[Symbol.toStringTag] = _GetElementConstructor(tagName).name;
         }
         cloneNode(deep) {
