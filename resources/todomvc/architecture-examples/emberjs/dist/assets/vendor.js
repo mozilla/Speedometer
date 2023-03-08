@@ -10748,9 +10748,9 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 // Because of that, this security measure has to be disabled in Safari 8.
 // https://bugs.webkit.org/show_bug.cgi?id=137337
 support.createHTMLDocument = ( function() {
-	//var body = document.implementation.createHTMLDocument( "" ).body;
-	//body.innerHTML = "<form></form><form></form>";
-	return true;//body.childNodes.length === 2;
+	var body = document.implementation.createHTMLDocument( "" ).body;
+	body.innerHTML = "<form></form><form></form>";
+	return body.childNodes.length === 2;
 } )();
 
 
@@ -24675,7 +24675,6 @@ enifed('ember-debug/deprecate', ['exports', 'ember-debug/error', 'ember-console'
     });
 
     registerHandler(function raiseOnDeprecation(message, options, next) {
-      return
       if (_emberEnvironment.ENV.RAISE_ON_DEPRECATION) {
         var updatedMessage = formatMessage(message);
 
