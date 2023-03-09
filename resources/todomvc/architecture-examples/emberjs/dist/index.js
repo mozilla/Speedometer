@@ -62,7 +62,7 @@ function benchmark() {
         let newTodo = document.getElementsByClassName("new-todo")[0];
         console.log(newTodo)
         var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 200;
+        var numberOfItemsToAdd = 100;
         let total = 0;
         let start = performance.now();
 	function addItems() {
