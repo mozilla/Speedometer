@@ -27,7 +27,7 @@
         load("build.min.js")
         let newTodo = document.getElementsByClassName("new-todo")[0];
         var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 200;
+        var numberOfItemsToAdd = 100;
         let start = performance.now();
         for (let i = 0; i < numberOfItemsToAdd; i++) {
             newTodo.value = 'Something to do ' + i;
