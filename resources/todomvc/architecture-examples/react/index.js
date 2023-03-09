@@ -25,20 +25,24 @@
         load("node_modules/react/dist/react-with-addons.min.js")
         load("node_modules/react-dom/dist/react-dom.min.js")
         load("build.min.js")
+function benchmark() {
+        var total = 0;
         let newTodo = document.getElementsByClassName("new-todo")[0];
         var ENTER_KEY = 13;
         var numberOfItemsToAdd = 100;
         let start = performance.now();
+        function addingItems() {
         for (let i = 0; i < numberOfItemsToAdd; i++) {
             newTodo.value = 'Something to do ' + i;
             newTodo.dispatchEvent({ type: 'input' })
             newTodo.dispatchEvent({ type: 'keydown', keyCode: ENTER_KEY})
         }
         let end = performance.now();
-        var total = end - start;
         console.log("adding took: " + (end - start) + "ms");
-
-        {
+        total = end - start;
+        }
+        addingItems()
+        function completingItems() {
                 // convert to static array
                 let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("toggle"));
                 let start = performance.now();
@@ -49,7 +53,8 @@
                 total += (end - start);
                 console.log("clicking took: " + (end - start) + "ms");
         }
-        {
+        completingItems()
+        function deletingItems(){
                 // convert to static array
                 let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("destroy"));
                 let start = performance.now();
@@ -60,7 +65,10 @@
                 total += (end - start);
                 console.log("deleting took: " + (end - start) + "ms");
         }
+        deletingItems()
         console.log("total took: " + total + "ms")
+}
+benchmark()
 /*        <script>
             window.app.Utils.store = () => {};
         </script>
