@@ -43,6 +43,77 @@ if (!("window" in globalThis)) {
     globalThis.XMLHttpRequest = function () { }
     globalThis.Worker = function () { };
 
+    // A live lazily populated collection of nodes that have query(node) == true
+    class HTMLCollection {
+        constructor(document, node, query) {
+            this.elements = [];
+            this.document = document;
+            this.node = node;
+            this.query = query;
+            this.version = document.version;
+        }
+        update(index) {
+            if (this.version != this.document.version) {
+                this.elements.length = 0;
+                this.version = this.document.version;
+            }
+            let node = this.node;
+            while (node && (this.elements.length <= index || index == -1)) {
+                if (this.query(node)) {
+                    this.elements.push(node)
+                }
+                if (node.firstChild) {
+                    node = node.firstChild;
+                } else if (node.nextSibling) {
+                    node = node.nextSibling;
+                } else {
+                    while (node) {
+                        if (node.parentNode && node.parentNode.nextSibling) {
+                            node = node.parentNode.nextSibling;
+                            break;
+                        }
+                        node = node.parentNode
+                    }
+                }
+            }
+            this.node = node;
+        }
+        item(index) {
+            this.update(index);
+            return this.elements[index];
+        }
+        get length() {
+            this.update(-1)
+            return this.elements.length;
+        }
+    };
+
+    function makeArrayLike(o) {
+        return new Proxy(o, {
+            get: function (target, propKey) {
+                if (Number.isInteger(Number(propKey))) {
+                    const index = Number(propKey);
+                    return target.item(index);
+                }
+                var p = Reflect.get(target, propKey);
+                return p
+            },
+            has: function (target, P) {
+                if (Number.isInteger(Number(P))) {
+                    const index = Number(P);
+                    // we don't want has() to use the length getter
+                    // so that we can avoid loading the entire list 
+                    if (index < 0) {
+                        return false;
+                    }
+                    target.update(index)
+                    return index < target.elements.length;
+                }
+                return Reflect.has(target, P)
+            },
+        });
+    }
+
     function _GetElementConstructor(tagName) {
         switch (tagName.toLowerCase()) {
             case "html":
@@ -159,18 +230,20 @@ if (!("window" in globalThis)) {
         compareDocumentPosition(otherNode) {
             return globalThis.Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC;
         }
-        childNodes = [];
         parentNode = null;
-        parentElement = null;
+        nextSibling = null;
+        previousSibling = null;
         appendChild(childNode) {
-            this.childNodes.push(childNode);
+            if (!this.firstChild) {
+                this.firstChild = childNode;
+                this.lastChild = childNode;
+            } else {
+                childNode.previousSibling = this.lastChild;
+                this.lastChild.nextSibling = childNode;
+                this.lastChild = childNode;
+            }
             if (childNode instanceof globalThis.Node) {
                 childNode.parentNode = this;
-                if (this instanceof globalThis.Element) {
-                    childNode.parentElement = this;
-                } else {
-                    childNode.parentElement = null;
-                }
             }
             return childNode;
         }
@@ -180,47 +253,51 @@ if (!("window" in globalThis)) {
             return result
         }
         removeChild(child) {
-            this.childNodes = this.childNodes.filter(node => node !== child);
+            if (child.previousSibling) {
+                child.previousSibling.nextSibling = child.nextSibling;
+            } else {
+                child.parentNode.firstChild = child.nextSibling;
+            }
+            if (child.nextSibling) {
+                child.nextSibling.previousSibling = child.previousSibiling;
+            } else {
+                child.parentNode.lastChild = child.previousSibling;
+            }
+            child.parentNode = null;
         }
         insertBefore(newNode, ref) {
-            let idx = this.childNodes.indexOf(ref);
-            if (newNode instanceof globalThis.Node) {
-                newNode.parentNode = this;
-                if (this instanceof globalThis.Element) {
-                    newNode.parentElement = this;
-                } else {
-                    newNode.parentElement = null;
-                }
+            if (!ref) {
+                this.appendChild(newNode)
+            } else {
+                console.assert(ref.parentNode == this);
+                var old_length = this.childNodes.length;
+                newNode.nextSibling = ref;
+                newNode.previousSibling = ref.previousSibling;
+                ref.previousSibling.nextSibling = newNode;
+                ref.previousSibling = newNode;
+                newNode.parentNode = ref.parentNode;
+                console.assert(this.childNodes.length = old_length + 1)
             }
-            this.childNodes.splice(idx, 0, newNode);
+            return newNode;
         }
-        get firstChild() {
-            const nodes = this.childNodes;
-            if (nodes.length === 0) {
-                return null;
+        get childNodes() {
+            let result = [];
+            let child = this.firstChild;
+            while (child) {
+                result.push(child)
+                child = child.nextSibling;
             }
-            return nodes[0];
-        }
-        get lastChild() {
-            const nodes = this.childNodes;
-            if (nodes.length === 0) {
-                return null;
-            }
-            return nodes[nodes.length - 1];
-        }
-        get nextSibling() {
-            const nodes = this.parentNode.childNodes;
-            const index = nodes.indexOf(this);
-            if (index < 0) {
-                return null;
-            }
-            if (index + 1 >= nodes.length) {
-                return null;
-            }
-            return nodes[index + 1];
+            return result;
         }
         get ownerDocument() {
             return globalThis.document;
+        }
+        get parentElement() {
+            if (this.parentNode instanceof globalThis.Element) {
+                return this.parentNode;
+            } else {
+                return null;
+            }
         }
     };
     globalThis.Element = class extends globalThis.Node {
@@ -343,6 +420,7 @@ if (!("window" in globalThis)) {
         }
 
         insertAdjacentHTML(position, html) {
+            console.log("iAH")
             var position = position.toLowerCase();
             console.assert(position == "beforeend")
             var el = document.createElement('div');
@@ -361,9 +439,12 @@ if (!("window" in globalThis)) {
             };
         }
         get children() {
+            console.log("children")
             return this.childNodes.filter(n => n instanceof globalThis.Element);
         }
         get firstElementChild() {
+            console.log("fec")
+
             const elements = this.children;
             if (elements.length === 0) {
                 return null;
@@ -371,6 +452,8 @@ if (!("window" in globalThis)) {
             return elements[0];
         }
         get lastElementChild() {
+            console.log("lec")
+
             const elements = this.children;
             if (elements.length === 0) {
                 return null;
@@ -382,22 +465,7 @@ if (!("window" in globalThis)) {
             return this.childNodes.filter(n => n.tagName === tagName);
         }
         getElementsByClassName(className) {
-            let results = []
-            for (let child of this.childNodes) {
-                if (!(child instanceof globalThis.Element)) {
-                    continue;
-                }
-                let classProp = child["class"];
-                let classList;
-                if (classProp) {
-                    classList = classProp.split(" ");
-                }
-                if (classList && classList.includes(className)) {
-                    results.push(child);
-                }
-                results = results.concat(child.getElementsByClassName(className));
-            }
-            return results;
+            return makeArrayLike(new HTMLCollection(document, this, (node) => node.class == className))
         }
         querySelector(sel) {
            if (sel == ".edit") {
@@ -535,7 +603,6 @@ if (!("window" in globalThis)) {
         body: new globalThis.HTMLBodyElement("body"),
         head: new globalThis.HTMLHeadElement("head"),
         documentElement: new globalThis.HTMLHtmlElement("html"),
-        childNodes: [],
         cookie: "",
         compatMode: "CSS1Compat",
         host: "example.com",
@@ -586,44 +653,7 @@ if (!("window" in globalThis)) {
             return []
         },
         getElementsByClassName(className) {
-            let results = []
-            for (let child of this.childNodes) {
-                if (!(child instanceof globalThis.Element)) {
-                    continue;
-                }
-                let classProp = child["class"];
-                let classList;
-                if (classProp) {
-                    classList = classProp.split(" ");
-                }
-                if (classList && classList.includes(className)) {
-                    results.push(child);
-                }
-                results = results.concat(child.getElementsByClassName(className));
-            }
-            return results;
-        },
-        getElementsByTagName(className) {
-            let results = []
-            for (let child of this.childNodes) {
-                results = results.concat(child.getElementsByTagName(className));
-            }
-            return results;
-        },
-        getElementById(id) {
-           function matchingId(node, id) {
-               for (let child of node.childNodes) {
-                   if (child["id"] == id) {
-                       return child;
-                   }
-                   var result = matchingId(child, id);
-                   if (result) {
-                       return result;
-                   }
-               }
-               return null;
-           }
-           return matchingId(this, id)
+            return makeArrayLike(new HTMLCollection(document, this, (node) => node.class == className))
         },
         createRange: () => new globalThis.Range,
         getSelection: () => new globalThis.Selection,
