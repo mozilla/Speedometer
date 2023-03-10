@@ -24,6 +24,7 @@ if (!("window" in globalThis)) {
 
     let lastTimeoutId = 0;
     globalThis.setTimeout = function (callback, delay) {
+        console.log("setTimeout")
         timeoutHandlers.push(callback);
         lastTimeoutId++;
         return lastTimeoutId;
@@ -463,9 +464,15 @@ if (!("window" in globalThis)) {
     globalThis.HTMLFrameSetElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLFrameElement = class extends globalThis.HTMLElement { };
     globalThis.CharacterData = class extends globalThis.Node { };
-    globalThis.Text = class extends globalThis.CharacterData { };
+    globalThis.Text = class extends globalThis.CharacterData { nodeName = "#text" };
 
     globalThis.Event = class {
+        constructor(type, options) {
+            this.type = type
+            this.options = options
+        }
+        preventDefault() {}
+
         initCustomEvent() { }
         initEvent() { }
     };
@@ -563,6 +570,8 @@ if (!("window" in globalThis)) {
                 return document.head.childNodes[0]
            } else if (sel == "body") {
                 return document.body
+           } else if (sel == ".todoapp") {
+                return document.getElementsByClassName("todoapp")[0]
            }
 
         },
