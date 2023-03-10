@@ -206,6 +206,8 @@ if (!("window" in globalThis)) {
             return globalThis.Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC;
         }
         parentNode = null;
+        nextSibling = null;
+        previousSibling = null;
         appendChild(childNode) {
             if (!this.firstChild) {
                 this.firstChild = childNode;
@@ -237,10 +239,13 @@ if (!("window" in globalThis)) {
                 this.appendChild(newNode)
             } else {
                 console.assert(ref.parentNode == this);
+                newNode.nextSibling = ref;
+                newNode.previousSibling = ref.previousSibling;
                 ref.previousSibling.nextSibling = newNode;
                 ref.previousSibling = newNode;
                 newNode.parentNode = ref.parentNode;
             }
+            return newNode;
         }
         get childNodes() {
             let result = [];
