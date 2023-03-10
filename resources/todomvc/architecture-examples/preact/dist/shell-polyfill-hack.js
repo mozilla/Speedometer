@@ -399,6 +399,12 @@ if (!("window" in globalThis)) {
             }
             return results;
         }
+        querySelector(sel) {
+           if (sel == ".edit") {
+                return this.getElementsByClassName("edit")[0]
+           }
+           print("querySelector", sel)
+        }
         getAttributeNode() {}
         get style() {
             let self = this;

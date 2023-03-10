@@ -39,7 +39,7 @@ function benchmark() {
         let checkboxes = document.getElementsByClassName("toggle");
         console.log(checkboxes.length)
         for (let i = 0; i < numberOfItemsToAdd; i++) {
-            checkboxes[i].dispatchEvent(new Event('click'));
+            checkboxes[i].dispatchEvent(new Event('change'));
         }
         drainJobQueue()
 
