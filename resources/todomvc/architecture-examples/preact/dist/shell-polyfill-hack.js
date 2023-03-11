@@ -259,7 +259,7 @@ if (!("window" in globalThis)) {
                 child.parentNode.firstChild = child.nextSibling;
             }
             if (child.nextSibling) {
-                child.nextSibling.previousSibling = child.previousSibiling;
+                child.nextSibling.previousSibling = child.previousSibling;
             } else {
                 child.parentNode.lastChild = child.previousSibling;
             }
@@ -273,7 +273,11 @@ if (!("window" in globalThis)) {
                 var old_length = this.childNodes.length;
                 newNode.nextSibling = ref;
                 newNode.previousSibling = ref.previousSibling;
-                ref.previousSibling.nextSibling = newNode;
+                if (ref.previousSibling) {
+                    ref.previousSibling.nextSibling = newNode;
+                } else {
+                    this.firstChild = newNode;
+                }
                 ref.previousSibling = newNode;
                 newNode.parentNode = ref.parentNode;
                 console.assert(this.childNodes.length = old_length + 1)
