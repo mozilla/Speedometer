@@ -36,7 +36,7 @@ function benchmark() {
     let end = performance.now();
     console.log("took: " + (end - start) + "ms");
     function toggleItems() {
-        let checkboxes = document.getElementsByClassName("toggle");
+        let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("toggle"));
         console.log(checkboxes.length)
         for (let i = 0; i < numberOfItemsToAdd; i++) {
             checkboxes[i].dispatchEvent(new Event('change'));
@@ -51,7 +51,7 @@ function benchmark() {
 
     start = performance.now();
     function removeItems() {
-        let deleteButtons = document.getElementsByClassName("destroy");
+        let deleteButtons = Array.prototype.slice.call(document.getElementsByClassName("destroy"));
         let start = performance.now();
         for (let i = 0; i < numberOfItemsToAdd; i++) {
             deleteButtons[i].dispatchEvent(new Event('click'));

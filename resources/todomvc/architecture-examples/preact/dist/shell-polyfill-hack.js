@@ -12,6 +12,7 @@ var timeoutHandlers = [];
 if (!("assert" in console)) {
     console["assert"] = function(value) {
         if (!value) {
+            console.log("assertion failed")
             throw value
         }
     }
@@ -234,6 +235,7 @@ if (!("window" in globalThis)) {
         nextSibling = null;
         previousSibling = null;
         appendChild(childNode) {
+            console.assert(!childNode.parentNode)
             if (!this.firstChild) {
                 this.firstChild = childNode;
                 this.lastChild = childNode;
