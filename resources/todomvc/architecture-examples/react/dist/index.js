@@ -7,7 +7,16 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>TodoMVC: React</title>
     */
-
+if ("drainMicrotasks" in globalThis) {
+    print("jsc")
+    // webkit
+    globalThis["drainJobQueue"] = drainMicrotasks
+} else if ("version" in globalThis) {
+    // v8
+    print("v8")
+    // run with --allow-natives-syntax
+    globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
+}
 
 load('shell-polyfill-hack.js')
 let section = document.createElement("section")
@@ -15,6 +24,25 @@ section.className = "todoapp"
 section.id = "root"
 document.body.appendChild(section)
 load('app.bundle.js')
+        drainJobQueue()
+    let newTodo = document.getElementsByClassName("new-todo")[0];
+    var ENTER_KEY = 13;
+    var numberOfItemsToAdd = 3;
+    let total = 0;
+    let start = performance.now();
+    function addingItems() {
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            newTodo.value = 'Something to do ' + i;
+            newTodo.dispatchEvent(new Event('input'))
+            var e = new Event('keydown')
+            e.keyCode = ENTER_KEY;
+            newTodo.dispatchEvent(e)
+        }
+        drainJobQueue()
+    }
+    addingItems()
+    let end = performance.now();
+    console.log("took: " + (end - start) + "ms");
 /*
     <script defer src="app.bundle.js"></script></head>
     <body>
