@@ -7,7 +7,13 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>TodoMVC: React</title>
     */
+
+
 load('shell-polyfill-hack.js')
+let section = document.createElement("section")
+section.className = "todoapp"
+section.id = "root"
+document.body.appendChild(section)
 load('app.bundle.js')
 /*
     <script defer src="app.bundle.js"></script></head>
