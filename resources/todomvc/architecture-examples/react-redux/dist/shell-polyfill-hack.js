@@ -656,6 +656,9 @@ if (!("window" in globalThis)) {
             print("querySelectorAll", sel)
             return []
         },
+        getElementById(id) {
+            return makeArrayLike(new HTMLCollection(document, this, (node) => node.id == id))[0]
+        },
         getElementsByClassName(className) {
             return makeArrayLike(new HTMLCollection(document, this, (node) => node.class == className))
         },
