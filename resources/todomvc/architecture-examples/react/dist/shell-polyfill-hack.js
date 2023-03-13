@@ -44,6 +44,17 @@ if (!("window" in globalThis)) {
     globalThis.XMLHttpRequest = function () { }
     globalThis.Worker = function () { };
     globalThis.history = { pushState() {}, popState() {}, replaceState() {} }
+    globalThis.uuid_seed = 0;
+    globalThis.crypto = {
+        randomUUID() {
+            function randomHex() {
+                uuid_seed = (1103515245 * uuid_seed + 12345) % 2147483647;
+                return uuid_seed.toString(16).padStart(8, '0');
+            }
+            let mid = randomHex()
+            return `${randomHex()}-${mid.slice(0, 4)}-${mid.slice(4,8)}-${randomHex().slice(0, 4)}-${randomHex()}`
+        }
+    }
 
     // A live lazily populated collection of nodes that have query(node) == true
     class HTMLCollection {
