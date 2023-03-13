@@ -18,8 +18,8 @@ Suites.enable = function (names) {
 };
 
 Suites.push({
-    name: "VanillaJS-TodoMVC",
-    url: "todomvc/vanilla-examples/vanillajs/index.html",
+    name: "TodoMVC-JavaScript-ES5",
+    url: "todomvc/vanilla-examples/javascript-es5/dist/index.html",
     async prepare(page) {
         (await page.waitForElement(".new-todo")).focus();
     },
@@ -46,8 +46,8 @@ Suites.push({
 });
 
 Suites.push({
-    name: "Vanilla-ES2015-TodoMVC",
-    url: "todomvc/vanilla-examples/es2015/index.html",
+    name: "TodoMVC-JavaScript-ES6",
+    url: "todomvc/vanilla-examples/javascript-es6/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -66,7 +66,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -75,8 +75,8 @@ Suites.push({
 });
 
 Suites.push({
-    name: "Vanilla-ES2015-Babel-Webpack-TodoMVC",
-    url: "todomvc/vanilla-examples/es2015-babel-webpack/dist/index.html",
+    name: "TodoMVC-JavaScript-ES6-Webpack",
+    url: "todomvc/vanilla-examples/javascript-es6-webpack/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -95,7 +95,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -152,7 +152,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -180,7 +180,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -239,7 +239,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -326,7 +326,7 @@ Suites.push({
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
         }),
-        new BenchmarkTestStep("DeletingItems", (page) => {
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 deleteButtons[i].click();
@@ -351,6 +351,46 @@ Suites.push({
         new BenchmarkTestStep("Attributes", (page) => {
             let summary = page.querySelectorAll(".sidebar-inner summary")[4];
             summary.click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "Editor-CodeMirror",
+    url: "tentative/editors/dist/codemirror.html",
+    async prepare(page) {},
+    tests: [
+        new BenchmarkTestStep("Create", (page) => {
+            page.querySelector("#create").click();
+            page.querySelector("#layout").click();
+        }),
+        new BenchmarkTestStep("Big", (page) => {
+            page.querySelector("#big").click();
+            page.querySelector("#layout").click();
+        }),
+        new BenchmarkTestStep("Highlight", (page) => {
+            page.querySelector("#highlight").click();
+            page.querySelector("#layout").click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "Editor-TipTap",
+    url: "tentative/editors/dist/tiptap.html",
+    async prepare(page) {},
+    tests: [
+        new BenchmarkTestStep("Create", (page) => {
+            page.querySelector("#create").click();
+            page.querySelector("#layout").click();
+        }),
+        new BenchmarkTestStep("Big", (page) => {
+            page.querySelector("#big").click();
+            page.querySelector("#layout").click();
+        }),
+        new BenchmarkTestStep("Highlight", (page) => {
+            page.querySelector("#highlight").click();
+            page.querySelector("#layout").click();
         }),
     ],
 });

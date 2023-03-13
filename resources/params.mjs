@@ -1,13 +1,11 @@
-const UNITS = ["ms", "score"];
-
 class Params {
     viewport = {
         width: 800,
         height: 600,
     };
+    developerMode = false;
     startAutomatically = false;
     iterationCount = 10;
-    unit = "ms";
     suites = [];
 
     constructor(searchParams = undefined) {
@@ -35,13 +33,6 @@ class Params {
                 throw new Error(`Invalid iterationCount param: ${this.iterationCount}`);
             searchParams.delete("iterationCount");
         }
-
-        if (searchParams.has("unit")) {
-            this.unit = searchParams.get("unit").toLowerCase();
-            if (!UNITS.includes(this.unit))
-                throw new Error(`Invalid unit=${this.unit}. Valid values are ${UNITS}`);
-            searchParams.delete("unit");
-        }
         if (searchParams.has("suite") || searchParams.has("suites")) {
             if (searchParams.has("suite") && searchParams.has("suites"))
                 throw new Error("Params 'suite' and 'suites' can not be used together.");
@@ -52,6 +43,8 @@ class Params {
             searchParams.delete("suite");
             searchParams.delete("suites");
         }
+        this.developerMode = searchParams.has("developerMode");
+        searchParams.delete("developerMode");
         const unused = Array.from(searchParams.keys());
         if (unused.length > 0)
             console.error("Got unused search params", unused);

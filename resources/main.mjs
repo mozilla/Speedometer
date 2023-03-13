@@ -2,26 +2,28 @@ import { BenchmarkRunner } from "./benchmark-runner.mjs";
 import "./benchmark-report.mjs";
 import * as Statistics from "./statistics.mjs";
 import { Suites } from "./tests.mjs";
+import { renderMetricView } from "./metric-ui.mjs";
 import { params } from "./params.mjs";
 
 // FIXME(camillobruni): Add base class
 class MainBenchmarkClient {
-    displayUnit = "score";
-    iterationCount = 10;
+    developerMode = false;
     stepCount = null;
     suitesCount = null;
     _measuredValuesList = [];
     _finishedTestCount = 0;
     _progressCompleted = null;
     _isRunning = false;
+    _hasResults = false;
 
     constructor() {
         window.addEventListener("DOMContentLoaded", () => this.prepareUI());
+        this._showSection(window.location.hash);
     }
 
     startBenchmark() {
-        this.displayUnit = params.unit;
-        this.iterationCount = params.iterationCount;
+        if (this._isRunning)
+            return false;
         if (params.suites.length > 0) {
             if (!Suites.enable(params.suites)) {
                 const message = `Suite "${params.suites}" does not exist. No tests to run.`;
@@ -35,20 +37,22 @@ class MainBenchmarkClient {
                 return false;
             }
         }
+        this._isRunning = true;
+        this.developerMode = params.developerMode;
 
         const enabledSuites = Suites.filter((suite) => !suite.disabled);
         const totalSubtestsCount = enabledSuites.reduce((testsCount, suite) => {
             return testsCount + suite.tests.length;
         }, 0);
-        this.stepCount = this.iterationCount * totalSubtestsCount;
+        this.stepCount = params.iterationCount * totalSubtestsCount;
         this.suitesCount = enabledSuites.length;
         const runner = new BenchmarkRunner(Suites, this);
-        runner.runMultipleIterations(this.iterationCount);
+        runner.runMultipleIterations(params.iterationCount);
         return true;
     }
 
     willAddTestFrame(frame) {
-        const main = document.querySelector("main");
+        const main = document.querySelector("#running");
         const style = getComputedStyle(main);
         frame.style.left = `${main.offsetLeft + parseInt(style.borderLeftWidth) + parseInt(style.paddingLeft)}px`;
         frame.style.top = `${main.offsetTop + parseInt(style.borderTopWidth) + parseInt(style.paddingTop)}px`;
@@ -69,29 +73,27 @@ class MainBenchmarkClient {
     }
 
     willStartFirstIteration() {
-        this._isRunning = true;
         this._measuredValuesList = [];
         this._finishedTestCount = 0;
         this._progressCompleted = document.getElementById("progress-completed");
     }
 
-    didFinishLastIteration() {
+    didFinishLastIteration(metrics) {
         console.assert(this._isRunning);
         this._isRunning = false;
-        const results = this._computeResults(this._measuredValuesList, this.displayUnit);
+        this._hasResults = true;
 
-        this._updateGaugeNeedle(results.mean);
-        document.getElementById("result-number").textContent = results.formattedMean;
-        if (results.formattedDelta)
-            document.getElementById("confidence-number").textContent = `\u00b1 ${results.formattedDelta}`;
+        const scoreResults = this._computeResults(this._measuredValuesList, "score");
+        this._updateGaugeNeedle(scoreResults.mean);
+        document.getElementById("result-number").textContent = scoreResults.formattedMean;
+        if (scoreResults.formattedDelta)
+            document.getElementById("confidence-number").textContent = `\u00b1 ${scoreResults.formattedDelta}`;
 
-        this._populateDetailedResults(results.formattedValues);
-        document.getElementById("results-with-statistics").textContent = results.formattedMeanAndDelta;
+        this._populateDetailedResults(metrics);
 
-        if (this.displayUnit === "ms") {
-            document.getElementById("show-summary").style.display = "none";
+        if (this.developerMode)
             this.showResultsDetails();
-        } else
+        else
             this.showResultsSummary();
     }
 
@@ -155,22 +157,43 @@ class MainBenchmarkClient {
         const needleAngle = Math.max(0, Math.min(score, 140)) - 70;
         const needleRotationValue = `rotate(${needleAngle}deg)`;
 
-        const gaugeNeedleElement = document.querySelector("#summarized-results > .gauge .needle");
+        const gaugeNeedleElement = document.querySelector("#summary > .gauge .needle");
         gaugeNeedleElement.style.setProperty("-webkit-transform", needleRotationValue);
         gaugeNeedleElement.style.setProperty("-moz-transform", needleRotationValue);
         gaugeNeedleElement.style.setProperty("-ms-transform", needleRotationValue);
         gaugeNeedleElement.style.setProperty("transform", needleRotationValue);
     }
 
-    _populateDetailedResults(formattedValues) {
-        const resultsTables = document.querySelectorAll(".results-table");
-        let i = 0;
-        resultsTables[0].innerHTML = "";
-        for (; i < Math.ceil(formattedValues.length / 2); i++)
-            this._addDetailedResultsRow(resultsTables[0], i, formattedValues[i]);
-        resultsTables[1].innerHTML = "";
-        for (; i < formattedValues.length; i++)
-            this._addDetailedResultsRow(resultsTables[1], i, formattedValues[i]);
+    _populateDetailedResults(metrics) {
+        const trackHeight = 24;
+        document.documentElement.style.setProperty("--metrics-line-height", `${trackHeight}px`);
+        const plotWidth = (params.viewport.width - 120) / 2;
+        document.getElementById("total-chart").innerHTML = renderMetricView({
+            metrics: [metrics["Total"]],
+            width: plotWidth,
+            trackHeight,
+            renderChildren: false,
+            colors: ["white"],
+        });
+
+        const toplevelMetrics = Object.values(metrics).filter((each) => !each.parent && each.children.length > 0);
+        document.getElementById("tests-chart").innerHTML = renderMetricView({
+            metrics: toplevelMetrics,
+            width: plotWidth,
+            trackHeight,
+            renderChildren: false,
+        });
+
+        let html = "";
+        for (const metric of toplevelMetrics) {
+            html += renderMetricView({
+                metrics: metric.children,
+                width: plotWidth,
+                trackHeight,
+                title: metric.name,
+            });
+        }
+        document.getElementById("metrics-results").innerHTML = html;
 
         const jsonData = JSON.stringify(this._measuredValuesList);
         const blob = new Blob([jsonData], { type: "application/json" });
@@ -181,17 +204,14 @@ class MainBenchmarkClient {
     }
 
     prepareUI() {
-        window.addEventListener("popstate", this._popStateHandler.bind(this), false);
+        window.addEventListener("hashchange", this._hashChangeHandler.bind(this));
         window.addEventListener("resize", this._resizeScreeHandler.bind(this));
         this._resizeScreeHandler();
 
-        document.getElementById("logo").onclick = this._logoClickHandler.bind(this);
-        document.getElementById("show-summary").onclick = this.showResultsSummary.bind(this);
-        document.getElementById("show-details").onclick = this.showResultsDetails.bind(this);
-        document.getElementById("copy-json").onclick = this.copyJsonResults.bind(this);
-        document.querySelectorAll(".show-about").forEach((each) => {
-            each.onclick = this.showAbout.bind(this);
+        document.querySelectorAll("logo").forEach((button) => {
+            button.onclick = this._logoClickHandler.bind(this);
         });
+        document.getElementById("copy-json").onclick = this.copyJsonResults.bind(this);
         document.querySelectorAll(".start-tests-button").forEach((button) => {
             button.onclick = this._startBenchmarkHandler.bind(this);
         });
@@ -200,18 +220,8 @@ class MainBenchmarkClient {
             this._startBenchmarkHandler();
     }
 
-    _popStateHandler(event) {
-        if (event.state) {
-            const sectionToShow = event.state.section;
-            if (sectionToShow) {
-                const sections = document.querySelectorAll("main > section");
-                for (let i = 0; i < sections.length; i++) {
-                    if (sections[i].id === sectionToShow)
-                        return this._showSection(sectionToShow, false);
-                }
-            }
-        }
-        return this._showSection("home", false);
+    _hashChangeHandler() {
+        this._showSection(window.location.hash);
     }
 
     _resizeScreeHandler() {
@@ -226,27 +236,23 @@ class MainBenchmarkClient {
 
     _startBenchmarkHandler() {
         if (this.startBenchmark())
-            this._showSection("running");
+            this._showSection("#running");
     }
 
     _logoClickHandler(event) {
         // Prevent any accidental UI changes during benchmark runs.
         if (!this._isRunning)
-            this._showSection("home", true);
+            this._showSection("#home");
         event.preventDefault();
         return false;
     }
 
     showResultsSummary() {
-        this._showSection("summarized-results", true);
+        this._showSection("#summary");
     }
 
     showResultsDetails() {
-        this._showSection("detailed-results", true);
-    }
-
-    showAbout() {
-        this._showSection("about", true);
+        this._showSection("#details");
     }
 
     _getFormattedJSONResult() {
@@ -262,18 +268,22 @@ class MainBenchmarkClient {
         navigator.clipboard.writeText(this._getFormattedJSONResult());
     }
 
-    _showSection(sectionIdentifier, pushState) {
-        const currentSectionElement = document.querySelector("section.selected");
-        console.assert(currentSectionElement);
-
-        const newSectionElement = document.getElementById(sectionIdentifier);
-        console.assert(newSectionElement);
-
-        currentSectionElement.classList.remove("selected");
-        newSectionElement.classList.add("selected");
-
-        if (pushState)
-            history.pushState({ section: sectionIdentifier }, document.title);
+    _showSection(hash) {
+        if (this._isRunning) {
+            window.location.hash = "#running";
+            return;
+        } else if (this._hasResults) {
+            if (hash !== "#summary" && hash !== "#details") {
+                window.location.hash = "#summary";
+                return;
+            }
+        } else {
+            if (hash !== "#home" && hash !== "#about") {
+                window.location.hash = "#home";
+                return;
+            }
+        }
+        window.location.hash = hash || "#home";
     }
 }
 
