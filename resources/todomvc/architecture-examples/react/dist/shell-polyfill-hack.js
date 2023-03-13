@@ -191,7 +191,9 @@ if (!("window" in globalThis)) {
                         current_target.onclick.call(current_target, event)
                         break; 
                     } else if (event_listeners && event.type in event_listeners) {
-                        event_listeners[event.type].call(current_target, event);
+                        for (const listener of event_listeners[event.type]) {
+                            listener.call(current_target, event);
+                        }
                         break;
                     } else {
                         current_target = current_target.parentNode;
@@ -211,10 +213,11 @@ if (!("window" in globalThis)) {
                 if (!this.event_listeners) {
                     this.event_listeners = {};
                 }
-                /*if (type in this.event_listeners) {
-                    throw 'already have listener', type
-                }*/
-                this.event_listeners[type] = listener;
+                if (type in this.event_listeners) {
+                    this.event_listeners[type].push(listener);
+                } else {
+                    this.event_listeners[type] = [listener];
+                }
             }
         }
         removeEventListener(type, listener) {
@@ -600,7 +603,11 @@ if (!("window" in globalThis)) {
         hash: "",
         get href() {
            return "http://" + this.host + this.pathname + this.hash
+        },
+        get origin() {
+           return "http://" + this.host
         }
+
     };
 
     globalThis.Document = class extends globalThis.Node {};
