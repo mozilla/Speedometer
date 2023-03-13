@@ -43,6 +43,7 @@ if (!("window" in globalThis)) {
 
     globalThis.XMLHttpRequest = function () { }
     globalThis.Worker = function () { };
+    globalThis.history = { pushState() {}, popState() {}, replaceState() {} }
 
     // A live lazily populated collection of nodes that have query(node) == true
     class HTMLCollection {
@@ -210,9 +211,9 @@ if (!("window" in globalThis)) {
                 if (!this.event_listeners) {
                     this.event_listeners = {};
                 }
-                if (type in this.event_listeners) {
-                    throw 'already have listener'
-                }
+                /*if (type in this.event_listeners) {
+                    throw 'already have listener', type
+                }*/
                 this.event_listeners[type] = listener;
             }
         }
@@ -669,7 +670,8 @@ if (!("window" in globalThis)) {
         getSelection: () => new globalThis.Selection,
         activeElement: null,
         location: globalThis.location,
-        oninput: null
+        oninput: null,
+        defaultView: window
     };
 
     globalThis.document.getElementsByClassName.toString = () => "getElementsByClassName() { [native code ] }"
