@@ -272,7 +272,6 @@ if (!("window" in globalThis)) {
                 this.appendChild(newNode)
             } else {
                 console.assert(ref.parentNode == this);
-                var old_length = this.childNodes.length;
                 newNode.nextSibling = ref;
                 newNode.previousSibling = ref.previousSibling;
                 if (ref.previousSibling) {
@@ -282,7 +281,6 @@ if (!("window" in globalThis)) {
                 }
                 ref.previousSibling = newNode;
                 newNode.parentNode = ref.parentNode;
-                console.assert(this.childNodes.length = old_length + 1)
             }
             return newNode;
         }
