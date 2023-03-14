@@ -100,11 +100,13 @@
         }
         
         console.log("done init")
+function benchmark() {
         let newTodo = document.getElementsByClassName("new-todo")[0];
         var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 200;
+        var numberOfItemsToAdd = 100;
         let total = 0;
         let start = performance.now();
+        function addingItems() {
         for (let i = 0; i < numberOfItemsToAdd; i++) {
                 newTodo.value = 'Something to do ' + i;
                 newTodo.dispatchEvent({ type: 'input' })
@@ -118,20 +120,23 @@
         let end = performance.now();
         console.log("took: " + (end - start) + "ms");
         total += end - start;
+        }
+        addingItems()
         start = performance.now();
-        {
+        function completingItems() {
                 let checkboxes = document.getElementsByClassName("toggle");
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         checkboxes[i].dispatchEvent({ type: 'click' });
                 }
 
         }
+        completingItems()
         end = performance.now();
         console.log("clicking took: " + (end - start) + "ms");
         total += end - start;
 
         start = performance.now();
-        {
+        function deletingItems() {
                 let deleteButtons = document.getElementsByClassName("destroy");
                 let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
@@ -139,11 +144,13 @@
                 }
 
         }
+        deletingItems()
         end = performance.now();
         console.log("delete took: " + (end - start) + "ms");
         total += end - start;
         console.log(`total: ${total}`)
-
+}
+benchmark()
 /*
         <script>
         </script>
