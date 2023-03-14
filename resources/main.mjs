@@ -4,6 +4,11 @@ import * as Statistics from "./statistics.mjs";
 import { Suites } from "./tests.mjs";
 import { renderMetricView } from "./metric-ui.mjs";
 import { params } from "./params.mjs";
+import { createUIForSuites, createDeveloperModeContainer } from "./developer-mode.mjs";
+
+let developerMode = createDeveloperModeContainer();
+developerMode.querySelector(".developer-mode-content").append(createUIForSuites(Suites, () => {}, () => {}));
+document.body.append(developerMode);
 
 // FIXME(camillobruni): Add base class
 class MainBenchmarkClient {
