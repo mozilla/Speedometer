@@ -188,18 +188,7 @@ if (!("window" in globalThis)) {
                 let current_target = this;
                 while (current_target) {
                     let event_listeners = current_target.event_listeners;
-                    if (event.type == "keydown" && current_target.onkeydown) {
-                        current_target.onkeydown.call(current_target, event)
-                        break;
-                    } else if (event.type == "click" && current_target.tagName == "INPUT" && current_target.type == "checkbox") {
-                        if (current_target.onchange) {
-                            current_target.onchange.call(current_target, event)
-                        }
-                        break;
-                    } else if (event.type == "click" && current_target.onclick) {
-                        current_target.onclick.call(current_target, event)
-                        break; 
-                    } else if (event_listeners && event.type in event_listeners) {
+                    if (event_listeners && event.type in event_listeners) {
                         for (const listener of event_listeners[event.type]) {
                             listener.call(current_target, event);
                         }
