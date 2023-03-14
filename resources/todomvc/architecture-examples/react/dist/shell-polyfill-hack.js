@@ -35,8 +35,6 @@ if (!("window" in globalThis)) {
     globalThis.clearTimeout = () => null;
     globalThis.dispatchEvent = () => null;
     globalThis.addEventListener = (type, f) => {
-    //backtrace();
-        print("addEventListener: " + type);
         eventListeners[type] = f
     }
     globalThis.removeEventListener = () => null;

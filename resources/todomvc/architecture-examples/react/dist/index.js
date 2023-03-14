@@ -24,10 +24,11 @@ section.className = "todoapp"
 section.id = "root"
 document.body.appendChild(section)
 load('app.bundle.js')
-        drainJobQueue()
+drainJobQueue()
+function benchmark() {
     let newTodo = document.getElementsByClassName("new-todo")[0];
     var ENTER_KEY = 13;
-    var numberOfItemsToAdd = 3;
+    var numberOfItemsToAdd = 100;
     let total = 0;
     let start = performance.now();
     function addingItems() {
@@ -43,6 +44,38 @@ load('app.bundle.js')
     addingItems()
     let end = performance.now();
     console.log("took: " + (end - start) + "ms");
+    start = performance.now()
+    function toggleItems() {
+        let checkboxes = document.getElementsByClassName("toggle");
+        console.log(checkboxes.length)
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            checkboxes[i].dispatchEvent(new Event('click'));
+        }
+        drainJobQueue()
+
+    }
+    toggleItems()
+    end = performance.now();
+    console.log("clicking took: " + (end - start) + "ms");
+    total += end - start;
+
+    start = performance.now();
+    function removeItems() {
+        let deleteButtons = document.getElementsByClassName("destroy");
+        let start = performance.now();
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            deleteButtons[i].dispatchEvent(new Event('click'));
+        }
+        drainJobQueue()
+    }
+    removeItems()
+    end = performance.now();
+    console.log("delete took: " + (end - start) + "ms");
+    total += end - start;
+    console.log(`total: ${total}`)
+}
+benchmark()
+
 /*
     <script defer src="app.bundle.js"></script></head>
     <body>
