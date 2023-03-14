@@ -108,7 +108,7 @@
         for (let i = 0; i < numberOfItemsToAdd; i++) {
                 newTodo.value = 'Something to do ' + i;
                 newTodo.dispatchEvent({ type: 'input' })
-                newTodo.dispatchEvent({ type: 'keypress', keyCode: ENTER_KEY})
+                newTodo.dispatchEvent({ type: 'keypress', keyCode: ENTER_KEY, which: ENTER_KEY})
         }
         
         while (timeoutHandlers.length > 0) {
