@@ -474,6 +474,12 @@ if (!("window" in globalThis)) {
         host: "example.com",
         readyState: "complete",
         nodeType: globalThis.Node.DOCUMENT_NODE,
+        implementation: {
+            createHTMLDocument() {
+                // this is very wrong
+                return globalThis.document
+            }
+        },
         createEvent: () => new globalThis.Event,
         createTextNode: (data) => {
             let node = new globalThis.Text;
