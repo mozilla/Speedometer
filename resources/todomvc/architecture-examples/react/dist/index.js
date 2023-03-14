@@ -43,6 +43,7 @@ function benchmark() {
     }
     addingItems()
     let end = performance.now();
+    total = end - start;
     console.log("took: " + (end - start) + "ms");
     start = performance.now()
     function toggleItems() {
