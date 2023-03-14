@@ -102,7 +102,7 @@
         console.log("done init")
         let newTodo = document.getElementsByClassName("new-todo")[0];
         var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 200;
+        var numberOfItemsToAdd = 2;
         let total = 0;
         let start = performance.now();
         for (let i = 0; i < numberOfItemsToAdd; i++) {
@@ -117,7 +117,7 @@
         }
         let end = performance.now();
         console.log("took: " + (end - start) + "ms");
-        total += end - start;
+        /*total += end - start;
         start = performance.now();
         {
                 let checkboxes = document.getElementsByClassName("toggle");
@@ -143,7 +143,7 @@
         console.log("delete took: " + (end - start) + "ms");
         total += end - start;
         console.log(`total: ${total}`)
-
+*/
 /*
         <script>
         </script>
