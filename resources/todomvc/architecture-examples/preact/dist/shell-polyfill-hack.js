@@ -43,6 +43,7 @@ if (!("window" in globalThis)) {
 
     globalThis.XMLHttpRequest = function () { }
     globalThis.Worker = function () { };
+    globalThis.history = { pushState() {}, popState() {}, replaceState() {} }
 
     // A live lazily populated collection of nodes that have query(node) == true
     class HTMLCollection {
