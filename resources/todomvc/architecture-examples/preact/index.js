@@ -14,7 +14,7 @@ var section = document.createElement("section")
 section.id = "root"
 section.className = "todoapp"
 document.body.appendChild(section)
-load('app.bundle.js')
+load('dist/app.bundle.js')
 drainJobQueue()
 
 function benchmark() {
