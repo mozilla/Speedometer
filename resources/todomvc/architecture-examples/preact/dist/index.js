@@ -11,6 +11,7 @@ if ("drainMicrotasks" in globalThis) {
     globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
 }
 var section = document.createElement("section")
+section.id = "root"
 section.className = "todoapp"
 document.body.appendChild(section)
 load('app.bundle.js')
@@ -28,6 +29,7 @@ function benchmark() {
             newTodo.dispatchEvent(new Event('input'))
             var e = new Event('keydown')
             e.keyCode = ENTER_KEY;
+            e.key = "enter"
             newTodo.dispatchEvent(e)
         }
         drainJobQueue()
