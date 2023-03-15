@@ -664,7 +664,8 @@ if (!("window" in globalThis)) {
         getSelection: () => new globalThis.Selection,
         activeElement: null,
         location: globalThis.location,
-        oninput: null
+        oninput: null,
+        defaultView: window
     };
 
     globalThis.document.getElementsByClassName.toString = () => "getElementsByClassName() { [native code ] }"
