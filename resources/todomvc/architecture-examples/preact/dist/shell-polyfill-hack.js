@@ -650,12 +650,17 @@ if (!("window" in globalThis)) {
                 return document.body
            } else if (sel == ".todoapp") {
                 return document.getElementsByClassName("todoapp")[0]
+           } else if (sel == "head") {
+                return document.head
            }
 
         },
         querySelectorAll(sel) {
             print("querySelectorAll", sel)
             return []
+        },
+        getElementById(id) {
+            return makeArrayLike(new HTMLCollection(document, this, (node) => node.id == id))[0]
         },
         getElementsByClassName(className) {
             return makeArrayLike(new HTMLCollection(document, this, (node) => node.class == className))
