@@ -8,6 +8,15 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 });
 
 var timeoutHandlers = [];
+if (!globalThis.console) {
+    globalThis.console = { log: (msg) => print(msg) }
+}
+globalThis.console.error = globalThis.console.log;
+globalThis.console.warn = globalThis.console.log;
+// For JSC
+if (!globalThis.performance) {
+    globalThis.performance = { now: () => preciseTime()*1000 }
+}
 
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
@@ -534,14 +543,5 @@ if (!("window" in globalThis)) {
 
     globalThis.document.appendChild(globalThis.document.documentElement);
     globalThis.document.documentElement.appendChild(globalThis.document.body);
-    if (!globalThis.console) {
-	globalThis.console = { log: (msg) => print(msg) }
-    }
-    globalThis.console.error = globalThis.console.log;
-    globalThis.console.warn = globalThis.console.log;
-    // For JSC
-    if (!globalThis.performance) {
-	globalThis.performance = { now: () => preciseTime()*1000 }
-    }
     globalThis.onhashchange = null
 } // !("window" in globalThis)
