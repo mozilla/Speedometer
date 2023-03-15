@@ -534,6 +534,7 @@ if (!("window" in globalThis)) {
     globalThis.HTMLScriptElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLInputElement = class extends globalThis.HTMLElement {
         type = "text"
+        setSelectionRange() {}
     };
     globalThis.HTMLButtonElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLImageElement = class extends globalThis.HTMLElement { };
