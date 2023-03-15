@@ -1,0 +1,37 @@
+To get unminified preact:
+
+- Checkout preact 10.13.1
+- Apply the following patch:
+```
+diff --git a/package.json b/package.json
+index 7c4715c3..9f1c5cb2 100644
+--- a/package.json
++++ b/package.json
+@@ -96,21 +96,21 @@
+        },
+        "license": "MIT",
+        "funding": {
+                "type": "opencollective",
+                "url": "https://opencollective.com/preact"
+        },
+        "types": "src/index.d.ts",
+        "scripts": {
+                "prepare": "run-s build && check-export-map",
+                "build": "npm-run-all --parallel build:*",
+-               "build:core": "microbundle build --raw --no-generateTypes -f cjs,esm,umd",
++               "build:core": "microbundle build --no-compress --raw --no-generateTypes -f cjs,esm,umd",
+                "build:core-min": "microbundle build --raw --no-generateTypes -f cjs,esm,umd,iife src/cjs.js -o dist/preact.min.js",
+                "build:debug": "microbundle build --raw --no-generateTypes -f cjs,esm,umd --cwd debug",
+                "build:devtools": "microbundle build --raw --no-generateTypes -f cjs,esm,umd --cwd devtools",
+                "build:hooks": "microbundle build --raw --no-generateTypes -f cjs,esm,umd --cwd hooks",
+                "build:test-utils": "microbundle build --raw --no-generateTypes -f cjs,esm,umd --cwd test-utils",
+                "build:compat": "microbundle build src/index.js src/scheduler.js --raw --no-generateTypes -f cjs,esm,umd --cwd compat --globals 'preact/hooks=preactHooks'",
+                "build:jsx": "microbundle build --raw --no-generateTypes -f cjs,esm,umd --cwd jsx-runtime",
+                "postbuild": "node ./config/node-13-exports.js && node ./config/compat-entries.js",
+                "dev": "microbundle watch --raw --no-generateTypes --format cjs",
+                "dev:hooks": "microbundle watch --raw --no-generateTypes --format cjs --cwd hooks",
+```
+- npm install
+- npm run build
+- cp dist/preact.module.js dist/preact.modules.js.map into the node_modules/preact/dist/ directory
+
