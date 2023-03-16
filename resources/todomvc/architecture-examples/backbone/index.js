@@ -82,6 +82,7 @@
         document.body.appendChild(statsTemplate)
 
 
+        var start = performance.now();
         load("dist/jquery.js")
         load("dist/underscore.js")
         load("dist/backbone.js")
@@ -98,8 +99,9 @@
                 let handler = timeoutHandlers.shift();
                 handler();
         }
+        var end = performance.now()
         
-        console.log("done init")
+        console.log("done init " + (end - start) + "ms")
 function benchmark() {
         let newTodo = document.getElementsByClassName("new-todo")[0];
         var ENTER_KEY = 13;
