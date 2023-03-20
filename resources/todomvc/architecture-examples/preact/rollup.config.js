@@ -47,6 +47,5 @@ export default {
         copy({
             targets: [{ src: "public/index.html", dest: "dist/" }],
         }),
-        production && terser(),
     ],
 };
