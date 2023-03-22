@@ -2,10 +2,11 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   publicPath: "",
-  terser: {
+  chainWebpack: config => config.optimization.minimize(false)
+  /*terser: {
     minify: "terser",
     terserOptions: {
-        compress: true
+        compress: false
     },
-  },
+  },*/
 })
