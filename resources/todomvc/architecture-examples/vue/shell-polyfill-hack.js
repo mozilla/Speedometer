@@ -640,18 +640,12 @@ if (!("window" in globalThis)) {
            return new Node;
         },
         querySelector(sel) {
-           print("querySelector", sel)
-           if (sel == "app-root") {
-                return document.body.childNodes[0]
+           if (sel == "base") {
+                return document.getElementsByClassName("base")[0]
+           } else if (sel == "#app") {
+                return document.getElementById("app")[0]
            }
-           else if (sel == "meta[name=\"todomvc/config/environment\"]") {
-                return document.head.childNodes[0]
-           } else if (sel == "body") {
-                return document.body
-           } else if (sel == ".todoapp") {
-                return document.getElementsByClassName("todoapp")[0]
-           }
-
+           print("document.querySelector", sel)
         },
         querySelectorAll(sel) {
             print("querySelectorAll", sel)
