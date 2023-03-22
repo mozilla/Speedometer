@@ -1,0 +1,86 @@
+/*<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>vue-cli-todomvc</title>
+    <link href=./static/css/app.5b47040a23ec3fcb78037de398c53557.css rel=stylesheet>
+</head>
+
+<body>
+    <div id=app></div>*/
+    load('shell-polyfill-hack.js')
+if ("drainMicrotasks" in globalThis) {
+    print("jsc")
+    // webkit
+    globalThis["drainJobQueue"] = drainMicrotasks
+} else if ("version" in globalThis) {
+    // v8
+    print("v8")
+    // run with --allow-natives-syntax
+    globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
+}
+    let div = document.createElement("div")
+    div.id = "app"
+    document.body.appendChild(div)
+    
+    load('dist/static/js/manifest.aa9978aa96ee948f2a4c.js')
+    load('dist/static/js/vendor.e7008001a8bed009bbf1.js')
+    load('dist/static/js/app.e6c010d57d53537f4ad2.js')
+    drainJobQueue()
+    
+
+    function benchmark() {
+    let newTodo = document.getElementsByClassName("new-todo")[0];
+    var ENTER_KEY = 13;
+    var numberOfItemsToAdd = 100;
+    let total = 0;
+    let start = performance.now();
+    function addingItems() {
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            newTodo.value = 'Something to do ' + i;
+            newTodo.dispatchEvent(new Event('input'))
+            var e = new Event('keyup')
+            e.keyCode = ENTER_KEY;
+            e.key = "Enter"
+            newTodo.dispatchEvent(e)
+        }
+        drainJobQueue()
+    }
+    addingItems()
+    let end = performance.now();
+    console.log("took: " + (end - start) + "ms");
+    function toggleItems() {
+        let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("toggle"));
+        console.log(checkboxes.length)
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            checkboxes[i].dispatchEvent(new Event('change'));
+        }
+        drainJobQueue()
+
+    }
+    toggleItems()
+    end = performance.now();
+    console.log("clicking took: " + (end - start) + "ms");
+    total += end - start;
+
+    start = performance.now();
+    function removeItems() {
+        let deleteButtons = Array.prototype.slice.call(document.getElementsByClassName("destroy"));
+        let start = performance.now();
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            deleteButtons[i].dispatchEvent(new Event('click'));
+        }
+        drainJobQueue()
+    }
+    removeItems()
+    end = performance.now();
+    console.log("delete took: " + (end - start) + "ms");
+    total += end - start;
+    console.log(`total: ${total}`)
+}
+benchmark()
+    /*
+</body>
+
+</html>*/
