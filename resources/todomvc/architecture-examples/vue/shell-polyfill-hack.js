@@ -328,7 +328,9 @@ if (!("window" in globalThis)) {
         setAttribute(key, val) { this[key] = val; }
         removeAttribute(key) { delete this[key] }
 
-        get innerHTML() { return this._innerHTML }
+        get innerHTML() { return this._innerHTML ||
+            `<${this.tagName}>\n${this.childNodes?.map(n => (" " + (n.innerHTML || "#text")).replaceAll("\n", "\n ")).join("\n")}\n</${this.tagName}>`
+        }
         get attributes() { return [] }
 
         // TODO this doesn't handle '/' in attribute values and probably should switch
@@ -504,6 +506,7 @@ if (!("window" in globalThis)) {
         contentEditable = false;
         focus() { }
     };
+    globalThis.SVGElement = class extends globalThis.Element { };
     globalThis.HTMLHtmlElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLAnchorElement = class extends globalThis.HTMLElement {
         get protocol() {
@@ -640,12 +643,12 @@ if (!("window" in globalThis)) {
            return new Node;
         },
         querySelector(sel) {
+           print("document.querySelector", sel)
            if (sel == "base") {
                 return document.getElementsByClassName("base")[0]
            } else if (sel == "#app") {
-                return document.getElementById("app")[0]
+                return document.getElementById("app")
            }
-           print("document.querySelector", sel)
         },
         querySelectorAll(sel) {
             print("querySelectorAll", sel)
