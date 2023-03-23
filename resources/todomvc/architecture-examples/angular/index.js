@@ -44,7 +44,7 @@ print("dod", newTodo)
 let inShell = false;
 
 var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 200;
+        var numberOfItemsToAdd = 100;
         let total = 0;
         let start = performance.now();
         for (let i = 0; i < numberOfItemsToAdd; i++) {
