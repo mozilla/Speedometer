@@ -31,59 +31,64 @@ load("polyfills.3a2aed82a0c9b24e6585.bundle.js")
 load("vendor.9a296bbc1909830a9106.bundle.js")
 load("main.f1c5d33a6950c335064d.bundle.js")
 */
-load('inline.0f18e6cb9ba1cee8817e.bundle.js')
-load("polyfills.e3fb9e3c796983e0b832.bundle.js")
-load("vendor.644bf307cfffc4bce1e4.bundle.js")
-load("main.731ae27d727ec7ad13c4.bundle.js")
+load('dist/inline.0f18e6cb9ba1cee8817e.bundle.js')
+load("dist/polyfills.e3fb9e3c796983e0b832.bundle.js")
+load("dist/vendor.644bf307cfffc4bce1e4.bundle.js")
+load("dist/main.731ae27d727ec7ad13c4.bundle.js")
 
 
 drainJobQueue()        
-let newTodo = document.getElementsByClassName("new-todo")[0];
 
-print("dod", newTodo)
 let inShell = false;
-
-var ENTER_KEY = 13;
-        var numberOfItemsToAdd = 100;
-        let total = 0;
-        let start = performance.now();
+function benchmark() {
+    let newTodo = document.getElementsByClassName("new-todo")[0];
+    var ENTER_KEY = 13;
+    var numberOfItemsToAdd = 100;
+    let total = 0;
+    let start = performance.now();
+    function addingItems() {
         for (let i = 0; i < numberOfItemsToAdd; i++) {
-                newTodo.value = 'Something to do ' + i;
-                newTodo.dispatchEvent({ type: 'input' })
-                newTodo.dispatchEvent({ type: 'keyup', keyCode: ENTER_KEY, key: 'Enter'})
+            newTodo.value = 'Something to do ' + i;
+            newTodo.dispatchEvent({ type: 'input' })
+            newTodo.dispatchEvent({ type: 'keyup', keyCode: ENTER_KEY, key: 'Enter'})
         }
         drainJobQueue()
 
-                while (timeoutHandlers.length > 0) {
-                let handler = timeoutHandlers.shift();
-                handler();
+
+        while (timeoutHandlers.length > 0) {
+        let handler = timeoutHandlers.shift();
+        handler();
         }
-        let end = performance.now();
-        console.log("took: " + (end - start) + "ms");
-        total += end - start;
-
-        start = performance.now();
-        {
-                let checkboxes = document.getElementsByClassName("toggle");
-                for (let i = 0; i < numberOfItemsToAdd; i++) {
-                        checkboxes[i].dispatchEvent({ type: 'click' });
-                }
-
+    }
+    addingItems()
+    let end = performance.now();
+    total = end - start;
+    console.log("took: " + (end - start) + "ms");
+    start = performance.now()
+    function toggleItems() {
+        let checkboxes = document.getElementsByClassName("toggle");
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            checkboxes[i].dispatchEvent({ type: 'click' });
         }
-        end = performance.now();
-        console.log("clicking took: " + (end - start) + "ms");
-        total += end - start;
+    }
+    toggleItems()
+    end = performance.now();
+    console.log("clicking took: " + (end - start) + "ms");
+    total += end - start;
 
-        start = performance.now();
-        {
-                let deleteButtons = document.getElementsByClassName("destroy");
-                let start = performance.now();
-                for (let i = 0; i < numberOfItemsToAdd; i++) {
-                        deleteButtons[i].dispatchEvent({ type: 'click' });
-                }
-
+    start = performance.now();
+    function removeItems() {
+        let deleteButtons = document.getElementsByClassName("destroy");
+        let start = performance.now();
+        for (let i = 0; i < numberOfItemsToAdd; i++) {
+            deleteButtons[i].dispatchEvent({ type: 'click' });
         }
-        end = performance.now();
-        console.log("delete took: " + (end - start) + "ms");
-        total += end - start;
-        console.log(`total: ${total}`)
+
+    }
+    removeItems()
+    end = performance.now();
+    console.log("delete took: " + (end - start) + "ms");
+    total += end - start;
+    console.log(`total: ${total}`)
+}
+benchmark()
