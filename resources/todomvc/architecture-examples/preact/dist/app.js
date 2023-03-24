@@ -1262,7 +1262,6 @@
     let uuid = "";
     for (let i = 0; i < 32; i++) {
       let random = Math.random() * 16 | 0;
-      // prettier-ignore
       if (i === 8 || i === 12 || i === 16 || i === 20) uuid += "-";
       uuid += (i === 12 ? 4 : i === 16 ? random & 3 | 8 : random).toString(16);
     }
@@ -1325,7 +1324,6 @@
     };
   }
 
-  // eslint-disable-next-line no-unused-vars
   function TodoHeader(_ref) {
     let {
       onKeyDown
@@ -1428,7 +1426,6 @@
       }
     }
     function handleKeyDown(e) {
-      // prettier-ignore
       if (e.key === "Escape") setEditing(false);else if (e.key === "Enter") handleSubmit(e);
     }
     function handleDoubleClick() {
@@ -1479,7 +1476,6 @@
     completed: todo => todo.completed
   };
 
-  // eslint-disable-next-line no-unused-vars
   function TodoMain(_ref) {
     let {
       onChange,
@@ -1549,11 +1545,8 @@
     }, "Clear completed"));
   }
 
-  // eslint-disable-next-line no-unused-vars
   const getRoute = () => {
     let route = String(location.hash || "").split("/").pop();
-
-    // prettier-ignore
     if (!FILTERS[route]) route = "all";
     return route;
   };
@@ -1610,7 +1603,6 @@
     })) : null);
   }
 
-  // eslint-disable-next-line no-unused-vars
   render(createElement(App, null), document.querySelector(".todoapp"));
 
 })();
