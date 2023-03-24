@@ -23,7 +23,7 @@ let section = document.createElement("section")
 section.className = "todoapp"
 section.id = "root"
 document.body.appendChild(section)
-load('app.bundle.js')
+load('dist/app.bundle.js')
 drainJobQueue()
 function benchmark() {
     let newTodo = document.getElementsByClassName("new-todo")[0];
