@@ -604,7 +604,8 @@ if (!("window" in globalThis)) {
         },
         get origin() {
            return "http://" + this.host
-        }
+        },
+        replace() {}
 
     };
 
