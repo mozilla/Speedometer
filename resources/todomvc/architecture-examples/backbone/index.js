@@ -120,7 +120,7 @@ function benchmark() {
                 handler();
         }
         let end = performance.now();
-        console.log("took: " + (end - start) + "ms");
+        console.log(`RESULTS-Adding${numberOfItemsToAdd}Items ${end - start}`);
         total += end - start;
         }
         addingItems()
@@ -134,7 +134,7 @@ function benchmark() {
         }
         completingItems()
         end = performance.now();
-        console.log("clicking took: " + (end - start) + "ms");
+        console.log(`RESULTS-CompletingAllItems ${end - start}`);
         total += end - start;
 
         start = performance.now();
@@ -148,9 +148,9 @@ function benchmark() {
         }
         deletingItems()
         end = performance.now();
-        console.log("delete took: " + (end - start) + "ms");
+        console.log(`RESULTS-DeletingAllItems ${end - start}`);
         total += end - start;
-        console.log(`total: ${total}`)
+        console.log(`RESULTS-Total ${total}`);
 }
 benchmark()
 /*

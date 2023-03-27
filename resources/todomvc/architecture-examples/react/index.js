@@ -44,7 +44,7 @@ function benchmark() {
     addingItems()
     let end = performance.now();
     total = end - start;
-    console.log("took: " + (end - start) + "ms");
+    console.log(`RESULTS-Adding${numberOfItemsToAdd}Items ${end - start}`);
     start = performance.now()
     function toggleItems() {
         let checkboxes = document.getElementsByClassName("toggle");
@@ -57,7 +57,7 @@ function benchmark() {
     }
     toggleItems()
     end = performance.now();
-    console.log("clicking took: " + (end - start) + "ms");
+    console.log(`RESULTS-CompletingAllItems ${end - start}`);
     total += end - start;
 
     start = performance.now();
@@ -71,9 +71,9 @@ function benchmark() {
     }
     removeItems()
     end = performance.now();
-    console.log("delete took: " + (end - start) + "ms");
+    console.log(`RESULTS-DeletingAllItems ${end - start}`);
     total += end - start;
-    console.log(`total: ${total}`)
+    console.log(`RESULTS-Total ${total}`);
 }
 benchmark()
 
