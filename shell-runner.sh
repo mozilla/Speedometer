@@ -4,6 +4,7 @@ suite_dirs=(
   "Preact:resources/todomvc/architecture-examples/preact/index.js"
   "Backbone:resources/todomvc/architecture-examples/backbone/index.js"
   "React:resources/todomvc/architecture-examples/react/index.js"
+  "React-redux:resources/todomvc/architecture-examples/react-redux/index.js"
 )
 suite_dirs_keys=("${suite_dirs[@]%%:*}")
 verbose=false
