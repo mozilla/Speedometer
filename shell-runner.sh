@@ -124,7 +124,7 @@ function run_suite {
       if [[ $line =~ RESULTS-(.*)\ (.*) ]]; then
         local step=${BASH_REMATCH[1]}
         local time=${BASH_REMATCH[2]}
-        local key="${suite}-${step}"
+        local key="${suite}/${step}"
         results+=("${i}:${key}:${time}")
       fi
     done < <($js_shell $js_shell_args "$suite_file")
