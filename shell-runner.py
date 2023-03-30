@@ -49,7 +49,7 @@ def run_suite(suite, iteration_count, js_shell, js_shell_args, verbose):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--suite", action="append", choices=suite_dirs.keys())
-    parser.add_argument("--iteration-count", type=int, default=1)
+    parser.add_argument("-i", "--iteration-count", type=int, default=1)
     parser.add_argument("--js-shell", default=os.environ.get("JS_SHELL", "js"))
     parser.add_argument("--js-shell-args", default=[])
     parser.add_argument("-v", "--verbose", action="store_true")
