@@ -51,7 +51,7 @@ def main():
     parser.add_argument("--suite", action="append", choices=suite_dirs.keys())
     parser.add_argument("--iteration-count", type=int, default=1)
     parser.add_argument("--js-shell", default=os.environ.get("JS_SHELL", "js"))
-    parser.add_argument("--js-shell-args", nargs="*", default=[])
+    parser.add_argument("--js-shell-args", default=[])
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("output_file", nargs="?", default="/dev/stdout")
     args = parser.parse_args()
@@ -66,7 +66,7 @@ def main():
 
     results = []
     for suite in args.suite:
-        results.extend(run_suite(suite, args.iteration_count, args.js_shell, args.js_shell_args, args.verbose))
+        results.extend(run_suite(suite, args.iteration_count, args.js_shell, args.js_shell_args.split(" "), args.verbose))
 
     # Aggregate results
     aggregated_results = defaultdict(lambda: defaultdict(list))
