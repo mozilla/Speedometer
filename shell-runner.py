@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import shutil
+import statistics
 from collections import defaultdict
 
 suite_dirs = {
@@ -50,6 +51,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--suite", action="append", choices=suite_dirs.keys())
     parser.add_argument("-i", "--iteration-count", type=int, default=1)
+    parser.add_argument("--summary", action="store_true")
     parser.add_argument("--js-shell", default=os.environ.get("JS_SHELL", "js"))
     parser.add_argument("--js-shell-args", default=[])
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -71,13 +73,19 @@ def main():
     # Aggregate results
     aggregated_results = defaultdict(lambda: defaultdict(list))
     for iteration, step, time in results:
-        aggregated_results[step][iteration].append(time)
+        aggregated_results[step][iteration] = float(time)
 
     # Write output to file
     with open(args.output_file, "w") as f:
-        f.write("Step," + ",".join(f"#{i}" for i in range(1, args.iteration_count + 1)) + "\n")
-        for step in aggregated_results:
-            f.write(step + "," + ",".join(",".join(str(x) for x in aggregated_results[step][i]) for i in range(1, args.iteration_count + 1)) + "\n")
+        if args.summary:
+            f.write("Step,mean,stddev\n")
+            for step in aggregated_results:
+                results = list(aggregated_results[step].values())
+                f.write(f"{step},{statistics.mean(results)},{statistics.stdev(results)}\n")
+        else:
+            f.write("Step," + ",".join(f"#{i}" for i in range(1, args.iteration_count + 1)) + "\n")
+            for step in aggregated_results:
+                f.write(step + "," + ",".join(",".join(str(x) for x in aggregated_results[step][i]) for i in range(1, args.iteration_count + 1)) + "\n")
 
 
 if __name__ == "__main__":
