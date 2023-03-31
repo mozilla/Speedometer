@@ -1,0 +1,16 @@
+{
+  "name": "builder",
+  "private": "true",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "prettier": "^2.8.7"
+  }
+}
