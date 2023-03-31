@@ -20,8 +20,11 @@ jobs:
       - name: Commit report
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-           echo "Changes found - would commit them"
            git status
-           git remote
+           git config --global user.name 'Action Committer'
+           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+           git add build
+           git commit -m "Action: update build"
+           git push
           fi
   
