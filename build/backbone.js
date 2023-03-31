@@ -2,6 +2,7 @@
 
 
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/shell-polyfill-hack.js
 ;// Helper class for debugging
 function DumpMissingPropertiesBase() { }
@@ -641,6 +642,7 @@ if (!("window" in globalThis)) {
 
         var start = performance.now();
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/jquery.js
 ;/*!
  * jQuery JavaScript Library v3.6.4
@@ -11609,6 +11611,7 @@ return jQuery;
 } );;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/underscore.js
 ;(function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -13654,6 +13657,7 @@ return jQuery;
 //# sourceMappingURL=underscore-umd.js.map;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/backbone.js
 ;//     Backbone.js 1.4.1
 
@@ -15763,6 +15767,7 @@ return jQuery;
 });;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/sync/backbone.sync.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -15868,6 +15873,7 @@ Backbone.sync = (function (method, model, options) {
 })();;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/models/todo.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -15898,6 +15904,7 @@ var app = app || {};
 })();;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/collections/todos.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -15940,6 +15947,7 @@ var app = app || {};
 })();;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/views/todo-view.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -16063,6 +16071,7 @@ var app = app || {};
 })(jQuery);;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/views/app-view.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -16203,6 +16212,7 @@ var app = app || {};
 })(jQuery);;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/routers/router.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */
@@ -16234,6 +16244,7 @@ var app = app || {};
 })();;
 ;
         
+
 // Load contents of ../resources/todomvc/architecture-examples/backbone/dist/app.js
 ;/* eslint no-unused-vars: 0 */
 /* eslint no-undef: 0 */

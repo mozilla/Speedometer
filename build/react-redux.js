@@ -21,6 +21,7 @@ if ("drainMicrotasks" in globalThis) {
 }
 
 
+
 // Load contents of ../resources/todomvc/architecture-examples/react-redux/shell-polyfill-hack.js
 ;// Helper class for debugging
 function DumpMissingPropertiesBase() { }
@@ -724,6 +725,7 @@ let section = document.createElement("section")
 section.className = "todoapp"
 section.id = "root"
 document.body.appendChild(section)
+
 
 // Load contents of ../resources/todomvc/architecture-examples/react-redux/dist/app.bundle.js
 ;/******/ (() => { // webpackBootstrap
