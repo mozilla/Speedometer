@@ -20,18 +20,8 @@ jobs:
       - name: Commit report
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-           git config --global user.name 'Action Committer'
-           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-           git commit -am "Action: update built files"
-           git push
+           echo "Changes found - would commit them"
+           git status
+           git remote
           fi
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: shell-ci
-          publish_dir: ./build
-
-
   
