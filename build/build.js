@@ -20,7 +20,7 @@ function flattenFile(path, newPath) {
 
         // Replace the load() call with the file contents, but only once
         code = code.replace(match[0], () => {
-            const fileCode = `\n// Load contents of ${fileName}\n;${fileContents.trim()};\n`;
+            const fileCode = `\n\n// Load contents of ${fileName}\n;${fileContents.trim()};\n`;
             return `${fileCode};`;
         });
     }
