@@ -53,7 +53,7 @@ def main():
     parser.add_argument("-i", "--iteration-count", type=int, default=1)
     parser.add_argument("--summary", action="store_true")
     parser.add_argument("--js-shell", default=os.environ.get("JS_SHELL", "js"))
-    parser.add_argument("--js-shell-args", default=[])
+    parser.add_argument("--js-shell-args", default="")
     parser.add_argument("-v", "--verbose", action="store_true")
     parser.add_argument("output_file", nargs="?", default="/dev/stdout")
     args = parser.parse_args()
@@ -85,7 +85,7 @@ def main():
         else:
             f.write("Step," + ",".join(f"#{i}" for i in range(1, args.iteration_count + 1)) + "\n")
             for step in aggregated_results:
-                f.write(step + "," + ",".join(",".join(str(x) for x in aggregated_results[step][i]) for i in range(1, args.iteration_count + 1)) + "\n")
+                f.write(step + "," + ",".join(str(aggregated_results[step][i]) for i in range(1, args.iteration_count + 1)) + "\n")
 
 
 if __name__ == "__main__":
