@@ -68,7 +68,7 @@ def main():
 
     results = []
     for suite in args.suite:
-        results.extend(run_suite(suite, args.iteration_count, args.js_shell, args.js_shell_args.split(" "), args.verbose))
+        results.extend(run_suite(suite, args.iteration_count, args.js_shell, args.js_shell_args.split(" ") if args.js_shell_args else [], args.verbose))
 
     # Aggregate results
     aggregated_results = defaultdict(lambda: defaultdict(list))
