@@ -257,13 +257,12 @@ module.exports = function (webpackEnv) {
               // https://github.com/terser-js/terser/issues/120
               inline: 2,
             },
-            mangle: {
-              safari10: true,
-            },
+            mangle: false,
             // Added for profiling in devtools
             keep_classnames: isEnvProductionProfile,
             keep_fnames: isEnvProductionProfile,
             output: {
+              beautify: true,
               ecma: 5,
               comments: false,
               // Turned on because emoji and regex is not minified properly using default
