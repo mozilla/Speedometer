@@ -335,8 +335,8 @@ Suites.push({
 });
 
 Suites.push({
-    name: "MDN-Details",
-    url: "tentative/layout/mdn_html.html",
+    name: "Element-Details",
+    url: "tentative/elements/details_element.html",
     async prepare(page) {
     },
     tests: [
@@ -359,6 +359,32 @@ Suites.push({
 
             let attributesSummary = page.querySelectorAll(".sidebar-inner summary")[4];
             attributesSummary.click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "Element-Dialog",
+    url: "tentative/elements/dialog_element.html",
+    async prepare(page) {
+    },
+    tests: [
+        new BenchmarkTestStep("Show", (page) => {
+            let show = page.querySelector("#showDialog");
+            show.click();
+        }),
+        new BenchmarkTestStep("Elements", (page) => {
+            // Close the previous section
+            let select = page.querySelector("select");
+            let option = page.querySelector("select option:nth-child(2)");
+            select.value = option.value;
+            throw new Error("Stop");
+            // option.selected = true;
+            // let introSummary = page.querySelectorAll(".sidebar-inner summary")[0];
+            // introSummary.click();
+
+            // let elementsSummary = page.querySelectorAll(".sidebar-inner summary")[3];
+            // elementsSummary.click();
         }),
     ],
 });
