@@ -341,16 +341,24 @@ Suites.push({
     },
     tests: [
         new BenchmarkTestStep("Introduction", (page) => {
-            let summary = page.querySelectorAll(".sidebar-inner summary")[0];
-            summary.click();
+            let introSummary = page.querySelectorAll(".sidebar-inner summary")[0];
+            introSummary.click();
         }),
         new BenchmarkTestStep("Elements", (page) => {
-            let summary = page.querySelectorAll(".sidebar-inner summary")[3];
-            summary.click();
+            // Close the previous section
+            let introSummary = page.querySelectorAll(".sidebar-inner summary")[0];
+            introSummary.click();
+
+            let elementsSummary = page.querySelectorAll(".sidebar-inner summary")[3];
+            elementsSummary.click();
         }),
         new BenchmarkTestStep("Attributes", (page) => {
-            let summary = page.querySelectorAll(".sidebar-inner summary")[4];
-            summary.click();
+            // Close the previous section
+            let elementsSummary = page.querySelectorAll(".sidebar-inner summary")[3];
+            elementsSummary.click();
+
+            let attributesSummary = page.querySelectorAll(".sidebar-inner summary")[4];
+            attributesSummary.click();
         }),
     ],
 });
