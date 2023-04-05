@@ -370,21 +370,20 @@ Suites.push({
     },
     tests: [
         new BenchmarkTestStep("Show", (page) => {
-            let show = page.querySelector("#showDialog");
-            show.click();
+            let showDialog = page.querySelector("#showDialog");
+            showDialog.click();
         }),
-        new BenchmarkTestStep("Elements", (page) => {
-            // Close the previous section
-            let select = page.querySelector("select");
-            let option = page.querySelector("select option:nth-child(2)");
-            select.value = option.value;
-            throw new Error("Stop");
-            // option.selected = true;
-            // let introSummary = page.querySelectorAll(".sidebar-inner summary")[0];
-            // introSummary.click();
-
-            // let elementsSummary = page.querySelectorAll(".sidebar-inner summary")[3];
-            // elementsSummary.click();
+        new BenchmarkTestStep("Close", (page) => {
+            let confirmBtn = page.querySelector("#confirmBtn");
+            confirmBtn.click();
+        }),
+        new BenchmarkTestStep("ShowModal", (page) => {
+            let showModal = page.querySelector("#showModal");
+            showModal.click();
+        }),
+        new BenchmarkTestStep("CloseModal", (page) => {
+            let confirmBtn = page.querySelector("#confirmBtn");
+            confirmBtn.click();
         }),
     ],
 });

@@ -49,9 +49,9 @@
       <label>Favorite animal:
         <select>
           <option value="default">Choose…</option>
-          <option value="1">Brine shrimp</option>
-          <option value="2">Red panda</option>
-          <option value="3">Spider monkey</option>
+          <option>Brine shrimp</option>
+          <option>Red panda</option>
+          <option>Spider monkey</option>
         </select>
       </label>
     </p>
@@ -62,18 +62,24 @@
   </form>
 </dialog>
 <p>
-  <button id="showDialog">Show the dialog</button>
+  <button id="showModal">Show modal</button>
+  <button id="showDialog">Show</button>
 </p>
 <output></output>
 <script>
+    const showModalButton = document.getElementById('showModal');
     const showButton = document.getElementById('showDialog');
     const favDialog = document.getElementById('favDialog');
     const outputBox = document.querySelector('output');
     const selectEl = favDialog.querySelector('select');
     const confirmBtn = favDialog.querySelector('#confirmBtn');
 
-    // "Show the dialog" button opens the <dialog> modally
+    // "Show the dialog" button opens the <dialog>
     showButton.addEventListener('click', () => {
+        favDialog.show();
+    });
+    // "Show the dialog" button opens the <dialog> modally
+    showModalButton.addEventListener('click', () => {
         favDialog.showModal();
     });
     // "Favorite animal" input sets the value of the submit button
