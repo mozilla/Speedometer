@@ -386,6 +386,23 @@ Suites.push({
 });
 
 Suites.push({
+    name: "Element-Dialog-3",
+    url: "tentative/elements/dialog_native_demo.html",
+    async prepare(page) {
+    },
+    tests: [
+        new BenchmarkTestStep("Open", (page) => {
+            let open = page.querySelector("#open_dialog");
+            open.click();
+        }),
+        new BenchmarkTestStep("Close", (page) => {
+            let close = page.querySelector("#close_dialog");
+            close.click();
+        }),
+    ],
+});
+
+Suites.push({
     name: "Editor-CodeMirror",
     url: "tentative/editors/dist/codemirror.html",
     async prepare(page) {},
