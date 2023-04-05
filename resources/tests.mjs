@@ -389,6 +389,31 @@ Suites.push({
 });
 
 Suites.push({
+    name: "Element-Dialog-2",
+    url: "tentative/elements/dialog_demo.html",
+    async prepare(page) {
+    },
+    tests: [
+        new BenchmarkTestStep("Mini-Open", (page) => {
+            let deleteUser = page.querySelector(".user button");
+            deleteUser.click();
+        }),
+        new BenchmarkTestStep("Mini-Close", (page) => {
+            let cancelButton = page.querySelector("#MiniDialog button");
+            cancelButton.click();
+        }),
+        new BenchmarkTestStep("Mega-Open", (page) => {
+            let createUser = page.querySelector("button.user");
+            createUser.click();
+        }),
+        new BenchmarkTestStep("Mega-Close", (page) => {
+            let closeButton = page.querySelector("#MegaDialog > form:nth-child(1) > header:nth-child(1) > button:nth-child(2)");
+            closeButton.click();
+        }),
+    ],
+});
+
+Suites.push({
     name: "Editor-CodeMirror",
     url: "tentative/editors/dist/codemirror.html",
     async prepare(page) {},
