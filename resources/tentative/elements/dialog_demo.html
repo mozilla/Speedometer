@@ -1490,7 +1490,7 @@
 
         <main>
             <div class="user">
-                <img src="https://doodleipsum.com/700x700/avatar-5?i=e49dd48962488beade4c44491e56a5a9" alt="" />
+                <img src="avatar-1.png" alt="" />
                 <button aria-label="Remove user 1">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -1499,7 +1499,7 @@
                 </button>
             </div>
             <div class="user">
-                <img src="https://doodleipsum.com/700x700/avatar-5?i=ca71b901f3ad2ce77d50ab296aff3f5f" alt="" />
+                <img src="avatar-2.png" alt="" />
                 <button aria-label="Remove user 2">
                     <svg width="24" height="24" viewBox="0 0 24 24">
                         <line x1="18" y1="6" x2="6" y2="18" />
@@ -1618,23 +1618,23 @@
                 });
         },
         m = ({ target: e }) => {
-            console.log("Dialog closing", e);
+            // console.log("Dialog closing", e);
         },
         v = ({ target: e }) => {
             var i;
-            if ((console.log("Dialog closed", e), console.info("Dialog user action:", e.returnValue), e.returnValue === "confirm")) {
-                const r = new FormData(e.querySelector("form"));
-                console.info("Dialog form data", Object.fromEntries(r.entries())), M(r), (i = e.querySelector("form")) == null || i.reset();
-            }
+            // if ((console.log("Dialog closed", e), console.info("Dialog user action:", e.returnValue), e.returnValue === "confirm")) {
+            //     const r = new FormData(e.querySelector("form"));
+            //     console.info("Dialog form data", Object.fromEntries(r.entries())), M(r), (i = e.querySelector("form")) == null || i.reset();
+            // }
         },
         g = ({ target: e }) => {
-            console.log("Dialog open", e);
+            // console.log("Dialog open", e);
         },
         f = ({ target: e }) => {
-            console.log("Dialog opening", e);
+            // console.log("Dialog opening", e);
         },
         p = ({ target: e }) => {
-            e.removeEventListener("closing", m), e.removeEventListener("closed", v), e.removeEventListener("opening", f), e.removeEventListener("opened", g), e.removeEventListener("removed", p), console.log("Dialog removed", e);
+            e.removeEventListener("closing", m), e.removeEventListener("closed", v), e.removeEventListener("opening", f), e.removeEventListener("opened", g), e.removeEventListener("removed", p); //console.log("Dialog removed", e);
         };
     document.querySelectorAll('dialog[modal-mode="mega"]').forEach((e) => {
         u(e), e.addEventListener("closing", m), e.addEventListener("closed", v), e.addEventListener("opening", f), e.addEventListener("opened", g), e.addEventListener("removed", p);
