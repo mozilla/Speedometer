@@ -107,7 +107,7 @@ class PageElement {
             cancelable: true,
             keyCode: ENTER_KEY_CODE,
             which: ENTER_KEY_CODE,
-            key: "ENTER",
+            key: "Enter",
         };
         if (options !== undefined)
             eventOptions = Object.assign(eventOptions, options);
@@ -183,7 +183,6 @@ export class BenchmarkRunner {
                 await this._runSuite(suite);
         }
 
-
         // Remove frame to clear the view for displaying the results.
         this._removeFrame();
         await this._finalize();
@@ -191,8 +190,10 @@ export class BenchmarkRunner {
 
     async _runSuite(suite) {
         await this._prepareSuite(suite);
+        performance.mark(`start-suite-${suite.name}`);
         for (const test of suite.tests)
             await this._runTestAndRecordResults(suite, test);
+        performance.mark(`end-suite-${suite.name}`);
     }
 
     async _prepareSuite(suite) {

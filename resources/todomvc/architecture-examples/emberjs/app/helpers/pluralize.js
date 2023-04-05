@@ -1,8 +1,8 @@
-import Ember from 'ember';
-import { pluralize } from 'ember-inflector';
+import { helper } from "@ember/component/helper";
+import { pluralize } from "ember-inflector";
 
-export function pluralizeHelper([singular, count]/*, hash*/) {
+export function pluralizeHelper([singular, count]) {
     return count === 1 ? singular : pluralize(singular);
 }
 
-export default Ember.Helper.helper(pluralizeHelper);
+export default helper(pluralizeHelper);

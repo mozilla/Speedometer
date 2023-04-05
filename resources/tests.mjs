@@ -104,8 +104,8 @@ Suites.push({
 });
 
 Suites.push({
-    name: "React-TodoMVC",
-    url: "todomvc/architecture-examples/react/index.html",
+    name: "TodoMVC-React",
+    url: "todomvc/architecture-examples/react/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -133,7 +133,7 @@ Suites.push({
 });
 
 Suites.push({
-    name: "React-Redux-TodoMVC",
+    name: "TodoMVC-React-Redux",
     url: "todomvc/architecture-examples/react-redux/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
@@ -161,7 +161,7 @@ Suites.push({
 });
 
 Suites.push({
-    name: "EmberJS-TodoMVC",
+    name: "TodoMVC-Ember",
     url: "todomvc/architecture-examples/emberjs/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
@@ -189,8 +189,8 @@ Suites.push({
 });
 
 Suites.push({
-    name: "BackboneJS-TodoMVC",
-    url: "todomvc/architecture-examples/backbone/index.html",
+    name: "TodoMVC-Backbone",
+    url: "todomvc/architecture-examples/backbone/dist/index.html",
     async prepare(page) {
         await page.waitForElement("#appIsReady");
         const newTodo = page.querySelector(".new-todo");
@@ -219,7 +219,7 @@ Suites.push({
 });
 
 Suites.push({
-    name: "Angular2-TypeScript-TodoMVC",
+    name: "TodoMVC-Angular",
     url: "todomvc/architecture-examples/angular/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
@@ -248,7 +248,7 @@ Suites.push({
 });
 
 Suites.push({
-    name: "VueJS-TodoMVC",
+    name: "TodoMVC-Vue",
     url: "todomvc/architecture-examples/vuejs-cli/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
@@ -277,7 +277,7 @@ Suites.push({
 });
 
 Suites.push({
-    name: "jQuery-TodoMVC",
+    name: "TodoMVC-jQuery",
     url: "todomvc/architecture-examples/jquery/index.html",
     async prepare(page) {
         await page.waitForElement("#appIsReady");
@@ -307,7 +307,7 @@ Suites.push({
 
 
 Suites.push({
-    name: "Preact-TodoMVC",
+    name: "TodoMVC-Preact",
     url: "todomvc/architecture-examples/preact/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
