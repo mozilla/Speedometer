@@ -39,7 +39,7 @@ load("dist/main.731ae27d727ec7ad13c4.bundle.js")
 
 load("dist/runtime.4ab3ac3fb25d0afb.js")// type="module"></script>
 load("dist/polyfills.1a94f65a60804e51.js")// type="module"></script>
-load("dist/main.3cda2411851e9a5b.js")// type="module"></script>
+load("dist/main.86f0459d5fbe39f5.js")// type="module"></script>
 
 drainJobQueue()        
 
