@@ -29,7 +29,7 @@ export default {
             exportConditions: ["svelte"],
             extensions: [".svelte"],
         }),
-        production && terser(),
+        // production && terser(),
         production && filesize(),
         copy({
             targets: [{ src: "public/index.html", dest: "dist/" }],
