@@ -2,6 +2,7 @@ import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import { terser } from "rollup-plugin-terser";
 import filesize from "rollup-plugin-filesize";
+import prettier from "rollup-plugin-prettier";
 import copy from "rollup-plugin-copy";
 import css from "rollup-plugin-import-css";
 
@@ -14,7 +15,7 @@ export default {
     output: {
         file: "dist/app.js",
         format: "iife",
-        sourcemap: true,
+        sourcemap: false,
         name: "app",
     },
     plugins: [
@@ -29,8 +30,13 @@ export default {
             exportConditions: ["svelte"],
             extensions: [".svelte"],
         }),
-        // production && terser(),
+        production && terser({
+            mangle: false,
+        }),
         production && filesize(),
+        production && prettier({
+            parser: "babel",
+        }),
         copy({
             targets: [{ src: "public/index.html", dest: "dist/" }],
         }),
