@@ -14,7 +14,7 @@ export default {
     output: {
         file: "dist/app.js",
         format: "iife",
-        sourcemap: true,
+        sourcemap: false,
         name: "app",
     },
     plugins: [
@@ -29,7 +29,10 @@ export default {
             exportConditions: ["svelte"],
             extensions: [".svelte"],
         }),
-        production && terser(),
+        production && terser({
+            mangle: false,
+            format: { beautify: true },
+        }),
         production && filesize(),
         copy({
             targets: [{ src: "public/index.html", dest: "dist/" }],
