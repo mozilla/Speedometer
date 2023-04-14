@@ -15,6 +15,7 @@ suite_dirs = {
     "React": "resources/todomvc/architecture-examples/react/index.js",
     "React-redux": "resources/todomvc/architecture-examples/react-redux/index.js",
     "Svelte": "resources/todomvc/architecture-examples/svelte/index.js",
+    "Angular": "resources/todomvc/architecture-examples/angular/index.js",
 }
 
 
