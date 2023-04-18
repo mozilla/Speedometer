@@ -340,7 +340,9 @@ if (!("window" in globalThis)) {
         setAttribute(key, val) { this[key] = val; }
         removeAttribute(key) { delete this[key] }
 
-        get innerHTML() { return this._innerHTML }
+        get innerHTML() { return this._innerHTML ||
+            `<${this.tagName}>\n${this.childNodes?.map(n => (" " + (n.innerHTML || "#text")).replaceAll("\n", "\n ")).join("\n")}\n</${this.tagName}>`
+        }
         get attributes() { return [] }
 
         // TODO this doesn't handle '/' in attribute values and probably should switch
@@ -350,6 +352,12 @@ if (!("window" in globalThis)) {
                 this._innerHTML = html;
                 return;
             }
+            
+            // remove existing content
+            while (this.firstChild) {
+                this.removeChild(this.lastChild);
+            }
+
             let root = this;
             let currentNode = root;
             let stack = [];
@@ -401,7 +409,6 @@ if (!("window" in globalThis)) {
                         }
 
                         j++; // skip '"'
-          
                         newNode.setAttribute(key, value);
                       }
                     }
@@ -411,6 +418,9 @@ if (!("window" in globalThis)) {
                     currentNode = newNode;
                     buffer = '';
                     state = 'text';
+                    if (tagName == "input") {
+                        currentNode = stack.pop();
+                    }
                   } else {
                     buffer += char;
                   }
@@ -433,7 +443,6 @@ if (!("window" in globalThis)) {
             if (buffer.trim().length > 0) {
               currentNode.appendChild(document.createTextNode(buffer.trim()));
             }
-              
         }
 
         insertAdjacentHTML(position, html) {
@@ -517,11 +526,16 @@ if (!("window" in globalThis)) {
                 left: 100,
             };
         }
-        dataset = {};
     };
     globalThis.HTMLElement = class extends globalThis.Element {
         contentEditable = false;
         focus() { }
+	get dataset() {
+		if (this["data-id"]) {
+			return {id: this["data-id"] }
+		}
+		return {}
+	}
     };
     globalThis.HTMLHtmlElement = class extends globalThis.HTMLElement { };
     globalThis.HTMLAnchorElement = class extends globalThis.HTMLElement {
@@ -663,18 +677,16 @@ if (!("window" in globalThis)) {
            return new Node;
         },
         querySelector(sel) {
-           print("querySelector", sel)
            if (sel == "app-root") {
                 return document.body.childNodes[0]
-           }
-           else if (sel == "meta[name=\"todomvc/config/environment\"]") {
-                return document.head.childNodes[0]
+           } else if (sel == "meta[name=\"todomvc/config/environment\"]") {
+               return document.head.childNodes[0]
            } else if (sel == "body") {
-                return document.body
+               return document.body
            } else if (sel == ".todoapp") {
-                return document.getElementsByClassName("todoapp")[0]
+               return document.getElementsByClassName("todoapp")[0]
            } else if (sel == "head") {
-                return document.head;
+               return document.head;
            } else if (sel == ".filters .selected") {
                var ancestors = document.getElementsByClassName("filters");
                var result = [];
@@ -685,17 +697,22 @@ if (!("window" in globalThis)) {
                }
                return result;
            } else if (sel == '.filters [href="#/"]') {
-            var ancestors = document.getElementsByClassName("filters");
-            var result = [];
-            for (var a of Array.prototype.slice.call(ancestors)) {
-                for (var c of a.childNodes) {
-                    result = result.concat(makeArrayLike(new HTMLCollection(document, this, (node) => node.href == "#/")))
+               var ancestors = document.getElementsByClassName("filters");
+               var result = [];
+               for (var a of Array.prototype.slice.call(ancestors)) {
+                   for (var c of a.childNodes) {
+                       result = result.concat(makeArrayLike(new HTMLCollection(document, this, (node) => node.href == "#/")))
+                   }
                 }
+                return result;
+            } else if (sel.startsWith('[data-id')) {
+                var id_value = sel.match(/\d+/)
+                return makeArrayLike(new HTMLCollection(document, this, (node) => node["data-id"] == id_value))[0];
+            } else if (sel[0] == ".") {
+                return document.getElementsByClassName(sel.substring(1))[0]
             }
-            return result;
-        } else if (sel[0] == ".") {
-               return document.getElementsByClassName(sel.substring(1))[0]
-           }
+            print("querySelector", sel)
+
 
         },
         querySelectorAll(sel) {
