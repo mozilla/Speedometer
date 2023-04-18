@@ -43,6 +43,16 @@
             <p>Double-click to edit a todo</p>
         </footer>*/
         load("shell-polyfill-hack.js")
+if ("drainMicrotasks" in globalThis) {
+    print("jsc")
+    // webkit
+    globalThis["drainJobQueue"] = drainMicrotasks
+} else if ("version" in globalThis) {
+    // v8
+    print("v8")
+    // run with --allow-natives-syntax
+    globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
+}
 
         var sectionTodoApp = document.createElement("section")
         sectionTodoApp.class = "todoapp";
