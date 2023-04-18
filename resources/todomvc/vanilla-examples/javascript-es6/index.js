@@ -64,9 +64,25 @@
         input.class = "toggle-all"
         main.appendChild(input)
 
+	var label = document.createElement("label")
+        label.class = "toggle-all-label"
+        main.appendChild(label)
+
         var ul = document.createElement("ul")
         ul.class = "todo-list"
         main.appendChild(ul)
+        
+        var footer = document.createElement("footer")
+        footer.class = "footer";
+        sectionTodoApp.appendChild(footer)
+                
+        var count = document.createElement("span")
+	count.class = "todo-count";
+	footer.appendChild(count)
+
+	var clearCompleted = document.createElement("button")
+        clearCompleted.class = "clear-completed";
+	sectionTodoApp.appendChild(clearCompleted)
  
         load("src/helpers.js")
         load("src/store.js")
