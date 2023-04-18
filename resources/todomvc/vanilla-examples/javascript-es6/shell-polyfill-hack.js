@@ -141,6 +141,7 @@ if (!("window" in globalThis)) {
                 return globalThis.HTMLBodyElement;
             case "b":
             case "main":
+            case "strong":
                 return globalThis.HTMLElement;
             case "div":
                 return globalThis.HTMLDivElement;
