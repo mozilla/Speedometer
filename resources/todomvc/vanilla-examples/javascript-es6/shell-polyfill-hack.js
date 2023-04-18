@@ -110,7 +110,7 @@ if (!("window" in globalThis)) {
     function makeArrayLike(o) {
         return new Proxy(o, {
             get: function (target, propKey) {
-                if (Number.isInteger(Number(propKey))) {
+		if (Number.isInteger(Number(propKey))) {
                     const index = Number(propKey);
                     return target.item(index);
                 }
@@ -490,6 +490,12 @@ if (!("window" in globalThis)) {
 
            print("querySelector", sel)
         }
+        querySelectorAll(sel) {
+            if (sel[0] == "." && sel.indexOf(' ') !== -1) {
+                return Array.prototype.slice.call(this.getElementsByClassName(sel.substring(1)))
+            }
+            print("querySelectorAll", sel)
+        }
         getAttributeNode() {}
         get style() {
             let self = this;
@@ -668,6 +674,26 @@ if (!("window" in globalThis)) {
                 return document.getElementsByClassName("todoapp")[0]
            } else if (sel == "head") {
                 return document.head;
+           } else if (sel == ".filters .selected") {
+               var ancestors = document.getElementsByClassName("filters");
+               var result = [];
+               for (var a of Array.prototype.slice.call(ancestors)) {
+                   for (var c of a.childNodes) {
+                       result = result.concat(c.getElementsByClassName("selected"))
+                   }
+               }
+               return result;
+           } else if (sel == '.filters [href="#/"]') {
+            var ancestors = document.getElementsByClassName("filters");
+            var result = [];
+            for (var a of Array.prototype.slice.call(ancestors)) {
+                for (var c of a.childNodes) {
+                    result = result.concat(makeArrayLike(new HTMLCollection(document, this, (node) => node.href == "#/")))
+                }
+            }
+            return result;
+        } else if (sel[0] == ".") {
+               return document.getElementsByClassName(sel.substring(1))[0]
            }
 
         },
