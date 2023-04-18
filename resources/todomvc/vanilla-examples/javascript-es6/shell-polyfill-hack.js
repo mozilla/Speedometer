@@ -491,7 +491,7 @@ if (!("window" in globalThis)) {
            print("querySelector", sel)
         }
         querySelectorAll(sel) {
-            if (sel[0] == "." && sel.indexOf(' ') !== -1) {
+            if (sel[0] == "." && sel.indexOf(' ') == -1) {
                 return Array.prototype.slice.call(this.getElementsByClassName(sel.substring(1)))
             }
             print("querySelectorAll", sel)
