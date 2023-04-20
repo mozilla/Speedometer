@@ -25,17 +25,7 @@ if ("drainMicrotasks" in globalThis) {
 }
 performance.measure = function() {}
 load('shell-polyfill-hack.js')
-document.body.appendChild(document.createElement("app-root"))
-/*load('inline.3b7f8ce2e6bc2f77dd83.bundle.js')
-load("polyfills.3a2aed82a0c9b24e6585.bundle.js")
-load("vendor.9a296bbc1909830a9106.bundle.js")
-load("main.f1c5d33a6950c335064d.bundle.js")
-*/
-/*load('dist/inline.0f18e6cb9ba1cee8817e.bundle.js')
-load("dist/polyfills.e3fb9e3c796983e0b832.bundle.js")
-load("dist/vendor.644bf307cfffc4bce1e4.bundle.js")
-load("dist/main.731ae27d727ec7ad13c4.bundle.js")
-*/
+document.body.appendChild(document.createElement("app-root"));
 
 load("dist/runtime.e42baa953544dd4f.js")// type="module"></script>
 load("dist/polyfills.e666e00fbdd942b1.js")// type="module"></script>

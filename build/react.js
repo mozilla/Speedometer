@@ -34,6 +34,9 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 
 var timeoutHandlers = [];
 
+if (!globalThis.console) {
+    globalThis.console = { log: (msg) => print(msg) }
+}
 if (!("assert" in console)) {
     console["assert"] = function(value) {
         if (!value) {
@@ -41,9 +44,6 @@ if (!("assert" in console)) {
             throw value
         }
     }
-}
-if (!globalThis.console) {
-    globalThis.console = { log: (msg) => print(msg) }
 }
 globalThis.console.error = globalThis.console.log;
 globalThis.console.warn = globalThis.console.log;
