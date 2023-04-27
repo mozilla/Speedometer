@@ -8,15 +8,6 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 });
 
 var timeoutHandlers = [];
-
-if (!("assert" in console)) {
-    console["assert"] = function(value) {
-        if (!value) {
-            console.log("assertion failed")
-            throw value
-        }
-    }
-}
 if (!globalThis.console) {
     globalThis.console = { log: (msg) => print(msg) }
 }
@@ -25,6 +16,14 @@ globalThis.console.warn = globalThis.console.log;
 // For JSC
 if (!globalThis.performance) {
     globalThis.performance = { now: () => preciseTime() * 1000 }
+}
+if (!("assert" in console)) {
+    console["assert"] = function(value) {
+        if (!value) {
+            console.log("assertion failed")
+            throw value
+        }
+    }
 }
 
 // In jsshell, mock just enough details of DOM for matrix to work.

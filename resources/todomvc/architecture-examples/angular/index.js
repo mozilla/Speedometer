@@ -23,7 +23,6 @@ if ("drainMicrotasks" in globalThis) {
    // run with --allow-natives-syntax
    var drainJobQueue = eval("() => { %PerformMicrotaskCheckpoint(); }")
 }
-performance.measure = function() {}
 load('shell-polyfill-hack.js')
 document.body.appendChild(document.createElement("app-root"))
 /*load('inline.3b7f8ce2e6bc2f77dd83.bundle.js')
@@ -39,7 +38,7 @@ load("dist/main.731ae27d727ec7ad13c4.bundle.js")
 
 load("dist/runtime.e42baa953544dd4f.js")// type="module"></script>
 load("dist/polyfills.e666e00fbdd942b1.js")// type="module"></script>
-load("dist/main.6b2851abde849f23.js")// type="module"></script>
+load("dist/main.62fa1dd31ebdf6e8.js")// type="module"></script>
 
 drainJobQueue()        
 
@@ -69,7 +68,7 @@ function benchmark() {
     console.log(`RESULTS-Adding${numberOfItemsToAdd}Items ${end - start}`);
     function toggleItems() {
         let checkboxes = document.getElementsByClassName("toggle");
-        for (let i = 0; i < numberOfItemsToAdd; i++) {
+	for (let i = 0; i < numberOfItemsToAdd; i++) {
             checkboxes[i].dispatchEvent({ type: 'click' });
         }
     }

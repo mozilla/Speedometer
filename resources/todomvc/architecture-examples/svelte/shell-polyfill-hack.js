@@ -243,9 +243,13 @@ if (!("window" in globalThis)) {
         compareDocumentPosition(otherNode) {
             return globalThis.Node.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC;
         }
-        parentNode = null;
-        nextSibling = null;
-        previousSibling = null;
+	    constructor() {
+		    super();
+            print(shapeOf(this))
+        this.parentNode = null;
+        this.nextSibling = null;
+        this.previousSibling = null;
+	    }
         appendChild(childNode) {
             console.assert(!childNode.parentNode)
             if (!this.firstChild) {
@@ -319,6 +323,7 @@ if (!("window" in globalThis)) {
     globalThis.Element = class extends globalThis.Node {
         constructor(tagName) {
             super();
+            //print(shapeOf(this))
             this.tagName = tagName.toUpperCase();
             this.nodeName = tagName.toUpperCase();
             this.onkeydown = null;

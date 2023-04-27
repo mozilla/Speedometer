@@ -6,6 +6,16 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
         return target[prop];
     }
 });
+if (!globalThis.console) {
+    globalThis.console = { log: (msg) => print(msg) }
+}
+globalThis.console.error = globalThis.console.log;
+globalThis.console.warn = globalThis.console.log;
+// For JSC
+if (!globalThis.performance) {
+    globalThis.performance = { now: () => preciseTime()*1000 }
+}
+globalThis.performance.measure = function() {}
 
 var timeoutHandlers = [];
 
@@ -579,14 +589,5 @@ if (!("window" in globalThis)) {
 
     globalThis.document.appendChild(globalThis.document.documentElement);
     globalThis.document.documentElement.appendChild(globalThis.document.body);
-    if (!globalThis.console) {
-	globalThis.console = { log: (msg) => print(msg) }
-    }
-    globalThis.console.error = globalThis.console.log;
-    globalThis.console.warn = globalThis.console.log;
-    // For JSC
-    if (!globalThis.performance) {
-	globalThis.performance = { now: () => preciseTime()*1000 }
-    }
     globalThis.onhashchange = null
 } // !("window" in globalThis)
