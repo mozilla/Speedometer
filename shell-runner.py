@@ -17,6 +17,7 @@ suite_dirs = {
     "Svelte": "resources/todomvc/architecture-examples/svelte/index.js",
     "Angular": "resources/todomvc/architecture-examples/angular/index.js",
     "JavaScript-ES6": "resources/todomvc/vanilla-examples/javascript-es6/index.js",
+    "jQuery": "resources/todomvc/architecture-examples/jquery/index.js",
 }
 
 
