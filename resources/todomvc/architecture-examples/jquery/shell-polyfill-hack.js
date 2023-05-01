@@ -488,6 +488,12 @@ if (!("window" in globalThis)) {
     globalThis.Text = class extends globalThis.CharacterData { };
 
     globalThis.Event = class {
+        constructor(type, options) {
+            this.type = type
+            this.options = options
+        }
+        preventDefault() {}
+
         initCustomEvent() { }
         initEvent() { }
     };
