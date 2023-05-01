@@ -127,8 +127,7 @@
 
         var start = performance.now();
         load("dist/jquery.min.js")
-        //load("node_modules/jquery/dist/jquery.js")
-        load("node_modules/handlebars/dist/handlebars.js")
+        load("dist/handlebars.min.js")
         load("dist/director.min.js")
         load("dist/app.js")
 
