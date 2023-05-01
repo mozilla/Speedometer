@@ -316,6 +316,12 @@ if (!("window" in globalThis)) {
                 this._innerHTML = html;
                 return;
             }
+
+            // remove existing content
+            while (this.firstChild) {
+                this.removeChild(this.lastChild);
+            }
+
             let root = this;
             let currentNode = root;
             let stack = [];
@@ -544,8 +550,10 @@ if (!("window" in globalThis)) {
         nodeType: globalThis.Node.DOCUMENT_NODE,
         implementation: {
             createHTMLDocument() {
-                // this is very wrong
-                return globalThis.document
+                // this is very wrong but is enough for jQuery's feature detection code
+                return {__proto__: globalThis.Node.prototype,
+                        body: new globalThis.HTMLBodyElement("body"),
+                }
             }
         },
         createEvent: () => new globalThis.Event,
