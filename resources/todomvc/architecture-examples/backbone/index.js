@@ -126,6 +126,7 @@ function benchmark() {
         addingItems()
         start = performance.now();
         function completingItems() {
+                let checkboxes = Array.prototype.slice.call(document.getElementsByClassName("toggle"));
                 let checkboxes = document.getElementsByClassName("toggle");
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         checkboxes[i].dispatchEvent({ type: 'click' });
@@ -139,7 +140,7 @@ function benchmark() {
 
         start = performance.now();
         function deletingItems() {
-                let deleteButtons = document.getElementsByClassName("destroy");
+                let deleteButtons = Array.prototype.slice.call(document.getElementsByClassName("destroy"));
                 let start = performance.now();
                 for (let i = 0; i < numberOfItemsToAdd; i++) {
                         deleteButtons[i].dispatchEvent({ type: 'click' });
