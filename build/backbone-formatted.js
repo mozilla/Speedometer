@@ -49,6 +49,77 @@ if (!("window" in globalThis)) {
   globalThis.XMLHttpRequest = function () {};
   globalThis.Worker = function () {};
 
+  // A live lazily populated collection of nodes that have query(node) == true
+  class HTMLCollection {
+    constructor(document, node, query) {
+      this.elements = [];
+      this.document = document;
+      this.node = node;
+      this.query = query;
+      this.version = document.version;
+    }
+    update(index) {
+      if (this.version != this.document.version) {
+        this.elements.length = 0;
+        this.version = this.document.version;
+      }
+      let node = this.node;
+      while (node && (this.elements.length <= index || index == -1)) {
+        if (this.query(node)) {
+          this.elements.push(node);
+        }
+        if (node.firstChild) {
+          node = node.firstChild;
+        } else if (node.nextSibling) {
+          node = node.nextSibling;
+        } else {
+          while (node) {
+            if (node.parentNode && node.parentNode.nextSibling) {
+              node = node.parentNode.nextSibling;
+              break;
+            }
+            node = node.parentNode;
+          }
+        }
+      }
+      this.node = node;
+    }
+    item(index) {
+      this.update(index);
+      return this.elements[index];
+    }
+    get length() {
+      this.update(-1);
+      return this.elements.length;
+    }
+  }
+
+  function makeArrayLike(o) {
+    return new Proxy(o, {
+      get: function (target, propKey) {
+        if (Number.isInteger(Number(propKey))) {
+          const index = Number(propKey);
+          return target.item(index);
+        }
+        var p = Reflect.get(target, propKey);
+        return p;
+      },
+      has: function (target, P) {
+        if (Number.isInteger(Number(P))) {
+          const index = Number(P);
+          // we don't want has() to use the length getter
+          // so that we can avoid loading the entire list
+          if (index < 0) {
+            return false;
+          }
+          target.update(index);
+          return index < target.elements.length;
+        }
+        return Reflect.has(target, P);
+      },
+    });
+  }
+
   function _GetElementConstructor(tagName) {
     switch (tagName.toLowerCase()) {
       case "html":
@@ -183,7 +254,7 @@ if (!("window" in globalThis)) {
         child.parentNode.firstChild = child.nextSibling;
       }
       if (child.nextSibling) {
-        child.nextSibling.previousSibling = child.previousSibiling;
+        child.nextSibling.previousSibling = child.previousSibling;
       } else {
         child.parentNode.lastChild = child.previousSibling;
       }
@@ -196,7 +267,11 @@ if (!("window" in globalThis)) {
         console.assert(ref.parentNode == this);
         newNode.nextSibling = ref;
         newNode.previousSibling = ref.previousSibling;
-        ref.previousSibling.nextSibling = newNode;
+        if (ref.previousSibling) {
+          ref.previousSibling.nextSibling = newNode;
+        } else {
+          this.firstChild = newNode;
+        }
         ref.previousSibling = newNode;
         newNode.parentNode = ref.parentNode;
       }
@@ -372,22 +447,9 @@ if (!("window" in globalThis)) {
       return this.childNodes.filter((n) => n.tagName === tagName);
     }
     getElementsByClassName(className) {
-      let results = [];
-      for (let child of this.childNodes) {
-        if (!(child instanceof globalThis.Element)) {
-          continue;
-        }
-        let classProp = child["class"];
-        let classList;
-        if (classProp) {
-          classList = classProp.split(" ");
-        }
-        if (classList && classList.includes(className)) {
-          results.push(child);
-        }
-        results = results.concat(child.getElementsByClassName(className));
-      }
-      return results;
+      return makeArrayLike(
+        new HTMLCollection(document, this, (node) => node.class == className)
+      );
     }
     get style() {
       let self = this;
@@ -531,38 +593,15 @@ if (!("window" in globalThis)) {
     createDocumentFragment() {
       return new Node();
     },
-    getElementsByClassName(className) {
-      let results = [];
-      for (let child of this.childNodes) {
-        if (!(child instanceof globalThis.Element)) {
-          continue;
-        }
-        let classProp = child["class"];
-        let classList;
-        if (classProp) {
-          classList = classProp.split(" ");
-        }
-        if (classList && classList.includes(className)) {
-          results.push(child);
-        }
-        results = results.concat(child.getElementsByClassName(className));
-      }
-      return results;
-    },
     getElementById(id) {
-      function matchingId(node, id) {
-        for (let child of node.childNodes) {
-          if (child["id"] == id) {
-            return child;
-          }
-          var result = matchingId(child, id);
-          if (result) {
-            return result;
-          }
-        }
-        return null;
-      }
-      return matchingId(this, id);
+      return makeArrayLike(
+        new HTMLCollection(document, this, (node) => node.id == id)
+      )[0];
+    },
+    getElementsByClassName(className) {
+      return makeArrayLike(
+        new HTMLCollection(document, this, (node) => node.class == className)
+      );
     },
     createRange: () => new globalThis.Range(),
     getSelection: () => new globalThis.Selection(),
@@ -16860,6 +16899,9 @@ function benchmark() {
   addingItems();
   start = performance.now();
   function completingItems() {
+    let checkboxes = Array.prototype.slice.call(
+      document.getElementsByClassName("toggle")
+    );
     let checkboxes = document.getElementsByClassName("toggle");
     for (let i = 0; i < numberOfItemsToAdd; i++) {
       checkboxes[i].dispatchEvent({ type: "click" });
@@ -16872,7 +16914,9 @@ function benchmark() {
 
   start = performance.now();
   function deletingItems() {
-    let deleteButtons = document.getElementsByClassName("destroy");
+    let deleteButtons = Array.prototype.slice.call(
+      document.getElementsByClassName("destroy")
+    );
     let start = performance.now();
     for (let i = 0; i < numberOfItemsToAdd; i++) {
       deleteButtons[i].dispatchEvent({ type: "click" });
