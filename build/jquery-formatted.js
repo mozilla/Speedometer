@@ -578,6 +578,12 @@ if (!("window" in globalThis)) {
   globalThis.Text = class extends globalThis.CharacterData {};
 
   globalThis.Event = class {
+    constructor(type, options) {
+      this.type = type;
+      this.options = options;
+    }
+    preventDefault() {}
+
     initCustomEvent() {}
     initEvent() {}
   };
@@ -12091,11 +12097,11 @@ function benchmark() {
     for (let i = 0; i < numberOfItemsToAdd; i++) {
       newTodo.value = "Something to do " + i;
       newTodo.dispatchEvent({ type: "input" });
-      newTodo.dispatchEvent({
-        type: "keyup",
-        keyCode: ENTER_KEY,
-        which: ENTER_KEY,
-      });
+      var e = new Event("keyup");
+      e.keyCode = ENTER_KEY;
+      e.which = ENTER_KEY;
+      e.key = "Enter";
+      newTodo.dispatchEvent(e);
     }
 
     while (timeoutHandlers.length > 0) {
