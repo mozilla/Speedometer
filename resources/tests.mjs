@@ -339,11 +339,11 @@ Suites.push({
     async prepare(page) {
     },
     tests: [
-        new BenchmarkTestStep("OpenSiteMap", (page) => {
+        new BenchmarkTestStep("OpenNavPopups", (page) => {
             page.querySelector("#sitemap-link").click();
             page.querySelector("#header-nav-dropdown-toggle").click()
         }),
-        new BenchmarkTestStep("ExpandDetails", (page) => {
+        new BenchmarkTestStep("ExpandSitemapDetails", (page) => {
             page.querySelector("#sitemap-us-details summary").click();
             page.querySelector("#sitemap-us-details summary").click();
             page.querySelector("#sitemap-world-details summary").click();
@@ -357,7 +357,7 @@ Suites.push({
             page.querySelector("#sitemap-sports-details summary").click();
             page.querySelector("#sitemap-videos-details summary").click();
         }),
-        new BenchmarkTestStep("LanguageSettingsOpen", (page) => {
+        new BenchmarkTestStep("OpenSettingsDialog", (page) => {
             page.querySelector("#settings-language-link").click();
         }),
     ],
