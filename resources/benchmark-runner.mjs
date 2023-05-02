@@ -74,6 +74,10 @@ class PageElement {
         this.#node = node;
     }
 
+    setAttribute(attr, value) {
+        this.#node.setAttribute(attr, value);
+    }
+
     setValue(value) {
         this.#node.value = value;
     }

@@ -332,6 +332,52 @@ Suites.push({
     ],
 });
 
+
+Suites.push({
+    name: "News",
+    url: "tentative/news/dist/index.html",
+    async prepare(page) {
+    },
+    tests: [
+        new BenchmarkTestStep("OpenSiteMap", (page) => {
+            page.querySelector("#sitemap-link").click();
+        }),
+        new BenchmarkTestStep("ExpandDetails", (page) => {
+            page.querySelector("#sitemap-world-details summary").click();
+            page.querySelector("#sitemap-sports-details summary").click();
+            page.querySelector("#sitemap-videos-details summary").click();
+        }),
+        new BenchmarkTestStep("ClickLink", (page) => {
+            page.querySelector("#sitemap-page-videos-section-live_tv-link").click();
+        }),
+        new BenchmarkTestStep("LanguageSettings", (page) => {
+            page.querySelector("#settings-language-link").click();
+        }),
+        new BenchmarkTestStep("LanguageSettings", (page) => {
+            page.querySelector("#close-dialog-link").click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "News-Sizes",
+    url: "tentative/news/dist/frame.html",
+    async prepare(page) {
+        await page.waitForElement("html.ready");
+    },
+    tests: [
+        new BenchmarkTestStep("Medium", (page) => {
+            page.querySelector("iframe").setAttribute("class", "medium");
+        }),
+        new BenchmarkTestStep("Small", (page) => {
+            page.querySelector("iframe").setAttribute("class", "small");
+        }),
+        new BenchmarkTestStep("Big", (page) => {
+            page.querySelector("iframe").setAttribute("class", "");
+        }),
+    ],
+});
+
 Suites.push({
     name: "Editor-CodeMirror",
     url: "tentative/editors/dist/codemirror.html",
