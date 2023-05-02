@@ -344,7 +344,7 @@ Suites.push({
             page.querySelector("#header-nav-dropdown-toggle").click()
         }),
         new BenchmarkTestStep("ExpandSitemapDetails", (page) => {
-            page.querySelector("#sitemap-us-details summary").click();
+            page.querySelector("#sitemap-frontpage-details summary").click();
             page.querySelector("#sitemap-us-details summary").click();
             page.querySelector("#sitemap-world-details summary").click();
             page.querySelector("#sitemap-politics-details summary").click();
