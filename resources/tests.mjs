@@ -341,19 +341,24 @@ Suites.push({
     tests: [
         new BenchmarkTestStep("OpenSiteMap", (page) => {
             page.querySelector("#sitemap-link").click();
+            page.querySelector("#header-nav-dropdown-toggle").click()
         }),
         new BenchmarkTestStep("ExpandDetails", (page) => {
-            for (let element of page.querySelectorAll("#sitemap details summary"))
-                element.click();
+            page.querySelector("#sitemap-us-details summary").click();
+            page.querySelector("#sitemap-us-details summary").click();
+            page.querySelector("#sitemap-world-details summary").click();
+            page.querySelector("#sitemap-politics-details summary").click();
+            page.querySelector("#sitemap-business-details summary").click();
+            page.querySelector("#sitemap-opinion-details summary").click();
+            page.querySelector("#sitemap-health-details summary").click();
+            page.querySelector("#sitemap-entertainment-details summary").click();
+            page.querySelector("#sitemap-style-details summary").click();
+            page.querySelector("#sitemap-travel-details summary").click();
+            page.querySelector("#sitemap-sports-details summary").click();
+            page.querySelector("#sitemap-videos-details summary").click();
         }),
-        new BenchmarkTestStep("ClickLink", (page) => {
-            page.querySelector("#sitemap-page-videos-section-live_tv-link").click();
-        }),
-        new BenchmarkTestStep("LanguageSettings", (page) => {
+        new BenchmarkTestStep("LanguageSettingsOpen", (page) => {
             page.querySelector("#settings-language-link").click();
-        }),
-        new BenchmarkTestStep("LanguageSettings", (page) => {
-            page.querySelector("#close-dialog-link").click();
         }),
     ],
 });
