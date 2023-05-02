@@ -7,22 +7,62 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title></title>
     <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
       iframe {
         width: 100%;
-        height: 100%;
+        height: 100vh;
         border: none;
       }
       iframe.small {
-        width: 20%;
-        height: 20%;
-      }
-      iframe.medium {
-        width: 60%;
-        height: 60%;
+        width: 50%;
       }
     </style>
   </head>
   <body>
+    <button hidden id="OpenNavPopup"></button>
+    <button hidden id="ExpandNavPopup"></button>
+    <button hidden id="CloseNavPopup"></button>
+    <!-- <button hidden id="ExpandSitemapDetails"></button>
+    <button hidden id="OpenSettingsDialog"></button> -->
     <iframe src="./index.html" onload="document.documentElement.classList.add('ready')"></iframe>
+    <script>
+      let frame = document.querySelector('iframe');
+      let contentDoc;
+      frame.onload = () => {
+        document.documentElement.classList.add('ready');
+        contentDoc = frame.contentDocument;
+      }
+      document.querySelector('#OpenNavPopup').onclick = () => {
+        contentDoc.querySelector('#menu-link').click();
+      };
+      document.querySelector('#ExpandNavPopup').onclick = () => {
+        contentDoc.querySelector('#mobile-menu-nav-dropdown-toggle').click();
+      };
+      document.querySelector('#CloseNavPopup').onclick = () => {
+        contentDoc.querySelector('#close-menu-link').click();
+      };
+
+      // document.querySelector('#ExpandSitemapDetails').onclick = () => {
+      //   contentDoc.querySelector('#sitemap-frontpage-details summary').click();
+      //   contentDoc.querySelector('#sitemap-us-details summary').click();
+      //   contentDoc.querySelector('#sitemap-world-details summary').click();
+      //   contentDoc.querySelector('#sitemap-politics-details summary').click();
+      //   contentDoc.querySelector('#sitemap-business-details summary').click();
+      //   contentDoc.querySelector('#sitemap-opinion-details summary').click();
+      //   contentDoc.querySelector('#sitemap-health-details summary').click();
+      //   contentDoc.querySelector('#sitemap-entertainment-details summary').click();
+      //   contentDoc.querySelector('#sitemap-style-details summary').click();
+      //   contentDoc.querySelector('#sitemap-travel-details summary').click();
+      //   contentDoc.querySelector('#sitemap-sports-details summary').click();
+      //   contentDoc.querySelector('#sitemap-videos-details summary').click();
+      // };
+
+      // document.querySelector('#OpenSettingsDialog').onclick = () => {
+      //   contentDoc.querySelector('#settings-language-link').click();
+      // };
+    </script>
   </body>
 </html>
