@@ -343,9 +343,8 @@ Suites.push({
             page.querySelector("#sitemap-link").click();
         }),
         new BenchmarkTestStep("ExpandDetails", (page) => {
-            page.querySelector("#sitemap-world-details summary").click();
-            page.querySelector("#sitemap-sports-details summary").click();
-            page.querySelector("#sitemap-videos-details summary").click();
+            for (let element of page.querySelectorAll("#sitemap details summary"))
+                element.click();
         }),
         new BenchmarkTestStep("ClickLink", (page) => {
             page.querySelector("#sitemap-page-videos-section-live_tv-link").click();
