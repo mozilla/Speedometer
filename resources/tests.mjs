@@ -370,18 +370,17 @@ Suites.push({
         await page.waitForElement("html.ready");
     },
     tests: [
-        new BenchmarkTestStep("ResizeToSmall", (page) => {
+        new BenchmarkTestStep("OpenSitemap", (page) => {
+            page.querySelector("#OpenSitemapPopup").click();
+            page.querySelector("#ExpandSitemapDetails").click();
+        }),
+        new BenchmarkTestStep("OpenSettingsDialog", (page) => {
+            page.querySelector("#OpenSettingsDialog").click();
+        }),
+        new BenchmarkTestStep("OpenSmallNavPopup", (page) => {
             page.querySelector("iframe").setAttribute("class", "small");
-        }),
-        new BenchmarkTestStep("OpenNavPopup", (page) => {
             page.querySelector("#OpenNavPopup").click();
-        }),
-        new BenchmarkTestStep("ExpandNavPopup", (page) => {
             page.querySelector("#ExpandNavPopup").click();
-        }),
-        new BenchmarkTestStep("ResizeToBig", (page) => {
-            page.querySelector("#CloseNavPopup").click();
-            page.querySelector("iframe").setAttribute("class", "");
         }),
     ],
 });
