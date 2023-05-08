@@ -335,7 +335,9 @@ Suites.push({
 Suites.push({
     name: "NewsSite - Next",
     url: "tentative/newssite/news-next/dist/index.html",
-    async prepare(page) {},
+    async prepare(page) {
+        await new Promise(r=>setTimeout(r, 100));
+    },
     tests: [
         new BenchmarkTestStep("NavigateToBusiness", (page) => {
             page.querySelector("#navbar-navlist-business-link").click();
