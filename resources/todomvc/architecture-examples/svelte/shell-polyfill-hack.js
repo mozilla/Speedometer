@@ -564,7 +564,9 @@ if (!("window" in globalThis)) {
         }
         preventDefault() {}
 
-        initCustomEvent() { }
+        initCustomEvent(type, canBubble, cancelable, detail) {
+            this.detail = detail
+        }
         initEvent() { }
     };
     globalThis.UIEvent = class extends globalThis.Event { };
