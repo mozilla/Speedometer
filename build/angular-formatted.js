@@ -3529,13 +3529,13 @@ document.body.appendChild(document.createElement("app-root"));
     __webpack_require__((__webpack_require__.s = 435));
   },
 ]); // type="module"></script>
-// Load contents of ../resources/todomvc/architecture-examples/angular/dist/main.6b2851abde849f23.js
+// Load contents of ../resources/todomvc/architecture-examples/angular/dist/main.a554e93481d86451.js
 ("use strict");
 
 (self.webpackChunkangular = self.webpackChunkangular || []).push([
   [179],
   {
-    826: () => {
+    677: () => {
       function isFunction(value) {
         return "function" == typeof value;
       }
@@ -3879,6 +3879,15 @@ document.body.appendChild(document.createElement("app-root"));
       function identity(x) {
         return x;
       }
+      function pipeFromArray(fns) {
+        return 0 === fns.length
+          ? identity
+          : 1 === fns.length
+          ? fns[0]
+          : function (input) {
+              return fns.reduce((prev, fn) => fn(prev), input);
+            };
+      }
       let Observable_Observable = (() => {
         class Observable2 {
           constructor(subscribe) {
@@ -3958,15 +3967,7 @@ document.body.appendChild(document.createElement("app-root"));
             return this;
           }
           pipe(...operations) {
-            return (function pipeFromArray(fns) {
-              return 0 === fns.length
-                ? identity
-                : 1 === fns.length
-                ? fns[0]
-                : function (input) {
-                    return fns.reduce((prev, fn) => fn(prev), input);
-                  };
-            })(operations)(this);
+            return pipeFromArray(operations)(this);
           }
           toPromise(promiseCtor) {
             return new (promiseCtor = getPromiseCtor(promiseCtor))(
@@ -4141,13 +4142,12 @@ document.body.appendChild(document.createElement("app-root"));
             : EMPTY_SUBSCRIPTION;
         }
       }
+      function hasLift(source) {
+        return isFunction(source?.lift);
+      }
       function operate(init) {
         return (source) => {
-          if (
-            (function hasLift(source) {
-              return isFunction(source?.lift);
-            })(source)
-          )
+          if (hasLift(source))
             return source.lift(function (liftedSource) {
               try {
                 return init(liftedSource, this);
@@ -4614,11 +4614,17 @@ document.body.appendChild(document.createElement("app-root"));
               })(source, subscriber, project, concurrent)
             ));
       }
+      function mergeAll(concurrent = 1 / 0) {
+        return mergeMap(identity, concurrent);
+      }
       const EMPTY = new Observable_Observable((subscriber) =>
         subscriber.complete()
       );
       function last(arr) {
         return arr[arr.length - 1];
+      }
+      function popResultSelector(args) {
+        return isFunction(last(args)) ? args.pop() : void 0;
       }
       function popScheduler(args) {
         return (function isScheduler(value) {
@@ -4859,7 +4865,7 @@ document.body.appendChild(document.createElement("app-root"));
             );
           })(msg, actual, null, "!=");
       }
-      function core_defineInjectable(opts) {
+      function ɵɵdefineInjectable(opts) {
         return {
           token: opts.token,
           providedIn: opts.providedIn || null,
@@ -5099,6 +5105,14 @@ document.body.appendChild(document.createElement("app-root"));
       function getPipeDef$1(type) {
         return type[NG_PIPE_DEF] || null;
       }
+      function getNgModuleDef(type, throwNotFound) {
+        const ngModuleDef = type[NG_MOD_DEF] || null;
+        if (!ngModuleDef && !0 === throwNotFound)
+          throw new Error(
+            `Type ${stringify(type)} does not have 'ɵmod' property.`
+          );
+        return ngModuleDef;
+      }
       function isLView(value) {
         return Array.isArray(value) && "object" == typeof value[1];
       }
@@ -5270,6 +5284,9 @@ document.body.appendChild(document.createElement("app-root"));
       function setCurrentDirectiveIndex(currentDirectiveIndex) {
         instructionState.lFrame.currentDirectiveIndex = currentDirectiveIndex;
       }
+      function getCurrentQueryIndex() {
+        return instructionState.lFrame.currentQueryIndex;
+      }
       function setCurrentQueryIndex(value) {
         instructionState.lFrame.currentQueryIndex = value;
       }
@@ -5365,6 +5382,10 @@ document.body.appendChild(document.createElement("app-root"));
       }
       function setSelectedIndex(index) {
         instructionState.lFrame.selectedIndex = index;
+      }
+      function getSelectedTNode() {
+        const lFrame = instructionState.lFrame;
+        return getTNode(lFrame.tView, lFrame.selectedIndex);
       }
       function registerPostOrderHooks(tView, tNode) {
         for (
@@ -5500,6 +5521,9 @@ document.body.appendChild(document.createElement("app-root"));
           }
         }
         return i;
+      }
+      function isNameOnlyAttributeMarker(marker) {
+        return 3 === marker || 4 === marker || 6 === marker;
       }
       function mergeHostAttrs(dst, src) {
         if (null !== src && 0 !== src.length)
@@ -5840,42 +5864,7 @@ document.body.appendChild(document.createElement("app-root"));
       ) {
         const currentTView = lView[1],
           tNode = currentTView.data[injectorIndex + 8],
-          injectableIdx = (function locateDirectiveOrProvider(
-            tNode,
-            tView,
-            token,
-            canAccessViewProviders,
-            isHostSpecialCase
-          ) {
-            const nodeProviderIndexes = tNode.providerIndexes,
-              tInjectables = tView.data,
-              injectablesStart = 1048575 & nodeProviderIndexes,
-              directivesStart = tNode.directiveStart,
-              cptViewProvidersCount = nodeProviderIndexes >> 20,
-              endIndex = isHostSpecialCase
-                ? injectablesStart + cptViewProvidersCount
-                : tNode.directiveEnd;
-            for (
-              let i = canAccessViewProviders
-                ? injectablesStart
-                : injectablesStart + cptViewProvidersCount;
-              i < endIndex;
-              i++
-            ) {
-              const providerTokenOrDef = tInjectables[i];
-              if (
-                (i < directivesStart && token === providerTokenOrDef) ||
-                (i >= directivesStart && providerTokenOrDef.type === token)
-              )
-                return i;
-            }
-            if (isHostSpecialCase) {
-              const dirDef = tInjectables[directivesStart];
-              if (dirDef && isComponentDef(dirDef) && dirDef.type === token)
-                return directivesStart;
-            }
-            return null;
-          })(
+          injectableIdx = locateDirectiveOrProvider(
             tNode,
             currentTView,
             token,
@@ -5887,6 +5876,42 @@ document.body.appendChild(document.createElement("app-root"));
         return null !== injectableIdx
           ? getNodeInjectable(lView, currentTView, injectableIdx, tNode)
           : NOT_FOUND;
+      }
+      function locateDirectiveOrProvider(
+        tNode,
+        tView,
+        token,
+        canAccessViewProviders,
+        isHostSpecialCase
+      ) {
+        const nodeProviderIndexes = tNode.providerIndexes,
+          tInjectables = tView.data,
+          injectablesStart = 1048575 & nodeProviderIndexes,
+          directivesStart = tNode.directiveStart,
+          cptViewProvidersCount = nodeProviderIndexes >> 20,
+          endIndex = isHostSpecialCase
+            ? injectablesStart + cptViewProvidersCount
+            : tNode.directiveEnd;
+        for (
+          let i = canAccessViewProviders
+            ? injectablesStart
+            : injectablesStart + cptViewProvidersCount;
+          i < endIndex;
+          i++
+        ) {
+          const providerTokenOrDef = tInjectables[i];
+          if (
+            (i < directivesStart && token === providerTokenOrDef) ||
+            (i >= directivesStart && providerTokenOrDef.type === token)
+          )
+            return i;
+        }
+        if (isHostSpecialCase) {
+          const dirDef = tInjectables[directivesStart];
+          if (dirDef && isComponentDef(dirDef) && dirDef.type === token)
+            return directivesStart;
+        }
+        return null;
       }
       function getNodeInjectable(lView, tView, index, tNode) {
         let value = lView[index];
@@ -6072,7 +6097,7 @@ document.body.appendChild(document.createElement("app-root"));
             "number" == typeof options
               ? (this.__NG_ELEMENT_ID__ = options)
               : void 0 !== options &&
-                (this.ɵprov = core_defineInjectable({
+                (this.ɵprov = ɵɵdefineInjectable({
                   token: this,
                   providedIn: options.providedIn || "root",
                   factory: options.factory,
@@ -6084,6 +6109,16 @@ document.body.appendChild(document.createElement("app-root"));
         toString() {
           return `InjectionToken ${this._desc}`;
         }
+      }
+      function flatten(list, dst) {
+        void 0 === dst && (dst = list);
+        for (let i = 0; i < list.length; i++) {
+          let item = list[i];
+          Array.isArray(item)
+            ? (dst === list && (dst = list.slice(0, i)), flatten(item, dst))
+            : dst !== list && dst.push(item);
+        }
+        return dst;
       }
       function deepForEach(input, fn) {
         input.forEach((value) =>
@@ -6160,6 +6195,18 @@ document.body.appendChild(document.createElement("app-root"));
             return _injectImplementation;
           })() || injectInjectorOnly
         )(resolveForwardRef(token), flags);
+      }
+      function fesm2020_core_inject(token, flags = InjectFlags.Default) {
+        return (
+          "number" != typeof flags &&
+            (flags =
+              0 |
+              (flags.optional && 8) |
+              (flags.host && 1) |
+              (flags.self && 2) |
+              (flags.skipSelf && 4)),
+          core_inject(token, flags)
+        );
       }
       function injectArgs(types) {
         const args = [];
@@ -6719,6 +6766,63 @@ document.body.appendChild(document.createElement("app-root"));
           ? renderer.removeAttribute(element, "class")
           : renderer.setAttribute(element, "class", newValue);
       }
+      class SafeValueImpl {
+        constructor(changingThisBreaksApplicationSecurity) {
+          this.changingThisBreaksApplicationSecurity =
+            changingThisBreaksApplicationSecurity;
+        }
+        toString() {
+          return `SafeValue must use [property]=binding: ${this.changingThisBreaksApplicationSecurity} (see https://g.co/ng/security#xss)`;
+        }
+      }
+      function unwrapSafeValue(value) {
+        return value instanceof SafeValueImpl
+          ? value.changingThisBreaksApplicationSecurity
+          : value;
+      }
+      const SAFE_URL_PATTERN =
+        /^(?:(?:https?|mailto|data|ftp|tel|file|sms):|[^&:/?#]*(?:[/?#]|$))/gi;
+      var core_SecurityContext = (() => (
+        ((core_SecurityContext = core_SecurityContext || {})[
+          (core_SecurityContext.NONE = 0)
+        ] = "NONE"),
+        (core_SecurityContext[(core_SecurityContext.HTML = 1)] = "HTML"),
+        (core_SecurityContext[(core_SecurityContext.STYLE = 2)] = "STYLE"),
+        (core_SecurityContext[(core_SecurityContext.SCRIPT = 3)] = "SCRIPT"),
+        (core_SecurityContext[(core_SecurityContext.URL = 4)] = "URL"),
+        (core_SecurityContext[(core_SecurityContext.RESOURCE_URL = 5)] =
+          "RESOURCE_URL"),
+        core_SecurityContext
+      ))();
+      function ɵɵsanitizeUrl(unsafeUrl) {
+        const sanitizer = (function getSanitizer() {
+          const lView = getLView();
+          return lView && lView[12];
+        })();
+        return sanitizer
+          ? sanitizer.sanitize(core_SecurityContext.URL, unsafeUrl) || ""
+          : (function allowSanitizationBypassAndThrow(value, type) {
+              const actualType = (function getSanitizationBypassType(value) {
+                return (
+                  (value instanceof SafeValueImpl && value.getTypeName()) ||
+                  null
+                );
+              })(value);
+              if (null != actualType && actualType !== type) {
+                if ("ResourceURL" === actualType && "URL" === type) return !0;
+                throw new Error(
+                  `Required a safe ${type}, got a ${actualType} (see https://g.co/ng/security#xss)`
+                );
+              }
+              return actualType === type;
+            })(unsafeUrl, "URL")
+          ? unwrapSafeValue(unsafeUrl)
+          : (function _sanitizeUrl(url) {
+              return (url = String(url)).match(SAFE_URL_PATTERN)
+                ? url
+                : "unsafe:" + url;
+            })(renderStringify(unsafeUrl));
+      }
       const ENVIRONMENT_INITIALIZER = new InjectionToken(
           "ENVIRONMENT_INITIALIZER"
         ),
@@ -7123,8 +7227,8 @@ document.body.appendChild(document.createElement("app-root"));
               if (def) {
                 const typeName = (function getTypeName(type) {
                   if (type.hasOwnProperty("name")) return type.name;
-                  const match = ("" + type).match(/^function\s*([^\s(]+)/);
-                  return null === match ? "" : match[1];
+                  const match2 = ("" + type).match(/^function\s*([^\s(]+)/);
+                  return null === match2 ? "" : match2[1];
                 })(type);
                 return (
                   console.warn(
@@ -7235,6 +7339,9 @@ document.body.appendChild(document.createElement("app-root"));
         }
         return (ElementRef2.__NG_ELEMENT_ID__ = injectElementRef), ElementRef2;
       })();
+      function unwrapElementRef(value) {
+        return value instanceof core_ElementRef ? value.nativeElement : value;
+      }
       class RendererFactory2 {}
       let core_Renderer2 = (() => {
           class Renderer22 {}
@@ -7254,7 +7361,7 @@ document.body.appendChild(document.createElement("app-root"));
         Sanitizer = (() => {
           class Sanitizer2 {}
           return (
-            (Sanitizer2.ɵprov = core_defineInjectable({
+            (Sanitizer2.ɵprov = ɵɵdefineInjectable({
               token: Sanitizer2,
               providedIn: "root",
               factory: () => null,
@@ -7290,6 +7397,9 @@ document.body.appendChild(document.createElement("app-root"));
           for (; e && getOriginalError(e); ) e = getOriginalError(e);
           return e || null;
         }
+      }
+      function maybeUnwrapFn(value) {
+        return value instanceof Function ? value() : value;
       }
       function classIndexOf(className, classToSearch, startingIndex) {
         let end = className.length;
@@ -7339,9 +7449,7 @@ document.body.appendChild(document.createElement("app-root"));
         const nodeAttrs = tNode.attrs || [],
           nameOnlyMarkerIdx = (function getNameOnlyMarkerIndex(nodeAttrs) {
             for (let i = 0; i < nodeAttrs.length; i++)
-              if (3 === (marker = nodeAttrs[i]) || 4 === marker || 6 === marker)
-                return i;
-            var marker;
+              if (isNameOnlyAttributeMarker(nodeAttrs[i])) return i;
             return nodeAttrs.length;
           })(nodeAttrs);
         let skipToNextSelector = !1;
@@ -7600,7 +7708,7 @@ document.body.appendChild(document.createElement("app-root"));
         return (
           (Injector2.THROW_IF_NOT_FOUND = THROW_IF_NOT_FOUND),
           (Injector2.NULL = new NullInjector()),
-          (Injector2.ɵprov = core_defineInjectable({
+          (Injector2.ɵprov = ɵɵdefineInjectable({
             token: Injector2,
             providedIn: "any",
             factory: () => core_inject(INJECTOR),
@@ -7619,6 +7727,9 @@ document.body.appendChild(document.createElement("app-root"));
               resolveForwardRef(token),
               flags
             );
+      }
+      function ɵɵinvalidFactory() {
+        throw new Error("invalid");
       }
       function toTStylingRange(prev, next) {
         return (prev << 17) | (next << 2);
@@ -8098,6 +8209,17 @@ document.body.appendChild(document.createElement("app-root"));
           incompleteFirstPass: !1,
         });
       }
+      function storeCleanupWithContext(tView, lView, context2, cleanupFn) {
+        const lCleanup = getOrCreateLViewCleanup(lView);
+        null === context2
+          ? lCleanup.push(cleanupFn)
+          : (lCleanup.push(context2),
+            tView.firstCreatePass &&
+              getOrCreateTViewCleanup(tView).push(
+                cleanupFn,
+                lCleanup.length - 1
+              ));
+      }
       function generatePropertyAliases(
         inputAliasMap,
         directiveDefIdx,
@@ -8352,6 +8474,34 @@ document.body.appendChild(document.createElement("app-root"));
             )
           );
         lView[hostTNode.index] = componentView;
+      }
+      function elementAttributeInternal(
+        tNode,
+        lView,
+        name,
+        value,
+        sanitizer,
+        namespace
+      ) {
+        const element = getNativeByTNode(tNode, lView);
+        !(function setElementAttribute(
+          renderer,
+          element,
+          namespace,
+          tagName,
+          name,
+          value,
+          sanitizer
+        ) {
+          if (null == value) renderer.removeAttribute(element, name, namespace);
+          else {
+            const strValue =
+              null == sanitizer
+                ? renderStringify(value)
+                : sanitizer(value, tagName || "", name);
+            renderer.setAttribute(element, name, strValue, namespace);
+          }
+        })(lView[11], element, namespace, tNode.value, name, value, sanitizer);
       }
       function setInputsFromAttrs(
         lView,
@@ -8634,22 +8784,7 @@ document.body.appendChild(document.createElement("app-root"));
           destroyLView(this._lView[1], this._lView);
         }
         onDestroy(callback) {
-          !(function storeCleanupWithContext(
-            tView,
-            lView,
-            context2,
-            cleanupFn
-          ) {
-            const lCleanup = getOrCreateLViewCleanup(lView);
-            null === context2
-              ? lCleanup.push(cleanupFn)
-              : (lCleanup.push(context2),
-                tView.firstCreatePass &&
-                  getOrCreateTViewCleanup(tView).push(
-                    cleanupFn,
-                    lCleanup.length - 1
-                  ));
-          })(this._lView[1], this._lView, null, callback);
+          storeCleanupWithContext(this._lView[1], this._lView, null, callback);
         }
         markForCheck() {
           markViewDirty(this._cdRefInjectingView || this._lView);
@@ -9180,6 +9315,22 @@ document.body.appendChild(document.createElement("app-root"));
           ((lView[bindingIndex] = value), !0)
         );
       }
+      function ɵɵattribute(name, value, sanitizer, namespace) {
+        const lView = getLView();
+        return (
+          bindingUpdated(lView, nextBindingIndex(), value) &&
+            (getTView(),
+            elementAttributeInternal(
+              getSelectedTNode(),
+              lView,
+              name,
+              value,
+              sanitizer,
+              namespace
+            )),
+          ɵɵattribute
+        );
+      }
       function ɵɵtemplate(
         index,
         templateFn,
@@ -9321,10 +9472,7 @@ document.body.appendChild(document.createElement("app-root"));
                   renderer.setProperty(element, propName, value));
             })(
               getTView(),
-              (function getSelectedTNode() {
-                const lFrame = instructionState.lFrame;
-                return getTNode(lFrame.tView, lFrame.selectedIndex);
-              })(),
+              getSelectedTNode(),
               lView,
               propName,
               value,
@@ -9488,6 +9636,16 @@ document.body.appendChild(document.createElement("app-root"));
             ),
           ɵɵelementEnd
         );
+      }
+      function ɵɵelement(index, name, attrsIndex, localRefsIndex) {
+        return (
+          ɵɵelementStart(index, name, attrsIndex, localRefsIndex),
+          ɵɵelementEnd(),
+          ɵɵelement
+        );
+      }
+      function ɵɵgetCurrentView() {
+        return getLView();
       }
       function core_isPromise(obj) {
         return !!obj && "function" == typeof obj.then;
@@ -10076,24 +10234,7 @@ document.body.appendChild(document.createElement("app-root"));
                         ("string" == typeof suffix
                           ? (value += suffix)
                           : "object" == typeof value &&
-                            (value = stringify(
-                              (function unwrapSafeValue(value) {
-                                return value instanceof
-                                  class SafeValueImpl {
-                                    constructor(
-                                      changingThisBreaksApplicationSecurity
-                                    ) {
-                                      this.changingThisBreaksApplicationSecurity =
-                                        changingThisBreaksApplicationSecurity;
-                                    }
-                                    toString() {
-                                      return `SafeValue must use [property]=binding: ${this.changingThisBreaksApplicationSecurity} (see https://g.co/ng/security#xss)`;
-                                    }
-                                  }
-                                  ? value.changingThisBreaksApplicationSecurity
-                                  : value;
-                              })(value)
-                            ))),
+                            (value = stringify(unwrapSafeValue(value)))),
                       value
                     );
                   })(value, suffix)),
@@ -10493,6 +10634,7 @@ document.body.appendChild(document.createElement("app-root"));
         };
       }
       class NgModuleRef$1 {}
+      class NgModuleFactory$1 {}
       class NgModuleRef extends NgModuleRef$1 {
         constructor(ngModuleType, _parent) {
           super(),
@@ -10502,17 +10644,8 @@ document.body.appendChild(document.createElement("app-root"));
             (this.componentFactoryResolver = new ComponentFactoryResolver(
               this
             ));
-          const ngModuleDef = (function getNgModuleDef(type, throwNotFound) {
-            const ngModuleDef = type[NG_MOD_DEF] || null;
-            if (!ngModuleDef && !0 === throwNotFound)
-              throw new Error(
-                `Type ${stringify(type)} does not have 'ɵmod' property.`
-              );
-            return ngModuleDef;
-          })(ngModuleType);
-          (this._bootstrapComponents = (function maybeUnwrapFn(value) {
-            return value instanceof Function ? value() : value;
-          })(ngModuleDef.bootstrap)),
+          const ngModuleDef = getNgModuleDef(ngModuleType);
+          (this._bootstrapComponents = maybeUnwrapFn(ngModuleDef.bootstrap)),
             (this._r3Injector = createInjectorWithoutInjectorInstances(
               ngModuleType,
               _parent,
@@ -10545,7 +10678,7 @@ document.body.appendChild(document.createElement("app-root"));
           this.destroyCbs.push(callback);
         }
       }
-      class NgModuleFactory extends class NgModuleFactory$1 {} {
+      class NgModuleFactory extends NgModuleFactory$1 {
         constructor(moduleType) {
           super(), (this.moduleType = moduleType);
         }
@@ -10553,12 +10686,97 @@ document.body.appendChild(document.createElement("app-root"));
           return new NgModuleRef(this.moduleType, parentInjector);
         }
       }
+      class EnvironmentNgModuleRefAdapter extends NgModuleRef$1 {
+        constructor(providers, parent, source) {
+          super(),
+            (this.componentFactoryResolver = new ComponentFactoryResolver(
+              this
+            )),
+            (this.instance = null);
+          const injector = new R3Injector(
+            [
+              ...providers,
+              {
+                provide: NgModuleRef$1,
+                useValue: this,
+              },
+              {
+                provide: ComponentFactoryResolver$1,
+                useValue: this.componentFactoryResolver,
+              },
+            ],
+            parent || getNullInjector(),
+            source,
+            new Set(["environment"])
+          );
+          (this.injector = injector), injector.resolveInjectorInitializers();
+        }
+        destroy() {
+          this.injector.destroy();
+        }
+        onDestroy(callback) {
+          this.injector.onDestroy(callback);
+        }
+      }
+      function createEnvironmentInjector(providers, parent, debugName = null) {
+        return new EnvironmentNgModuleRefAdapter(providers, parent, debugName)
+          .injector;
+      }
+      let StandaloneService = (() => {
+        class StandaloneService2 {
+          constructor(_injector) {
+            (this._injector = _injector), (this.cachedInjectors = new Map());
+          }
+          getOrCreateStandaloneInjector(componentDef) {
+            if (!componentDef.standalone) return null;
+            if (!this.cachedInjectors.has(componentDef.id)) {
+              const providers = internalImportProvidersFrom(
+                  0,
+                  componentDef.type
+                ),
+                standaloneInjector =
+                  providers.length > 0
+                    ? createEnvironmentInjector(
+                        [providers],
+                        this._injector,
+                        `Standalone[${componentDef.type.name}]`
+                      )
+                    : null;
+              this.cachedInjectors.set(componentDef.id, standaloneInjector);
+            }
+            return this.cachedInjectors.get(componentDef.id);
+          }
+          ngOnDestroy() {
+            try {
+              for (const injector of this.cachedInjectors.values())
+                null !== injector && injector.destroy();
+            } finally {
+              this.cachedInjectors.clear();
+            }
+          }
+        }
+        return (
+          (StandaloneService2.ɵprov = ɵɵdefineInjectable({
+            token: StandaloneService2,
+            providedIn: "environment",
+            factory: () =>
+              new StandaloneService2(core_inject(EnvironmentInjector)),
+          })),
+          StandaloneService2
+        );
+      })();
+      function ɵɵStandaloneFeature(definition) {
+        definition.getStandaloneInjector = (parentInjector) =>
+          parentInjector
+            .get(StandaloneService)
+            .getOrCreateStandaloneInjector(definition);
+      }
       function _wrapInTimeout(fn) {
         return (value) => {
           setTimeout(fn, void 0, value);
         };
       }
-      const core_EventEmitter = class EventEmitter_ extends Subject {
+      const EventEmitter = class EventEmitter_ extends Subject {
         constructor(isAsync = !1) {
           super(), (this.__isAsync = isAsync);
         }
@@ -10590,6 +10808,92 @@ document.body.appendChild(document.createElement("app-root"));
           );
         }
       };
+      function symbolIterator() {
+        return this._results[core_getSymbolIterator()]();
+      }
+      class QueryList {
+        constructor(_emitDistinctChangesOnly = !1) {
+          (this._emitDistinctChangesOnly = _emitDistinctChangesOnly),
+            (this.dirty = !0),
+            (this._results = []),
+            (this._changesDetected = !1),
+            (this._changes = null),
+            (this.length = 0),
+            (this.first = void 0),
+            (this.last = void 0);
+          const symbol = core_getSymbolIterator(),
+            proto = QueryList.prototype;
+          proto[symbol] || (proto[symbol] = symbolIterator);
+        }
+        get changes() {
+          return this._changes || (this._changes = new EventEmitter());
+        }
+        get(index) {
+          return this._results[index];
+        }
+        map(fn) {
+          return this._results.map(fn);
+        }
+        filter(fn) {
+          return this._results.filter(fn);
+        }
+        find(fn) {
+          return this._results.find(fn);
+        }
+        reduce(fn, init) {
+          return this._results.reduce(fn, init);
+        }
+        forEach(fn) {
+          this._results.forEach(fn);
+        }
+        some(fn) {
+          return this._results.some(fn);
+        }
+        toArray() {
+          return this._results.slice();
+        }
+        toString() {
+          return this._results.toString();
+        }
+        reset(resultsTree, identityAccessor) {
+          this.dirty = !1;
+          const newResultFlat = flatten(resultsTree);
+          (this._changesDetected = !(function arrayEquals(
+            a,
+            b,
+            identityAccessor
+          ) {
+            if (a.length !== b.length) return !1;
+            for (let i = 0; i < a.length; i++) {
+              let valueA = a[i],
+                valueB = b[i];
+              if (
+                (identityAccessor &&
+                  ((valueA = identityAccessor(valueA)),
+                  (valueB = identityAccessor(valueB))),
+                valueB !== valueA)
+              )
+                return !1;
+            }
+            return !0;
+          })(this._results, newResultFlat, identityAccessor)) &&
+            ((this._results = newResultFlat),
+            (this.length = newResultFlat.length),
+            (this.last = newResultFlat[this.length - 1]),
+            (this.first = newResultFlat[0]));
+        }
+        notifyOnChanges() {
+          this._changes &&
+            (this._changesDetected || !this._emitDistinctChangesOnly) &&
+            this._changes.emit(this);
+        }
+        setDirty() {
+          this.dirty = !0;
+        }
+        destroy() {
+          this.changes.complete(), this.changes.unsubscribe();
+        }
+      }
       let TemplateRef = (() => {
         class TemplateRef2 {}
         return (
@@ -10632,15 +10936,16 @@ document.body.appendChild(document.createElement("app-root"));
           }
         };
       function injectTemplateRef() {
-        return (function createTemplateRef(hostTNode, hostLView) {
-          return 4 & hostTNode.type
-            ? new R3TemplateRef(
-                hostLView,
-                hostTNode,
-                createElementRef(hostTNode, hostLView)
-              )
-            : null;
-        })(getCurrentTNode(), getLView());
+        return createTemplateRef(getCurrentTNode(), getLView());
+      }
+      function createTemplateRef(hostTNode, hostLView) {
+        return 4 & hostTNode.type
+          ? new R3TemplateRef(
+              hostLView,
+              hostTNode,
+              createElementRef(hostTNode, hostLView)
+            )
+          : null;
       }
       let ViewContainerRef = (() => {
         class ViewContainerRef2 {}
@@ -10650,33 +10955,7 @@ document.body.appendChild(document.createElement("app-root"));
         );
       })();
       function injectViewContainerRef() {
-        return (function createContainerRef(hostTNode, hostLView) {
-          let lContainer;
-          const slotValue = hostLView[hostTNode.index];
-          if (isLContainer(slotValue)) lContainer = slotValue;
-          else {
-            let commentNode;
-            if (8 & hostTNode.type) commentNode = unwrapRNode(slotValue);
-            else {
-              const renderer = hostLView[11];
-              commentNode = renderer.createComment("");
-              const hostNative = getNativeByTNode(hostTNode, hostLView);
-              nativeInsertBefore(
-                renderer,
-                nativeParentNode(renderer, hostNative),
-                commentNode,
-                (function nativeNextSibling(renderer, node) {
-                  return renderer.nextSibling(node);
-                })(renderer, hostNative),
-                !1
-              );
-            }
-            (hostLView[hostTNode.index] = lContainer =
-              createLContainer(slotValue, hostLView, commentNode, hostTNode)),
-              addToViewTree(hostLView, lContainer);
-          }
-          return new R3ViewContainerRef(lContainer, hostTNode, hostLView);
-        })(getCurrentTNode(), getLView());
+        return createContainerRef(getCurrentTNode(), getLView());
       }
       const VE_ViewContainerRef = ViewContainerRef,
         R3ViewContainerRef = class extends VE_ViewContainerRef {
@@ -10893,6 +11172,366 @@ document.body.appendChild(document.createElement("app-root"));
       function getOrCreateViewRefs(lContainer) {
         return lContainer[8] || (lContainer[8] = []);
       }
+      function createContainerRef(hostTNode, hostLView) {
+        let lContainer;
+        const slotValue = hostLView[hostTNode.index];
+        if (isLContainer(slotValue)) lContainer = slotValue;
+        else {
+          let commentNode;
+          if (8 & hostTNode.type) commentNode = unwrapRNode(slotValue);
+          else {
+            const renderer = hostLView[11];
+            commentNode = renderer.createComment("");
+            const hostNative = getNativeByTNode(hostTNode, hostLView);
+            nativeInsertBefore(
+              renderer,
+              nativeParentNode(renderer, hostNative),
+              commentNode,
+              (function nativeNextSibling(renderer, node) {
+                return renderer.nextSibling(node);
+              })(renderer, hostNative),
+              !1
+            );
+          }
+          (hostLView[hostTNode.index] = lContainer =
+            createLContainer(slotValue, hostLView, commentNode, hostTNode)),
+            addToViewTree(hostLView, lContainer);
+        }
+        return new R3ViewContainerRef(lContainer, hostTNode, hostLView);
+      }
+      class LQuery_ {
+        constructor(queryList) {
+          (this.queryList = queryList), (this.matches = null);
+        }
+        clone() {
+          return new LQuery_(this.queryList);
+        }
+        setDirty() {
+          this.queryList.setDirty();
+        }
+      }
+      class LQueries_ {
+        constructor(queries = []) {
+          this.queries = queries;
+        }
+        createEmbeddedView(tView) {
+          const tQueries = tView.queries;
+          if (null !== tQueries) {
+            const noOfInheritedQueries =
+                null !== tView.contentQueries
+                  ? tView.contentQueries[0]
+                  : tQueries.length,
+              viewLQueries = [];
+            for (let i = 0; i < noOfInheritedQueries; i++) {
+              const tQuery = tQueries.getByIndex(i);
+              viewLQueries.push(
+                this.queries[tQuery.indexInDeclarationView].clone()
+              );
+            }
+            return new LQueries_(viewLQueries);
+          }
+          return null;
+        }
+        insertView(tView) {
+          this.dirtyQueriesWithMatches(tView);
+        }
+        detachView(tView) {
+          this.dirtyQueriesWithMatches(tView);
+        }
+        dirtyQueriesWithMatches(tView) {
+          for (let i = 0; i < this.queries.length; i++)
+            null !== getTQuery(tView, i).matches && this.queries[i].setDirty();
+        }
+      }
+      class TQueryMetadata_ {
+        constructor(predicate, flags, read = null) {
+          (this.predicate = predicate),
+            (this.flags = flags),
+            (this.read = read);
+        }
+      }
+      class TQueries_ {
+        constructor(queries = []) {
+          this.queries = queries;
+        }
+        elementStart(tView, tNode) {
+          for (let i = 0; i < this.queries.length; i++)
+            this.queries[i].elementStart(tView, tNode);
+        }
+        elementEnd(tNode) {
+          for (let i = 0; i < this.queries.length; i++)
+            this.queries[i].elementEnd(tNode);
+        }
+        embeddedTView(tNode) {
+          let queriesForTemplateRef = null;
+          for (let i = 0; i < this.length; i++) {
+            const childQueryIndex =
+                null !== queriesForTemplateRef
+                  ? queriesForTemplateRef.length
+                  : 0,
+              tqueryClone = this.getByIndex(i).embeddedTView(
+                tNode,
+                childQueryIndex
+              );
+            tqueryClone &&
+              ((tqueryClone.indexInDeclarationView = i),
+              null !== queriesForTemplateRef
+                ? queriesForTemplateRef.push(tqueryClone)
+                : (queriesForTemplateRef = [tqueryClone]));
+          }
+          return null !== queriesForTemplateRef
+            ? new TQueries_(queriesForTemplateRef)
+            : null;
+        }
+        template(tView, tNode) {
+          for (let i = 0; i < this.queries.length; i++)
+            this.queries[i].template(tView, tNode);
+        }
+        getByIndex(index) {
+          return this.queries[index];
+        }
+        get length() {
+          return this.queries.length;
+        }
+        track(tquery) {
+          this.queries.push(tquery);
+        }
+      }
+      class TQuery_ {
+        constructor(metadata, nodeIndex = -1) {
+          (this.metadata = metadata),
+            (this.matches = null),
+            (this.indexInDeclarationView = -1),
+            (this.crossesNgTemplate = !1),
+            (this._appliesToNextNode = !0),
+            (this._declarationNodeIndex = nodeIndex);
+        }
+        elementStart(tView, tNode) {
+          this.isApplyingToNode(tNode) && this.matchTNode(tView, tNode);
+        }
+        elementEnd(tNode) {
+          this._declarationNodeIndex === tNode.index &&
+            (this._appliesToNextNode = !1);
+        }
+        template(tView, tNode) {
+          this.elementStart(tView, tNode);
+        }
+        embeddedTView(tNode, childQueryIndex) {
+          return this.isApplyingToNode(tNode)
+            ? ((this.crossesNgTemplate = !0),
+              this.addMatch(-tNode.index, childQueryIndex),
+              new TQuery_(this.metadata))
+            : null;
+        }
+        isApplyingToNode(tNode) {
+          if (this._appliesToNextNode && 1 != (1 & this.metadata.flags)) {
+            const declarationNodeIdx = this._declarationNodeIndex;
+            let parent = tNode.parent;
+            for (
+              ;
+              null !== parent &&
+              8 & parent.type &&
+              parent.index !== declarationNodeIdx;
+
+            )
+              parent = parent.parent;
+            return declarationNodeIdx === (null !== parent ? parent.index : -1);
+          }
+          return this._appliesToNextNode;
+        }
+        matchTNode(tView, tNode) {
+          const predicate = this.metadata.predicate;
+          if (Array.isArray(predicate))
+            for (let i = 0; i < predicate.length; i++) {
+              const name = predicate[i];
+              this.matchTNodeWithReadOption(
+                tView,
+                tNode,
+                getIdxOfMatchingSelector(tNode, name)
+              ),
+                this.matchTNodeWithReadOption(
+                  tView,
+                  tNode,
+                  locateDirectiveOrProvider(tNode, tView, name, !1, !1)
+                );
+            }
+          else
+            predicate === TemplateRef
+              ? 4 & tNode.type &&
+                this.matchTNodeWithReadOption(tView, tNode, -1)
+              : this.matchTNodeWithReadOption(
+                  tView,
+                  tNode,
+                  locateDirectiveOrProvider(tNode, tView, predicate, !1, !1)
+                );
+        }
+        matchTNodeWithReadOption(tView, tNode, nodeMatchIdx) {
+          if (null !== nodeMatchIdx) {
+            const read = this.metadata.read;
+            if (null !== read)
+              if (
+                read === core_ElementRef ||
+                read === ViewContainerRef ||
+                (read === TemplateRef && 4 & tNode.type)
+              )
+                this.addMatch(tNode.index, -2);
+              else {
+                const directiveOrProviderIdx = locateDirectiveOrProvider(
+                  tNode,
+                  tView,
+                  read,
+                  !1,
+                  !1
+                );
+                null !== directiveOrProviderIdx &&
+                  this.addMatch(tNode.index, directiveOrProviderIdx);
+              }
+            else this.addMatch(tNode.index, nodeMatchIdx);
+          }
+        }
+        addMatch(tNodeIdx, matchIdx) {
+          null === this.matches
+            ? (this.matches = [tNodeIdx, matchIdx])
+            : this.matches.push(tNodeIdx, matchIdx);
+        }
+      }
+      function getIdxOfMatchingSelector(tNode, selector) {
+        const localNames = tNode.localNames;
+        if (null !== localNames)
+          for (let i = 0; i < localNames.length; i += 2)
+            if (localNames[i] === selector) return localNames[i + 1];
+        return null;
+      }
+      function createResultForNode(lView, tNode, matchingIdx, read) {
+        return -1 === matchingIdx
+          ? (function createResultByTNodeType(tNode, currentView) {
+              return 11 & tNode.type
+                ? createElementRef(tNode, currentView)
+                : 4 & tNode.type
+                ? createTemplateRef(tNode, currentView)
+                : null;
+            })(tNode, lView)
+          : -2 === matchingIdx
+          ? (function createSpecialToken(lView, tNode, read) {
+              return read === core_ElementRef
+                ? createElementRef(tNode, lView)
+                : read === TemplateRef
+                ? createTemplateRef(tNode, lView)
+                : read === ViewContainerRef
+                ? createContainerRef(tNode, lView)
+                : void 0;
+            })(lView, tNode, read)
+          : getNodeInjectable(lView, lView[1], matchingIdx, tNode);
+      }
+      function materializeViewResults(tView, lView, tQuery, queryIndex) {
+        const lQuery = lView[19].queries[queryIndex];
+        if (null === lQuery.matches) {
+          const tViewData = tView.data,
+            tQueryMatches = tQuery.matches,
+            result = [];
+          for (let i = 0; i < tQueryMatches.length; i += 2) {
+            const matchedNodeIdx = tQueryMatches[i];
+            result.push(
+              matchedNodeIdx < 0
+                ? null
+                : createResultForNode(
+                    lView,
+                    tViewData[matchedNodeIdx],
+                    tQueryMatches[i + 1],
+                    tQuery.metadata.read
+                  )
+            );
+          }
+          lQuery.matches = result;
+        }
+        return lQuery.matches;
+      }
+      function collectQueryResults(tView, lView, queryIndex, result) {
+        const tQuery = tView.queries.getByIndex(queryIndex),
+          tQueryMatches = tQuery.matches;
+        if (null !== tQueryMatches) {
+          const lViewResults = materializeViewResults(
+            tView,
+            lView,
+            tQuery,
+            queryIndex
+          );
+          for (let i = 0; i < tQueryMatches.length; i += 2) {
+            const tNodeIdx = tQueryMatches[i];
+            if (tNodeIdx > 0) result.push(lViewResults[i / 2]);
+            else {
+              const childQueryIndex = tQueryMatches[i + 1],
+                declarationLContainer = lView[-tNodeIdx];
+              for (let i2 = 10; i2 < declarationLContainer.length; i2++) {
+                const embeddedLView = declarationLContainer[i2];
+                embeddedLView[17] === embeddedLView[3] &&
+                  collectQueryResults(
+                    embeddedLView[1],
+                    embeddedLView,
+                    childQueryIndex,
+                    result
+                  );
+              }
+              if (null !== declarationLContainer[9]) {
+                const embeddedLViews = declarationLContainer[9];
+                for (let i2 = 0; i2 < embeddedLViews.length; i2++) {
+                  const embeddedLView = embeddedLViews[i2];
+                  collectQueryResults(
+                    embeddedLView[1],
+                    embeddedLView,
+                    childQueryIndex,
+                    result
+                  );
+                }
+              }
+            }
+          }
+        }
+        return result;
+      }
+      function ɵɵqueryRefresh(queryList) {
+        const lView = getLView(),
+          tView = getTView(),
+          queryIndex = getCurrentQueryIndex();
+        setCurrentQueryIndex(queryIndex + 1);
+        const tQuery = getTQuery(tView, queryIndex);
+        if (
+          queryList.dirty &&
+          (function isCreationMode(view) {
+            return 4 == (4 & view[2]);
+          })(lView) ===
+            (2 == (2 & tQuery.metadata.flags))
+        ) {
+          if (null === tQuery.matches) queryList.reset([]);
+          else {
+            const result = tQuery.crossesNgTemplate
+              ? collectQueryResults(tView, lView, queryIndex, [])
+              : materializeViewResults(tView, lView, tQuery, queryIndex);
+            queryList.reset(result, unwrapElementRef),
+              queryList.notifyOnChanges();
+          }
+          return !0;
+        }
+        return !1;
+      }
+      function ɵɵviewQuery(predicate, flags, read) {
+        const tView = getTView();
+        tView.firstCreatePass &&
+          ((function createTQuery(tView, metadata, nodeIndex) {
+            null === tView.queries && (tView.queries = new TQueries_()),
+              tView.queries.track(new TQuery_(metadata, nodeIndex));
+          })(tView, new TQueryMetadata_(predicate, flags, read), -1),
+          2 == (2 & flags) && (tView.staticViewQueries = !0)),
+          (function createLQuery(tView, lView, flags) {
+            const queryList = new QueryList(4 == (4 & flags));
+            storeCleanupWithContext(tView, lView, queryList, queryList.destroy),
+              null === lView[19] && (lView[19] = new LQueries_()),
+              lView[19].queries.push(new LQuery_(queryList));
+          })(tView, getLView(), flags);
+      }
+      function getTQuery(tView, index) {
+        return tView.queries.getByIndex(index);
+      }
       function core_noop(...args) {}
       const APP_INITIALIZER = new InjectionToken("Application Initializer");
       let ApplicationInitStatus = (() => {
@@ -10945,7 +11584,7 @@ document.body.appendChild(document.createElement("app-root"));
               core_inject(APP_INITIALIZER, 8)
             );
           }),
-          (ApplicationInitStatus2.ɵprov = core_defineInjectable({
+          (ApplicationInitStatus2.ɵprov = ɵɵdefineInjectable({
             token: ApplicationInitStatus2,
             factory: ApplicationInitStatus2.ɵfac,
             providedIn: "root",
@@ -10967,27 +11606,94 @@ document.body.appendChild(document.createElement("app-root"));
           providedIn: "platform",
           factory: () => "unknown",
         }),
-        APP_BOOTSTRAP_LISTENER = new InjectionToken("appBootstrapListener"),
-        LOCALE_ID = new InjectionToken("LocaleId", {
-          providedIn: "root",
-          factory: () =>
-            (function fesm2020_core_inject(token, flags = InjectFlags.Default) {
-              return (
-                "number" != typeof flags &&
-                  (flags =
-                    0 |
-                    (flags.optional && 8) |
-                    (flags.host && 1) |
-                    (flags.self && 2) |
-                    (flags.skipSelf && 4)),
-                core_inject(token, flags)
-              );
-            })(LOCALE_ID, InjectFlags.Optional | InjectFlags.SkipSelf) ||
-            (function getGlobalLocale() {
-              return (typeof $localize < "u" && $localize.locale) || "en-US";
-            })(),
-        }),
-        promise = (() => Promise.resolve(0))();
+        core_APP_BOOTSTRAP_LISTENER = new InjectionToken(
+          "appBootstrapListener"
+        );
+      let Console = (() => {
+        class Console2 {
+          log(message) {
+            console.log(message);
+          }
+          warn(message) {
+            console.warn(message);
+          }
+        }
+        return (
+          (Console2.ɵfac = function (t) {
+            return new (t || Console2)();
+          }),
+          (Console2.ɵprov = ɵɵdefineInjectable({
+            token: Console2,
+            factory: Console2.ɵfac,
+            providedIn: "platform",
+          })),
+          Console2
+        );
+      })();
+      const LOCALE_ID = new InjectionToken("LocaleId", {
+        providedIn: "root",
+        factory: () =>
+          fesm2020_core_inject(
+            LOCALE_ID,
+            InjectFlags.Optional | InjectFlags.SkipSelf
+          ) ||
+          (function getGlobalLocale() {
+            return (typeof $localize < "u" && $localize.locale) || "en-US";
+          })(),
+      });
+      class ModuleWithComponentFactories {
+        constructor(ngModuleFactory, componentFactories) {
+          (this.ngModuleFactory = ngModuleFactory),
+            (this.componentFactories = componentFactories);
+        }
+      }
+      let Compiler = (() => {
+        class Compiler2 {
+          compileModuleSync(moduleType) {
+            return new NgModuleFactory(moduleType);
+          }
+          compileModuleAsync(moduleType) {
+            return Promise.resolve(this.compileModuleSync(moduleType));
+          }
+          compileModuleAndAllComponentsSync(moduleType) {
+            const ngModuleFactory = this.compileModuleSync(moduleType),
+              componentFactories = maybeUnwrapFn(
+                getNgModuleDef(moduleType).declarations
+              ).reduce((factories, declaration) => {
+                const componentDef = getComponentDef(declaration);
+                return (
+                  componentDef &&
+                    factories.push(new ComponentFactory(componentDef)),
+                  factories
+                );
+              }, []);
+            return new ModuleWithComponentFactories(
+              ngModuleFactory,
+              componentFactories
+            );
+          }
+          compileModuleAndAllComponentsAsync(moduleType) {
+            return Promise.resolve(
+              this.compileModuleAndAllComponentsSync(moduleType)
+            );
+          }
+          clearCache() {}
+          clearCacheFor(type) {}
+          getModuleId(moduleType) {}
+        }
+        return (
+          (Compiler2.ɵfac = function (t) {
+            return new (t || Compiler2)();
+          }),
+          (Compiler2.ɵprov = ɵɵdefineInjectable({
+            token: Compiler2,
+            factory: Compiler2.ɵfac,
+            providedIn: "root",
+          })),
+          Compiler2
+        );
+      })();
+      const promise = (() => Promise.resolve(0))();
       function scheduleMicroTask(fn) {
         typeof Zone > "u"
           ? promise.then(() => {
@@ -11005,10 +11711,10 @@ document.body.appendChild(document.createElement("app-root"));
             ((this.hasPendingMacrotasks = !1),
             (this.hasPendingMicrotasks = !1),
             (this.isStable = !0),
-            (this.onUnstable = new core_EventEmitter(!1)),
-            (this.onMicrotaskEmpty = new core_EventEmitter(!1)),
-            (this.onStable = new core_EventEmitter(!1)),
-            (this.onError = new core_EventEmitter(!1)),
+            (this.onUnstable = new EventEmitter(!1)),
+            (this.onMicrotaskEmpty = new EventEmitter(!1)),
+            (this.onStable = new EventEmitter(!1)),
+            (this.onError = new EventEmitter(!1)),
             typeof Zone > "u")
           )
             throw new RuntimeError(908, !1);
@@ -11229,10 +11935,10 @@ document.body.appendChild(document.createElement("app-root"));
           (this.hasPendingMicrotasks = !1),
             (this.hasPendingMacrotasks = !1),
             (this.isStable = !0),
-            (this.onUnstable = new core_EventEmitter()),
-            (this.onMicrotaskEmpty = new core_EventEmitter()),
-            (this.onStable = new core_EventEmitter()),
-            (this.onError = new core_EventEmitter());
+            (this.onUnstable = new EventEmitter()),
+            (this.onMicrotaskEmpty = new EventEmitter()),
+            (this.onStable = new EventEmitter()),
+            (this.onError = new EventEmitter());
         }
         run(fn, applyThis, applyArgs) {
           return fn.apply(applyThis, applyArgs);
@@ -11384,7 +12090,7 @@ document.body.appendChild(document.createElement("app-root"));
                 core_inject(TESTABILITY_GETTER)
               );
             }),
-            (Testability2.ɵprov = core_defineInjectable({
+            (Testability2.ɵprov = ɵɵdefineInjectable({
               token: Testability2,
               factory: Testability2.ɵfac,
             })),
@@ -11428,7 +12134,7 @@ document.body.appendChild(document.createElement("app-root"));
             (TestabilityRegistry2.ɵfac = function (t) {
               return new (t || TestabilityRegistry2)();
             }),
-            (TestabilityRegistry2.ɵprov = core_defineInjectable({
+            (TestabilityRegistry2.ɵprov = ɵɵdefineInjectable({
               token: TestabilityRegistry2,
               factory: TestabilityRegistry2.ɵfac,
               providedIn: "platform",
@@ -11441,6 +12147,11 @@ document.body.appendChild(document.createElement("app-root"));
         PLATFORM_DESTROY_LISTENERS = new InjectionToken(
           "PlatformDestroyListeners"
         );
+      class NgProbeToken {
+        constructor(name, token) {
+          (this.name = name), (this.token = token);
+        }
+      }
       function createPlatformFactory(
         parentPlatformFactory,
         name,
@@ -11670,7 +12381,7 @@ document.body.appendChild(document.createElement("app-root"));
           (PlatformRef2.ɵfac = function (t) {
             return new (t || PlatformRef2)(core_inject(core_Injector));
           }),
-          (PlatformRef2.ɵprov = core_defineInjectable({
+          (PlatformRef2.ɵprov = ɵɵdefineInjectable({
             token: PlatformRef2,
             factory: PlatformRef2.ɵfac,
             providedIn: "platform",
@@ -11753,9 +12464,7 @@ document.body.appendChild(document.createElement("app-root"));
               return sources.length
                 ? 1 === sources.length
                   ? innerFrom(sources[0])
-                  : (function mergeAll(concurrent = 1 / 0) {
-                      return mergeMap(identity, concurrent);
-                    })(concurrent)(from(sources, scheduler))
+                  : mergeAll(concurrent)(from(sources, scheduler))
                 : EMPTY;
             })(
               isCurrentlyStable,
@@ -11771,7 +12480,7 @@ document.body.appendChild(document.createElement("app-root"));
                     let connection,
                       resetConnection,
                       subject,
-                      refCount = 0,
+                      refCount2 = 0,
                       hasCompleted = !1,
                       hasErrored = !1;
                     const cancelReset = () => {
@@ -11788,11 +12497,12 @@ document.body.appendChild(document.createElement("app-root"));
                         reset(), conn?.unsubscribe();
                       };
                     return operate((source, subscriber) => {
-                      refCount++, !hasErrored && !hasCompleted && cancelReset();
+                      refCount2++,
+                        !hasErrored && !hasCompleted && cancelReset();
                       const dest = (subject = subject ?? connector());
                       subscriber.add(() => {
-                        refCount--,
-                          0 === refCount &&
+                        refCount2--,
+                          0 === refCount2 &&
                             !hasErrored &&
                             !hasCompleted &&
                             (resetConnection = handleReset(
@@ -11802,7 +12512,7 @@ document.body.appendChild(document.createElement("app-root"));
                       }),
                         dest.subscribe(subscriber),
                         !connection &&
-                          refCount > 0 &&
+                          refCount2 > 0 &&
                           ((connection = new SafeSubscriber({
                             next: (value) => dest.next(value),
                             error: (err) => {
@@ -11910,7 +12620,7 @@ document.body.appendChild(document.createElement("app-root"));
               this.tick(),
               this.components.push(componentRef),
               this._injector
-                .get(APP_BOOTSTRAP_LISTENER, [])
+                .get(core_APP_BOOTSTRAP_LISTENER, [])
                 .concat(this._bootstrapListeners)
                 .forEach((listener) => listener(componentRef));
           }
@@ -11951,7 +12661,7 @@ document.body.appendChild(document.createElement("app-root"));
               core_inject(ErrorHandler)
             );
           }),
-          (ApplicationRef2.ɵprov = core_defineInjectable({
+          (ApplicationRef2.ɵprov = ɵɵdefineInjectable({
             token: ApplicationRef2,
             factory: ApplicationRef2.ɵfac,
             providedIn: "root",
@@ -12504,7 +13214,7 @@ document.body.appendChild(document.createElement("app-root"));
           }
         }
         return (
-          (IterableDiffers2.ɵprov = core_defineInjectable({
+          (IterableDiffers2.ɵprov = ɵɵdefineInjectable({
             token: IterableDiffers2,
             providedIn: "root",
             factory: defaultIterableDiffersFactory,
@@ -12530,23 +13240,451 @@ document.body.appendChild(document.createElement("app-root"));
           ApplicationModule2
         );
       })();
+      function coerceToBoolean(value) {
+        return "boolean" == typeof value
+          ? value
+          : null != value && "false" !== value;
+      }
       let _DOM = null;
       function getDOM() {
         return _DOM;
       }
       const common_DOCUMENT = new InjectionToken("DocumentToken");
-      function parseCookieValue(cookieStr, name) {
-        name = encodeURIComponent(name);
-        for (const cookie of cookieStr.split(";")) {
-          const eqIndex = cookie.indexOf("="),
-            [cookieName, cookieValue] =
-              -1 == eqIndex
-                ? [cookie, ""]
-                : [cookie.slice(0, eqIndex), cookie.slice(eqIndex + 1)];
-          if (cookieName.trim() === name)
-            return decodeURIComponent(cookieValue);
+      let PlatformLocation = (() => {
+        class PlatformLocation2 {
+          historyGo(relativePosition) {
+            throw new Error("Not implemented");
+          }
         }
-        return null;
+        return (
+          (PlatformLocation2.ɵfac = function (t) {
+            return new (t || PlatformLocation2)();
+          }),
+          (PlatformLocation2.ɵprov = ɵɵdefineInjectable({
+            token: PlatformLocation2,
+            factory: function () {
+              return (function useBrowserPlatformLocation() {
+                return core_inject(BrowserPlatformLocation);
+              })();
+            },
+            providedIn: "platform",
+          })),
+          PlatformLocation2
+        );
+      })();
+      const LOCATION_INITIALIZED = new InjectionToken("Location Initialized");
+      let BrowserPlatformLocation = (() => {
+        class BrowserPlatformLocation2 extends PlatformLocation {
+          constructor(_doc) {
+            super(), (this._doc = _doc), this._init();
+          }
+          _init() {
+            (this.location = window.location), (this._history = window.history);
+          }
+          getBaseHrefFromDOM() {
+            return getDOM().getBaseHref(this._doc);
+          }
+          onPopState(fn) {
+            const window2 = getDOM().getGlobalEventTarget(this._doc, "window");
+            return (
+              window2.addEventListener("popstate", fn, !1),
+              () => window2.removeEventListener("popstate", fn)
+            );
+          }
+          onHashChange(fn) {
+            const window2 = getDOM().getGlobalEventTarget(this._doc, "window");
+            return (
+              window2.addEventListener("hashchange", fn, !1),
+              () => window2.removeEventListener("hashchange", fn)
+            );
+          }
+          get href() {
+            return this.location.href;
+          }
+          get protocol() {
+            return this.location.protocol;
+          }
+          get hostname() {
+            return this.location.hostname;
+          }
+          get port() {
+            return this.location.port;
+          }
+          get pathname() {
+            return this.location.pathname;
+          }
+          get search() {
+            return this.location.search;
+          }
+          get hash() {
+            return this.location.hash;
+          }
+          set pathname(newPath) {
+            this.location.pathname = newPath;
+          }
+          pushState(state, title, url) {
+            supportsState()
+              ? this._history.pushState(state, title, url)
+              : (this.location.hash = url);
+          }
+          replaceState(state, title, url) {
+            supportsState()
+              ? this._history.replaceState(state, title, url)
+              : (this.location.hash = url);
+          }
+          forward() {
+            this._history.forward();
+          }
+          back() {
+            this._history.back();
+          }
+          historyGo(relativePosition = 0) {
+            this._history.go(relativePosition);
+          }
+          getState() {
+            return this._history.state;
+          }
+        }
+        return (
+          (BrowserPlatformLocation2.ɵfac = function (t) {
+            return new (t || BrowserPlatformLocation2)(
+              core_inject(common_DOCUMENT)
+            );
+          }),
+          (BrowserPlatformLocation2.ɵprov = ɵɵdefineInjectable({
+            token: BrowserPlatformLocation2,
+            factory: function () {
+              return (function createBrowserPlatformLocation() {
+                return new BrowserPlatformLocation(
+                  core_inject(common_DOCUMENT)
+                );
+              })();
+            },
+            providedIn: "platform",
+          })),
+          BrowserPlatformLocation2
+        );
+      })();
+      function supportsState() {
+        return !!window.history.pushState;
+      }
+      function joinWithSlash(start, end) {
+        if (0 == start.length) return end;
+        if (0 == end.length) return start;
+        let slashes = 0;
+        return (
+          start.endsWith("/") && slashes++,
+          end.startsWith("/") && slashes++,
+          2 == slashes
+            ? start + end.substring(1)
+            : 1 == slashes
+            ? start + end
+            : start + "/" + end
+        );
+      }
+      function stripTrailingSlash(url) {
+        const match2 = url.match(/#|\?|$/),
+          pathEndIdx = (match2 && match2.index) || url.length;
+        return (
+          url.slice(0, pathEndIdx - ("/" === url[pathEndIdx - 1] ? 1 : 0)) +
+          url.slice(pathEndIdx)
+        );
+      }
+      function normalizeQueryParams(params) {
+        return params && "?" !== params[0] ? "?" + params : params;
+      }
+      let LocationStrategy = (() => {
+        class LocationStrategy2 {
+          historyGo(relativePosition) {
+            throw new Error("Not implemented");
+          }
+        }
+        return (
+          (LocationStrategy2.ɵfac = function (t) {
+            return new (t || LocationStrategy2)();
+          }),
+          (LocationStrategy2.ɵprov = ɵɵdefineInjectable({
+            token: LocationStrategy2,
+            factory: function () {
+              return fesm2020_core_inject(PathLocationStrategy);
+            },
+            providedIn: "root",
+          })),
+          LocationStrategy2
+        );
+      })();
+      const APP_BASE_HREF = new InjectionToken("appBaseHref");
+      let PathLocationStrategy = (() => {
+          class PathLocationStrategy2 extends LocationStrategy {
+            constructor(_platformLocation, href) {
+              super(),
+                (this._platformLocation = _platformLocation),
+                (this._removeListenerFns = []),
+                (this._baseHref =
+                  href ??
+                  this._platformLocation.getBaseHrefFromDOM() ??
+                  fesm2020_core_inject(common_DOCUMENT).location?.origin ??
+                  "");
+            }
+            ngOnDestroy() {
+              for (; this._removeListenerFns.length; )
+                this._removeListenerFns.pop()();
+            }
+            onPopState(fn) {
+              this._removeListenerFns.push(
+                this._platformLocation.onPopState(fn),
+                this._platformLocation.onHashChange(fn)
+              );
+            }
+            getBaseHref() {
+              return this._baseHref;
+            }
+            prepareExternalUrl(internal) {
+              return joinWithSlash(this._baseHref, internal);
+            }
+            path(includeHash = !1) {
+              const pathname =
+                  this._platformLocation.pathname +
+                  normalizeQueryParams(this._platformLocation.search),
+                hash = this._platformLocation.hash;
+              return hash && includeHash ? `${pathname}${hash}` : pathname;
+            }
+            pushState(state, title, url, queryParams) {
+              const externalUrl = this.prepareExternalUrl(
+                url + normalizeQueryParams(queryParams)
+              );
+              this._platformLocation.pushState(state, title, externalUrl);
+            }
+            replaceState(state, title, url, queryParams) {
+              const externalUrl = this.prepareExternalUrl(
+                url + normalizeQueryParams(queryParams)
+              );
+              this._platformLocation.replaceState(state, title, externalUrl);
+            }
+            forward() {
+              this._platformLocation.forward();
+            }
+            back() {
+              this._platformLocation.back();
+            }
+            getState() {
+              return this._platformLocation.getState();
+            }
+            historyGo(relativePosition = 0) {
+              this._platformLocation.historyGo?.(relativePosition);
+            }
+          }
+          return (
+            (PathLocationStrategy2.ɵfac = function (t) {
+              return new (t || PathLocationStrategy2)(
+                core_inject(PlatformLocation),
+                core_inject(APP_BASE_HREF, 8)
+              );
+            }),
+            (PathLocationStrategy2.ɵprov = ɵɵdefineInjectable({
+              token: PathLocationStrategy2,
+              factory: PathLocationStrategy2.ɵfac,
+              providedIn: "root",
+            })),
+            PathLocationStrategy2
+          );
+        })(),
+        HashLocationStrategy = (() => {
+          class HashLocationStrategy2 extends LocationStrategy {
+            constructor(_platformLocation, _baseHref) {
+              super(),
+                (this._platformLocation = _platformLocation),
+                (this._baseHref = ""),
+                (this._removeListenerFns = []),
+                null != _baseHref && (this._baseHref = _baseHref);
+            }
+            ngOnDestroy() {
+              for (; this._removeListenerFns.length; )
+                this._removeListenerFns.pop()();
+            }
+            onPopState(fn) {
+              this._removeListenerFns.push(
+                this._platformLocation.onPopState(fn),
+                this._platformLocation.onHashChange(fn)
+              );
+            }
+            getBaseHref() {
+              return this._baseHref;
+            }
+            path(includeHash = !1) {
+              let path = this._platformLocation.hash;
+              return (
+                null == path && (path = "#"),
+                path.length > 0 ? path.substring(1) : path
+              );
+            }
+            prepareExternalUrl(internal) {
+              const url = joinWithSlash(this._baseHref, internal);
+              return url.length > 0 ? "#" + url : url;
+            }
+            pushState(state, title, path, queryParams) {
+              let url = this.prepareExternalUrl(
+                path + normalizeQueryParams(queryParams)
+              );
+              0 == url.length && (url = this._platformLocation.pathname),
+                this._platformLocation.pushState(state, title, url);
+            }
+            replaceState(state, title, path, queryParams) {
+              let url = this.prepareExternalUrl(
+                path + normalizeQueryParams(queryParams)
+              );
+              0 == url.length && (url = this._platformLocation.pathname),
+                this._platformLocation.replaceState(state, title, url);
+            }
+            forward() {
+              this._platformLocation.forward();
+            }
+            back() {
+              this._platformLocation.back();
+            }
+            getState() {
+              return this._platformLocation.getState();
+            }
+            historyGo(relativePosition = 0) {
+              this._platformLocation.historyGo?.(relativePosition);
+            }
+          }
+          return (
+            (HashLocationStrategy2.ɵfac = function (t) {
+              return new (t || HashLocationStrategy2)(
+                core_inject(PlatformLocation),
+                core_inject(APP_BASE_HREF, 8)
+              );
+            }),
+            (HashLocationStrategy2.ɵprov = ɵɵdefineInjectable({
+              token: HashLocationStrategy2,
+              factory: HashLocationStrategy2.ɵfac,
+            })),
+            HashLocationStrategy2
+          );
+        })(),
+        Location = (() => {
+          class Location2 {
+            constructor(locationStrategy) {
+              (this._subject = new EventEmitter()),
+                (this._urlChangeListeners = []),
+                (this._urlChangeSubscription = null),
+                (this._locationStrategy = locationStrategy);
+              const browserBaseHref = this._locationStrategy.getBaseHref();
+              (this._baseHref = stripTrailingSlash(
+                _stripIndexHtml(browserBaseHref)
+              )),
+                this._locationStrategy.onPopState((ev) => {
+                  this._subject.emit({
+                    url: this.path(!0),
+                    pop: !0,
+                    state: ev.state,
+                    type: ev.type,
+                  });
+                });
+            }
+            ngOnDestroy() {
+              this._urlChangeSubscription?.unsubscribe(),
+                (this._urlChangeListeners = []);
+            }
+            path(includeHash = !1) {
+              return this.normalize(this._locationStrategy.path(includeHash));
+            }
+            getState() {
+              return this._locationStrategy.getState();
+            }
+            isCurrentPathEqualTo(path, query = "") {
+              return (
+                this.path() ==
+                this.normalize(path + normalizeQueryParams(query))
+              );
+            }
+            normalize(url) {
+              return Location2.stripTrailingSlash(
+                (function _stripBaseHref(baseHref, url) {
+                  return baseHref && url.startsWith(baseHref)
+                    ? url.substring(baseHref.length)
+                    : url;
+                })(this._baseHref, _stripIndexHtml(url))
+              );
+            }
+            prepareExternalUrl(url) {
+              return (
+                url && "/" !== url[0] && (url = "/" + url),
+                this._locationStrategy.prepareExternalUrl(url)
+              );
+            }
+            go(path, query = "", state = null) {
+              this._locationStrategy.pushState(state, "", path, query),
+                this._notifyUrlChangeListeners(
+                  this.prepareExternalUrl(path + normalizeQueryParams(query)),
+                  state
+                );
+            }
+            replaceState(path, query = "", state = null) {
+              this._locationStrategy.replaceState(state, "", path, query),
+                this._notifyUrlChangeListeners(
+                  this.prepareExternalUrl(path + normalizeQueryParams(query)),
+                  state
+                );
+            }
+            forward() {
+              this._locationStrategy.forward();
+            }
+            back() {
+              this._locationStrategy.back();
+            }
+            historyGo(relativePosition = 0) {
+              this._locationStrategy.historyGo?.(relativePosition);
+            }
+            onUrlChange(fn) {
+              return (
+                this._urlChangeListeners.push(fn),
+                this._urlChangeSubscription ||
+                  (this._urlChangeSubscription = this.subscribe((v) => {
+                    this._notifyUrlChangeListeners(v.url, v.state);
+                  })),
+                () => {
+                  const fnIndex = this._urlChangeListeners.indexOf(fn);
+                  this._urlChangeListeners.splice(fnIndex, 1),
+                    0 === this._urlChangeListeners.length &&
+                      (this._urlChangeSubscription?.unsubscribe(),
+                      (this._urlChangeSubscription = null));
+                }
+              );
+            }
+            _notifyUrlChangeListeners(url = "", state) {
+              this._urlChangeListeners.forEach((fn) => fn(url, state));
+            }
+            subscribe(onNext, onThrow, onReturn) {
+              return this._subject.subscribe({
+                next: onNext,
+                error: onThrow,
+                complete: onReturn,
+              });
+            }
+          }
+          return (
+            (Location2.normalizeQueryParams = normalizeQueryParams),
+            (Location2.joinWithSlash = joinWithSlash),
+            (Location2.stripTrailingSlash = stripTrailingSlash),
+            (Location2.ɵfac = function (t) {
+              return new (t || Location2)(core_inject(LocationStrategy));
+            }),
+            (Location2.ɵprov = ɵɵdefineInjectable({
+              token: Location2,
+              factory: function () {
+                return (function createLocation() {
+                  return new Location(core_inject(LocationStrategy));
+                })();
+              },
+              providedIn: "root",
+            })),
+            Location2
+          );
+        })();
+      function _stripIndexHtml(url) {
+        return url.replace(/\/index.html$/, "");
       }
       class NgForOfContext {
         constructor($implicit, ngForOf, index, count) {
@@ -12750,19 +13888,133 @@ document.body.appendChild(document.createElement("app-root"));
           );
       }
       let CommonModule = (() => {
-        class CommonModule2 {}
-        return (
-          (CommonModule2.ɵfac = function (t) {
-            return new (t || CommonModule2)();
-          }),
-          (CommonModule2.ɵmod = ɵɵdefineNgModule({
-            type: CommonModule2,
-          })),
-          (CommonModule2.ɵinj = ɵɵdefineInjector({})),
-          CommonModule2
-        );
-      })();
-      class XhrFactory {}
+          class CommonModule2 {}
+          return (
+            (CommonModule2.ɵfac = function (t) {
+              return new (t || CommonModule2)();
+            }),
+            (CommonModule2.ɵmod = ɵɵdefineNgModule({
+              type: CommonModule2,
+            })),
+            (CommonModule2.ɵinj = ɵɵdefineInjector({})),
+            CommonModule2
+          );
+        })(),
+        common_ViewportScroller = (() => {
+          class ViewportScroller2 {}
+          return (
+            (ViewportScroller2.ɵprov = ɵɵdefineInjectable({
+              token: ViewportScroller2,
+              providedIn: "root",
+              factory: () =>
+                new BrowserViewportScroller(
+                  core_inject(common_DOCUMENT),
+                  window
+                ),
+            })),
+            ViewportScroller2
+          );
+        })();
+      class BrowserViewportScroller {
+        constructor(document2, window2) {
+          (this.document = document2),
+            (this.window = window2),
+            (this.offset = () => [0, 0]);
+        }
+        setOffset(offset) {
+          this.offset = Array.isArray(offset) ? () => offset : offset;
+        }
+        getScrollPosition() {
+          return this.supportsScrolling()
+            ? [this.window.pageXOffset, this.window.pageYOffset]
+            : [0, 0];
+        }
+        scrollToPosition(position) {
+          this.supportsScrolling() &&
+            this.window.scrollTo(position[0], position[1]);
+        }
+        scrollToAnchor(target) {
+          if (!this.supportsScrolling()) return;
+          const elSelected = (function findAnchorFromDocument(
+            document2,
+            target
+          ) {
+            const documentResult =
+              document2.getElementById(target) ||
+              document2.getElementsByName(target)[0];
+            if (documentResult) return documentResult;
+            if (
+              "function" == typeof document2.createTreeWalker &&
+              document2.body &&
+              (document2.body.createShadowRoot || document2.body.attachShadow)
+            ) {
+              const treeWalker = document2.createTreeWalker(
+                document2.body,
+                NodeFilter.SHOW_ELEMENT
+              );
+              let currentNode = treeWalker.currentNode;
+              for (; currentNode; ) {
+                const shadowRoot = currentNode.shadowRoot;
+                if (shadowRoot) {
+                  const result =
+                    shadowRoot.getElementById(target) ||
+                    shadowRoot.querySelector(`[name="${target}"]`);
+                  if (result) return result;
+                }
+                currentNode = treeWalker.nextNode();
+              }
+            }
+            return null;
+          })(this.document, target);
+          elSelected && (this.scrollToElement(elSelected), elSelected.focus());
+        }
+        setHistoryScrollRestoration(scrollRestoration) {
+          if (this.supportScrollRestoration()) {
+            const history = this.window.history;
+            history &&
+              history.scrollRestoration &&
+              (history.scrollRestoration = scrollRestoration);
+          }
+        }
+        scrollToElement(el) {
+          const rect = el.getBoundingClientRect(),
+            left = rect.left + this.window.pageXOffset,
+            top = rect.top + this.window.pageYOffset,
+            offset = this.offset();
+          this.window.scrollTo(left - offset[0], top - offset[1]);
+        }
+        supportScrollRestoration() {
+          try {
+            if (!this.supportsScrolling()) return !1;
+            const scrollRestorationDescriptor =
+              getScrollRestorationProperty(this.window.history) ||
+              getScrollRestorationProperty(
+                Object.getPrototypeOf(this.window.history)
+              );
+            return !(
+              !scrollRestorationDescriptor ||
+              (!scrollRestorationDescriptor.writable &&
+                !scrollRestorationDescriptor.set)
+            );
+          } catch {
+            return !1;
+          }
+        }
+        supportsScrolling() {
+          try {
+            return (
+              !!this.window &&
+              !!this.window.scrollTo &&
+              "pageXOffset" in this.window
+            );
+          } catch {
+            return !1;
+          }
+        }
+      }
+      function getScrollRestorationProperty(obj) {
+        return Object.getOwnPropertyDescriptor(obj, "scrollRestoration");
+      }
       class BrowserDomAdapter extends class GenericBrowserDomAdapter extends class DomAdapter {} {
         constructor() {
           super(...arguments), (this.supportsDOMEvents = !0);
@@ -12837,7 +14089,19 @@ document.body.appendChild(document.createElement("app-root"));
           return window.navigator.userAgent;
         }
         getCookie(name) {
-          return parseCookieValue(document.cookie, name);
+          return (function parseCookieValue(cookieStr, name) {
+            name = encodeURIComponent(name);
+            for (const cookie of cookieStr.split(";")) {
+              const eqIndex = cookie.indexOf("="),
+                [cookieName, cookieValue] =
+                  -1 == eqIndex
+                    ? [cookie, ""]
+                    : [cookie.slice(0, eqIndex), cookie.slice(eqIndex + 1)];
+              if (cookieName.trim() === name)
+                return decodeURIComponent(cookieValue);
+            }
+            return null;
+          })(document.cookie, name);
         }
       }
       let urlParsingNode,
@@ -12875,7 +14139,7 @@ document.body.appendChild(document.createElement("app-root"));
           (BrowserXhr2.ɵfac = function (t) {
             return new (t || BrowserXhr2)();
           }),
-          (BrowserXhr2.ɵprov = core_defineInjectable({
+          (BrowserXhr2.ɵprov = ɵɵdefineInjectable({
             token: BrowserXhr2,
             factory: BrowserXhr2.ɵfac,
           })),
@@ -12929,7 +14193,7 @@ document.body.appendChild(document.createElement("app-root"));
               core_inject(core_NgZone)
             );
           }),
-          (EventManager2.ɵprov = core_defineInjectable({
+          (EventManager2.ɵprov = ɵɵdefineInjectable({
             token: EventManager2,
             factory: EventManager2.ɵfac,
           })),
@@ -12971,7 +14235,7 @@ document.body.appendChild(document.createElement("app-root"));
             (SharedStylesHost2.ɵfac = function (t) {
               return new (t || SharedStylesHost2)();
             }),
-            (SharedStylesHost2.ɵprov = core_defineInjectable({
+            (SharedStylesHost2.ɵprov = ɵɵdefineInjectable({
               token: SharedStylesHost2,
               factory: SharedStylesHost2.ɵfac,
             })),
@@ -13020,7 +14284,7 @@ document.body.appendChild(document.createElement("app-root"));
                 core_inject(common_DOCUMENT)
               );
             }),
-            (DomSharedStylesHost2.ɵprov = core_defineInjectable({
+            (DomSharedStylesHost2.ɵprov = ɵɵdefineInjectable({
               token: DomSharedStylesHost2,
               factory: DomSharedStylesHost2.ɵfac,
             })),
@@ -13113,7 +14377,7 @@ document.body.appendChild(document.createElement("app-root"));
               core_inject(core_APP_ID)
             );
           }),
-          (DomRendererFactory22.ɵprov = core_defineInjectable({
+          (DomRendererFactory22.ɵprov = ɵɵdefineInjectable({
             token: DomRendererFactory22,
             factory: DomRendererFactory22.ɵfac,
           })),
@@ -13329,7 +14593,7 @@ document.body.appendChild(document.createElement("app-root"));
           (DomEventsPlugin2.ɵfac = function (t) {
             return new (t || DomEventsPlugin2)(core_inject(common_DOCUMENT));
           }),
-          (DomEventsPlugin2.ɵprov = core_defineInjectable({
+          (DomEventsPlugin2.ɵprov = ɵɵdefineInjectable({
             token: DomEventsPlugin2,
             factory: DomEventsPlugin2.ɵfac,
           })),
@@ -13446,7 +14710,7 @@ document.body.appendChild(document.createElement("app-root"));
           (KeyEventsPlugin2.ɵfac = function (t) {
             return new (t || KeyEventsPlugin2)(core_inject(common_DOCUMENT));
           }),
-          (KeyEventsPlugin2.ɵprov = core_defineInjectable({
+          (KeyEventsPlugin2.ɵprov = ɵɵdefineInjectable({
             token: KeyEventsPlugin2,
             factory: KeyEventsPlugin2.ɵfac,
           })),
@@ -13592,1278 +14856,130 @@ document.body.appendChild(document.createElement("app-root"));
             deps: [EVENT_MANAGER_PLUGINS, core_NgZone],
           },
           {
-            provide: XhrFactory,
+            provide: class XhrFactory {},
             useClass: BrowserXhr,
             deps: [],
           },
           [],
         ];
       let BrowserModule = (() => {
-        class BrowserModule2 {
-          constructor(providersAlreadyPresent) {}
-          static withServerTransition(params) {
-            return {
-              ngModule: BrowserModule2,
+          class BrowserModule2 {
+            constructor(providersAlreadyPresent) {}
+            static withServerTransition(params) {
+              return {
+                ngModule: BrowserModule2,
+                providers: [
+                  {
+                    provide: core_APP_ID,
+                    useValue: params.appId,
+                  },
+                  {
+                    provide: TRANSITION_ID,
+                    useExisting: core_APP_ID,
+                  },
+                  SERVER_TRANSITION_PROVIDERS,
+                ],
+              };
+            }
+          }
+          return (
+            (BrowserModule2.ɵfac = function (t) {
+              return new (t || BrowserModule2)(
+                core_inject(BROWSER_MODULE_PROVIDERS_MARKER, 12)
+              );
+            }),
+            (BrowserModule2.ɵmod = ɵɵdefineNgModule({
+              type: BrowserModule2,
+            })),
+            (BrowserModule2.ɵinj = ɵɵdefineInjector({
               providers: [
-                {
-                  provide: core_APP_ID,
-                  useValue: params.appId,
-                },
-                {
-                  provide: TRANSITION_ID,
-                  useExisting: core_APP_ID,
-                },
-                SERVER_TRANSITION_PROVIDERS,
+                ...BROWSER_MODULE_PROVIDERS,
+                ...TESTABILITY_PROVIDERS,
               ],
+              imports: [CommonModule, ApplicationModule],
+            })),
+            BrowserModule2
+          );
+        })(),
+        Title = (() => {
+          class Title2 {
+            constructor(_doc) {
+              this._doc = _doc;
+            }
+            getTitle() {
+              return this._doc.title;
+            }
+            setTitle(newTitle) {
+              this._doc.title = newTitle || "";
+            }
+          }
+          return (
+            (Title2.ɵfac = function (t) {
+              return new (t || Title2)(core_inject(common_DOCUMENT));
+            }),
+            (Title2.ɵprov = ɵɵdefineInjectable({
+              token: Title2,
+              factory: function (t) {
+                let r = null;
+                return (
+                  (r = t
+                    ? new t()
+                    : (function createTitle() {
+                        return new Title(core_inject(common_DOCUMENT));
+                      })()),
+                  r
+                );
+              },
+              providedIn: "root",
+            })),
+            Title2
+          );
+        })();
+      typeof window < "u" && window;
+      const { isArray } = Array,
+        { getPrototypeOf, prototype: objectProto, keys: getKeys } = Object;
+      function argsArgArrayOrObject(args) {
+        if (1 === args.length) {
+          const first2 = args[0];
+          if (isArray(first2))
+            return {
+              args: first2,
+              keys: null,
+            };
+          if (
+            (function isPOJO(obj) {
+              return (
+                obj &&
+                "object" == typeof obj &&
+                getPrototypeOf(obj) === objectProto
+              );
+            })(first2)
+          ) {
+            const keys = getKeys(first2);
+            return {
+              args: keys.map((key) => first2[key]),
+              keys,
             };
           }
         }
-        return (
-          (BrowserModule2.ɵfac = function (t) {
-            return new (t || BrowserModule2)(
-              core_inject(BROWSER_MODULE_PROVIDERS_MARKER, 12)
-            );
-          }),
-          (BrowserModule2.ɵmod = ɵɵdefineNgModule({
-            type: BrowserModule2,
-          })),
-          (BrowserModule2.ɵinj = ɵɵdefineInjector({
-            providers: [...BROWSER_MODULE_PROVIDERS, ...TESTABILITY_PROVIDERS],
-            imports: [CommonModule, ApplicationModule],
-          })),
-          BrowserModule2
-        );
-      })();
-      typeof window < "u" && window;
-      class HttpHandler {}
-      class HttpBackend {}
-      class HttpHeaders {
-        constructor(headers) {
-          (this.normalizedNames = new Map()),
-            (this.lazyUpdate = null),
-            headers
-              ? (this.lazyInit =
-                  "string" == typeof headers
-                    ? () => {
-                        (this.headers = new Map()),
-                          headers.split("\n").forEach((line) => {
-                            const index = line.indexOf(":");
-                            if (index > 0) {
-                              const name = line.slice(0, index),
-                                key = name.toLowerCase(),
-                                value = line.slice(index + 1).trim();
-                              this.maybeSetNormalizedName(name, key),
-                                this.headers.has(key)
-                                  ? this.headers.get(key).push(value)
-                                  : this.headers.set(key, [value]);
-                            }
-                          });
-                      }
-                    : () => {
-                        (this.headers = new Map()),
-                          Object.keys(headers).forEach((name) => {
-                            let values = headers[name];
-                            const key = name.toLowerCase();
-                            "string" == typeof values && (values = [values]),
-                              values.length > 0 &&
-                                (this.headers.set(key, values),
-                                this.maybeSetNormalizedName(name, key));
-                          });
-                      })
-              : (this.headers = new Map());
-        }
-        has(name) {
-          return this.init(), this.headers.has(name.toLowerCase());
-        }
-        get(name) {
-          this.init();
-          const values = this.headers.get(name.toLowerCase());
-          return values && values.length > 0 ? values[0] : null;
-        }
-        keys() {
-          return this.init(), Array.from(this.normalizedNames.values());
-        }
-        getAll(name) {
-          return this.init(), this.headers.get(name.toLowerCase()) || null;
-        }
-        append(name, value) {
-          return this.clone({
-            name,
-            value,
-            op: "a",
-          });
-        }
-        set(name, value) {
-          return this.clone({
-            name,
-            value,
-            op: "s",
-          });
-        }
-        delete(name, value) {
-          return this.clone({
-            name,
-            value,
-            op: "d",
-          });
-        }
-        maybeSetNormalizedName(name, lcName) {
-          this.normalizedNames.has(lcName) ||
-            this.normalizedNames.set(lcName, name);
-        }
-        init() {
-          this.lazyInit &&
-            (this.lazyInit instanceof HttpHeaders
-              ? this.copyFrom(this.lazyInit)
-              : this.lazyInit(),
-            (this.lazyInit = null),
-            this.lazyUpdate &&
-              (this.lazyUpdate.forEach((update) => this.applyUpdate(update)),
-              (this.lazyUpdate = null)));
-        }
-        copyFrom(other) {
-          other.init(),
-            Array.from(other.headers.keys()).forEach((key) => {
-              this.headers.set(key, other.headers.get(key)),
-                this.normalizedNames.set(key, other.normalizedNames.get(key));
-            });
-        }
-        clone(update) {
-          const clone = new HttpHeaders();
-          return (
-            (clone.lazyInit =
-              this.lazyInit && this.lazyInit instanceof HttpHeaders
-                ? this.lazyInit
-                : this),
-            (clone.lazyUpdate = (this.lazyUpdate || []).concat([update])),
-            clone
-          );
-        }
-        applyUpdate(update) {
-          const key = update.name.toLowerCase();
-          switch (update.op) {
-            case "a":
-            case "s":
-              let value = update.value;
-              if (
-                ("string" == typeof value && (value = [value]),
-                0 === value.length)
-              )
-                return;
-              this.maybeSetNormalizedName(update.name, key);
-              const base =
-                ("a" === update.op ? this.headers.get(key) : void 0) || [];
-              base.push(...value), this.headers.set(key, base);
-              break;
-
-            case "d":
-              const toDelete = update.value;
-              if (toDelete) {
-                let existing = this.headers.get(key);
-                if (!existing) return;
-                (existing = existing.filter(
-                  (value2) => -1 === toDelete.indexOf(value2)
-                )),
-                  0 === existing.length
-                    ? (this.headers.delete(key),
-                      this.normalizedNames.delete(key))
-                    : this.headers.set(key, existing);
-              } else this.headers.delete(key), this.normalizedNames.delete(key);
-          }
-        }
-        forEach(fn) {
-          this.init(),
-            Array.from(this.normalizedNames.keys()).forEach((key) =>
-              fn(this.normalizedNames.get(key), this.headers.get(key))
-            );
-        }
-      }
-      class HttpUrlEncodingCodec {
-        encodeKey(key) {
-          return standardEncoding(key);
-        }
-        encodeValue(value) {
-          return standardEncoding(value);
-        }
-        decodeKey(key) {
-          return decodeURIComponent(key);
-        }
-        decodeValue(value) {
-          return decodeURIComponent(value);
-        }
-      }
-      const STANDARD_ENCODING_REGEX = /%(\d[a-f0-9])/gi,
-        STANDARD_ENCODING_REPLACEMENTS = {
-          40: "@",
-          "3A": ":",
-          24: "$",
-          "2C": ",",
-          "3B": ";",
-          "3D": "=",
-          "3F": "?",
-          "2F": "/",
-        };
-      function standardEncoding(v) {
-        return encodeURIComponent(v).replace(
-          STANDARD_ENCODING_REGEX,
-          (s, t) => STANDARD_ENCODING_REPLACEMENTS[t] ?? s
-        );
-      }
-      function valueToString(value) {
-        return `${value}`;
-      }
-      class HttpParams {
-        constructor(options = {}) {
-          if (
-            ((this.updates = null),
-            (this.cloneFrom = null),
-            (this.encoder = options.encoder || new HttpUrlEncodingCodec()),
-            options.fromString)
-          ) {
-            if (options.fromObject)
-              throw new Error("Cannot specify both fromString and fromObject.");
-            this.map = (function paramParser(rawParams, codec) {
-              const map2 = new Map();
-              return (
-                rawParams.length > 0 &&
-                  rawParams
-                    .replace(/^\?/, "")
-                    .split("&")
-                    .forEach((param) => {
-                      const eqIdx = param.indexOf("="),
-                        [key, val] =
-                          -1 == eqIdx
-                            ? [codec.decodeKey(param), ""]
-                            : [
-                                codec.decodeKey(param.slice(0, eqIdx)),
-                                codec.decodeValue(param.slice(eqIdx + 1)),
-                              ],
-                        list = map2.get(key) || [];
-                      list.push(val), map2.set(key, list);
-                    }),
-                map2
-              );
-            })(options.fromString, this.encoder);
-          } else
-            options.fromObject
-              ? ((this.map = new Map()),
-                Object.keys(options.fromObject).forEach((key) => {
-                  const value = options.fromObject[key],
-                    values = Array.isArray(value)
-                      ? value.map(valueToString)
-                      : [valueToString(value)];
-                  this.map.set(key, values);
-                }))
-              : (this.map = null);
-        }
-        has(param) {
-          return this.init(), this.map.has(param);
-        }
-        get(param) {
-          this.init();
-          const res = this.map.get(param);
-          return res ? res[0] : null;
-        }
-        getAll(param) {
-          return this.init(), this.map.get(param) || null;
-        }
-        keys() {
-          return this.init(), Array.from(this.map.keys());
-        }
-        append(param, value) {
-          return this.clone({
-            param,
-            value,
-            op: "a",
-          });
-        }
-        appendAll(params) {
-          const updates = [];
-          return (
-            Object.keys(params).forEach((param) => {
-              const value = params[param];
-              Array.isArray(value)
-                ? value.forEach((_value) => {
-                    updates.push({
-                      param,
-                      value: _value,
-                      op: "a",
-                    });
-                  })
-                : updates.push({
-                    param,
-                    value,
-                    op: "a",
-                  });
-            }),
-            this.clone(updates)
-          );
-        }
-        set(param, value) {
-          return this.clone({
-            param,
-            value,
-            op: "s",
-          });
-        }
-        delete(param, value) {
-          return this.clone({
-            param,
-            value,
-            op: "d",
-          });
-        }
-        toString() {
-          return (
-            this.init(),
-            this.keys()
-              .map((key) => {
-                const eKey = this.encoder.encodeKey(key);
-                return this.map
-                  .get(key)
-                  .map((value) => eKey + "=" + this.encoder.encodeValue(value))
-                  .join("&");
-              })
-              .filter((param) => "" !== param)
-              .join("&")
-          );
-        }
-        clone(update) {
-          const clone = new HttpParams({
-            encoder: this.encoder,
-          });
-          return (
-            (clone.cloneFrom = this.cloneFrom || this),
-            (clone.updates = (this.updates || []).concat(update)),
-            clone
-          );
-        }
-        init() {
-          null === this.map && (this.map = new Map()),
-            null !== this.cloneFrom &&
-              (this.cloneFrom.init(),
-              this.cloneFrom
-                .keys()
-                .forEach((key) =>
-                  this.map.set(key, this.cloneFrom.map.get(key))
-                ),
-              this.updates.forEach((update) => {
-                switch (update.op) {
-                  case "a":
-                  case "s":
-                    const base =
-                      ("a" === update.op
-                        ? this.map.get(update.param)
-                        : void 0) || [];
-                    base.push(valueToString(update.value)),
-                      this.map.set(update.param, base);
-                    break;
-
-                  case "d":
-                    if (void 0 === update.value) {
-                      this.map.delete(update.param);
-                      break;
-                    }
-                    {
-                      let base2 = this.map.get(update.param) || [];
-                      const idx = base2.indexOf(valueToString(update.value));
-                      -1 !== idx && base2.splice(idx, 1),
-                        base2.length > 0
-                          ? this.map.set(update.param, base2)
-                          : this.map.delete(update.param);
-                    }
-                }
-              }),
-              (this.cloneFrom = this.updates = null));
-        }
-      }
-      class HttpContext {
-        constructor() {
-          this.map = new Map();
-        }
-        set(token, value) {
-          return this.map.set(token, value), this;
-        }
-        get(token) {
-          return (
-            this.map.has(token) || this.map.set(token, token.defaultValue()),
-            this.map.get(token)
-          );
-        }
-        delete(token) {
-          return this.map.delete(token), this;
-        }
-        has(token) {
-          return this.map.has(token);
-        }
-        keys() {
-          return this.map.keys();
-        }
-      }
-      function isArrayBuffer(value) {
-        return typeof ArrayBuffer < "u" && value instanceof ArrayBuffer;
-      }
-      function isBlob(value) {
-        return typeof Blob < "u" && value instanceof Blob;
-      }
-      function isFormData(value) {
-        return typeof FormData < "u" && value instanceof FormData;
-      }
-      class HttpRequest {
-        constructor(method, url, third, fourth) {
-          let options;
-          if (
-            ((this.url = url),
-            (this.body = null),
-            (this.reportProgress = !1),
-            (this.withCredentials = !1),
-            (this.responseType = "json"),
-            (this.method = method.toUpperCase()),
-            (function mightHaveBody(method) {
-              switch (method) {
-                case "DELETE":
-                case "GET":
-                case "HEAD":
-                case "OPTIONS":
-                case "JSONP":
-                  return !1;
-
-                default:
-                  return !0;
-              }
-            })(this.method) || fourth
-              ? ((this.body = void 0 !== third ? third : null),
-                (options = fourth))
-              : (options = third),
-            options &&
-              ((this.reportProgress = !!options.reportProgress),
-              (this.withCredentials = !!options.withCredentials),
-              options.responseType &&
-                (this.responseType = options.responseType),
-              options.headers && (this.headers = options.headers),
-              options.context && (this.context = options.context),
-              options.params && (this.params = options.params)),
-            this.headers || (this.headers = new HttpHeaders()),
-            this.context || (this.context = new HttpContext()),
-            this.params)
-          ) {
-            const params = this.params.toString();
-            if (0 === params.length) this.urlWithParams = url;
-            else {
-              const qIdx = url.indexOf("?");
-              this.urlWithParams =
-                url +
-                (-1 === qIdx ? "?" : qIdx < url.length - 1 ? "&" : "") +
-                params;
-            }
-          } else (this.params = new HttpParams()), (this.urlWithParams = url);
-        }
-        serializeBody() {
-          return null === this.body
-            ? null
-            : isArrayBuffer(this.body) ||
-              isBlob(this.body) ||
-              isFormData(this.body) ||
-              (function isUrlSearchParams(value) {
-                return (
-                  typeof URLSearchParams < "u" &&
-                  value instanceof URLSearchParams
-                );
-              })(this.body) ||
-              "string" == typeof this.body
-            ? this.body
-            : this.body instanceof HttpParams
-            ? this.body.toString()
-            : "object" == typeof this.body ||
-              "boolean" == typeof this.body ||
-              Array.isArray(this.body)
-            ? JSON.stringify(this.body)
-            : this.body.toString();
-        }
-        detectContentTypeHeader() {
-          return null === this.body || isFormData(this.body)
-            ? null
-            : isBlob(this.body)
-            ? this.body.type || null
-            : isArrayBuffer(this.body)
-            ? null
-            : "string" == typeof this.body
-            ? "text/plain"
-            : this.body instanceof HttpParams
-            ? "application/x-www-form-urlencoded;charset=UTF-8"
-            : "object" == typeof this.body ||
-              "number" == typeof this.body ||
-              "boolean" == typeof this.body
-            ? "application/json"
-            : null;
-        }
-        clone(update = {}) {
-          const method = update.method || this.method,
-            url = update.url || this.url,
-            responseType = update.responseType || this.responseType,
-            body = void 0 !== update.body ? update.body : this.body,
-            withCredentials =
-              void 0 !== update.withCredentials
-                ? update.withCredentials
-                : this.withCredentials,
-            reportProgress =
-              void 0 !== update.reportProgress
-                ? update.reportProgress
-                : this.reportProgress;
-          let headers = update.headers || this.headers,
-            params = update.params || this.params;
-          const context2 = update.context ?? this.context;
-          return (
-            void 0 !== update.setHeaders &&
-              (headers = Object.keys(update.setHeaders).reduce(
-                (headers2, name) => headers2.set(name, update.setHeaders[name]),
-                headers
-              )),
-            update.setParams &&
-              (params = Object.keys(update.setParams).reduce(
-                (params2, param) => params2.set(param, update.setParams[param]),
-                params
-              )),
-            new HttpRequest(method, url, body, {
-              params,
-              headers,
-              context: context2,
-              reportProgress,
-              responseType,
-              withCredentials,
-            })
-          );
-        }
-      }
-      var HttpEventType = (() => (
-        ((HttpEventType = HttpEventType || {})[(HttpEventType.Sent = 0)] =
-          "Sent"),
-        (HttpEventType[(HttpEventType.UploadProgress = 1)] = "UploadProgress"),
-        (HttpEventType[(HttpEventType.ResponseHeader = 2)] = "ResponseHeader"),
-        (HttpEventType[(HttpEventType.DownloadProgress = 3)] =
-          "DownloadProgress"),
-        (HttpEventType[(HttpEventType.Response = 4)] = "Response"),
-        (HttpEventType[(HttpEventType.User = 5)] = "User"),
-        HttpEventType
-      ))();
-      class HttpResponseBase {
-        constructor(init, defaultStatus = 200, defaultStatusText = "OK") {
-          (this.headers = init.headers || new HttpHeaders()),
-            (this.status =
-              void 0 !== init.status ? init.status : defaultStatus),
-            (this.statusText = init.statusText || defaultStatusText),
-            (this.url = init.url || null),
-            (this.ok = this.status >= 200 && this.status < 300);
-        }
-      }
-      class HttpHeaderResponse extends HttpResponseBase {
-        constructor(init = {}) {
-          super(init), (this.type = HttpEventType.ResponseHeader);
-        }
-        clone(update = {}) {
-          return new HttpHeaderResponse({
-            headers: update.headers || this.headers,
-            status: void 0 !== update.status ? update.status : this.status,
-            statusText: update.statusText || this.statusText,
-            url: update.url || this.url || void 0,
-          });
-        }
-      }
-      class HttpResponse extends HttpResponseBase {
-        constructor(init = {}) {
-          super(init),
-            (this.type = HttpEventType.Response),
-            (this.body = void 0 !== init.body ? init.body : null);
-        }
-        clone(update = {}) {
-          return new HttpResponse({
-            body: void 0 !== update.body ? update.body : this.body,
-            headers: update.headers || this.headers,
-            status: void 0 !== update.status ? update.status : this.status,
-            statusText: update.statusText || this.statusText,
-            url: update.url || this.url || void 0,
-          });
-        }
-      }
-      class HttpErrorResponse extends HttpResponseBase {
-        constructor(init) {
-          super(init, 0, "Unknown Error"),
-            (this.name = "HttpErrorResponse"),
-            (this.ok = !1),
-            (this.message =
-              this.status >= 200 && this.status < 300
-                ? `Http failure during parsing for ${
-                    init.url || "(unknown url)"
-                  }`
-                : `Http failure response for ${init.url || "(unknown url)"}: ${
-                    init.status
-                  } ${init.statusText}`),
-            (this.error = init.error || null);
-        }
-      }
-      function addBody(options, body) {
         return {
-          body,
-          headers: options.headers,
-          context: options.context,
-          observe: options.observe,
-          params: options.params,
-          reportProgress: options.reportProgress,
-          responseType: options.responseType,
-          withCredentials: options.withCredentials,
+          args,
+          keys: null,
         };
       }
-      let HttpClient = (() => {
-        class HttpClient2 {
-          constructor(handler) {
-            this.handler = handler;
-          }
-          request(first, url, options = {}) {
-            let req;
-            if (first instanceof HttpRequest) req = first;
-            else {
-              let headers, params;
-              (headers =
-                options.headers instanceof HttpHeaders
-                  ? options.headers
-                  : new HttpHeaders(options.headers)),
-                options.params &&
-                  (params =
-                    options.params instanceof HttpParams
-                      ? options.params
-                      : new HttpParams({
-                          fromObject: options.params,
-                        })),
-                (req = new HttpRequest(
-                  first,
-                  url,
-                  void 0 !== options.body ? options.body : null,
-                  {
-                    headers,
-                    context: options.context,
-                    params,
-                    reportProgress: options.reportProgress,
-                    responseType: options.responseType || "json",
-                    withCredentials: options.withCredentials,
-                  }
-                ));
-            }
-            const events$ = (function of(...args) {
-              return from(args, popScheduler(args));
-            })(req).pipe(
-              (function concatMap(project, resultSelector) {
-                return isFunction(resultSelector)
-                  ? mergeMap(project, resultSelector, 1)
-                  : mergeMap(project, 1);
-              })((req2) => this.handler.handle(req2))
-            );
-            if (first instanceof HttpRequest || "events" === options.observe)
-              return events$;
-            const res$ = events$.pipe(
-              (function filter(predicate, thisArg) {
-                return operate((source, subscriber) => {
-                  let index = 0;
-                  source.subscribe(
-                    createOperatorSubscriber(
-                      subscriber,
-                      (value) =>
-                        predicate.call(thisArg, value, index++) &&
-                        subscriber.next(value)
-                    )
-                  );
-                });
-              })((event) => event instanceof HttpResponse)
-            );
-            switch (options.observe || "body") {
-              case "body":
-                switch (req.responseType) {
-                  case "arraybuffer":
-                    return res$.pipe(
-                      map((res) => {
-                        if (
-                          null !== res.body &&
-                          !(res.body instanceof ArrayBuffer)
-                        )
-                          throw new Error("Response is not an ArrayBuffer.");
-                        return res.body;
-                      })
-                    );
-
-                  case "blob":
-                    return res$.pipe(
-                      map((res) => {
-                        if (null !== res.body && !(res.body instanceof Blob))
-                          throw new Error("Response is not a Blob.");
-                        return res.body;
-                      })
-                    );
-
-                  case "text":
-                    return res$.pipe(
-                      map((res) => {
-                        if (null !== res.body && "string" != typeof res.body)
-                          throw new Error("Response is not a string.");
-                        return res.body;
-                      })
-                    );
-
-                  default:
-                    return res$.pipe(map((res) => res.body));
-                }
-
-              case "response":
-                return res$;
-
-              default:
-                throw new Error(
-                  `Unreachable: unhandled observe type ${options.observe}}`
-                );
-            }
-          }
-          delete(url, options = {}) {
-            return this.request("DELETE", url, options);
-          }
-          get(url, options = {}) {
-            return this.request("GET", url, options);
-          }
-          head(url, options = {}) {
-            return this.request("HEAD", url, options);
-          }
-          jsonp(url, callbackParam) {
-            return this.request("JSONP", url, {
-              params: new HttpParams().append(callbackParam, "JSONP_CALLBACK"),
-              observe: "body",
-              responseType: "json",
-            });
-          }
-          options(url, options = {}) {
-            return this.request("OPTIONS", url, options);
-          }
-          patch(url, body, options = {}) {
-            return this.request("PATCH", url, addBody(options, body));
-          }
-          post(url, body, options = {}) {
-            return this.request("POST", url, addBody(options, body));
-          }
-          put(url, body, options = {}) {
-            return this.request("PUT", url, addBody(options, body));
-          }
-        }
-        return (
-          (HttpClient2.ɵfac = function (t) {
-            return new (t || HttpClient2)(core_inject(HttpHandler));
-          }),
-          (HttpClient2.ɵprov = core_defineInjectable({
-            token: HttpClient2,
-            factory: HttpClient2.ɵfac,
-          })),
-          HttpClient2
-        );
-      })();
-      class HttpInterceptorHandler {
-        constructor(next, interceptor) {
-          (this.next = next), (this.interceptor = interceptor);
-        }
-        handle(req) {
-          return this.interceptor.intercept(req, this.next);
-        }
-      }
-      const HTTP_INTERCEPTORS = new InjectionToken("HTTP_INTERCEPTORS");
-      let NoopInterceptor = (() => {
-        class NoopInterceptor2 {
-          intercept(req, next) {
-            return next.handle(req);
-          }
-        }
-        return (
-          (NoopInterceptor2.ɵfac = function (t) {
-            return new (t || NoopInterceptor2)();
-          }),
-          (NoopInterceptor2.ɵprov = core_defineInjectable({
-            token: NoopInterceptor2,
-            factory: NoopInterceptor2.ɵfac,
-          })),
-          NoopInterceptor2
-        );
-      })();
-      const XSSI_PREFIX = /^\)\]\}',?\n/;
-      let HttpXhrBackend = (() => {
-        class HttpXhrBackend2 {
-          constructor(xhrFactory) {
-            this.xhrFactory = xhrFactory;
-          }
-          handle(req) {
-            if ("JSONP" === req.method)
-              throw new Error(
-                "Attempted to construct Jsonp request without HttpClientJsonpModule installed."
-              );
-            return new Observable_Observable((observer) => {
-              const xhr = this.xhrFactory.build();
-              if (
-                (xhr.open(req.method, req.urlWithParams),
-                req.withCredentials && (xhr.withCredentials = !0),
-                req.headers.forEach((name, values) =>
-                  xhr.setRequestHeader(name, values.join(","))
-                ),
-                req.headers.has("Accept") ||
-                  xhr.setRequestHeader(
-                    "Accept",
-                    "application/json, text/plain, */*"
-                  ),
-                !req.headers.has("Content-Type"))
-              ) {
-                const detectedType = req.detectContentTypeHeader();
-                null !== detectedType &&
-                  xhr.setRequestHeader("Content-Type", detectedType);
-              }
-              if (req.responseType) {
-                const responseType = req.responseType.toLowerCase();
-                xhr.responseType =
-                  "json" !== responseType ? responseType : "text";
-              }
-              const reqBody = req.serializeBody();
-              let headerResponse = null;
-              const partialFromXhr = () => {
-                  if (null !== headerResponse) return headerResponse;
-                  const statusText = xhr.statusText || "OK",
-                    headers = new HttpHeaders(xhr.getAllResponseHeaders()),
-                    url =
-                      (function getResponseUrl(xhr) {
-                        return "responseURL" in xhr && xhr.responseURL
-                          ? xhr.responseURL
-                          : /^X-Request-URL:/m.test(xhr.getAllResponseHeaders())
-                          ? xhr.getResponseHeader("X-Request-URL")
-                          : null;
-                      })(xhr) || req.url;
-                  return (
-                    (headerResponse = new HttpHeaderResponse({
-                      headers,
-                      status: xhr.status,
-                      statusText,
-                      url,
-                    })),
-                    headerResponse
-                  );
-                },
-                onLoad = () => {
-                  let { headers, status, statusText, url } = partialFromXhr(),
-                    body = null;
-                  204 !== status &&
-                    (body =
-                      typeof xhr.response > "u"
-                        ? xhr.responseText
-                        : xhr.response),
-                    0 === status && (status = body ? 200 : 0);
-                  let ok = status >= 200 && status < 300;
-                  if ("json" === req.responseType && "string" == typeof body) {
-                    const originalBody = body;
-                    body = body.replace(XSSI_PREFIX, "");
-                    try {
-                      body = "" !== body ? JSON.parse(body) : null;
-                    } catch (error) {
-                      (body = originalBody),
-                        ok &&
-                          ((ok = !1),
-                          (body = {
-                            error,
-                            text: body,
-                          }));
-                    }
-                  }
-                  ok
-                    ? (observer.next(
-                        new HttpResponse({
-                          body,
-                          headers,
-                          status,
-                          statusText,
-                          url: url || void 0,
-                        })
-                      ),
-                      observer.complete())
-                    : observer.error(
-                        new HttpErrorResponse({
-                          error: body,
-                          headers,
-                          status,
-                          statusText,
-                          url: url || void 0,
-                        })
-                      );
-                },
-                onError = (error) => {
-                  const { url } = partialFromXhr(),
-                    res = new HttpErrorResponse({
-                      error,
-                      status: xhr.status || 0,
-                      statusText: xhr.statusText || "Unknown Error",
-                      url: url || void 0,
-                    });
-                  observer.error(res);
-                };
-              let sentHeaders = !1;
-              const onDownProgress = (event) => {
-                  sentHeaders ||
-                    (observer.next(partialFromXhr()), (sentHeaders = !0));
-                  let progressEvent = {
-                    type: HttpEventType.DownloadProgress,
-                    loaded: event.loaded,
-                  };
-                  event.lengthComputable && (progressEvent.total = event.total),
-                    "text" === req.responseType &&
-                      !!xhr.responseText &&
-                      (progressEvent.partialText = xhr.responseText),
-                    observer.next(progressEvent);
-                },
-                onUpProgress = (event) => {
-                  let progress = {
-                    type: HttpEventType.UploadProgress,
-                    loaded: event.loaded,
-                  };
-                  event.lengthComputable && (progress.total = event.total),
-                    observer.next(progress);
-                };
-              return (
-                xhr.addEventListener("load", onLoad),
-                xhr.addEventListener("error", onError),
-                xhr.addEventListener("timeout", onError),
-                xhr.addEventListener("abort", onError),
-                req.reportProgress &&
-                  (xhr.addEventListener("progress", onDownProgress),
-                  null !== reqBody &&
-                    xhr.upload &&
-                    xhr.upload.addEventListener("progress", onUpProgress)),
-                xhr.send(reqBody),
-                observer.next({
-                  type: HttpEventType.Sent,
-                }),
-                () => {
-                  xhr.removeEventListener("error", onError),
-                    xhr.removeEventListener("abort", onError),
-                    xhr.removeEventListener("load", onLoad),
-                    xhr.removeEventListener("timeout", onError),
-                    req.reportProgress &&
-                      (xhr.removeEventListener("progress", onDownProgress),
-                      null !== reqBody &&
-                        xhr.upload &&
-                        xhr.upload.removeEventListener(
-                          "progress",
-                          onUpProgress
-                        )),
-                    xhr.readyState !== xhr.DONE && xhr.abort();
-                }
-              );
-            });
-          }
-        }
-        return (
-          (HttpXhrBackend2.ɵfac = function (t) {
-            return new (t || HttpXhrBackend2)(core_inject(XhrFactory));
-          }),
-          (HttpXhrBackend2.ɵprov = core_defineInjectable({
-            token: HttpXhrBackend2,
-            factory: HttpXhrBackend2.ɵfac,
-          })),
-          HttpXhrBackend2
-        );
-      })();
-      const XSRF_COOKIE_NAME = new InjectionToken("XSRF_COOKIE_NAME"),
-        XSRF_HEADER_NAME = new InjectionToken("XSRF_HEADER_NAME");
-      class HttpXsrfTokenExtractor {}
-      let HttpXsrfCookieExtractor = (() => {
-          class HttpXsrfCookieExtractor2 {
-            constructor(doc, platform, cookieName) {
-              (this.doc = doc),
-                (this.platform = platform),
-                (this.cookieName = cookieName),
-                (this.lastCookieString = ""),
-                (this.lastToken = null),
-                (this.parseCount = 0);
-            }
-            getToken() {
-              if ("server" === this.platform) return null;
-              const cookieString = this.doc.cookie || "";
-              return (
-                cookieString !== this.lastCookieString &&
-                  (this.parseCount++,
-                  (this.lastToken = parseCookieValue(
-                    cookieString,
-                    this.cookieName
-                  )),
-                  (this.lastCookieString = cookieString)),
-                this.lastToken
-              );
-            }
-          }
-          return (
-            (HttpXsrfCookieExtractor2.ɵfac = function (t) {
-              return new (t || HttpXsrfCookieExtractor2)(
-                core_inject(common_DOCUMENT),
-                core_inject(core_PLATFORM_ID),
-                core_inject(XSRF_COOKIE_NAME)
-              );
-            }),
-            (HttpXsrfCookieExtractor2.ɵprov = core_defineInjectable({
-              token: HttpXsrfCookieExtractor2,
-              factory: HttpXsrfCookieExtractor2.ɵfac,
-            })),
-            HttpXsrfCookieExtractor2
-          );
-        })(),
-        HttpXsrfInterceptor = (() => {
-          class HttpXsrfInterceptor2 {
-            constructor(tokenService, headerName) {
-              (this.tokenService = tokenService),
-                (this.headerName = headerName);
-            }
-            intercept(req, next) {
-              const lcUrl = req.url.toLowerCase();
-              if (
-                "GET" === req.method ||
-                "HEAD" === req.method ||
-                lcUrl.startsWith("http://") ||
-                lcUrl.startsWith("https://")
-              )
-                return next.handle(req);
-              const token = this.tokenService.getToken();
-              return (
-                null !== token &&
-                  !req.headers.has(this.headerName) &&
-                  (req = req.clone({
-                    headers: req.headers.set(this.headerName, token),
-                  })),
-                next.handle(req)
-              );
-            }
-          }
-          return (
-            (HttpXsrfInterceptor2.ɵfac = function (t) {
-              return new (t || HttpXsrfInterceptor2)(
-                core_inject(HttpXsrfTokenExtractor),
-                core_inject(XSRF_HEADER_NAME)
-              );
-            }),
-            (HttpXsrfInterceptor2.ɵprov = core_defineInjectable({
-              token: HttpXsrfInterceptor2,
-              factory: HttpXsrfInterceptor2.ɵfac,
-            })),
-            HttpXsrfInterceptor2
-          );
-        })(),
-        HttpInterceptingHandler = (() => {
-          class HttpInterceptingHandler2 {
-            constructor(backend, injector) {
-              (this.backend = backend),
-                (this.injector = injector),
-                (this.chain = null);
-            }
-            handle(req) {
-              if (null === this.chain) {
-                const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
-                this.chain = interceptors.reduceRight(
-                  (next, interceptor) =>
-                    new HttpInterceptorHandler(next, interceptor),
-                  this.backend
-                );
-              }
-              return this.chain.handle(req);
-            }
-          }
-          return (
-            (HttpInterceptingHandler2.ɵfac = function (t) {
-              return new (t || HttpInterceptingHandler2)(
-                core_inject(HttpBackend),
-                core_inject(core_Injector)
-              );
-            }),
-            (HttpInterceptingHandler2.ɵprov = core_defineInjectable({
-              token: HttpInterceptingHandler2,
-              factory: HttpInterceptingHandler2.ɵfac,
-            })),
-            HttpInterceptingHandler2
-          );
-        })(),
-        HttpClientXsrfModule = (() => {
-          class HttpClientXsrfModule2 {
-            static disable() {
-              return {
-                ngModule: HttpClientXsrfModule2,
-                providers: [
-                  {
-                    provide: HttpXsrfInterceptor,
-                    useClass: NoopInterceptor,
-                  },
-                ],
-              };
-            }
-            static withOptions(options = {}) {
-              return {
-                ngModule: HttpClientXsrfModule2,
-                providers: [
-                  options.cookieName
-                    ? {
-                        provide: XSRF_COOKIE_NAME,
-                        useValue: options.cookieName,
-                      }
-                    : [],
-                  options.headerName
-                    ? {
-                        provide: XSRF_HEADER_NAME,
-                        useValue: options.headerName,
-                      }
-                    : [],
-                ],
-              };
-            }
-          }
-          return (
-            (HttpClientXsrfModule2.ɵfac = function (t) {
-              return new (t || HttpClientXsrfModule2)();
-            }),
-            (HttpClientXsrfModule2.ɵmod = ɵɵdefineNgModule({
-              type: HttpClientXsrfModule2,
-            })),
-            (HttpClientXsrfModule2.ɵinj = ɵɵdefineInjector({
-              providers: [
-                HttpXsrfInterceptor,
-                {
-                  provide: HTTP_INTERCEPTORS,
-                  useExisting: HttpXsrfInterceptor,
-                  multi: !0,
-                },
-                {
-                  provide: HttpXsrfTokenExtractor,
-                  useClass: HttpXsrfCookieExtractor,
-                },
-                {
-                  provide: XSRF_COOKIE_NAME,
-                  useValue: "XSRF-TOKEN",
-                },
-                {
-                  provide: XSRF_HEADER_NAME,
-                  useValue: "X-XSRF-TOKEN",
-                },
-              ],
-            })),
-            HttpClientXsrfModule2
-          );
-        })(),
-        HttpClientModule = (() => {
-          class HttpClientModule2 {}
-          return (
-            (HttpClientModule2.ɵfac = function (t) {
-              return new (t || HttpClientModule2)();
-            }),
-            (HttpClientModule2.ɵmod = ɵɵdefineNgModule({
-              type: HttpClientModule2,
-            })),
-            (HttpClientModule2.ɵinj = ɵɵdefineInjector({
-              providers: [
-                HttpClient,
-                {
-                  provide: HttpHandler,
-                  useClass: HttpInterceptingHandler,
-                },
-                HttpXhrBackend,
-                {
-                  provide: HttpBackend,
-                  useExisting: HttpXhrBackend,
-                },
-              ],
-              imports: [
-                HttpClientXsrfModule.withOptions({
-                  cookieName: "XSRF-TOKEN",
-                  headerName: "X-XSRF-TOKEN",
-                }),
-              ],
-            })),
-            HttpClientModule2
-          );
-        })();
-      const { isArray } = Array,
-        { getPrototypeOf, prototype: objectProto, keys: getKeys } = Object;
       const { isArray: mapOneOrManyArgs_isArray } = Array;
+      function mapOneOrManyArgs(fn) {
+        return map((args) =>
+          (function callOrApply(fn, args) {
+            return mapOneOrManyArgs_isArray(args) ? fn(...args) : fn(args);
+          })(fn, args)
+        );
+      }
       function createObject(keys, values) {
         return keys.reduce(
           (result, key, i) => ((result[key] = values[i]), result),
           {}
         );
-      }
-      function forkJoin(...args) {
-        const resultSelector = (function popResultSelector(args) {
-            return isFunction(last(args)) ? args.pop() : void 0;
-          })(args),
-          { args: sources, keys } = (function argsArgArrayOrObject(args) {
-            if (1 === args.length) {
-              const first = args[0];
-              if (isArray(first))
-                return {
-                  args: first,
-                  keys: null,
-                };
-              if (
-                (function isPOJO(obj) {
-                  return (
-                    obj &&
-                    "object" == typeof obj &&
-                    getPrototypeOf(obj) === objectProto
-                  );
-                })(first)
-              ) {
-                const keys = getKeys(first);
-                return {
-                  args: keys.map((key) => first[key]),
-                  keys,
-                };
-              }
-            }
-            return {
-              args,
-              keys: null,
-            };
-          })(args),
-          result = new Observable_Observable((subscriber) => {
-            const { length } = sources;
-            if (!length) return void subscriber.complete();
-            const values = new Array(length);
-            let remainingCompletions = length,
-              remainingEmissions = length;
-            for (let sourceIndex = 0; sourceIndex < length; sourceIndex++) {
-              let hasValue = !1;
-              innerFrom(sources[sourceIndex]).subscribe(
-                createOperatorSubscriber(
-                  subscriber,
-                  (value) => {
-                    hasValue || ((hasValue = !0), remainingEmissions--),
-                      (values[sourceIndex] = value);
-                  },
-                  () => remainingCompletions--,
-                  void 0,
-                  () => {
-                    (!remainingCompletions || !hasValue) &&
-                      (remainingEmissions ||
-                        subscriber.next(
-                          keys ? createObject(keys, values) : values
-                        ),
-                      subscriber.complete());
-                  }
-                )
-              );
-            }
-          });
-        return resultSelector
-          ? result.pipe(
-              (function mapOneOrManyArgs(fn) {
-                return map((args) =>
-                  (function callOrApply(fn, args) {
-                    return mapOneOrManyArgs_isArray(args)
-                      ? fn(...args)
-                      : fn(args);
-                  })(fn, args)
-                );
-              })(resultSelector)
-            )
-          : result;
       }
       let BaseControlValueAccessor = (() => {
           class BaseControlValueAccessor2 {
@@ -15073,7 +15189,49 @@ document.body.appendChild(document.createElement("app-root"));
               return 0 == presentValidators.length
                 ? null
                 : function (control) {
-                    return forkJoin(
+                    return (function forkJoin(...args) {
+                      const resultSelector = popResultSelector(args),
+                        { args: sources, keys } = argsArgArrayOrObject(args),
+                        result = new Observable_Observable((subscriber) => {
+                          const { length } = sources;
+                          if (!length) return void subscriber.complete();
+                          const values = new Array(length);
+                          let remainingCompletions = length,
+                            remainingEmissions = length;
+                          for (
+                            let sourceIndex = 0;
+                            sourceIndex < length;
+                            sourceIndex++
+                          ) {
+                            let hasValue = !1;
+                            innerFrom(sources[sourceIndex]).subscribe(
+                              createOperatorSubscriber(
+                                subscriber,
+                                (value) => {
+                                  hasValue ||
+                                    ((hasValue = !0), remainingEmissions--),
+                                    (values[sourceIndex] = value);
+                                },
+                                () => remainingCompletions--,
+                                void 0,
+                                () => {
+                                  (!remainingCompletions || !hasValue) &&
+                                    (remainingEmissions ||
+                                      subscriber.next(
+                                        keys
+                                          ? createObject(keys, values)
+                                          : values
+                                      ),
+                                    subscriber.complete());
+                                }
+                              )
+                            );
+                          }
+                        });
+                      return resultSelector
+                        ? result.pipe(mapOneOrManyArgs(resultSelector))
+                        : result;
+                    })(
                       executeValidators(control, presentValidators).map(
                         toObservable
                       )
@@ -15088,6 +15246,12 @@ document.body.appendChild(document.createElement("app-root"));
           : Array.isArray(controlValidators)
           ? [...controlValidators, dirValidator]
           : [controlValidators, dirValidator];
+      }
+      function getControlValidators(control) {
+        return control._rawValidators;
+      }
+      function getControlAsyncValidators(control) {
+        return control._rawAsyncValidators;
       }
       function makeValidatorsArray(validators) {
         return validators
@@ -15115,7 +15279,7 @@ document.body.appendChild(document.createElement("app-root"));
           (v) => !hasValidator(validators, v)
         );
       }
-      class AbstractControlDirective {
+      class NgControl extends class AbstractControlDirective {
         constructor() {
           (this._rawValidators = []),
             (this._rawAsyncValidators = []),
@@ -15200,16 +15364,7 @@ document.body.appendChild(document.createElement("app-root"));
         getError(errorCode, path) {
           return this.control ? this.control.getError(errorCode, path) : null;
         }
-      }
-      class ControlContainer extends AbstractControlDirective {
-        get formDirective() {
-          return null;
-        }
-        get path() {
-          return null;
-        }
-      }
-      class NgControl extends AbstractControlDirective {
+      } {
         constructor() {
           super(...arguments),
             (this._parent = null),
@@ -15297,16 +15452,12 @@ document.body.appendChild(document.createElement("app-root"));
       }
       function setUpControl(control, dir) {
         (function setUpValidators(control, dir) {
-          const validators = (function getControlValidators(control) {
-            return control._rawValidators;
-          })(control);
+          const validators = getControlValidators(control);
           null !== dir.validator
             ? control.setValidators(mergeValidators(validators, dir.validator))
             : "function" == typeof validators &&
               control.setValidators([validators]);
-          const asyncValidators = (function getControlAsyncValidators(control) {
-            return control._rawAsyncValidators;
-          })(control);
+          const asyncValidators = getControlAsyncValidators(control);
           null !== dir.asyncValidator
             ? control.setAsyncValidators(
                 mergeValidators(asyncValidators, dir.asyncValidator)
@@ -15361,6 +15512,55 @@ document.body.appendChild(document.createElement("app-root"));
             }
           })(control, dir);
       }
+      function cleanUpControl(
+        control,
+        dir,
+        validateControlPresenceOnChange = !0
+      ) {
+        const noop2 = () => {};
+        dir.valueAccessor &&
+          (dir.valueAccessor.registerOnChange(noop2),
+          dir.valueAccessor.registerOnTouched(noop2)),
+          (function cleanUpValidators(control, dir) {
+            let isControlUpdated = !1;
+            if (null !== control) {
+              if (null !== dir.validator) {
+                const validators = getControlValidators(control);
+                if (Array.isArray(validators) && validators.length > 0) {
+                  const updatedValidators = validators.filter(
+                    (validator) => validator !== dir.validator
+                  );
+                  updatedValidators.length !== validators.length &&
+                    ((isControlUpdated = !0),
+                    control.setValidators(updatedValidators));
+                }
+              }
+              if (null !== dir.asyncValidator) {
+                const asyncValidators = getControlAsyncValidators(control);
+                if (
+                  Array.isArray(asyncValidators) &&
+                  asyncValidators.length > 0
+                ) {
+                  const updatedAsyncValidators = asyncValidators.filter(
+                    (asyncValidator) => asyncValidator !== dir.asyncValidator
+                  );
+                  updatedAsyncValidators.length !== asyncValidators.length &&
+                    ((isControlUpdated = !0),
+                    control.setAsyncValidators(updatedAsyncValidators));
+                }
+              }
+            }
+            const noop2 = () => {};
+            return (
+              registerOnValidatorChange(dir._rawValidators, noop2),
+              registerOnValidatorChange(dir._rawAsyncValidators, noop2),
+              isControlUpdated
+            );
+          })(control, dir),
+          control &&
+            (dir._invokeOnDestroyCallbacks(),
+            control._registerOnCollectionChange(() => {}));
+      }
       function registerOnValidatorChange(validators, onChange) {
         validators.forEach((validator) => {
           validator.registerOnValidatorChange &&
@@ -15388,506 +15588,468 @@ document.body.appendChild(document.createElement("app-root"));
           "disabled" in formState
         );
       }
-      const formControlBinding$1 = {
+      const FormControl = class extends class AbstractControl {
+        constructor(validators, asyncValidators) {
+          (this._pendingDirty = !1),
+            (this._hasOwnPendingAsyncValidator = !1),
+            (this._pendingTouched = !1),
+            (this._onCollectionChange = () => {}),
+            (this._parent = null),
+            (this.pristine = !0),
+            (this.touched = !1),
+            (this._onDisabledChange = []),
+            (this._rawValidators = validators),
+            (this._rawAsyncValidators = asyncValidators),
+            (this._composedValidatorFn = coerceToValidator(
+              this._rawValidators
+            )),
+            (this._composedAsyncValidatorFn = coerceToAsyncValidator(
+              this._rawAsyncValidators
+            ));
+        }
+        get validator() {
+          return this._composedValidatorFn;
+        }
+        set validator(validatorFn) {
+          this._rawValidators = this._composedValidatorFn = validatorFn;
+        }
+        get asyncValidator() {
+          return this._composedAsyncValidatorFn;
+        }
+        set asyncValidator(asyncValidatorFn) {
+          this._rawAsyncValidators = this._composedAsyncValidatorFn =
+            asyncValidatorFn;
+        }
+        get parent() {
+          return this._parent;
+        }
+        get valid() {
+          return "VALID" === this.status;
+        }
+        get invalid() {
+          return "INVALID" === this.status;
+        }
+        get pending() {
+          return "PENDING" == this.status;
+        }
+        get disabled() {
+          return "DISABLED" === this.status;
+        }
+        get enabled() {
+          return "DISABLED" !== this.status;
+        }
+        get dirty() {
+          return !this.pristine;
+        }
+        get untouched() {
+          return !this.touched;
+        }
+        get updateOn() {
+          return this._updateOn
+            ? this._updateOn
+            : this.parent
+            ? this.parent.updateOn
+            : "change";
+        }
+        setValidators(validators) {
+          (this._rawValidators = validators),
+            (this._composedValidatorFn = coerceToValidator(validators));
+        }
+        setAsyncValidators(validators) {
+          (this._rawAsyncValidators = validators),
+            (this._composedAsyncValidatorFn =
+              coerceToAsyncValidator(validators));
+        }
+        addValidators(validators) {
+          this.setValidators(addValidators(validators, this._rawValidators));
+        }
+        addAsyncValidators(validators) {
+          this.setAsyncValidators(
+            addValidators(validators, this._rawAsyncValidators)
+          );
+        }
+        removeValidators(validators) {
+          this.setValidators(removeValidators(validators, this._rawValidators));
+        }
+        removeAsyncValidators(validators) {
+          this.setAsyncValidators(
+            removeValidators(validators, this._rawAsyncValidators)
+          );
+        }
+        hasValidator(validator) {
+          return hasValidator(this._rawValidators, validator);
+        }
+        hasAsyncValidator(validator) {
+          return hasValidator(this._rawAsyncValidators, validator);
+        }
+        clearValidators() {
+          this.validator = null;
+        }
+        clearAsyncValidators() {
+          this.asyncValidator = null;
+        }
+        markAsTouched(opts = {}) {
+          (this.touched = !0),
+            this._parent && !opts.onlySelf && this._parent.markAsTouched(opts);
+        }
+        markAllAsTouched() {
+          this.markAsTouched({
+            onlySelf: !0,
+          }),
+            this._forEachChild((control) => control.markAllAsTouched());
+        }
+        markAsUntouched(opts = {}) {
+          (this.touched = !1),
+            (this._pendingTouched = !1),
+            this._forEachChild((control) => {
+              control.markAsUntouched({
+                onlySelf: !0,
+              });
+            }),
+            this._parent && !opts.onlySelf && this._parent._updateTouched(opts);
+        }
+        markAsDirty(opts = {}) {
+          (this.pristine = !1),
+            this._parent && !opts.onlySelf && this._parent.markAsDirty(opts);
+        }
+        markAsPristine(opts = {}) {
+          (this.pristine = !0),
+            (this._pendingDirty = !1),
+            this._forEachChild((control) => {
+              control.markAsPristine({
+                onlySelf: !0,
+              });
+            }),
+            this._parent &&
+              !opts.onlySelf &&
+              this._parent._updatePristine(opts);
+        }
+        markAsPending(opts = {}) {
+          (this.status = "PENDING"),
+            !1 !== opts.emitEvent && this.statusChanges.emit(this.status),
+            this._parent && !opts.onlySelf && this._parent.markAsPending(opts);
+        }
+        disable(opts = {}) {
+          const skipPristineCheck = this._parentMarkedDirty(opts.onlySelf);
+          (this.status = "DISABLED"),
+            (this.errors = null),
+            this._forEachChild((control) => {
+              control.disable({
+                ...opts,
+                onlySelf: !0,
+              });
+            }),
+            this._updateValue(),
+            !1 !== opts.emitEvent &&
+              (this.valueChanges.emit(this.value),
+              this.statusChanges.emit(this.status)),
+            this._updateAncestors({
+              ...opts,
+              skipPristineCheck,
+            }),
+            this._onDisabledChange.forEach((changeFn) => changeFn(!0));
+        }
+        enable(opts = {}) {
+          const skipPristineCheck = this._parentMarkedDirty(opts.onlySelf);
+          (this.status = "VALID"),
+            this._forEachChild((control) => {
+              control.enable({
+                ...opts,
+                onlySelf: !0,
+              });
+            }),
+            this.updateValueAndValidity({
+              onlySelf: !0,
+              emitEvent: opts.emitEvent,
+            }),
+            this._updateAncestors({
+              ...opts,
+              skipPristineCheck,
+            }),
+            this._onDisabledChange.forEach((changeFn) => changeFn(!1));
+        }
+        _updateAncestors(opts) {
+          this._parent &&
+            !opts.onlySelf &&
+            (this._parent.updateValueAndValidity(opts),
+            opts.skipPristineCheck || this._parent._updatePristine(),
+            this._parent._updateTouched());
+        }
+        setParent(parent) {
+          this._parent = parent;
+        }
+        getRawValue() {
+          return this.value;
+        }
+        updateValueAndValidity(opts = {}) {
+          this._setInitialStatus(),
+            this._updateValue(),
+            this.enabled &&
+              (this._cancelExistingSubscription(),
+              (this.errors = this._runValidator()),
+              (this.status = this._calculateStatus()),
+              ("VALID" === this.status || "PENDING" === this.status) &&
+                this._runAsyncValidator(opts.emitEvent)),
+            !1 !== opts.emitEvent &&
+              (this.valueChanges.emit(this.value),
+              this.statusChanges.emit(this.status)),
+            this._parent &&
+              !opts.onlySelf &&
+              this._parent.updateValueAndValidity(opts);
+        }
+        _updateTreeValidity(
+          opts = {
+            emitEvent: !0,
+          }
+        ) {
+          this._forEachChild((ctrl) => ctrl._updateTreeValidity(opts)),
+            this.updateValueAndValidity({
+              onlySelf: !0,
+              emitEvent: opts.emitEvent,
+            });
+        }
+        _setInitialStatus() {
+          this.status = this._allControlsDisabled() ? "DISABLED" : "VALID";
+        }
+        _runValidator() {
+          return this.validator ? this.validator(this) : null;
+        }
+        _runAsyncValidator(emitEvent) {
+          if (this.asyncValidator) {
+            (this.status = "PENDING"), (this._hasOwnPendingAsyncValidator = !0);
+            const obs = toObservable(this.asyncValidator(this));
+            this._asyncValidationSubscription = obs.subscribe((errors) => {
+              (this._hasOwnPendingAsyncValidator = !1),
+                this.setErrors(errors, {
+                  emitEvent,
+                });
+            });
+          }
+        }
+        _cancelExistingSubscription() {
+          this._asyncValidationSubscription &&
+            (this._asyncValidationSubscription.unsubscribe(),
+            (this._hasOwnPendingAsyncValidator = !1));
+        }
+        setErrors(errors, opts = {}) {
+          (this.errors = errors),
+            this._updateControlsErrors(!1 !== opts.emitEvent);
+        }
+        get(path) {
+          let currPath = path;
+          return null == currPath ||
+            (Array.isArray(currPath) || (currPath = currPath.split(".")),
+            0 === currPath.length)
+            ? null
+            : currPath.reduce(
+                (control, name) => control && control._find(name),
+                this
+              );
+        }
+        getError(errorCode, path) {
+          const control = path ? this.get(path) : this;
+          return control && control.errors ? control.errors[errorCode] : null;
+        }
+        hasError(errorCode, path) {
+          return !!this.getError(errorCode, path);
+        }
+        get root() {
+          let x = this;
+          for (; x._parent; ) x = x._parent;
+          return x;
+        }
+        _updateControlsErrors(emitEvent) {
+          (this.status = this._calculateStatus()),
+            emitEvent && this.statusChanges.emit(this.status),
+            this._parent && this._parent._updateControlsErrors(emitEvent);
+        }
+        _initObservables() {
+          (this.valueChanges = new EventEmitter()),
+            (this.statusChanges = new EventEmitter());
+        }
+        _calculateStatus() {
+          return this._allControlsDisabled()
+            ? "DISABLED"
+            : this.errors
+            ? "INVALID"
+            : this._hasOwnPendingAsyncValidator ||
+              this._anyControlsHaveStatus("PENDING")
+            ? "PENDING"
+            : this._anyControlsHaveStatus("INVALID")
+            ? "INVALID"
+            : "VALID";
+        }
+        _anyControlsHaveStatus(status) {
+          return this._anyControls((control) => control.status === status);
+        }
+        _anyControlsDirty() {
+          return this._anyControls((control) => control.dirty);
+        }
+        _anyControlsTouched() {
+          return this._anyControls((control) => control.touched);
+        }
+        _updatePristine(opts = {}) {
+          (this.pristine = !this._anyControlsDirty()),
+            this._parent &&
+              !opts.onlySelf &&
+              this._parent._updatePristine(opts);
+        }
+        _updateTouched(opts = {}) {
+          (this.touched = this._anyControlsTouched()),
+            this._parent && !opts.onlySelf && this._parent._updateTouched(opts);
+        }
+        _registerOnCollectionChange(fn) {
+          this._onCollectionChange = fn;
+        }
+        _setUpdateStrategy(opts) {
+          isOptionsObj(opts) &&
+            null != opts.updateOn &&
+            (this._updateOn = opts.updateOn);
+        }
+        _parentMarkedDirty(onlySelf) {
+          return (
+            !onlySelf &&
+            !(!this._parent || !this._parent.dirty) &&
+            !this._parent._anyControlsDirty()
+          );
+        }
+        _find(name) {
+          return null;
+        }
+      } {
+        constructor(formState = null, validatorOrOpts, asyncValidator) {
+          super(
+            (function pickValidators(validatorOrOpts) {
+              return (
+                (isOptionsObj(validatorOrOpts)
+                  ? validatorOrOpts.validators
+                  : validatorOrOpts) || null
+              );
+            })(validatorOrOpts),
+            (function pickAsyncValidators(asyncValidator, validatorOrOpts) {
+              return (
+                (isOptionsObj(validatorOrOpts)
+                  ? validatorOrOpts.asyncValidators
+                  : asyncValidator) || null
+              );
+            })(asyncValidator, validatorOrOpts)
+          ),
+            (this.defaultValue = null),
+            (this._onChange = []),
+            (this._pendingChange = !1),
+            this._applyFormState(formState),
+            this._setUpdateStrategy(validatorOrOpts),
+            this._initObservables(),
+            this.updateValueAndValidity({
+              onlySelf: !0,
+              emitEvent: !!this.asyncValidator,
+            }),
+            isOptionsObj(validatorOrOpts) &&
+              (validatorOrOpts.nonNullable ||
+                validatorOrOpts.initialValueIsDefault) &&
+              (this.defaultValue = isFormControlState(formState)
+                ? formState.value
+                : formState);
+        }
+        setValue(value, options = {}) {
+          (this.value = this._pendingValue = value),
+            this._onChange.length &&
+              !1 !== options.emitModelToViewChange &&
+              this._onChange.forEach((changeFn) =>
+                changeFn(this.value, !1 !== options.emitViewToModelChange)
+              ),
+            this.updateValueAndValidity(options);
+        }
+        patchValue(value, options = {}) {
+          this.setValue(value, options);
+        }
+        reset(formState = this.defaultValue, options = {}) {
+          this._applyFormState(formState),
+            this.markAsPristine(options),
+            this.markAsUntouched(options),
+            this.setValue(this.value, options),
+            (this._pendingChange = !1);
+        }
+        _updateValue() {}
+        _anyControls(condition) {
+          return !1;
+        }
+        _allControlsDisabled() {
+          return this.disabled;
+        }
+        registerOnChange(fn) {
+          this._onChange.push(fn);
+        }
+        _unregisterOnChange(fn) {
+          removeListItem(this._onChange, fn);
+        }
+        registerOnDisabledChange(fn) {
+          this._onDisabledChange.push(fn);
+        }
+        _unregisterOnDisabledChange(fn) {
+          removeListItem(this._onDisabledChange, fn);
+        }
+        _forEachChild(cb) {}
+        _syncPendingControls() {
+          return !(
+            "submit" !== this.updateOn ||
+            (this._pendingDirty && this.markAsDirty(),
+            this._pendingTouched && this.markAsTouched(),
+            !this._pendingChange) ||
+            (this.setValue(this._pendingValue, {
+              onlySelf: !0,
+              emitModelToViewChange: !1,
+            }),
+            0)
+          );
+        }
+        _applyFormState(formState) {
+          isFormControlState(formState)
+            ? ((this.value = this._pendingValue = formState.value),
+              formState.disabled
+                ? this.disable({
+                    onlySelf: !0,
+                    emitEvent: !1,
+                  })
+                : this.enable({
+                    onlySelf: !0,
+                    emitEvent: !1,
+                  }))
+            : (this.value = this._pendingValue = formState);
+        }
+      };
+      let RadioControlRegistryModule = (() => {
+        class RadioControlRegistryModule2 {}
+        return (
+          (RadioControlRegistryModule2.ɵfac = function (t) {
+            return new (t || RadioControlRegistryModule2)();
+          }),
+          (RadioControlRegistryModule2.ɵmod = ɵɵdefineNgModule({
+            type: RadioControlRegistryModule2,
+          })),
+          (RadioControlRegistryModule2.ɵinj = ɵɵdefineInjector({})),
+          RadioControlRegistryModule2
+        );
+      })();
+      const NG_MODEL_WITH_FORM_CONTROL_WARNING = new InjectionToken(
+          "NgModelWithFormControlWarning"
+        ),
+        formControlBinding = {
           provide: NgControl,
-          useExisting: forwardRef(() => NgModel),
-        },
-        resolvedPromise = (() => Promise.resolve())();
-      let NgModel = (() => {
-          class NgModel2 extends NgControl {
+          useExisting: forwardRef(() => FormControlDirective),
+        };
+      let FormControlDirective = (() => {
+          class FormControlDirective2 extends NgControl {
             constructor(
-              parent,
               validators,
               asyncValidators,
               valueAccessors,
-              _changeDetectorRef
+              _ngModelWarningConfig
             ) {
               super(),
-                (this._changeDetectorRef = _changeDetectorRef),
-                (this.control = new (class extends class AbstractControl {
-                  constructor(validators, asyncValidators) {
-                    (this._pendingDirty = !1),
-                      (this._hasOwnPendingAsyncValidator = !1),
-                      (this._pendingTouched = !1),
-                      (this._onCollectionChange = () => {}),
-                      (this._parent = null),
-                      (this.pristine = !0),
-                      (this.touched = !1),
-                      (this._onDisabledChange = []),
-                      (this._rawValidators = validators),
-                      (this._rawAsyncValidators = asyncValidators),
-                      (this._composedValidatorFn = coerceToValidator(
-                        this._rawValidators
-                      )),
-                      (this._composedAsyncValidatorFn = coerceToAsyncValidator(
-                        this._rawAsyncValidators
-                      ));
-                  }
-                  get validator() {
-                    return this._composedValidatorFn;
-                  }
-                  set validator(validatorFn) {
-                    this._rawValidators = this._composedValidatorFn =
-                      validatorFn;
-                  }
-                  get asyncValidator() {
-                    return this._composedAsyncValidatorFn;
-                  }
-                  set asyncValidator(asyncValidatorFn) {
-                    this._rawAsyncValidators = this._composedAsyncValidatorFn =
-                      asyncValidatorFn;
-                  }
-                  get parent() {
-                    return this._parent;
-                  }
-                  get valid() {
-                    return "VALID" === this.status;
-                  }
-                  get invalid() {
-                    return "INVALID" === this.status;
-                  }
-                  get pending() {
-                    return "PENDING" == this.status;
-                  }
-                  get disabled() {
-                    return "DISABLED" === this.status;
-                  }
-                  get enabled() {
-                    return "DISABLED" !== this.status;
-                  }
-                  get dirty() {
-                    return !this.pristine;
-                  }
-                  get untouched() {
-                    return !this.touched;
-                  }
-                  get updateOn() {
-                    return this._updateOn
-                      ? this._updateOn
-                      : this.parent
-                      ? this.parent.updateOn
-                      : "change";
-                  }
-                  setValidators(validators) {
-                    (this._rawValidators = validators),
-                      (this._composedValidatorFn =
-                        coerceToValidator(validators));
-                  }
-                  setAsyncValidators(validators) {
-                    (this._rawAsyncValidators = validators),
-                      (this._composedAsyncValidatorFn =
-                        coerceToAsyncValidator(validators));
-                  }
-                  addValidators(validators) {
-                    this.setValidators(
-                      addValidators(validators, this._rawValidators)
-                    );
-                  }
-                  addAsyncValidators(validators) {
-                    this.setAsyncValidators(
-                      addValidators(validators, this._rawAsyncValidators)
-                    );
-                  }
-                  removeValidators(validators) {
-                    this.setValidators(
-                      removeValidators(validators, this._rawValidators)
-                    );
-                  }
-                  removeAsyncValidators(validators) {
-                    this.setAsyncValidators(
-                      removeValidators(validators, this._rawAsyncValidators)
-                    );
-                  }
-                  hasValidator(validator) {
-                    return hasValidator(this._rawValidators, validator);
-                  }
-                  hasAsyncValidator(validator) {
-                    return hasValidator(this._rawAsyncValidators, validator);
-                  }
-                  clearValidators() {
-                    this.validator = null;
-                  }
-                  clearAsyncValidators() {
-                    this.asyncValidator = null;
-                  }
-                  markAsTouched(opts = {}) {
-                    (this.touched = !0),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent.markAsTouched(opts);
-                  }
-                  markAllAsTouched() {
-                    this.markAsTouched({
-                      onlySelf: !0,
-                    }),
-                      this._forEachChild((control) =>
-                        control.markAllAsTouched()
-                      );
-                  }
-                  markAsUntouched(opts = {}) {
-                    (this.touched = !1),
-                      (this._pendingTouched = !1),
-                      this._forEachChild((control) => {
-                        control.markAsUntouched({
-                          onlySelf: !0,
-                        });
-                      }),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent._updateTouched(opts);
-                  }
-                  markAsDirty(opts = {}) {
-                    (this.pristine = !1),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent.markAsDirty(opts);
-                  }
-                  markAsPristine(opts = {}) {
-                    (this.pristine = !0),
-                      (this._pendingDirty = !1),
-                      this._forEachChild((control) => {
-                        control.markAsPristine({
-                          onlySelf: !0,
-                        });
-                      }),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent._updatePristine(opts);
-                  }
-                  markAsPending(opts = {}) {
-                    (this.status = "PENDING"),
-                      !1 !== opts.emitEvent &&
-                        this.statusChanges.emit(this.status),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent.markAsPending(opts);
-                  }
-                  disable(opts = {}) {
-                    const skipPristineCheck = this._parentMarkedDirty(
-                      opts.onlySelf
-                    );
-                    (this.status = "DISABLED"),
-                      (this.errors = null),
-                      this._forEachChild((control) => {
-                        control.disable({
-                          ...opts,
-                          onlySelf: !0,
-                        });
-                      }),
-                      this._updateValue(),
-                      !1 !== opts.emitEvent &&
-                        (this.valueChanges.emit(this.value),
-                        this.statusChanges.emit(this.status)),
-                      this._updateAncestors({
-                        ...opts,
-                        skipPristineCheck,
-                      }),
-                      this._onDisabledChange.forEach((changeFn) =>
-                        changeFn(!0)
-                      );
-                  }
-                  enable(opts = {}) {
-                    const skipPristineCheck = this._parentMarkedDirty(
-                      opts.onlySelf
-                    );
-                    (this.status = "VALID"),
-                      this._forEachChild((control) => {
-                        control.enable({
-                          ...opts,
-                          onlySelf: !0,
-                        });
-                      }),
-                      this.updateValueAndValidity({
-                        onlySelf: !0,
-                        emitEvent: opts.emitEvent,
-                      }),
-                      this._updateAncestors({
-                        ...opts,
-                        skipPristineCheck,
-                      }),
-                      this._onDisabledChange.forEach((changeFn) =>
-                        changeFn(!1)
-                      );
-                  }
-                  _updateAncestors(opts) {
-                    this._parent &&
-                      !opts.onlySelf &&
-                      (this._parent.updateValueAndValidity(opts),
-                      opts.skipPristineCheck || this._parent._updatePristine(),
-                      this._parent._updateTouched());
-                  }
-                  setParent(parent) {
-                    this._parent = parent;
-                  }
-                  getRawValue() {
-                    return this.value;
-                  }
-                  updateValueAndValidity(opts = {}) {
-                    this._setInitialStatus(),
-                      this._updateValue(),
-                      this.enabled &&
-                        (this._cancelExistingSubscription(),
-                        (this.errors = this._runValidator()),
-                        (this.status = this._calculateStatus()),
-                        ("VALID" === this.status ||
-                          "PENDING" === this.status) &&
-                          this._runAsyncValidator(opts.emitEvent)),
-                      !1 !== opts.emitEvent &&
-                        (this.valueChanges.emit(this.value),
-                        this.statusChanges.emit(this.status)),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent.updateValueAndValidity(opts);
-                  }
-                  _updateTreeValidity(
-                    opts = {
-                      emitEvent: !0,
-                    }
-                  ) {
-                    this._forEachChild((ctrl) =>
-                      ctrl._updateTreeValidity(opts)
-                    ),
-                      this.updateValueAndValidity({
-                        onlySelf: !0,
-                        emitEvent: opts.emitEvent,
-                      });
-                  }
-                  _setInitialStatus() {
-                    this.status = this._allControlsDisabled()
-                      ? "DISABLED"
-                      : "VALID";
-                  }
-                  _runValidator() {
-                    return this.validator ? this.validator(this) : null;
-                  }
-                  _runAsyncValidator(emitEvent) {
-                    if (this.asyncValidator) {
-                      (this.status = "PENDING"),
-                        (this._hasOwnPendingAsyncValidator = !0);
-                      const obs = toObservable(this.asyncValidator(this));
-                      this._asyncValidationSubscription = obs.subscribe(
-                        (errors) => {
-                          (this._hasOwnPendingAsyncValidator = !1),
-                            this.setErrors(errors, {
-                              emitEvent,
-                            });
-                        }
-                      );
-                    }
-                  }
-                  _cancelExistingSubscription() {
-                    this._asyncValidationSubscription &&
-                      (this._asyncValidationSubscription.unsubscribe(),
-                      (this._hasOwnPendingAsyncValidator = !1));
-                  }
-                  setErrors(errors, opts = {}) {
-                    (this.errors = errors),
-                      this._updateControlsErrors(!1 !== opts.emitEvent);
-                  }
-                  get(path) {
-                    let currPath = path;
-                    return null == currPath ||
-                      (Array.isArray(currPath) ||
-                        (currPath = currPath.split(".")),
-                      0 === currPath.length)
-                      ? null
-                      : currPath.reduce(
-                          (control, name) => control && control._find(name),
-                          this
-                        );
-                  }
-                  getError(errorCode, path) {
-                    const control = path ? this.get(path) : this;
-                    return control && control.errors
-                      ? control.errors[errorCode]
-                      : null;
-                  }
-                  hasError(errorCode, path) {
-                    return !!this.getError(errorCode, path);
-                  }
-                  get root() {
-                    let x = this;
-                    for (; x._parent; ) x = x._parent;
-                    return x;
-                  }
-                  _updateControlsErrors(emitEvent) {
-                    (this.status = this._calculateStatus()),
-                      emitEvent && this.statusChanges.emit(this.status),
-                      this._parent &&
-                        this._parent._updateControlsErrors(emitEvent);
-                  }
-                  _initObservables() {
-                    (this.valueChanges = new core_EventEmitter()),
-                      (this.statusChanges = new core_EventEmitter());
-                  }
-                  _calculateStatus() {
-                    return this._allControlsDisabled()
-                      ? "DISABLED"
-                      : this.errors
-                      ? "INVALID"
-                      : this._hasOwnPendingAsyncValidator ||
-                        this._anyControlsHaveStatus("PENDING")
-                      ? "PENDING"
-                      : this._anyControlsHaveStatus("INVALID")
-                      ? "INVALID"
-                      : "VALID";
-                  }
-                  _anyControlsHaveStatus(status) {
-                    return this._anyControls(
-                      (control) => control.status === status
-                    );
-                  }
-                  _anyControlsDirty() {
-                    return this._anyControls((control) => control.dirty);
-                  }
-                  _anyControlsTouched() {
-                    return this._anyControls((control) => control.touched);
-                  }
-                  _updatePristine(opts = {}) {
-                    (this.pristine = !this._anyControlsDirty()),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent._updatePristine(opts);
-                  }
-                  _updateTouched(opts = {}) {
-                    (this.touched = this._anyControlsTouched()),
-                      this._parent &&
-                        !opts.onlySelf &&
-                        this._parent._updateTouched(opts);
-                  }
-                  _registerOnCollectionChange(fn) {
-                    this._onCollectionChange = fn;
-                  }
-                  _setUpdateStrategy(opts) {
-                    isOptionsObj(opts) &&
-                      null != opts.updateOn &&
-                      (this._updateOn = opts.updateOn);
-                  }
-                  _parentMarkedDirty(onlySelf) {
-                    return (
-                      !onlySelf &&
-                      !(!this._parent || !this._parent.dirty) &&
-                      !this._parent._anyControlsDirty()
-                    );
-                  }
-                  _find(name) {
-                    return null;
-                  }
-                } {
-                  constructor(
-                    formState = null,
-                    validatorOrOpts,
-                    asyncValidator
-                  ) {
-                    super(
-                      (function pickValidators(validatorOrOpts) {
-                        return (
-                          (isOptionsObj(validatorOrOpts)
-                            ? validatorOrOpts.validators
-                            : validatorOrOpts) || null
-                        );
-                      })(validatorOrOpts),
-                      (function pickAsyncValidators(
-                        asyncValidator,
-                        validatorOrOpts
-                      ) {
-                        return (
-                          (isOptionsObj(validatorOrOpts)
-                            ? validatorOrOpts.asyncValidators
-                            : asyncValidator) || null
-                        );
-                      })(asyncValidator, validatorOrOpts)
-                    ),
-                      (this.defaultValue = null),
-                      (this._onChange = []),
-                      (this._pendingChange = !1),
-                      this._applyFormState(formState),
-                      this._setUpdateStrategy(validatorOrOpts),
-                      this._initObservables(),
-                      this.updateValueAndValidity({
-                        onlySelf: !0,
-                        emitEvent: !!this.asyncValidator,
-                      }),
-                      isOptionsObj(validatorOrOpts) &&
-                        (validatorOrOpts.nonNullable ||
-                          validatorOrOpts.initialValueIsDefault) &&
-                        (this.defaultValue = isFormControlState(formState)
-                          ? formState.value
-                          : formState);
-                  }
-                  setValue(value, options = {}) {
-                    (this.value = this._pendingValue = value),
-                      this._onChange.length &&
-                        !1 !== options.emitModelToViewChange &&
-                        this._onChange.forEach((changeFn) =>
-                          changeFn(
-                            this.value,
-                            !1 !== options.emitViewToModelChange
-                          )
-                        ),
-                      this.updateValueAndValidity(options);
-                  }
-                  patchValue(value, options = {}) {
-                    this.setValue(value, options);
-                  }
-                  reset(formState = this.defaultValue, options = {}) {
-                    this._applyFormState(formState),
-                      this.markAsPristine(options),
-                      this.markAsUntouched(options),
-                      this.setValue(this.value, options),
-                      (this._pendingChange = !1);
-                  }
-                  _updateValue() {}
-                  _anyControls(condition) {
-                    return !1;
-                  }
-                  _allControlsDisabled() {
-                    return this.disabled;
-                  }
-                  registerOnChange(fn) {
-                    this._onChange.push(fn);
-                  }
-                  _unregisterOnChange(fn) {
-                    removeListItem(this._onChange, fn);
-                  }
-                  registerOnDisabledChange(fn) {
-                    this._onDisabledChange.push(fn);
-                  }
-                  _unregisterOnDisabledChange(fn) {
-                    removeListItem(this._onDisabledChange, fn);
-                  }
-                  _forEachChild(cb) {}
-                  _syncPendingControls() {
-                    return !(
-                      "submit" !== this.updateOn ||
-                      (this._pendingDirty && this.markAsDirty(),
-                      this._pendingTouched && this.markAsTouched(),
-                      !this._pendingChange) ||
-                      (this.setValue(this._pendingValue, {
-                        onlySelf: !0,
-                        emitModelToViewChange: !1,
-                      }),
-                      0)
-                    );
-                  }
-                  _applyFormState(formState) {
-                    isFormControlState(formState)
-                      ? ((this.value = this._pendingValue = formState.value),
-                        formState.disabled
-                          ? this.disable({
-                              onlySelf: !0,
-                              emitEvent: !1,
-                            })
-                          : this.enable({
-                              onlySelf: !0,
-                              emitEvent: !1,
-                            }))
-                      : (this.value = this._pendingValue = formState);
-                  }
-                })()),
-                (this._registered = !1),
-                (this.update = new core_EventEmitter()),
-                (this._parent = parent),
+                (this._ngModelWarningConfig = _ngModelWarningConfig),
+                (this.update = new EventEmitter()),
+                (this._ngModelWarningSent = !1),
                 this._setValidators(validators),
                 this._setAsyncValidators(asyncValidators),
                 (this.valueAccessor = (function selectValueAccessor(
@@ -15915,169 +16077,71 @@ document.body.appendChild(document.createElement("app-root"));
                   );
                 })(0, valueAccessors));
             }
+            set isDisabled(isDisabled) {}
             ngOnChanges(changes) {
-              if (
-                (this._checkForErrors(), !this._registered || "name" in changes)
-              ) {
-                if (
-                  this._registered &&
-                  (this._checkName(), this.formDirective)
-                ) {
-                  const oldName = changes.name.previousValue;
-                  this.formDirective.removeControl({
-                    name: oldName,
-                    path: this._getPath(oldName),
+              if (this._isControlChanged(changes)) {
+                const previousForm = changes.form.previousValue;
+                previousForm && cleanUpControl(previousForm, this, !1),
+                  setUpControl(this.form, this),
+                  this.form.updateValueAndValidity({
+                    emitEvent: !1,
                   });
-                }
-                this._setUpControl();
               }
-              "isDisabled" in changes && this._updateDisabled(changes),
-                (function isPropertyUpdated(changes, viewModel) {
-                  if (!changes.hasOwnProperty("model")) return !1;
-                  const change = changes.model;
-                  return (
-                    !!change.isFirstChange() ||
-                    !Object.is(viewModel, change.currentValue)
-                  );
-                })(changes, this.viewModel) &&
-                  (this._updateValue(this.model),
-                  (this.viewModel = this.model));
+              (function isPropertyUpdated(changes, viewModel) {
+                if (!changes.hasOwnProperty("model")) return !1;
+                const change = changes.model;
+                return (
+                  !!change.isFirstChange() ||
+                  !Object.is(viewModel, change.currentValue)
+                );
+              })(changes, this.viewModel) &&
+                (this.form.setValue(this.model), (this.viewModel = this.model));
             }
             ngOnDestroy() {
-              this.formDirective && this.formDirective.removeControl(this);
+              this.form && cleanUpControl(this.form, this, !1);
             }
             get path() {
-              return this._getPath(this.name);
+              return [];
             }
-            get formDirective() {
-              return this._parent ? this._parent.formDirective : null;
+            get control() {
+              return this.form;
             }
             viewToModelUpdate(newValue) {
               (this.viewModel = newValue), this.update.emit(newValue);
             }
-            _setUpControl() {
-              this._setUpdateStrategy(),
-                this._isStandalone()
-                  ? this._setUpStandalone()
-                  : this.formDirective.addControl(this),
-                (this._registered = !0);
-            }
-            _setUpdateStrategy() {
-              this.options &&
-                null != this.options.updateOn &&
-                (this.control._updateOn = this.options.updateOn);
-            }
-            _isStandalone() {
-              return (
-                !this._parent || !(!this.options || !this.options.standalone)
-              );
-            }
-            _setUpStandalone() {
-              setUpControl(this.control, this),
-                this.control.updateValueAndValidity({
-                  emitEvent: !1,
-                });
-            }
-            _checkForErrors() {
-              this._isStandalone() || this._checkParentType(),
-                this._checkName();
-            }
-            _checkParentType() {}
-            _checkName() {
-              this.options &&
-                this.options.name &&
-                (this.name = this.options.name),
-                this._isStandalone();
-            }
-            _updateValue(value) {
-              resolvedPromise.then(() => {
-                this.control.setValue(value, {
-                  emitViewToModelChange: !1,
-                }),
-                  this._changeDetectorRef?.markForCheck();
-              });
-            }
-            _updateDisabled(changes) {
-              const disabledValue = changes.isDisabled.currentValue,
-                isDisabled =
-                  0 !== disabledValue &&
-                  (function coerceToBoolean(value) {
-                    return "boolean" == typeof value
-                      ? value
-                      : null != value && "false" !== value;
-                  })(disabledValue);
-              resolvedPromise.then(() => {
-                isDisabled && !this.control.disabled
-                  ? this.control.disable()
-                  : !isDisabled &&
-                    this.control.disabled &&
-                    this.control.enable(),
-                  this._changeDetectorRef?.markForCheck();
-              });
-            }
-            _getPath(controlName) {
-              return this._parent
-                ? (function controlPath(name, parent) {
-                    return [...parent.path, name];
-                  })(controlName, this._parent)
-                : [controlName];
+            _isControlChanged(changes) {
+              return changes.hasOwnProperty("form");
             }
           }
           return (
-            (NgModel2.ɵfac = function (t) {
-              return new (t || NgModel2)(
-                ɵɵdirectiveInject(ControlContainer, 9),
+            (FormControlDirective2._ngModelWarningSentOnce = !1),
+            (FormControlDirective2.ɵfac = function (t) {
+              return new (t || FormControlDirective2)(
                 ɵɵdirectiveInject(NG_VALIDATORS, 10),
                 ɵɵdirectiveInject(NG_ASYNC_VALIDATORS, 10),
                 ɵɵdirectiveInject(NG_VALUE_ACCESSOR, 10),
-                ɵɵdirectiveInject(ChangeDetectorRef, 8)
+                ɵɵdirectiveInject(NG_MODEL_WITH_FORM_CONTROL_WARNING, 8)
               );
             }),
-            (NgModel2.ɵdir = ɵɵdefineDirective({
-              type: NgModel2,
-              selectors: [
-                [
-                  "",
-                  "ngModel",
-                  "",
-                  3,
-                  "formControlName",
-                  "",
-                  3,
-                  "formControl",
-                  "",
-                ],
-              ],
+            (FormControlDirective2.ɵdir = ɵɵdefineDirective({
+              type: FormControlDirective2,
+              selectors: [["", "formControl", ""]],
               inputs: {
-                name: "name",
+                form: ["formControl", "form"],
                 isDisabled: ["disabled", "isDisabled"],
                 model: ["ngModel", "model"],
-                options: ["ngModelOptions", "options"],
               },
               outputs: {
                 update: "ngModelChange",
               },
-              exportAs: ["ngModel"],
+              exportAs: ["ngForm"],
               features: [
-                ɵɵProvidersFeature([formControlBinding$1]),
+                ɵɵProvidersFeature([formControlBinding]),
                 ɵɵInheritDefinitionFeature,
                 ɵɵNgOnChangesFeature,
               ],
             })),
-            NgModel2
-          );
-        })(),
-        RadioControlRegistryModule = (() => {
-          class RadioControlRegistryModule2 {}
-          return (
-            (RadioControlRegistryModule2.ɵfac = function (t) {
-              return new (t || RadioControlRegistryModule2)();
-            }),
-            (RadioControlRegistryModule2.ɵmod = ɵɵdefineNgModule({
-              type: RadioControlRegistryModule2,
-            })),
-            (RadioControlRegistryModule2.ɵinj = ɵɵdefineInjector({})),
-            RadioControlRegistryModule2
+            FormControlDirective2
           );
         })(),
         ɵInternalFormsSharedModule = (() => {
@@ -16095,168 +16159,6044 @@ document.body.appendChild(document.createElement("app-root"));
             ɵInternalFormsSharedModule2
           );
         })(),
-        FormsModule = (() => {
-          class FormsModule2 {}
+        ReactiveFormsModule = (() => {
+          class ReactiveFormsModule2 {
+            static withConfig(opts) {
+              return {
+                ngModule: ReactiveFormsModule2,
+                providers: [
+                  {
+                    provide: NG_MODEL_WITH_FORM_CONTROL_WARNING,
+                    useValue: opts.warnOnNgModelWithFormControl,
+                  },
+                ],
+              };
+            }
+          }
           return (
-            (FormsModule2.ɵfac = function (t) {
-              return new (t || FormsModule2)();
+            (ReactiveFormsModule2.ɵfac = function (t) {
+              return new (t || ReactiveFormsModule2)();
             }),
-            (FormsModule2.ɵmod = ɵɵdefineNgModule({
-              type: FormsModule2,
+            (ReactiveFormsModule2.ɵmod = ɵɵdefineNgModule({
+              type: ReactiveFormsModule2,
             })),
-            (FormsModule2.ɵinj = ɵɵdefineInjector({
+            (ReactiveFormsModule2.ɵinj = ɵɵdefineInjector({
               imports: [ɵInternalFormsSharedModule],
             })),
-            FormsModule2
+            ReactiveFormsModule2
           );
         })();
-      class Todo {
-        constructor(values = {}) {
-          (this.id = 0),
-            (this.title = ""),
-            (this.complete = !1),
-            Object.assign(this, values);
+      function of_of(...args) {
+        return from(args, popScheduler(args));
+      }
+      class BehaviorSubject extends Subject {
+        constructor(_value) {
+          super(), (this._value = _value);
+        }
+        get value() {
+          return this.getValue();
+        }
+        _subscribe(subscriber) {
+          const subscription = super._subscribe(subscriber);
+          return (
+            !subscription.closed && subscriber.next(this._value), subscription
+          );
+        }
+        getValue() {
+          const { hasError, thrownError, _value } = this;
+          if (hasError) throw thrownError;
+          return this._throwIfClosed(), _value;
+        }
+        next(value) {
+          super.next((this._value = value));
         }
       }
-      let TodoDataService = (() => {
-        class TodoDataService2 {
-          constructor() {
-            (this.lastId = 0), (this.todos = []);
+      const EmptyError = createErrorClass(
+        (_super) =>
+          function () {
+            _super(this),
+              (this.name = "EmptyError"),
+              (this.message = "no elements in sequence");
           }
-          addTodo(todo) {
+      );
+      function combineLatest(...args) {
+        const scheduler = popScheduler(args),
+          resultSelector = popResultSelector(args),
+          { args: observables, keys } = argsArgArrayOrObject(args);
+        if (0 === observables.length) return from([], scheduler);
+        const result = new Observable_Observable(
+          (function combineLatestInit(
+            observables,
+            scheduler,
+            valueTransform = identity
+          ) {
+            return (subscriber) => {
+              maybeSchedule(
+                scheduler,
+                () => {
+                  const { length } = observables,
+                    values = new Array(length);
+                  let active = length,
+                    remainingFirstValues = length;
+                  for (let i = 0; i < length; i++)
+                    maybeSchedule(
+                      scheduler,
+                      () => {
+                        const source = from(observables[i], scheduler);
+                        let hasFirstValue = !1;
+                        source.subscribe(
+                          createOperatorSubscriber(
+                            subscriber,
+                            (value) => {
+                              (values[i] = value),
+                                hasFirstValue ||
+                                  ((hasFirstValue = !0),
+                                  remainingFirstValues--),
+                                remainingFirstValues ||
+                                  subscriber.next(
+                                    valueTransform(values.slice())
+                                  );
+                            },
+                            () => {
+                              --active || subscriber.complete();
+                            }
+                          )
+                        );
+                      },
+                      subscriber
+                    );
+                },
+                subscriber
+              );
+            };
+          })(
+            observables,
+            scheduler,
+            keys ? (values) => createObject(keys, values) : identity
+          )
+        );
+        return resultSelector
+          ? result.pipe(mapOneOrManyArgs(resultSelector))
+          : result;
+      }
+      function maybeSchedule(scheduler, execute, subscription) {
+        scheduler
+          ? executeSchedule(subscription, scheduler, execute)
+          : execute();
+      }
+      function concat(...args) {
+        return (function concatAll() {
+          return mergeAll(1);
+        })()(from(args, popScheduler(args)));
+      }
+      function defer(observableFactory) {
+        return new Observable_Observable((subscriber) => {
+          innerFrom(observableFactory()).subscribe(subscriber);
+        });
+      }
+      function throwError_throwError(errorOrErrorFactory, scheduler) {
+        const errorFactory = isFunction(errorOrErrorFactory)
+            ? errorOrErrorFactory
+            : () => errorOrErrorFactory,
+          init = (subscriber) => subscriber.error(errorFactory());
+        return new Observable_Observable(
+          scheduler
+            ? (subscriber) => scheduler.schedule(init, 0, subscriber)
+            : init
+        );
+      }
+      function refCount() {
+        return operate((source, subscriber) => {
+          let connection = null;
+          source._refCount++;
+          const refCounter = createOperatorSubscriber(
+            subscriber,
+            void 0,
+            void 0,
+            void 0,
+            () => {
+              if (!source || source._refCount <= 0 || 0 < --source._refCount)
+                return void (connection = null);
+              const sharedConnection = source._connection,
+                conn = connection;
+              (connection = null),
+                sharedConnection &&
+                  (!conn || sharedConnection === conn) &&
+                  sharedConnection.unsubscribe(),
+                subscriber.unsubscribe();
+            }
+          );
+          source.subscribe(refCounter),
+            refCounter.closed || (connection = source.connect());
+        });
+      }
+      class ConnectableObservable extends Observable_Observable {
+        constructor(source, subjectFactory) {
+          super(),
+            (this.source = source),
+            (this.subjectFactory = subjectFactory),
+            (this._subject = null),
+            (this._refCount = 0),
+            (this._connection = null),
+            hasLift(source) && (this.lift = source.lift);
+        }
+        _subscribe(subscriber) {
+          return this.getSubject().subscribe(subscriber);
+        }
+        getSubject() {
+          const subject = this._subject;
+          return (
+            (!subject || subject.isStopped) &&
+              (this._subject = this.subjectFactory()),
+            this._subject
+          );
+        }
+        _teardown() {
+          this._refCount = 0;
+          const { _connection } = this;
+          (this._subject = this._connection = null), _connection?.unsubscribe();
+        }
+        connect() {
+          let connection = this._connection;
+          if (!connection) {
+            connection = this._connection = new Subscription();
+            const subject = this.getSubject();
+            connection.add(
+              this.source.subscribe(
+                createOperatorSubscriber(
+                  subject,
+                  void 0,
+                  () => {
+                    this._teardown(), subject.complete();
+                  },
+                  (err) => {
+                    this._teardown(), subject.error(err);
+                  },
+                  () => this._teardown()
+                )
+              )
+            ),
+              connection.closed &&
+                ((this._connection = null), (connection = Subscription.EMPTY));
+          }
+          return connection;
+        }
+        refCount() {
+          return refCount()(this);
+        }
+      }
+      function switchMap(project, resultSelector) {
+        return operate((source, subscriber) => {
+          let innerSubscriber = null,
+            index = 0,
+            isComplete = !1;
+          const checkComplete = () =>
+            isComplete && !innerSubscriber && subscriber.complete();
+          source.subscribe(
+            createOperatorSubscriber(
+              subscriber,
+              (value) => {
+                innerSubscriber?.unsubscribe();
+                let innerIndex = 0;
+                const outerIndex = index++;
+                innerFrom(project(value, outerIndex)).subscribe(
+                  (innerSubscriber = createOperatorSubscriber(
+                    subscriber,
+                    (innerValue) =>
+                      subscriber.next(
+                        resultSelector
+                          ? resultSelector(
+                              value,
+                              innerValue,
+                              outerIndex,
+                              innerIndex++
+                            )
+                          : innerValue
+                      ),
+                    () => {
+                      (innerSubscriber = null), checkComplete();
+                    }
+                  ))
+                );
+              },
+              () => {
+                (isComplete = !0), checkComplete();
+              }
+            )
+          );
+        });
+      }
+      function take(count) {
+        return count <= 0
+          ? () => EMPTY
+          : operate((source, subscriber) => {
+              let seen = 0;
+              source.subscribe(
+                createOperatorSubscriber(subscriber, (value) => {
+                  ++seen <= count &&
+                    (subscriber.next(value),
+                    count <= seen && subscriber.complete());
+                })
+              );
+            });
+      }
+      function filter(predicate, thisArg) {
+        return operate((source, subscriber) => {
+          let index = 0;
+          source.subscribe(
+            createOperatorSubscriber(
+              subscriber,
+              (value) =>
+                predicate.call(thisArg, value, index++) &&
+                subscriber.next(value)
+            )
+          );
+        });
+      }
+      function defaultIfEmpty(defaultValue) {
+        return operate((source, subscriber) => {
+          let hasValue = !1;
+          source.subscribe(
+            createOperatorSubscriber(
+              subscriber,
+              (value) => {
+                (hasValue = !0), subscriber.next(value);
+              },
+              () => {
+                hasValue || subscriber.next(defaultValue),
+                  subscriber.complete();
+              }
+            )
+          );
+        });
+      }
+      function throwIfEmpty(errorFactory = defaultErrorFactory) {
+        return operate((source, subscriber) => {
+          let hasValue = !1;
+          source.subscribe(
+            createOperatorSubscriber(
+              subscriber,
+              (value) => {
+                (hasValue = !0), subscriber.next(value);
+              },
+              () =>
+                hasValue
+                  ? subscriber.complete()
+                  : subscriber.error(errorFactory())
+            )
+          );
+        });
+      }
+      function defaultErrorFactory() {
+        return new EmptyError();
+      }
+      function first(predicate, defaultValue) {
+        const hasDefaultValue = arguments.length >= 2;
+        return (source) =>
+          source.pipe(
+            predicate ? filter((v, i) => predicate(v, i, source)) : identity,
+            take(1),
+            hasDefaultValue
+              ? defaultIfEmpty(defaultValue)
+              : throwIfEmpty(() => new EmptyError())
+          );
+      }
+      function concatMap(project, resultSelector) {
+        return isFunction(resultSelector)
+          ? mergeMap(project, resultSelector, 1)
+          : mergeMap(project, 1);
+      }
+      function tap(observerOrNext, error, complete) {
+        const tapObserver =
+          isFunction(observerOrNext) || error || complete
+            ? {
+                next: observerOrNext,
+                error,
+                complete,
+              }
+            : observerOrNext;
+        return tapObserver
+          ? operate((source, subscriber) => {
+              var _a;
+              null === (_a = tapObserver.subscribe) ||
+                void 0 === _a ||
+                _a.call(tapObserver);
+              let isUnsub = !0;
+              source.subscribe(
+                createOperatorSubscriber(
+                  subscriber,
+                  (value) => {
+                    var _a2;
+                    null === (_a2 = tapObserver.next) ||
+                      void 0 === _a2 ||
+                      _a2.call(tapObserver, value),
+                      subscriber.next(value);
+                  },
+                  () => {
+                    var _a2;
+                    (isUnsub = !1),
+                      null === (_a2 = tapObserver.complete) ||
+                        void 0 === _a2 ||
+                        _a2.call(tapObserver),
+                      subscriber.complete();
+                  },
+                  (err) => {
+                    var _a2;
+                    (isUnsub = !1),
+                      null === (_a2 = tapObserver.error) ||
+                        void 0 === _a2 ||
+                        _a2.call(tapObserver, err),
+                      subscriber.error(err);
+                  },
+                  () => {
+                    var _a2, _b;
+                    isUnsub &&
+                      (null === (_a2 = tapObserver.unsubscribe) ||
+                        void 0 === _a2 ||
+                        _a2.call(tapObserver)),
+                      null === (_b = tapObserver.finalize) ||
+                        void 0 === _b ||
+                        _b.call(tapObserver);
+                  }
+                )
+              );
+            })
+          : identity;
+      }
+      function catchError_catchError(selector) {
+        return operate((source, subscriber) => {
+          let handledResult,
+            innerSub = null,
+            syncUnsub = !1;
+          (innerSub = source.subscribe(
+            createOperatorSubscriber(subscriber, void 0, void 0, (err) => {
+              (handledResult = innerFrom(
+                selector(err, catchError_catchError(selector)(source))
+              )),
+                innerSub
+                  ? (innerSub.unsubscribe(),
+                    (innerSub = null),
+                    handledResult.subscribe(subscriber))
+                  : (syncUnsub = !0);
+            })
+          )),
+            syncUnsub &&
+              (innerSub.unsubscribe(),
+              (innerSub = null),
+              handledResult.subscribe(subscriber));
+        });
+      }
+      function scanInternals(
+        accumulator,
+        seed,
+        hasSeed,
+        emitOnNext,
+        emitBeforeComplete
+      ) {
+        return (source, subscriber) => {
+          let hasState = hasSeed,
+            state = seed,
+            index = 0;
+          source.subscribe(
+            createOperatorSubscriber(
+              subscriber,
+              (value) => {
+                const i = index++;
+                (state = hasState
+                  ? accumulator(state, value, i)
+                  : ((hasState = !0), value)),
+                  emitOnNext && subscriber.next(state);
+              },
+              emitBeforeComplete &&
+                (() => {
+                  hasState && subscriber.next(state), subscriber.complete();
+                })
+            )
+          );
+        };
+      }
+      function scan(accumulator, seed) {
+        return operate(
+          scanInternals(accumulator, seed, arguments.length >= 2, !0)
+        );
+      }
+      function takeLast(count) {
+        return count <= 0
+          ? () => EMPTY
+          : operate((source, subscriber) => {
+              let buffer = [];
+              source.subscribe(
+                createOperatorSubscriber(
+                  subscriber,
+                  (value) => {
+                    buffer.push(value), count < buffer.length && buffer.shift();
+                  },
+                  () => {
+                    for (const value of buffer) subscriber.next(value);
+                    subscriber.complete();
+                  },
+                  void 0,
+                  () => {
+                    buffer = null;
+                  }
+                )
+              );
+            });
+      }
+      function last_last(predicate, defaultValue) {
+        const hasDefaultValue = arguments.length >= 2;
+        return (source) =>
+          source.pipe(
+            predicate ? filter((v, i) => predicate(v, i, source)) : identity,
+            takeLast(1),
+            hasDefaultValue
+              ? defaultIfEmpty(defaultValue)
+              : throwIfEmpty(() => new EmptyError())
+          );
+      }
+      function finalize(callback) {
+        return operate((source, subscriber) => {
+          try {
+            source.subscribe(subscriber);
+          } finally {
+            subscriber.add(callback);
+          }
+        });
+      }
+      const RouteTitleKey = Symbol("RouteTitle");
+      class ParamsAsMap {
+        constructor(params) {
+          this.params = params || {};
+        }
+        has(name) {
+          return Object.prototype.hasOwnProperty.call(this.params, name);
+        }
+        get(name) {
+          if (this.has(name)) {
+            const v = this.params[name];
+            return Array.isArray(v) ? v[0] : v;
+          }
+          return null;
+        }
+        getAll(name) {
+          if (this.has(name)) {
+            const v = this.params[name];
+            return Array.isArray(v) ? v : [v];
+          }
+          return [];
+        }
+        get keys() {
+          return Object.keys(this.params);
+        }
+      }
+      function convertToParamMap(params) {
+        return new ParamsAsMap(params);
+      }
+      function defaultUrlMatcher(segments, segmentGroup, route) {
+        const parts = route.path.split("/");
+        if (
+          parts.length > segments.length ||
+          ("full" === route.pathMatch &&
+            (segmentGroup.hasChildren() || parts.length < segments.length))
+        )
+          return null;
+        const posParams = {};
+        for (let index = 0; index < parts.length; index++) {
+          const part = parts[index],
+            segment = segments[index];
+          if (part.startsWith(":")) posParams[part.substring(1)] = segment;
+          else if (part !== segment.path) return null;
+        }
+        return {
+          consumed: segments.slice(0, parts.length),
+          posParams,
+        };
+      }
+      function shallowEqual(a, b) {
+        const k1 = a ? Object.keys(a) : void 0,
+          k2 = b ? Object.keys(b) : void 0;
+        if (!k1 || !k2 || k1.length != k2.length) return !1;
+        let key;
+        for (let i = 0; i < k1.length; i++)
+          if (((key = k1[i]), !equalArraysOrString(a[key], b[key]))) return !1;
+        return !0;
+      }
+      function equalArraysOrString(a, b) {
+        if (Array.isArray(a) && Array.isArray(b)) {
+          if (a.length !== b.length) return !1;
+          const aSorted = [...a].sort(),
+            bSorted = [...b].sort();
+          return aSorted.every((val, index) => bSorted[index] === val);
+        }
+        return a === b;
+      }
+      function router_flatten(arr) {
+        return Array.prototype.concat.apply([], arr);
+      }
+      function router_last(a) {
+        return a.length > 0 ? a[a.length - 1] : null;
+      }
+      function forEach(map2, callback) {
+        for (const prop in map2)
+          map2.hasOwnProperty(prop) && callback(map2[prop], prop);
+      }
+      function wrapIntoObservable(value) {
+        return isObservable(value)
+          ? value
+          : core_isPromise(value)
+          ? from(Promise.resolve(value))
+          : of_of(value);
+      }
+      const pathCompareMap = {
+          exact: function equalSegmentGroups(
+            container,
+            containee,
+            matrixParams
+          ) {
+            if (
+              !equalPath(container.segments, containee.segments) ||
+              !matrixParamsMatch(
+                container.segments,
+                containee.segments,
+                matrixParams
+              ) ||
+              container.numberOfChildren !== containee.numberOfChildren
+            )
+              return !1;
+            for (const c in containee.children)
+              if (
+                !container.children[c] ||
+                !equalSegmentGroups(
+                  container.children[c],
+                  containee.children[c],
+                  matrixParams
+                )
+              )
+                return !1;
+            return !0;
+          },
+          subset: containsSegmentGroup,
+        },
+        paramCompareMap = {
+          exact: function equalParams(container, containee) {
+            return shallowEqual(container, containee);
+          },
+          subset: function containsParams(container, containee) {
             return (
-              todo.id || (todo.id = ++this.lastId), this.todos.push(todo), this
+              Object.keys(containee).length <= Object.keys(container).length &&
+              Object.keys(containee).every((key) =>
+                equalArraysOrString(container[key], containee[key])
+              )
+            );
+          },
+          ignored: () => !0,
+        };
+      function containsTree(container, containee, options) {
+        return (
+          pathCompareMap[options.paths](
+            container.root,
+            containee.root,
+            options.matrixParams
+          ) &&
+          paramCompareMap[options.queryParams](
+            container.queryParams,
+            containee.queryParams
+          ) &&
+          !(
+            "exact" === options.fragment &&
+            container.fragment !== containee.fragment
+          )
+        );
+      }
+      function containsSegmentGroup(container, containee, matrixParams) {
+        return containsSegmentGroupHelper(
+          container,
+          containee,
+          containee.segments,
+          matrixParams
+        );
+      }
+      function containsSegmentGroupHelper(
+        container,
+        containee,
+        containeePaths,
+        matrixParams
+      ) {
+        if (container.segments.length > containeePaths.length) {
+          const current = container.segments.slice(0, containeePaths.length);
+          return !(
+            !equalPath(current, containeePaths) ||
+            containee.hasChildren() ||
+            !matrixParamsMatch(current, containeePaths, matrixParams)
+          );
+        }
+        if (container.segments.length === containeePaths.length) {
+          if (
+            !equalPath(container.segments, containeePaths) ||
+            !matrixParamsMatch(container.segments, containeePaths, matrixParams)
+          )
+            return !1;
+          for (const c in containee.children)
+            if (
+              !container.children[c] ||
+              !containsSegmentGroup(
+                container.children[c],
+                containee.children[c],
+                matrixParams
+              )
+            )
+              return !1;
+          return !0;
+        }
+        {
+          const current = containeePaths.slice(0, container.segments.length),
+            next = containeePaths.slice(container.segments.length);
+          return (
+            !!(
+              equalPath(container.segments, current) &&
+              matrixParamsMatch(container.segments, current, matrixParams) &&
+              container.children.primary
+            ) &&
+            containsSegmentGroupHelper(
+              container.children.primary,
+              containee,
+              next,
+              matrixParams
+            )
+          );
+        }
+      }
+      function matrixParamsMatch(containerPaths, containeePaths, options) {
+        return containeePaths.every((containeeSegment, i) =>
+          paramCompareMap[options](
+            containerPaths[i].parameters,
+            containeeSegment.parameters
+          )
+        );
+      }
+      class UrlTree {
+        constructor(root, queryParams, fragment) {
+          (this.root = root),
+            (this.queryParams = queryParams),
+            (this.fragment = fragment);
+        }
+        get queryParamMap() {
+          return (
+            this._queryParamMap ||
+              (this._queryParamMap = convertToParamMap(this.queryParams)),
+            this._queryParamMap
+          );
+        }
+        toString() {
+          return DEFAULT_SERIALIZER.serialize(this);
+        }
+      }
+      class UrlSegmentGroup {
+        constructor(segments, children) {
+          (this.segments = segments),
+            (this.children = children),
+            (this.parent = null),
+            forEach(children, (v, k) => (v.parent = this));
+        }
+        hasChildren() {
+          return this.numberOfChildren > 0;
+        }
+        get numberOfChildren() {
+          return Object.keys(this.children).length;
+        }
+        toString() {
+          return serializePaths(this);
+        }
+      }
+      class UrlSegment {
+        constructor(path, parameters) {
+          (this.path = path), (this.parameters = parameters);
+        }
+        get parameterMap() {
+          return (
+            this._parameterMap ||
+              (this._parameterMap = convertToParamMap(this.parameters)),
+            this._parameterMap
+          );
+        }
+        toString() {
+          return serializePath(this);
+        }
+      }
+      function equalPath(as, bs) {
+        return (
+          as.length === bs.length && as.every((a, i) => a.path === bs[i].path)
+        );
+      }
+      let UrlSerializer = (() => {
+        class UrlSerializer2 {}
+        return (
+          (UrlSerializer2.ɵfac = function (t) {
+            return new (t || UrlSerializer2)();
+          }),
+          (UrlSerializer2.ɵprov = ɵɵdefineInjectable({
+            token: UrlSerializer2,
+            factory: function () {
+              return new DefaultUrlSerializer();
+            },
+            providedIn: "root",
+          })),
+          UrlSerializer2
+        );
+      })();
+      class DefaultUrlSerializer {
+        parse(url) {
+          const p = new UrlParser(url);
+          return new UrlTree(
+            p.parseRootSegment(),
+            p.parseQueryParams(),
+            p.parseFragment()
+          );
+        }
+        serialize(tree2) {
+          return `/${serializeSegment(
+            tree2.root,
+            !0
+          )}${(function serializeQueryParams(params) {
+            const strParams = Object.keys(params)
+              .map((name) => {
+                const value = params[name];
+                return Array.isArray(value)
+                  ? value
+                      .map(
+                        (v) => `${encodeUriQuery(name)}=${encodeUriQuery(v)}`
+                      )
+                      .join("&")
+                  : `${encodeUriQuery(name)}=${encodeUriQuery(value)}`;
+              })
+              .filter((s) => !!s);
+            return strParams.length ? `?${strParams.join("&")}` : "";
+          })(tree2.queryParams)}${
+            "string" == typeof tree2.fragment
+              ? `#${(function encodeUriFragment(s) {
+                  return encodeURI(s);
+                })(tree2.fragment)}`
+              : ""
+          }`;
+        }
+      }
+      const DEFAULT_SERIALIZER = new DefaultUrlSerializer();
+      function serializePaths(segment) {
+        return segment.segments.map((p) => serializePath(p)).join("/");
+      }
+      function serializeSegment(segment, root) {
+        if (!segment.hasChildren()) return serializePaths(segment);
+        if (root) {
+          const primary = segment.children.primary
+              ? serializeSegment(segment.children.primary, !1)
+              : "",
+            children = [];
+          return (
+            forEach(segment.children, (v, k) => {
+              "primary" !== k &&
+                children.push(`${k}:${serializeSegment(v, !1)}`);
+            }),
+            children.length > 0 ? `${primary}(${children.join("//")})` : primary
+          );
+        }
+        {
+          const children = (function mapChildrenIntoArray(segment, fn) {
+            let res = [];
+            return (
+              forEach(segment.children, (child, childOutlet) => {
+                "primary" === childOutlet &&
+                  (res = res.concat(fn(child, childOutlet)));
+              }),
+              forEach(segment.children, (child, childOutlet) => {
+                "primary" !== childOutlet &&
+                  (res = res.concat(fn(child, childOutlet)));
+              }),
+              res
+            );
+          })(segment, (v, k) =>
+            "primary" === k
+              ? [serializeSegment(segment.children.primary, !1)]
+              : [`${k}:${serializeSegment(v, !1)}`]
+          );
+          return 1 === Object.keys(segment.children).length &&
+            null != segment.children.primary
+            ? `${serializePaths(segment)}/${children[0]}`
+            : `${serializePaths(segment)}/(${children.join("//")})`;
+        }
+      }
+      function encodeUriString(s) {
+        return encodeURIComponent(s)
+          .replace(/%40/g, "@")
+          .replace(/%3A/gi, ":")
+          .replace(/%24/g, "$")
+          .replace(/%2C/gi, ",");
+      }
+      function encodeUriQuery(s) {
+        return encodeUriString(s).replace(/%3B/gi, ";");
+      }
+      function encodeUriSegment(s) {
+        return encodeUriString(s)
+          .replace(/\(/g, "%28")
+          .replace(/\)/g, "%29")
+          .replace(/%26/gi, "&");
+      }
+      function decode(s) {
+        return decodeURIComponent(s);
+      }
+      function decodeQuery(s) {
+        return decode(s.replace(/\+/g, "%20"));
+      }
+      function serializePath(path) {
+        return `${encodeUriSegment(path.path)}${(function serializeMatrixParams(
+          params
+        ) {
+          return Object.keys(params)
+            .map(
+              (key) =>
+                `;${encodeUriSegment(key)}=${encodeUriSegment(params[key])}`
+            )
+            .join("");
+        })(path.parameters)}`;
+      }
+      const SEGMENT_RE = /^[^\/()?;=#]+/;
+      function matchSegments(str) {
+        const match2 = str.match(SEGMENT_RE);
+        return match2 ? match2[0] : "";
+      }
+      const QUERY_PARAM_RE = /^[^=?&#]+/,
+        QUERY_PARAM_VALUE_RE = /^[^&#]+/;
+      class UrlParser {
+        constructor(url) {
+          (this.url = url), (this.remaining = url);
+        }
+        parseRootSegment() {
+          return (
+            this.consumeOptional("/"),
+            "" === this.remaining ||
+            this.peekStartsWith("?") ||
+            this.peekStartsWith("#")
+              ? new UrlSegmentGroup([], {})
+              : new UrlSegmentGroup([], this.parseChildren())
+          );
+        }
+        parseQueryParams() {
+          const params = {};
+          if (this.consumeOptional("?"))
+            do {
+              this.parseQueryParam(params);
+            } while (this.consumeOptional("&"));
+          return params;
+        }
+        parseFragment() {
+          return this.consumeOptional("#")
+            ? decodeURIComponent(this.remaining)
+            : null;
+        }
+        parseChildren() {
+          if ("" === this.remaining) return {};
+          this.consumeOptional("/");
+          const segments = [];
+          for (
+            this.peekStartsWith("(") || segments.push(this.parseSegment());
+            this.peekStartsWith("/") &&
+            !this.peekStartsWith("//") &&
+            !this.peekStartsWith("/(");
+
+          )
+            this.capture("/"), segments.push(this.parseSegment());
+          let children = {};
+          this.peekStartsWith("/(") &&
+            (this.capture("/"), (children = this.parseParens(!0)));
+          let res = {};
+          return (
+            this.peekStartsWith("(") && (res = this.parseParens(!1)),
+            (segments.length > 0 || Object.keys(children).length > 0) &&
+              (res.primary = new UrlSegmentGroup(segments, children)),
+            res
+          );
+        }
+        parseSegment() {
+          const path = matchSegments(this.remaining);
+          if ("" === path && this.peekStartsWith(";"))
+            throw new RuntimeError(4009, !1);
+          return (
+            this.capture(path),
+            new UrlSegment(decode(path), this.parseMatrixParams())
+          );
+        }
+        parseMatrixParams() {
+          const params = {};
+          for (; this.consumeOptional(";"); ) this.parseParam(params);
+          return params;
+        }
+        parseParam(params) {
+          const key = matchSegments(this.remaining);
+          if (!key) return;
+          this.capture(key);
+          let value = "";
+          if (this.consumeOptional("=")) {
+            const valueMatch = matchSegments(this.remaining);
+            valueMatch && ((value = valueMatch), this.capture(value));
+          }
+          params[decode(key)] = decode(value);
+        }
+        parseQueryParam(params) {
+          const key = (function matchQueryParams(str) {
+            const match2 = str.match(QUERY_PARAM_RE);
+            return match2 ? match2[0] : "";
+          })(this.remaining);
+          if (!key) return;
+          this.capture(key);
+          let value = "";
+          if (this.consumeOptional("=")) {
+            const valueMatch = (function matchUrlQueryParamValue(str) {
+              const match2 = str.match(QUERY_PARAM_VALUE_RE);
+              return match2 ? match2[0] : "";
+            })(this.remaining);
+            valueMatch && ((value = valueMatch), this.capture(value));
+          }
+          const decodedKey = decodeQuery(key),
+            decodedVal = decodeQuery(value);
+          if (params.hasOwnProperty(decodedKey)) {
+            let currentVal = params[decodedKey];
+            Array.isArray(currentVal) ||
+              ((currentVal = [currentVal]), (params[decodedKey] = currentVal)),
+              currentVal.push(decodedVal);
+          } else params[decodedKey] = decodedVal;
+        }
+        parseParens(allowPrimary) {
+          const segments = {};
+          for (
+            this.capture("(");
+            !this.consumeOptional(")") && this.remaining.length > 0;
+
+          ) {
+            const path = matchSegments(this.remaining),
+              next = this.remaining[path.length];
+            if ("/" !== next && ")" !== next && ";" !== next)
+              throw new RuntimeError(4010, !1);
+            let outletName;
+            path.indexOf(":") > -1
+              ? ((outletName = path.slice(0, path.indexOf(":"))),
+                this.capture(outletName),
+                this.capture(":"))
+              : allowPrimary && (outletName = "primary");
+            const children = this.parseChildren();
+            (segments[outletName] =
+              1 === Object.keys(children).length
+                ? children.primary
+                : new UrlSegmentGroup([], children)),
+              this.consumeOptional("//");
+          }
+          return segments;
+        }
+        peekStartsWith(str) {
+          return this.remaining.startsWith(str);
+        }
+        consumeOptional(str) {
+          return (
+            !!this.peekStartsWith(str) &&
+            ((this.remaining = this.remaining.substring(str.length)), !0)
+          );
+        }
+        capture(str) {
+          if (!this.consumeOptional(str)) throw new RuntimeError(4011, !1);
+        }
+      }
+      function createRoot(rootCandidate) {
+        return rootCandidate.segments.length > 0
+          ? new UrlSegmentGroup([], {
+              primary: rootCandidate,
+            })
+          : rootCandidate;
+      }
+      function squashSegmentGroup(segmentGroup) {
+        const newChildren = {};
+        for (const childOutlet of Object.keys(segmentGroup.children)) {
+          const childCandidate = squashSegmentGroup(
+            segmentGroup.children[childOutlet]
+          );
+          (childCandidate.segments.length > 0 ||
+            childCandidate.hasChildren()) &&
+            (newChildren[childOutlet] = childCandidate);
+        }
+        return (function mergeTrivialChildren(s) {
+          if (1 === s.numberOfChildren && s.children.primary) {
+            const c = s.children.primary;
+            return new UrlSegmentGroup(
+              s.segments.concat(c.segments),
+              c.children
             );
           }
-          deleteTodoById(id) {
+          return s;
+        })(new UrlSegmentGroup(segmentGroup.segments, newChildren));
+      }
+      function isUrlTree(v) {
+        return v instanceof UrlTree;
+      }
+      function createUrlTree(route, urlTree, commands, queryParams, fragment) {
+        if (0 === commands.length)
+          return tree(
+            urlTree.root,
+            urlTree.root,
+            urlTree.root,
+            queryParams,
+            fragment
+          );
+        const nav = (function computeNavigation(commands) {
+          if (
+            "string" == typeof commands[0] &&
+            1 === commands.length &&
+            "/" === commands[0]
+          )
+            return new Navigation(!0, 0, commands);
+          let numberOfDoubleDots = 0,
+            isAbsolute = !1;
+          const res = commands.reduce((res2, cmd, cmdIdx) => {
+            if ("object" == typeof cmd && null != cmd) {
+              if (cmd.outlets) {
+                const outlets = {};
+                return (
+                  forEach(cmd.outlets, (commands2, name) => {
+                    outlets[name] =
+                      "string" == typeof commands2
+                        ? commands2.split("/")
+                        : commands2;
+                  }),
+                  [
+                    ...res2,
+                    {
+                      outlets,
+                    },
+                  ]
+                );
+              }
+              if (cmd.segmentPath) return [...res2, cmd.segmentPath];
+            }
+            return "string" != typeof cmd
+              ? [...res2, cmd]
+              : 0 === cmdIdx
+              ? (cmd.split("/").forEach((urlPart, partIndex) => {
+                  (0 == partIndex && "." === urlPart) ||
+                    (0 == partIndex && "" === urlPart
+                      ? (isAbsolute = !0)
+                      : ".." === urlPart
+                      ? numberOfDoubleDots++
+                      : "" != urlPart && res2.push(urlPart));
+                }),
+                res2)
+              : [...res2, cmd];
+          }, []);
+          return new Navigation(isAbsolute, numberOfDoubleDots, res);
+        })(commands);
+        return nav.toRoot()
+          ? tree(
+              urlTree.root,
+              urlTree.root,
+              new UrlSegmentGroup([], {}),
+              queryParams,
+              fragment
+            )
+          : (function createTreeUsingPathIndex(lastPathIndex) {
+              const startingPosition = (function findStartingPosition(
+                  nav,
+                  tree2,
+                  segmentGroup,
+                  lastPathIndex
+                ) {
+                  if (nav.isAbsolute) return new Position(tree2.root, !0, 0);
+                  if (-1 === lastPathIndex)
+                    return new Position(
+                      segmentGroup,
+                      segmentGroup === tree2.root,
+                      0
+                    );
+                  return (function createPositionApplyingDoubleDots(
+                    group,
+                    index,
+                    numberOfDoubleDots
+                  ) {
+                    let g = group,
+                      ci = index,
+                      dd = numberOfDoubleDots;
+                    for (; dd > ci; ) {
+                      if (((dd -= ci), (g = g.parent), !g))
+                        throw new RuntimeError(4005, !1);
+                      ci = g.segments.length;
+                    }
+                    return new Position(g, !1, ci - dd);
+                  })(
+                    segmentGroup,
+                    lastPathIndex + (isMatrixParams(nav.commands[0]) ? 0 : 1),
+                    nav.numberOfDoubleDots
+                  );
+                })(nav, urlTree, route.snapshot?._urlSegment, lastPathIndex),
+                segmentGroup = startingPosition.processChildren
+                  ? updateSegmentGroupChildren(
+                      startingPosition.segmentGroup,
+                      startingPosition.index,
+                      nav.commands
+                    )
+                  : updateSegmentGroup(
+                      startingPosition.segmentGroup,
+                      startingPosition.index,
+                      nav.commands
+                    );
+              return tree(
+                urlTree.root,
+                startingPosition.segmentGroup,
+                segmentGroup,
+                queryParams,
+                fragment
+              );
+            })(route.snapshot?._lastPathIndex);
+      }
+      function isMatrixParams(command) {
+        return (
+          "object" == typeof command &&
+          null != command &&
+          !command.outlets &&
+          !command.segmentPath
+        );
+      }
+      function isCommandWithOutlets(command) {
+        return "object" == typeof command && null != command && command.outlets;
+      }
+      function tree(
+        oldRoot,
+        oldSegmentGroup,
+        newSegmentGroup,
+        queryParams,
+        fragment
+      ) {
+        let rootCandidate,
+          qp = {};
+        queryParams &&
+          forEach(queryParams, (value, name) => {
+            qp[name] = Array.isArray(value)
+              ? value.map((v) => `${v}`)
+              : `${value}`;
+          }),
+          (rootCandidate =
+            oldRoot === oldSegmentGroup
+              ? newSegmentGroup
+              : replaceSegment(oldRoot, oldSegmentGroup, newSegmentGroup));
+        const newRoot = createRoot(squashSegmentGroup(rootCandidate));
+        return new UrlTree(newRoot, qp, fragment);
+      }
+      function replaceSegment(current, oldSegment, newSegment) {
+        const children = {};
+        return (
+          forEach(current.children, (c, outletName) => {
+            children[outletName] =
+              c === oldSegment
+                ? newSegment
+                : replaceSegment(c, oldSegment, newSegment);
+          }),
+          new UrlSegmentGroup(current.segments, children)
+        );
+      }
+      class Navigation {
+        constructor(isAbsolute, numberOfDoubleDots, commands) {
+          if (
+            ((this.isAbsolute = isAbsolute),
+            (this.numberOfDoubleDots = numberOfDoubleDots),
+            (this.commands = commands),
+            isAbsolute && commands.length > 0 && isMatrixParams(commands[0]))
+          )
+            throw new RuntimeError(4003, !1);
+          const cmdWithOutlet = commands.find(isCommandWithOutlets);
+          if (cmdWithOutlet && cmdWithOutlet !== router_last(commands))
+            throw new RuntimeError(4004, !1);
+        }
+        toRoot() {
+          return (
+            this.isAbsolute &&
+            1 === this.commands.length &&
+            "/" == this.commands[0]
+          );
+        }
+      }
+      class Position {
+        constructor(segmentGroup, processChildren, index) {
+          (this.segmentGroup = segmentGroup),
+            (this.processChildren = processChildren),
+            (this.index = index);
+        }
+      }
+      function updateSegmentGroup(segmentGroup, startIndex, commands) {
+        if (
+          (segmentGroup || (segmentGroup = new UrlSegmentGroup([], {})),
+          0 === segmentGroup.segments.length && segmentGroup.hasChildren())
+        )
+          return updateSegmentGroupChildren(segmentGroup, startIndex, commands);
+        const m = (function prefixedWith(segmentGroup, startIndex, commands) {
+            let currentCommandIndex = 0,
+              currentPathIndex = startIndex;
+            const noMatch2 = {
+              match: !1,
+              pathIndex: 0,
+              commandIndex: 0,
+            };
+            for (; currentPathIndex < segmentGroup.segments.length; ) {
+              if (currentCommandIndex >= commands.length) return noMatch2;
+              const path = segmentGroup.segments[currentPathIndex],
+                command = commands[currentCommandIndex];
+              if (isCommandWithOutlets(command)) break;
+              const curr = `${command}`,
+                next =
+                  currentCommandIndex < commands.length - 1
+                    ? commands[currentCommandIndex + 1]
+                    : null;
+              if (currentPathIndex > 0 && void 0 === curr) break;
+              if (
+                curr &&
+                next &&
+                "object" == typeof next &&
+                void 0 === next.outlets
+              ) {
+                if (!compare(curr, next, path)) return noMatch2;
+                currentCommandIndex += 2;
+              } else {
+                if (!compare(curr, {}, path)) return noMatch2;
+                currentCommandIndex++;
+              }
+              currentPathIndex++;
+            }
+            return {
+              match: !0,
+              pathIndex: currentPathIndex,
+              commandIndex: currentCommandIndex,
+            };
+          })(segmentGroup, startIndex, commands),
+          slicedCommands = commands.slice(m.commandIndex);
+        if (m.match && m.pathIndex < segmentGroup.segments.length) {
+          const g = new UrlSegmentGroup(
+            segmentGroup.segments.slice(0, m.pathIndex),
+            {}
+          );
+          return (
+            (g.children.primary = new UrlSegmentGroup(
+              segmentGroup.segments.slice(m.pathIndex),
+              segmentGroup.children
+            )),
+            updateSegmentGroupChildren(g, 0, slicedCommands)
+          );
+        }
+        return m.match && 0 === slicedCommands.length
+          ? new UrlSegmentGroup(segmentGroup.segments, {})
+          : m.match && !segmentGroup.hasChildren()
+          ? createNewSegmentGroup(segmentGroup, startIndex, commands)
+          : m.match
+          ? updateSegmentGroupChildren(segmentGroup, 0, slicedCommands)
+          : createNewSegmentGroup(segmentGroup, startIndex, commands);
+      }
+      function updateSegmentGroupChildren(segmentGroup, startIndex, commands) {
+        if (0 === commands.length)
+          return new UrlSegmentGroup(segmentGroup.segments, {});
+        {
+          const outlets = (function getOutlets(commands) {
+              return isCommandWithOutlets(commands[0])
+                ? commands[0].outlets
+                : {
+                    primary: commands,
+                  };
+            })(commands),
+            children = {};
+          return (
+            forEach(outlets, (commands2, outlet) => {
+              "string" == typeof commands2 && (commands2 = [commands2]),
+                null !== commands2 &&
+                  (children[outlet] = updateSegmentGroup(
+                    segmentGroup.children[outlet],
+                    startIndex,
+                    commands2
+                  ));
+            }),
+            forEach(segmentGroup.children, (child, childOutlet) => {
+              void 0 === outlets[childOutlet] &&
+                (children[childOutlet] = child);
+            }),
+            new UrlSegmentGroup(segmentGroup.segments, children)
+          );
+        }
+      }
+      function createNewSegmentGroup(segmentGroup, startIndex, commands) {
+        const paths = segmentGroup.segments.slice(0, startIndex);
+        let i = 0;
+        for (; i < commands.length; ) {
+          const command = commands[i];
+          if (isCommandWithOutlets(command)) {
+            const children = createNewSegmentChildren(command.outlets);
+            return new UrlSegmentGroup(paths, children);
+          }
+          if (0 === i && isMatrixParams(commands[0])) {
+            paths.push(
+              new UrlSegment(
+                segmentGroup.segments[startIndex].path,
+                router_stringify(commands[0])
+              )
+            ),
+              i++;
+            continue;
+          }
+          const curr = isCommandWithOutlets(command)
+              ? command.outlets.primary
+              : `${command}`,
+            next = i < commands.length - 1 ? commands[i + 1] : null;
+          curr && next && isMatrixParams(next)
+            ? (paths.push(new UrlSegment(curr, router_stringify(next))),
+              (i += 2))
+            : (paths.push(new UrlSegment(curr, {})), i++);
+        }
+        return new UrlSegmentGroup(paths, {});
+      }
+      function createNewSegmentChildren(outlets) {
+        const children = {};
+        return (
+          forEach(outlets, (commands, outlet) => {
+            "string" == typeof commands && (commands = [commands]),
+              null !== commands &&
+                (children[outlet] = createNewSegmentGroup(
+                  new UrlSegmentGroup([], {}),
+                  0,
+                  commands
+                ));
+          }),
+          children
+        );
+      }
+      function router_stringify(params) {
+        const res = {};
+        return forEach(params, (v, k) => (res[k] = `${v}`)), res;
+      }
+      function compare(path, params, segment) {
+        return path == segment.path && shallowEqual(params, segment.parameters);
+      }
+      class RouterEvent {
+        constructor(id, url) {
+          (this.id = id), (this.url = url);
+        }
+      }
+      class NavigationStart extends RouterEvent {
+        constructor(
+          id,
+          url,
+          navigationTrigger = "imperative",
+          restoredState = null
+        ) {
+          super(id, url),
+            (this.type = 0),
+            (this.navigationTrigger = navigationTrigger),
+            (this.restoredState = restoredState);
+        }
+        toString() {
+          return `NavigationStart(id: ${this.id}, url: '${this.url}')`;
+        }
+      }
+      class NavigationEnd extends RouterEvent {
+        constructor(id, url, urlAfterRedirects) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.type = 1);
+        }
+        toString() {
+          return `NavigationEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}')`;
+        }
+      }
+      class NavigationCancel extends RouterEvent {
+        constructor(id, url, reason, code) {
+          super(id, url),
+            (this.reason = reason),
+            (this.code = code),
+            (this.type = 2);
+        }
+        toString() {
+          return `NavigationCancel(id: ${this.id}, url: '${this.url}')`;
+        }
+      }
+      class NavigationError extends RouterEvent {
+        constructor(id, url, error, target) {
+          super(id, url),
+            (this.error = error),
+            (this.target = target),
+            (this.type = 3);
+        }
+        toString() {
+          return `NavigationError(id: ${this.id}, url: '${this.url}', error: ${this.error})`;
+        }
+      }
+      class RoutesRecognized extends RouterEvent {
+        constructor(id, url, urlAfterRedirects, state) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.state = state),
+            (this.type = 4);
+        }
+        toString() {
+          return `RoutesRecognized(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`;
+        }
+      }
+      class GuardsCheckStart extends RouterEvent {
+        constructor(id, url, urlAfterRedirects, state) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.state = state),
+            (this.type = 7);
+        }
+        toString() {
+          return `GuardsCheckStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`;
+        }
+      }
+      class GuardsCheckEnd extends RouterEvent {
+        constructor(id, url, urlAfterRedirects, state, shouldActivate) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.state = state),
+            (this.shouldActivate = shouldActivate),
+            (this.type = 8);
+        }
+        toString() {
+          return `GuardsCheckEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state}, shouldActivate: ${this.shouldActivate})`;
+        }
+      }
+      class ResolveStart extends RouterEvent {
+        constructor(id, url, urlAfterRedirects, state) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.state = state),
+            (this.type = 5);
+        }
+        toString() {
+          return `ResolveStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`;
+        }
+      }
+      class ResolveEnd extends RouterEvent {
+        constructor(id, url, urlAfterRedirects, state) {
+          super(id, url),
+            (this.urlAfterRedirects = urlAfterRedirects),
+            (this.state = state),
+            (this.type = 6);
+        }
+        toString() {
+          return `ResolveEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`;
+        }
+      }
+      class RouteConfigLoadStart {
+        constructor(route) {
+          (this.route = route), (this.type = 9);
+        }
+        toString() {
+          return `RouteConfigLoadStart(path: ${this.route.path})`;
+        }
+      }
+      class RouteConfigLoadEnd {
+        constructor(route) {
+          (this.route = route), (this.type = 10);
+        }
+        toString() {
+          return `RouteConfigLoadEnd(path: ${this.route.path})`;
+        }
+      }
+      class ChildActivationStart {
+        constructor(snapshot) {
+          (this.snapshot = snapshot), (this.type = 11);
+        }
+        toString() {
+          return `ChildActivationStart(path: '${
+            (this.snapshot.routeConfig && this.snapshot.routeConfig.path) || ""
+          }')`;
+        }
+      }
+      class ChildActivationEnd {
+        constructor(snapshot) {
+          (this.snapshot = snapshot), (this.type = 12);
+        }
+        toString() {
+          return `ChildActivationEnd(path: '${
+            (this.snapshot.routeConfig && this.snapshot.routeConfig.path) || ""
+          }')`;
+        }
+      }
+      class ActivationStart {
+        constructor(snapshot) {
+          (this.snapshot = snapshot), (this.type = 13);
+        }
+        toString() {
+          return `ActivationStart(path: '${
+            (this.snapshot.routeConfig && this.snapshot.routeConfig.path) || ""
+          }')`;
+        }
+      }
+      class ActivationEnd {
+        constructor(snapshot) {
+          (this.snapshot = snapshot), (this.type = 14);
+        }
+        toString() {
+          return `ActivationEnd(path: '${
+            (this.snapshot.routeConfig && this.snapshot.routeConfig.path) || ""
+          }')`;
+        }
+      }
+      class Scroll {
+        constructor(routerEvent, position, anchor) {
+          (this.routerEvent = routerEvent),
+            (this.position = position),
+            (this.anchor = anchor),
+            (this.type = 15);
+        }
+        toString() {
+          return `Scroll(anchor: '${this.anchor}', position: '${
+            this.position ? `${this.position[0]}, ${this.position[1]}` : null
+          }')`;
+        }
+      }
+      class Tree {
+        constructor(root) {
+          this._root = root;
+        }
+        get root() {
+          return this._root.value;
+        }
+        parent(t) {
+          const p = this.pathFromRoot(t);
+          return p.length > 1 ? p[p.length - 2] : null;
+        }
+        children(t) {
+          const n = findNode(t, this._root);
+          return n ? n.children.map((t2) => t2.value) : [];
+        }
+        firstChild(t) {
+          const n = findNode(t, this._root);
+          return n && n.children.length > 0 ? n.children[0].value : null;
+        }
+        siblings(t) {
+          const p = findPath(t, this._root);
+          return p.length < 2
+            ? []
+            : p[p.length - 2].children
+                .map((c2) => c2.value)
+                .filter((cc) => cc !== t);
+        }
+        pathFromRoot(t) {
+          return findPath(t, this._root).map((s) => s.value);
+        }
+      }
+      function findNode(value, node) {
+        if (value === node.value) return node;
+        for (const child of node.children) {
+          const node2 = findNode(value, child);
+          if (node2) return node2;
+        }
+        return null;
+      }
+      function findPath(value, node) {
+        if (value === node.value) return [node];
+        for (const child of node.children) {
+          const path = findPath(value, child);
+          if (path.length) return path.unshift(node), path;
+        }
+        return [];
+      }
+      class TreeNode {
+        constructor(value, children) {
+          (this.value = value), (this.children = children);
+        }
+        toString() {
+          return `TreeNode(${this.value})`;
+        }
+      }
+      function nodeChildrenAsMap(node) {
+        const map2 = {};
+        return (
+          node &&
+            node.children.forEach(
+              (child) => (map2[child.value.outlet] = child)
+            ),
+          map2
+        );
+      }
+      class RouterState extends Tree {
+        constructor(root, snapshot) {
+          super(root), (this.snapshot = snapshot), setRouterState(this, root);
+        }
+        toString() {
+          return this.snapshot.toString();
+        }
+      }
+      function createEmptyState(urlTree, rootComponent) {
+        const snapshot = (function createEmptyStateSnapshot(
+            urlTree,
+            rootComponent
+          ) {
+            const activated = new ActivatedRouteSnapshot(
+              [],
+              {},
+              {},
+              "",
+              {},
+              "primary",
+              rootComponent,
+              null,
+              urlTree.root,
+              -1,
+              {}
+            );
+            return new RouterStateSnapshot("", new TreeNode(activated, []));
+          })(urlTree, rootComponent),
+          emptyUrl = new BehaviorSubject([new UrlSegment("", {})]),
+          emptyParams = new BehaviorSubject({}),
+          emptyData = new BehaviorSubject({}),
+          emptyQueryParams = new BehaviorSubject({}),
+          fragment = new BehaviorSubject(""),
+          activated = new ActivatedRoute(
+            emptyUrl,
+            emptyParams,
+            emptyQueryParams,
+            fragment,
+            emptyData,
+            "primary",
+            rootComponent,
+            snapshot.root
+          );
+        return (
+          (activated.snapshot = snapshot.root),
+          new RouterState(new TreeNode(activated, []), snapshot)
+        );
+      }
+      class ActivatedRoute {
+        constructor(
+          url,
+          params,
+          queryParams,
+          fragment,
+          data,
+          outlet,
+          component,
+          futureSnapshot
+        ) {
+          (this.url = url),
+            (this.params = params),
+            (this.queryParams = queryParams),
+            (this.fragment = fragment),
+            (this.data = data),
+            (this.outlet = outlet),
+            (this.component = component),
+            (this.title =
+              this.data?.pipe(map((d) => d[RouteTitleKey])) ?? of_of(void 0)),
+            (this._futureSnapshot = futureSnapshot);
+        }
+        get routeConfig() {
+          return this._futureSnapshot.routeConfig;
+        }
+        get root() {
+          return this._routerState.root;
+        }
+        get parent() {
+          return this._routerState.parent(this);
+        }
+        get firstChild() {
+          return this._routerState.firstChild(this);
+        }
+        get children() {
+          return this._routerState.children(this);
+        }
+        get pathFromRoot() {
+          return this._routerState.pathFromRoot(this);
+        }
+        get paramMap() {
+          return (
+            this._paramMap ||
+              (this._paramMap = this.params.pipe(
+                map((p) => convertToParamMap(p))
+              )),
+            this._paramMap
+          );
+        }
+        get queryParamMap() {
+          return (
+            this._queryParamMap ||
+              (this._queryParamMap = this.queryParams.pipe(
+                map((p) => convertToParamMap(p))
+              )),
+            this._queryParamMap
+          );
+        }
+        toString() {
+          return this.snapshot
+            ? this.snapshot.toString()
+            : `Future(${this._futureSnapshot})`;
+        }
+      }
+      function inheritedParamsDataResolve(
+        route,
+        paramsInheritanceStrategy = "emptyOnly"
+      ) {
+        const pathFromRoot = route.pathFromRoot;
+        let inheritingStartingFrom = 0;
+        if ("always" !== paramsInheritanceStrategy)
+          for (
+            inheritingStartingFrom = pathFromRoot.length - 1;
+            inheritingStartingFrom >= 1;
+
+          ) {
+            const current = pathFromRoot[inheritingStartingFrom],
+              parent = pathFromRoot[inheritingStartingFrom - 1];
+            if (current.routeConfig && "" === current.routeConfig.path)
+              inheritingStartingFrom--;
+            else {
+              if (parent.component) break;
+              inheritingStartingFrom--;
+            }
+          }
+        return (function flattenInherited(pathFromRoot) {
+          return pathFromRoot.reduce(
+            (res, curr) => ({
+              params: {
+                ...res.params,
+                ...curr.params,
+              },
+              data: {
+                ...res.data,
+                ...curr.data,
+              },
+              resolve: {
+                ...curr.data,
+                ...res.resolve,
+                ...curr.routeConfig?.data,
+                ...curr._resolvedData,
+              },
+            }),
+            {
+              params: {},
+              data: {},
+              resolve: {},
+            }
+          );
+        })(pathFromRoot.slice(inheritingStartingFrom));
+      }
+      class ActivatedRouteSnapshot {
+        constructor(
+          url,
+          params,
+          queryParams,
+          fragment,
+          data,
+          outlet,
+          component,
+          routeConfig,
+          urlSegment,
+          lastPathIndex,
+          resolve,
+          correctedLastPathIndex
+        ) {
+          (this.url = url),
+            (this.params = params),
+            (this.queryParams = queryParams),
+            (this.fragment = fragment),
+            (this.data = data),
+            (this.outlet = outlet),
+            (this.component = component),
+            (this.title = this.data?.[RouteTitleKey]),
+            (this.routeConfig = routeConfig),
+            (this._urlSegment = urlSegment),
+            (this._lastPathIndex = lastPathIndex),
+            (this._correctedLastPathIndex =
+              correctedLastPathIndex ?? lastPathIndex),
+            (this._resolve = resolve);
+        }
+        get root() {
+          return this._routerState.root;
+        }
+        get parent() {
+          return this._routerState.parent(this);
+        }
+        get firstChild() {
+          return this._routerState.firstChild(this);
+        }
+        get children() {
+          return this._routerState.children(this);
+        }
+        get pathFromRoot() {
+          return this._routerState.pathFromRoot(this);
+        }
+        get paramMap() {
+          return (
+            this._paramMap || (this._paramMap = convertToParamMap(this.params)),
+            this._paramMap
+          );
+        }
+        get queryParamMap() {
+          return (
+            this._queryParamMap ||
+              (this._queryParamMap = convertToParamMap(this.queryParams)),
+            this._queryParamMap
+          );
+        }
+        toString() {
+          return `Route(url:'${this.url
+            .map((segment) => segment.toString())
+            .join("/")}', path:'${
+            this.routeConfig ? this.routeConfig.path : ""
+          }')`;
+        }
+      }
+      class RouterStateSnapshot extends Tree {
+        constructor(url, root) {
+          super(root), (this.url = url), setRouterState(this, root);
+        }
+        toString() {
+          return serializeNode(this._root);
+        }
+      }
+      function setRouterState(state, node) {
+        (node.value._routerState = state),
+          node.children.forEach((c) => setRouterState(state, c));
+      }
+      function serializeNode(node) {
+        const c =
+          node.children.length > 0
+            ? ` { ${node.children.map(serializeNode).join(", ")} } `
+            : "";
+        return `${node.value}${c}`;
+      }
+      function advanceActivatedRoute(route) {
+        if (route.snapshot) {
+          const currentSnapshot = route.snapshot,
+            nextSnapshot = route._futureSnapshot;
+          (route.snapshot = nextSnapshot),
+            shallowEqual(
+              currentSnapshot.queryParams,
+              nextSnapshot.queryParams
+            ) || route.queryParams.next(nextSnapshot.queryParams),
+            currentSnapshot.fragment !== nextSnapshot.fragment &&
+              route.fragment.next(nextSnapshot.fragment),
+            shallowEqual(currentSnapshot.params, nextSnapshot.params) ||
+              route.params.next(nextSnapshot.params),
+            (function shallowEqualArrays(a, b) {
+              if (a.length !== b.length) return !1;
+              for (let i = 0; i < a.length; ++i)
+                if (!shallowEqual(a[i], b[i])) return !1;
+              return !0;
+            })(currentSnapshot.url, nextSnapshot.url) ||
+              route.url.next(nextSnapshot.url),
+            shallowEqual(currentSnapshot.data, nextSnapshot.data) ||
+              route.data.next(nextSnapshot.data);
+        } else
+          (route.snapshot = route._futureSnapshot),
+            route.data.next(route._futureSnapshot.data);
+      }
+      function equalParamsAndUrlSegments(a, b) {
+        const equalUrlParams =
+          shallowEqual(a.params, b.params) &&
+          (function equalSegments(as, bs) {
             return (
-              (this.todos = this.todos.filter((todo) => todo.id !== id)), this
+              equalPath(as, bs) &&
+              as.every((a, i) => shallowEqual(a.parameters, bs[i].parameters))
+            );
+          })(a.url, b.url);
+        return (
+          equalUrlParams &&
+          !(!a.parent != !b.parent) &&
+          (!a.parent || equalParamsAndUrlSegments(a.parent, b.parent))
+        );
+      }
+      function createNode(routeReuseStrategy, curr, prevState) {
+        if (
+          prevState &&
+          routeReuseStrategy.shouldReuseRoute(
+            curr.value,
+            prevState.value.snapshot
+          )
+        ) {
+          const value = prevState.value;
+          value._futureSnapshot = curr.value;
+          const children = (function createOrReuseChildren(
+            routeReuseStrategy,
+            curr,
+            prevState
+          ) {
+            return curr.children.map((child) => {
+              for (const p of prevState.children)
+                if (
+                  routeReuseStrategy.shouldReuseRoute(
+                    child.value,
+                    p.value.snapshot
+                  )
+                )
+                  return createNode(routeReuseStrategy, child, p);
+              return createNode(routeReuseStrategy, child);
+            });
+          })(routeReuseStrategy, curr, prevState);
+          return new TreeNode(value, children);
+        }
+        {
+          if (routeReuseStrategy.shouldAttach(curr.value)) {
+            const detachedRouteHandle = routeReuseStrategy.retrieve(curr.value);
+            if (null !== detachedRouteHandle) {
+              const tree2 = detachedRouteHandle.route;
+              return (
+                (tree2.value._futureSnapshot = curr.value),
+                (tree2.children = curr.children.map((c) =>
+                  createNode(routeReuseStrategy, c)
+                )),
+                tree2
+              );
+            }
+          }
+          const value = (function createActivatedRoute(c) {
+              return new ActivatedRoute(
+                new BehaviorSubject(c.url),
+                new BehaviorSubject(c.params),
+                new BehaviorSubject(c.queryParams),
+                new BehaviorSubject(c.fragment),
+                new BehaviorSubject(c.data),
+                c.outlet,
+                c.component,
+                c
+              );
+            })(curr.value),
+            children = curr.children.map((c) =>
+              createNode(routeReuseStrategy, c)
+            );
+          return new TreeNode(value, children);
+        }
+      }
+      function redirectingNavigationError(urlSerializer, redirect) {
+        const { redirectTo, navigationBehaviorOptions } = isUrlTree(redirect)
+            ? {
+                redirectTo: redirect,
+                navigationBehaviorOptions: void 0,
+              }
+            : redirect,
+          error = navigationCancelingError(!1, 0, redirect);
+        return (
+          (error.url = redirectTo),
+          (error.navigationBehaviorOptions = navigationBehaviorOptions),
+          error
+        );
+      }
+      function navigationCancelingError(message, code, redirectUrl) {
+        const error = new Error("NavigationCancelingError: " + (message || ""));
+        return (
+          (error.ngNavigationCancelingError = !0),
+          (error.cancellationCode = code),
+          redirectUrl && (error.url = redirectUrl),
+          error
+        );
+      }
+      function isRedirectingNavigationCancelingError$1(error) {
+        return isNavigationCancelingError$1(error) && isUrlTree(error.url);
+      }
+      function isNavigationCancelingError$1(error) {
+        return error && error.ngNavigationCancelingError;
+      }
+      class OutletContext {
+        constructor() {
+          (this.outlet = null),
+            (this.route = null),
+            (this.resolver = null),
+            (this.injector = null),
+            (this.children = new ChildrenOutletContexts()),
+            (this.attachRef = null);
+        }
+      }
+      let ChildrenOutletContexts = (() => {
+          class ChildrenOutletContexts2 {
+            constructor() {
+              this.contexts = new Map();
+            }
+            onChildOutletCreated(childName, outlet) {
+              const context2 = this.getOrCreateContext(childName);
+              (context2.outlet = outlet),
+                this.contexts.set(childName, context2);
+            }
+            onChildOutletDestroyed(childName) {
+              const context2 = this.getContext(childName);
+              context2 &&
+                ((context2.outlet = null), (context2.attachRef = null));
+            }
+            onOutletDeactivated() {
+              const contexts = this.contexts;
+              return (this.contexts = new Map()), contexts;
+            }
+            onOutletReAttached(contexts) {
+              this.contexts = contexts;
+            }
+            getOrCreateContext(childName) {
+              let context2 = this.getContext(childName);
+              return (
+                context2 ||
+                  ((context2 = new OutletContext()),
+                  this.contexts.set(childName, context2)),
+                context2
+              );
+            }
+            getContext(childName) {
+              return this.contexts.get(childName) || null;
+            }
+          }
+          return (
+            (ChildrenOutletContexts2.ɵfac = function (t) {
+              return new (t || ChildrenOutletContexts2)();
+            }),
+            (ChildrenOutletContexts2.ɵprov = ɵɵdefineInjectable({
+              token: ChildrenOutletContexts2,
+              factory: ChildrenOutletContexts2.ɵfac,
+              providedIn: "root",
+            })),
+            ChildrenOutletContexts2
+          );
+        })(),
+        RouterOutlet = (() => {
+          class RouterOutlet2 {
+            constructor(
+              parentContexts,
+              location2,
+              name,
+              changeDetector,
+              environmentInjector
+            ) {
+              (this.parentContexts = parentContexts),
+                (this.location = location2),
+                (this.changeDetector = changeDetector),
+                (this.environmentInjector = environmentInjector),
+                (this.activated = null),
+                (this._activatedRoute = null),
+                (this.activateEvents = new EventEmitter()),
+                (this.deactivateEvents = new EventEmitter()),
+                (this.attachEvents = new EventEmitter()),
+                (this.detachEvents = new EventEmitter()),
+                (this.name = name || "primary"),
+                parentContexts.onChildOutletCreated(this.name, this);
+            }
+            ngOnDestroy() {
+              this.parentContexts.getContext(this.name)?.outlet === this &&
+                this.parentContexts.onChildOutletDestroyed(this.name);
+            }
+            ngOnInit() {
+              if (!this.activated) {
+                const context2 = this.parentContexts.getContext(this.name);
+                context2 &&
+                  context2.route &&
+                  (context2.attachRef
+                    ? this.attach(context2.attachRef, context2.route)
+                    : this.activateWith(context2.route, context2.injector));
+              }
+            }
+            get isActivated() {
+              return !!this.activated;
+            }
+            get component() {
+              if (!this.activated) throw new RuntimeError(4012, !1);
+              return this.activated.instance;
+            }
+            get activatedRoute() {
+              if (!this.activated) throw new RuntimeError(4012, !1);
+              return this._activatedRoute;
+            }
+            get activatedRouteData() {
+              return this._activatedRoute
+                ? this._activatedRoute.snapshot.data
+                : {};
+            }
+            detach() {
+              if (!this.activated) throw new RuntimeError(4012, !1);
+              this.location.detach();
+              const cmp = this.activated;
+              return (
+                (this.activated = null),
+                (this._activatedRoute = null),
+                this.detachEvents.emit(cmp.instance),
+                cmp
+              );
+            }
+            attach(ref, activatedRoute) {
+              (this.activated = ref),
+                (this._activatedRoute = activatedRoute),
+                this.location.insert(ref.hostView),
+                this.attachEvents.emit(ref.instance);
+            }
+            deactivate() {
+              if (this.activated) {
+                const c = this.component;
+                this.activated.destroy(),
+                  (this.activated = null),
+                  (this._activatedRoute = null),
+                  this.deactivateEvents.emit(c);
+              }
+            }
+            activateWith(activatedRoute, resolverOrInjector) {
+              if (this.isActivated) throw new RuntimeError(4013, !1);
+              this._activatedRoute = activatedRoute;
+              const location2 = this.location,
+                component = activatedRoute._futureSnapshot.component,
+                childContexts = this.parentContexts.getOrCreateContext(
+                  this.name
+                ).children,
+                injector = new OutletInjector(
+                  activatedRoute,
+                  childContexts,
+                  location2.injector
+                );
+              if (
+                resolverOrInjector &&
+                (function isComponentFactoryResolver(item) {
+                  return !!item.resolveComponentFactory;
+                })(resolverOrInjector)
+              ) {
+                const factory =
+                  resolverOrInjector.resolveComponentFactory(component);
+                this.activated = location2.createComponent(
+                  factory,
+                  location2.length,
+                  injector
+                );
+              } else
+                this.activated = location2.createComponent(component, {
+                  index: location2.length,
+                  injector,
+                  environmentInjector:
+                    resolverOrInjector ?? this.environmentInjector,
+                });
+              this.changeDetector.markForCheck(),
+                this.activateEvents.emit(this.activated.instance);
+            }
+          }
+          return (
+            (RouterOutlet2.ɵfac = function (t) {
+              return new (t || RouterOutlet2)(
+                ɵɵdirectiveInject(ChildrenOutletContexts),
+                ɵɵdirectiveInject(ViewContainerRef),
+                (function ɵɵinjectAttribute(attrNameToInject) {
+                  return (function injectAttributeImpl(
+                    tNode,
+                    attrNameToInject
+                  ) {
+                    if ("class" === attrNameToInject) return tNode.classes;
+                    if ("style" === attrNameToInject) return tNode.styles;
+                    const attrs = tNode.attrs;
+                    if (attrs) {
+                      const attrsLength = attrs.length;
+                      let i = 0;
+                      for (; i < attrsLength; ) {
+                        const value = attrs[i];
+                        if (isNameOnlyAttributeMarker(value)) break;
+                        if (0 === value) i += 2;
+                        else if ("number" == typeof value)
+                          for (
+                            i++;
+                            i < attrsLength && "string" == typeof attrs[i];
+
+                          )
+                            i++;
+                        else {
+                          if (value === attrNameToInject) return attrs[i + 1];
+                          i += 2;
+                        }
+                      }
+                    }
+                    return null;
+                  })(getCurrentTNode(), attrNameToInject);
+                })("name"),
+                ɵɵdirectiveInject(ChangeDetectorRef),
+                ɵɵdirectiveInject(EnvironmentInjector)
+              );
+            }),
+            (RouterOutlet2.ɵdir = ɵɵdefineDirective({
+              type: RouterOutlet2,
+              selectors: [["router-outlet"]],
+              outputs: {
+                activateEvents: "activate",
+                deactivateEvents: "deactivate",
+                attachEvents: "attach",
+                detachEvents: "detach",
+              },
+              exportAs: ["outlet"],
+              standalone: !0,
+            })),
+            RouterOutlet2
+          );
+        })();
+      class OutletInjector {
+        constructor(route, childContexts, parent) {
+          (this.route = route),
+            (this.childContexts = childContexts),
+            (this.parent = parent);
+        }
+        get(token, notFoundValue) {
+          return token === ActivatedRoute
+            ? this.route
+            : token === ChildrenOutletContexts
+            ? this.childContexts
+            : this.parent.get(token, notFoundValue);
+        }
+      }
+      let ɵEmptyOutletComponent = (() => {
+        class ɵEmptyOutletComponent2 {}
+        return (
+          (ɵEmptyOutletComponent2.ɵfac = function (t) {
+            return new (t || ɵEmptyOutletComponent2)();
+          }),
+          (ɵEmptyOutletComponent2.ɵcmp = ɵɵdefineComponent({
+            type: ɵEmptyOutletComponent2,
+            selectors: [["ng-component"]],
+            standalone: !0,
+            features: [ɵɵStandaloneFeature],
+            decls: 1,
+            vars: 0,
+            template: function (rf, ctx) {
+              1 & rf && ɵɵelement(0, "router-outlet");
+            },
+            dependencies: [RouterOutlet],
+            encapsulation: 2,
+          })),
+          ɵEmptyOutletComponent2
+        );
+      })();
+      function getOrCreateRouteInjectorIfNeeded(route, currentInjector) {
+        return (
+          route.providers &&
+            !route._injector &&
+            (route._injector = createEnvironmentInjector(
+              route.providers,
+              currentInjector,
+              `Route: ${route.path}`
+            )),
+          route._injector ?? currentInjector
+        );
+      }
+      function standardizeConfig(r) {
+        const children = r.children && r.children.map(standardizeConfig),
+          c = children
+            ? {
+                ...r,
+                children,
+              }
+            : {
+                ...r,
+              };
+        return (
+          !c.component &&
+            !c.loadComponent &&
+            (children || c.loadChildren) &&
+            c.outlet &&
+            "primary" !== c.outlet &&
+            (c.component = ɵEmptyOutletComponent),
+          c
+        );
+      }
+      function getOutlet(route) {
+        return route.outlet || "primary";
+      }
+      function sortByMatchingOutlets(routes2, outletName) {
+        const sortedConfig = routes2.filter((r) => getOutlet(r) === outletName);
+        return (
+          sortedConfig.push(
+            ...routes2.filter((r) => getOutlet(r) !== outletName)
+          ),
+          sortedConfig
+        );
+      }
+      function getClosestRouteInjector(snapshot) {
+        if (!snapshot) return null;
+        if (snapshot.routeConfig?._injector)
+          return snapshot.routeConfig._injector;
+        for (let s = snapshot.parent; s; s = s.parent) {
+          const route = s.routeConfig;
+          if (route?._loadedInjector) return route._loadedInjector;
+          if (route?._injector) return route._injector;
+        }
+        return null;
+      }
+      class ActivateRoutes {
+        constructor(routeReuseStrategy, futureState, currState, forwardEvent) {
+          (this.routeReuseStrategy = routeReuseStrategy),
+            (this.futureState = futureState),
+            (this.currState = currState),
+            (this.forwardEvent = forwardEvent);
+        }
+        activate(parentContexts) {
+          const futureRoot = this.futureState._root,
+            currRoot = this.currState ? this.currState._root : null;
+          this.deactivateChildRoutes(futureRoot, currRoot, parentContexts),
+            advanceActivatedRoute(this.futureState.root),
+            this.activateChildRoutes(futureRoot, currRoot, parentContexts);
+        }
+        deactivateChildRoutes(futureNode, currNode, contexts) {
+          const children = nodeChildrenAsMap(currNode);
+          futureNode.children.forEach((futureChild) => {
+            const childOutletName = futureChild.value.outlet;
+            this.deactivateRoutes(
+              futureChild,
+              children[childOutletName],
+              contexts
+            ),
+              delete children[childOutletName];
+          }),
+            forEach(children, (v, childName) => {
+              this.deactivateRouteAndItsChildren(v, contexts);
+            });
+        }
+        deactivateRoutes(futureNode, currNode, parentContext) {
+          const future = futureNode.value,
+            curr = currNode ? currNode.value : null;
+          if (future === curr)
+            if (future.component) {
+              const context2 = parentContext.getContext(future.outlet);
+              context2 &&
+                this.deactivateChildRoutes(
+                  futureNode,
+                  currNode,
+                  context2.children
+                );
+            } else
+              this.deactivateChildRoutes(futureNode, currNode, parentContext);
+          else
+            curr && this.deactivateRouteAndItsChildren(currNode, parentContext);
+        }
+        deactivateRouteAndItsChildren(route, parentContexts) {
+          route.value.component &&
+          this.routeReuseStrategy.shouldDetach(route.value.snapshot)
+            ? this.detachAndStoreRouteSubtree(route, parentContexts)
+            : this.deactivateRouteAndOutlet(route, parentContexts);
+        }
+        detachAndStoreRouteSubtree(route, parentContexts) {
+          const context2 = parentContexts.getContext(route.value.outlet),
+            contexts =
+              context2 && route.value.component
+                ? context2.children
+                : parentContexts,
+            children = nodeChildrenAsMap(route);
+          for (const childOutlet of Object.keys(children))
+            this.deactivateRouteAndItsChildren(children[childOutlet], contexts);
+          if (context2 && context2.outlet) {
+            const componentRef = context2.outlet.detach(),
+              contexts2 = context2.children.onOutletDeactivated();
+            this.routeReuseStrategy.store(route.value.snapshot, {
+              componentRef,
+              route,
+              contexts: contexts2,
+            });
+          }
+        }
+        deactivateRouteAndOutlet(route, parentContexts) {
+          const context2 = parentContexts.getContext(route.value.outlet),
+            contexts =
+              context2 && route.value.component
+                ? context2.children
+                : parentContexts,
+            children = nodeChildrenAsMap(route);
+          for (const childOutlet of Object.keys(children))
+            this.deactivateRouteAndItsChildren(children[childOutlet], contexts);
+          context2 &&
+            context2.outlet &&
+            (context2.outlet.deactivate(),
+            context2.children.onOutletDeactivated(),
+            (context2.attachRef = null),
+            (context2.resolver = null),
+            (context2.route = null));
+        }
+        activateChildRoutes(futureNode, currNode, contexts) {
+          const children = nodeChildrenAsMap(currNode);
+          futureNode.children.forEach((c) => {
+            this.activateRoutes(c, children[c.value.outlet], contexts),
+              this.forwardEvent(new ActivationEnd(c.value.snapshot));
+          }),
+            futureNode.children.length &&
+              this.forwardEvent(
+                new ChildActivationEnd(futureNode.value.snapshot)
+              );
+        }
+        activateRoutes(futureNode, currNode, parentContexts) {
+          const future = futureNode.value,
+            curr = currNode ? currNode.value : null;
+          if ((advanceActivatedRoute(future), future === curr))
+            if (future.component) {
+              const context2 = parentContexts.getOrCreateContext(future.outlet);
+              this.activateChildRoutes(futureNode, currNode, context2.children);
+            } else
+              this.activateChildRoutes(futureNode, currNode, parentContexts);
+          else if (future.component) {
+            const context2 = parentContexts.getOrCreateContext(future.outlet);
+            if (this.routeReuseStrategy.shouldAttach(future.snapshot)) {
+              const stored = this.routeReuseStrategy.retrieve(future.snapshot);
+              this.routeReuseStrategy.store(future.snapshot, null),
+                context2.children.onOutletReAttached(stored.contexts),
+                (context2.attachRef = stored.componentRef),
+                (context2.route = stored.route.value),
+                context2.outlet &&
+                  context2.outlet.attach(
+                    stored.componentRef,
+                    stored.route.value
+                  ),
+                advanceActivatedRoute(stored.route.value),
+                this.activateChildRoutes(futureNode, null, context2.children);
+            } else {
+              const injector = getClosestRouteInjector(future.snapshot),
+                cmpFactoryResolver =
+                  injector?.get(ComponentFactoryResolver$1) ?? null;
+              (context2.attachRef = null),
+                (context2.route = future),
+                (context2.resolver = cmpFactoryResolver),
+                (context2.injector = injector),
+                context2.outlet &&
+                  context2.outlet.activateWith(future, context2.injector),
+                this.activateChildRoutes(futureNode, null, context2.children);
+            }
+          } else this.activateChildRoutes(futureNode, null, parentContexts);
+        }
+      }
+      class CanActivate {
+        constructor(path) {
+          (this.path = path), (this.route = this.path[this.path.length - 1]);
+        }
+      }
+      class CanDeactivate {
+        constructor(component, route) {
+          (this.component = component), (this.route = route);
+        }
+      }
+      function getAllRouteGuards(future, curr, parentContexts) {
+        const futureRoot = future._root;
+        return getChildRouteGuards(
+          futureRoot,
+          curr ? curr._root : null,
+          parentContexts,
+          [futureRoot.value]
+        );
+      }
+      function getTokenOrFunctionIdentity(tokenOrFunction, injector) {
+        const NOT_FOUND2 = Symbol(),
+          result = injector.get(tokenOrFunction, NOT_FOUND2);
+        return result === NOT_FOUND2
+          ? "function" != typeof tokenOrFunction ||
+            (function isInjectable(type) {
+              return null !== getInjectableDef(type);
+            })(tokenOrFunction)
+            ? injector.get(tokenOrFunction)
+            : tokenOrFunction
+          : result;
+      }
+      function getChildRouteGuards(
+        futureNode,
+        currNode,
+        contexts,
+        futurePath,
+        checks = {
+          canDeactivateChecks: [],
+          canActivateChecks: [],
+        }
+      ) {
+        const prevChildren = nodeChildrenAsMap(currNode);
+        return (
+          futureNode.children.forEach((c) => {
+            (function getRouteGuards(
+              futureNode,
+              currNode,
+              parentContexts,
+              futurePath,
+              checks = {
+                canDeactivateChecks: [],
+                canActivateChecks: [],
+              }
+            ) {
+              const future = futureNode.value,
+                curr = currNode ? currNode.value : null,
+                context2 = parentContexts
+                  ? parentContexts.getContext(futureNode.value.outlet)
+                  : null;
+              if (curr && future.routeConfig === curr.routeConfig) {
+                const shouldRun = (function shouldRunGuardsAndResolvers(
+                  curr,
+                  future,
+                  mode
+                ) {
+                  if ("function" == typeof mode) return mode(curr, future);
+                  switch (mode) {
+                    case "pathParamsChange":
+                      return !equalPath(curr.url, future.url);
+
+                    case "pathParamsOrQueryParamsChange":
+                      return (
+                        !equalPath(curr.url, future.url) ||
+                        !shallowEqual(curr.queryParams, future.queryParams)
+                      );
+
+                    case "always":
+                      return !0;
+
+                    case "paramsOrQueryParamsChange":
+                      return (
+                        !equalParamsAndUrlSegments(curr, future) ||
+                        !shallowEqual(curr.queryParams, future.queryParams)
+                      );
+
+                    default:
+                      return !equalParamsAndUrlSegments(curr, future);
+                  }
+                })(curr, future, future.routeConfig.runGuardsAndResolvers);
+                shouldRun
+                  ? checks.canActivateChecks.push(new CanActivate(futurePath))
+                  : ((future.data = curr.data),
+                    (future._resolvedData = curr._resolvedData)),
+                  getChildRouteGuards(
+                    futureNode,
+                    currNode,
+                    future.component
+                      ? context2
+                        ? context2.children
+                        : null
+                      : parentContexts,
+                    futurePath,
+                    checks
+                  ),
+                  shouldRun &&
+                    context2 &&
+                    context2.outlet &&
+                    context2.outlet.isActivated &&
+                    checks.canDeactivateChecks.push(
+                      new CanDeactivate(context2.outlet.component, curr)
+                    );
+              } else
+                curr &&
+                  deactivateRouteAndItsChildren(currNode, context2, checks),
+                  checks.canActivateChecks.push(new CanActivate(futurePath)),
+                  getChildRouteGuards(
+                    futureNode,
+                    null,
+                    future.component
+                      ? context2
+                        ? context2.children
+                        : null
+                      : parentContexts,
+                    futurePath,
+                    checks
+                  );
+            })(
+              c,
+              prevChildren[c.value.outlet],
+              contexts,
+              futurePath.concat([c.value]),
+              checks
+            ),
+              delete prevChildren[c.value.outlet];
+          }),
+          forEach(prevChildren, (v, k) =>
+            deactivateRouteAndItsChildren(v, contexts.getContext(k), checks)
+          ),
+          checks
+        );
+      }
+      function deactivateRouteAndItsChildren(route, context2, checks) {
+        const children = nodeChildrenAsMap(route),
+          r = route.value;
+        forEach(children, (node, childName) => {
+          deactivateRouteAndItsChildren(
+            node,
+            r.component
+              ? context2
+                ? context2.children.getContext(childName)
+                : null
+              : context2,
+            checks
+          );
+        }),
+          checks.canDeactivateChecks.push(
+            new CanDeactivate(
+              r.component &&
+              context2 &&
+              context2.outlet &&
+              context2.outlet.isActivated
+                ? context2.outlet.component
+                : null,
+              r
+            )
+          );
+      }
+      function router_isFunction(v) {
+        return "function" == typeof v;
+      }
+      function isEmptyError(e) {
+        return e instanceof EmptyError || "EmptyError" === e?.name;
+      }
+      const INITIAL_VALUE = Symbol("INITIAL_VALUE");
+      function prioritizedGuardValue() {
+        return switchMap((obs) =>
+          combineLatest(
+            obs.map((o) =>
+              o.pipe(
+                take(1),
+                (function startWith(...values) {
+                  const scheduler = popScheduler(values);
+                  return operate((source, subscriber) => {
+                    (scheduler
+                      ? concat(values, source, scheduler)
+                      : concat(values, source)
+                    ).subscribe(subscriber);
+                  });
+                })(INITIAL_VALUE)
+              )
+            )
+          ).pipe(
+            map((results) => {
+              for (const result of results)
+                if (!0 !== result) {
+                  if (result === INITIAL_VALUE) return INITIAL_VALUE;
+                  if (!1 === result || result instanceof UrlTree) return result;
+                }
+              return !0;
+            }),
+            filter((item) => item !== INITIAL_VALUE),
+            take(1)
+          )
+        );
+      }
+      function redirectIfUrlTree(urlSerializer) {
+        return (function pipe(...fns) {
+          return pipeFromArray(fns);
+        })(
+          tap((result) => {
+            if (isUrlTree(result)) throw redirectingNavigationError(0, result);
+          }),
+          map((result) => !0 === result)
+        );
+      }
+      const noMatch$1 = {
+        matched: !1,
+        consumedSegments: [],
+        remainingSegments: [],
+        parameters: {},
+        positionalParamSegments: {},
+      };
+      function matchWithChecks(
+        segmentGroup,
+        route,
+        segments,
+        injector,
+        urlSerializer
+      ) {
+        const result = match(segmentGroup, route, segments);
+        return result.matched
+          ? (function runCanMatchGuards(
+              injector,
+              route,
+              segments,
+              urlSerializer
+            ) {
+              const canMatch = route.canMatch;
+              return canMatch && 0 !== canMatch.length
+                ? of_of(
+                    canMatch.map((injectionToken) => {
+                      const guard = getTokenOrFunctionIdentity(
+                        injectionToken,
+                        injector
+                      );
+                      return wrapIntoObservable(
+                        (function isCanMatch(guard) {
+                          return guard && router_isFunction(guard.canMatch);
+                        })(guard)
+                          ? guard.canMatch(route, segments)
+                          : injector.runInContext(() => guard(route, segments))
+                      );
+                    })
+                  ).pipe(prioritizedGuardValue(), redirectIfUrlTree())
+                : of_of(!0);
+            })(
+              (injector = getOrCreateRouteInjectorIfNeeded(route, injector)),
+              route,
+              segments
+            ).pipe(
+              map((v) =>
+                !0 === v
+                  ? result
+                  : {
+                      ...noMatch$1,
+                    }
+              )
+            )
+          : of_of(result);
+      }
+      function match(segmentGroup, route, segments) {
+        if ("" === route.path)
+          return "full" === route.pathMatch &&
+            (segmentGroup.hasChildren() || segments.length > 0)
+            ? {
+                ...noMatch$1,
+              }
+            : {
+                matched: !0,
+                consumedSegments: [],
+                remainingSegments: segments,
+                parameters: {},
+                positionalParamSegments: {},
+              };
+        const res = (route.matcher || defaultUrlMatcher)(
+          segments,
+          segmentGroup,
+          route
+        );
+        if (!res)
+          return {
+            ...noMatch$1,
+          };
+        const posParams = {};
+        forEach(res.posParams, (v, k) => {
+          posParams[k] = v.path;
+        });
+        const parameters =
+          res.consumed.length > 0
+            ? {
+                ...posParams,
+                ...res.consumed[res.consumed.length - 1].parameters,
+              }
+            : posParams;
+        return {
+          matched: !0,
+          consumedSegments: res.consumed,
+          remainingSegments: segments.slice(res.consumed.length),
+          parameters,
+          positionalParamSegments: res.posParams ?? {},
+        };
+      }
+      function split(
+        segmentGroup,
+        consumedSegments,
+        slicedSegments,
+        config2,
+        relativeLinkResolution = "corrected"
+      ) {
+        if (
+          slicedSegments.length > 0 &&
+          (function containsEmptyPathMatchesWithNamedOutlets(
+            segmentGroup,
+            slicedSegments,
+            routes2
+          ) {
+            return routes2.some(
+              (r) =>
+                emptyPathMatch(segmentGroup, slicedSegments, r) &&
+                "primary" !== getOutlet(r)
+            );
+          })(segmentGroup, slicedSegments, config2)
+        ) {
+          const s2 = new UrlSegmentGroup(
+            consumedSegments,
+            (function createChildrenForEmptyPaths(
+              segmentGroup,
+              consumedSegments,
+              routes2,
+              primarySegment
+            ) {
+              const res = {};
+              (res.primary = primarySegment),
+                (primarySegment._sourceSegment = segmentGroup),
+                (primarySegment._segmentIndexShift = consumedSegments.length);
+              for (const r of routes2)
+                if ("" === r.path && "primary" !== getOutlet(r)) {
+                  const s = new UrlSegmentGroup([], {});
+                  (s._sourceSegment = segmentGroup),
+                    (s._segmentIndexShift = consumedSegments.length),
+                    (res[getOutlet(r)] = s);
+                }
+              return res;
+            })(
+              segmentGroup,
+              consumedSegments,
+              config2,
+              new UrlSegmentGroup(slicedSegments, segmentGroup.children)
+            )
+          );
+          return (
+            (s2._sourceSegment = segmentGroup),
+            (s2._segmentIndexShift = consumedSegments.length),
+            {
+              segmentGroup: s2,
+              slicedSegments: [],
+            }
+          );
+        }
+        if (
+          0 === slicedSegments.length &&
+          (function containsEmptyPathMatches(
+            segmentGroup,
+            slicedSegments,
+            routes2
+          ) {
+            return routes2.some((r) =>
+              emptyPathMatch(segmentGroup, slicedSegments, r)
+            );
+          })(segmentGroup, slicedSegments, config2)
+        ) {
+          const s2 = new UrlSegmentGroup(
+            segmentGroup.segments,
+            (function addEmptyPathsToChildrenIfNeeded(
+              segmentGroup,
+              consumedSegments,
+              slicedSegments,
+              routes2,
+              children,
+              relativeLinkResolution
+            ) {
+              const res = {};
+              for (const r of routes2)
+                if (
+                  emptyPathMatch(segmentGroup, slicedSegments, r) &&
+                  !children[getOutlet(r)]
+                ) {
+                  const s = new UrlSegmentGroup([], {});
+                  (s._sourceSegment = segmentGroup),
+                    (s._segmentIndexShift =
+                      "legacy" === relativeLinkResolution
+                        ? segmentGroup.segments.length
+                        : consumedSegments.length),
+                    (res[getOutlet(r)] = s);
+                }
+              return {
+                ...children,
+                ...res,
+              };
+            })(
+              segmentGroup,
+              consumedSegments,
+              slicedSegments,
+              config2,
+              segmentGroup.children,
+              relativeLinkResolution
+            )
+          );
+          return (
+            (s2._sourceSegment = segmentGroup),
+            (s2._segmentIndexShift = consumedSegments.length),
+            {
+              segmentGroup: s2,
+              slicedSegments,
+            }
+          );
+        }
+        const s = new UrlSegmentGroup(
+          segmentGroup.segments,
+          segmentGroup.children
+        );
+        return (
+          (s._sourceSegment = segmentGroup),
+          (s._segmentIndexShift = consumedSegments.length),
+          {
+            segmentGroup: s,
+            slicedSegments,
+          }
+        );
+      }
+      function emptyPathMatch(segmentGroup, slicedSegments, r) {
+        return (
+          (!(segmentGroup.hasChildren() || slicedSegments.length > 0) ||
+            "full" !== r.pathMatch) &&
+          "" === r.path
+        );
+      }
+      function isImmediateMatch(route, rawSegment, segments, outlet) {
+        return (
+          !!(
+            getOutlet(route) === outlet ||
+            ("primary" !== outlet &&
+              emptyPathMatch(rawSegment, segments, route))
+          ) &&
+          ("**" === route.path || match(rawSegment, route, segments).matched)
+        );
+      }
+      function noLeftoversInUrl(segmentGroup, segments, outlet) {
+        return 0 === segments.length && !segmentGroup.children[outlet];
+      }
+      class NoMatch$1 {
+        constructor(segmentGroup) {
+          this.segmentGroup = segmentGroup || null;
+        }
+      }
+      class AbsoluteRedirect {
+        constructor(urlTree) {
+          this.urlTree = urlTree;
+        }
+      }
+      function noMatch(segmentGroup) {
+        return throwError_throwError(new NoMatch$1(segmentGroup));
+      }
+      function absoluteRedirect(newTree) {
+        return throwError_throwError(new AbsoluteRedirect(newTree));
+      }
+      class ApplyRedirects {
+        constructor(injector, configLoader, urlSerializer, urlTree, config2) {
+          (this.injector = injector),
+            (this.configLoader = configLoader),
+            (this.urlSerializer = urlSerializer),
+            (this.urlTree = urlTree),
+            (this.config = config2),
+            (this.allowRedirects = !0);
+        }
+        apply() {
+          const splitGroup = split(
+              this.urlTree.root,
+              [],
+              [],
+              this.config
+            ).segmentGroup,
+            rootSegmentGroup = new UrlSegmentGroup(
+              splitGroup.segments,
+              splitGroup.children
+            );
+          return this.expandSegmentGroup(
+            this.injector,
+            this.config,
+            rootSegmentGroup,
+            "primary"
+          )
+            .pipe(
+              map((rootSegmentGroup2) =>
+                this.createUrlTree(
+                  squashSegmentGroup(rootSegmentGroup2),
+                  this.urlTree.queryParams,
+                  this.urlTree.fragment
+                )
+              )
+            )
+            .pipe(
+              catchError_catchError((e) => {
+                if (e instanceof AbsoluteRedirect)
+                  return (this.allowRedirects = !1), this.match(e.urlTree);
+                throw e instanceof NoMatch$1 ? this.noMatchError(e) : e;
+              })
+            );
+        }
+        match(tree2) {
+          return this.expandSegmentGroup(
+            this.injector,
+            this.config,
+            tree2.root,
+            "primary"
+          )
+            .pipe(
+              map((rootSegmentGroup) =>
+                this.createUrlTree(
+                  squashSegmentGroup(rootSegmentGroup),
+                  tree2.queryParams,
+                  tree2.fragment
+                )
+              )
+            )
+            .pipe(
+              catchError_catchError((e) => {
+                throw e instanceof NoMatch$1 ? this.noMatchError(e) : e;
+              })
+            );
+        }
+        noMatchError(e) {
+          return new RuntimeError(4002, !1);
+        }
+        createUrlTree(rootCandidate, queryParams, fragment) {
+          const root = createRoot(rootCandidate);
+          return new UrlTree(root, queryParams, fragment);
+        }
+        expandSegmentGroup(injector, routes2, segmentGroup, outlet) {
+          return 0 === segmentGroup.segments.length &&
+            segmentGroup.hasChildren()
+            ? this.expandChildren(injector, routes2, segmentGroup).pipe(
+                map((children) => new UrlSegmentGroup([], children))
+              )
+            : this.expandSegment(
+                injector,
+                segmentGroup,
+                routes2,
+                segmentGroup.segments,
+                outlet,
+                !0
+              );
+        }
+        expandChildren(injector, routes2, segmentGroup) {
+          const childOutlets = [];
+          for (const child of Object.keys(segmentGroup.children))
+            "primary" === child
+              ? childOutlets.unshift(child)
+              : childOutlets.push(child);
+          return from(childOutlets).pipe(
+            concatMap((childOutlet) => {
+              const child = segmentGroup.children[childOutlet],
+                sortedRoutes = sortByMatchingOutlets(routes2, childOutlet);
+              return this.expandSegmentGroup(
+                injector,
+                sortedRoutes,
+                child,
+                childOutlet
+              ).pipe(
+                map((s) => ({
+                  segment: s,
+                  outlet: childOutlet,
+                }))
+              );
+            }),
+            scan(
+              (children, expandedChild) => (
+                (children[expandedChild.outlet] = expandedChild.segment),
+                children
+              ),
+              {}
+            ),
+            last_last()
+          );
+        }
+        expandSegment(
+          injector,
+          segmentGroup,
+          routes2,
+          segments,
+          outlet,
+          allowRedirects
+        ) {
+          return from(routes2).pipe(
+            concatMap((r) =>
+              this.expandSegmentAgainstRoute(
+                injector,
+                segmentGroup,
+                routes2,
+                r,
+                segments,
+                outlet,
+                allowRedirects
+              ).pipe(
+                catchError_catchError((e) => {
+                  if (e instanceof NoMatch$1) return of_of(null);
+                  throw e;
+                })
+              )
+            ),
+            first((s) => !!s),
+            catchError_catchError((e, _) => {
+              if (isEmptyError(e))
+                return noLeftoversInUrl(segmentGroup, segments, outlet)
+                  ? of_of(new UrlSegmentGroup([], {}))
+                  : noMatch(segmentGroup);
+              throw e;
+            })
+          );
+        }
+        expandSegmentAgainstRoute(
+          injector,
+          segmentGroup,
+          routes2,
+          route,
+          paths,
+          outlet,
+          allowRedirects
+        ) {
+          return isImmediateMatch(route, segmentGroup, paths, outlet)
+            ? void 0 === route.redirectTo
+              ? this.matchSegmentAgainstRoute(
+                  injector,
+                  segmentGroup,
+                  route,
+                  paths,
+                  outlet
+                )
+              : allowRedirects && this.allowRedirects
+              ? this.expandSegmentAgainstRouteUsingRedirect(
+                  injector,
+                  segmentGroup,
+                  routes2,
+                  route,
+                  paths,
+                  outlet
+                )
+              : noMatch(segmentGroup)
+            : noMatch(segmentGroup);
+        }
+        expandSegmentAgainstRouteUsingRedirect(
+          injector,
+          segmentGroup,
+          routes2,
+          route,
+          segments,
+          outlet
+        ) {
+          return "**" === route.path
+            ? this.expandWildCardWithParamsAgainstRouteUsingRedirect(
+                injector,
+                routes2,
+                route,
+                outlet
+              )
+            : this.expandRegularSegmentAgainstRouteUsingRedirect(
+                injector,
+                segmentGroup,
+                routes2,
+                route,
+                segments,
+                outlet
+              );
+        }
+        expandWildCardWithParamsAgainstRouteUsingRedirect(
+          injector,
+          routes2,
+          route,
+          outlet
+        ) {
+          const newTree = this.applyRedirectCommands([], route.redirectTo, {});
+          return route.redirectTo.startsWith("/")
+            ? absoluteRedirect(newTree)
+            : this.lineralizeSegments(route, newTree).pipe(
+                mergeMap((newSegments) => {
+                  const group = new UrlSegmentGroup(newSegments, {});
+                  return this.expandSegment(
+                    injector,
+                    group,
+                    routes2,
+                    newSegments,
+                    outlet,
+                    !1
+                  );
+                })
+              );
+        }
+        expandRegularSegmentAgainstRouteUsingRedirect(
+          injector,
+          segmentGroup,
+          routes2,
+          route,
+          segments,
+          outlet
+        ) {
+          const {
+            matched,
+            consumedSegments,
+            remainingSegments,
+            positionalParamSegments,
+          } = match(segmentGroup, route, segments);
+          if (!matched) return noMatch(segmentGroup);
+          const newTree = this.applyRedirectCommands(
+            consumedSegments,
+            route.redirectTo,
+            positionalParamSegments
+          );
+          return route.redirectTo.startsWith("/")
+            ? absoluteRedirect(newTree)
+            : this.lineralizeSegments(route, newTree).pipe(
+                mergeMap((newSegments) =>
+                  this.expandSegment(
+                    injector,
+                    segmentGroup,
+                    routes2,
+                    newSegments.concat(remainingSegments),
+                    outlet,
+                    !1
+                  )
+                )
+              );
+        }
+        matchSegmentAgainstRoute(
+          injector,
+          rawSegmentGroup,
+          route,
+          segments,
+          outlet
+        ) {
+          return "**" === route.path
+            ? ((injector = getOrCreateRouteInjectorIfNeeded(route, injector)),
+              route.loadChildren
+                ? (route._loadedRoutes
+                    ? of_of({
+                        routes: route._loadedRoutes,
+                        injector: route._loadedInjector,
+                      })
+                    : this.configLoader.loadChildren(injector, route)
+                  ).pipe(
+                    map(
+                      (cfg) => (
+                        (route._loadedRoutes = cfg.routes),
+                        (route._loadedInjector = cfg.injector),
+                        new UrlSegmentGroup(segments, {})
+                      )
+                    )
+                  )
+                : of_of(new UrlSegmentGroup(segments, {})))
+            : matchWithChecks(rawSegmentGroup, route, segments, injector).pipe(
+                switchMap(({ matched, consumedSegments, remainingSegments }) =>
+                  matched
+                    ? this.getChildConfig(
+                        (injector = route._injector ?? injector),
+                        route,
+                        segments
+                      ).pipe(
+                        mergeMap((routerConfig) => {
+                          const childInjector =
+                              routerConfig.injector ?? injector,
+                            childConfig = routerConfig.routes,
+                            {
+                              segmentGroup: splitSegmentGroup,
+                              slicedSegments,
+                            } = split(
+                              rawSegmentGroup,
+                              consumedSegments,
+                              remainingSegments,
+                              childConfig
+                            ),
+                            segmentGroup = new UrlSegmentGroup(
+                              splitSegmentGroup.segments,
+                              splitSegmentGroup.children
+                            );
+                          if (
+                            0 === slicedSegments.length &&
+                            segmentGroup.hasChildren()
+                          )
+                            return this.expandChildren(
+                              childInjector,
+                              childConfig,
+                              segmentGroup
+                            ).pipe(
+                              map(
+                                (children) =>
+                                  new UrlSegmentGroup(
+                                    consumedSegments,
+                                    children
+                                  )
+                              )
+                            );
+                          if (
+                            0 === childConfig.length &&
+                            0 === slicedSegments.length
+                          )
+                            return of_of(
+                              new UrlSegmentGroup(consumedSegments, {})
+                            );
+                          const matchedOnOutlet = getOutlet(route) === outlet;
+                          return this.expandSegment(
+                            childInjector,
+                            segmentGroup,
+                            childConfig,
+                            slicedSegments,
+                            matchedOnOutlet ? "primary" : outlet,
+                            !0
+                          ).pipe(
+                            map(
+                              (cs) =>
+                                new UrlSegmentGroup(
+                                  consumedSegments.concat(cs.segments),
+                                  cs.children
+                                )
+                            )
+                          );
+                        })
+                      )
+                    : noMatch(rawSegmentGroup)
+                )
+              );
+        }
+        getChildConfig(injector, route, segments) {
+          return route.children
+            ? of_of({
+                routes: route.children,
+                injector,
+              })
+            : route.loadChildren
+            ? void 0 !== route._loadedRoutes
+              ? of_of({
+                  routes: route._loadedRoutes,
+                  injector: route._loadedInjector,
+                })
+              : (function runCanLoadGuards(
+                  injector,
+                  route,
+                  segments,
+                  urlSerializer
+                ) {
+                  const canLoad = route.canLoad;
+                  return void 0 === canLoad || 0 === canLoad.length
+                    ? of_of(!0)
+                    : of_of(
+                        canLoad.map((injectionToken) => {
+                          const guard = getTokenOrFunctionIdentity(
+                            injectionToken,
+                            injector
+                          );
+                          return wrapIntoObservable(
+                            (function isCanLoad(guard) {
+                              return guard && router_isFunction(guard.canLoad);
+                            })(guard)
+                              ? guard.canLoad(route, segments)
+                              : injector.runInContext(() =>
+                                  guard(route, segments)
+                                )
+                          );
+                        })
+                      ).pipe(prioritizedGuardValue(), redirectIfUrlTree());
+                })(injector, route, segments).pipe(
+                  mergeMap((shouldLoadResult) =>
+                    shouldLoadResult
+                      ? this.configLoader.loadChildren(injector, route).pipe(
+                          tap((cfg) => {
+                            (route._loadedRoutes = cfg.routes),
+                              (route._loadedInjector = cfg.injector);
+                          })
+                        )
+                      : (function canLoadFails(route) {
+                          return throwError_throwError(
+                            navigationCancelingError(!1, 3)
+                          );
+                        })()
+                  )
+                )
+            : of_of({
+                routes: [],
+                injector,
+              });
+        }
+        lineralizeSegments(route, urlTree) {
+          let res = [],
+            c = urlTree.root;
+          for (;;) {
+            if (((res = res.concat(c.segments)), 0 === c.numberOfChildren))
+              return of_of(res);
+            if (c.numberOfChildren > 1 || !c.children.primary)
+              return throwError_throwError(new RuntimeError(4e3, !1));
+            c = c.children.primary;
+          }
+        }
+        applyRedirectCommands(segments, redirectTo, posParams) {
+          return this.applyRedirectCreateUrlTree(
+            redirectTo,
+            this.urlSerializer.parse(redirectTo),
+            segments,
+            posParams
+          );
+        }
+        applyRedirectCreateUrlTree(redirectTo, urlTree, segments, posParams) {
+          const newRoot = this.createSegmentGroup(
+            redirectTo,
+            urlTree.root,
+            segments,
+            posParams
+          );
+          return new UrlTree(
+            newRoot,
+            this.createQueryParams(
+              urlTree.queryParams,
+              this.urlTree.queryParams
+            ),
+            urlTree.fragment
+          );
+        }
+        createQueryParams(redirectToParams, actualParams) {
+          const res = {};
+          return (
+            forEach(redirectToParams, (v, k) => {
+              if ("string" == typeof v && v.startsWith(":")) {
+                const sourceName = v.substring(1);
+                res[k] = actualParams[sourceName];
+              } else res[k] = v;
+            }),
+            res
+          );
+        }
+        createSegmentGroup(redirectTo, group, segments, posParams) {
+          const updatedSegments = this.createSegments(
+            redirectTo,
+            group.segments,
+            segments,
+            posParams
+          );
+          let children = {};
+          return (
+            forEach(group.children, (child, name) => {
+              children[name] = this.createSegmentGroup(
+                redirectTo,
+                child,
+                segments,
+                posParams
+              );
+            }),
+            new UrlSegmentGroup(updatedSegments, children)
+          );
+        }
+        createSegments(
+          redirectTo,
+          redirectToSegments,
+          actualSegments,
+          posParams
+        ) {
+          return redirectToSegments.map((s) =>
+            s.path.startsWith(":")
+              ? this.findPosParam(redirectTo, s, posParams)
+              : this.findOrReturn(s, actualSegments)
+          );
+        }
+        findPosParam(redirectTo, redirectToUrlSegment, posParams) {
+          const pos = posParams[redirectToUrlSegment.path.substring(1)];
+          if (!pos) throw new RuntimeError(4001, !1);
+          return pos;
+        }
+        findOrReturn(redirectToUrlSegment, actualSegments) {
+          let idx = 0;
+          for (const s of actualSegments) {
+            if (s.path === redirectToUrlSegment.path)
+              return actualSegments.splice(idx), s;
+            idx++;
+          }
+          return redirectToUrlSegment;
+        }
+      }
+      class NoMatch {}
+      class Recognizer {
+        constructor(
+          injector,
+          rootComponentType,
+          config2,
+          urlTree,
+          url,
+          paramsInheritanceStrategy,
+          relativeLinkResolution,
+          urlSerializer
+        ) {
+          (this.injector = injector),
+            (this.rootComponentType = rootComponentType),
+            (this.config = config2),
+            (this.urlTree = urlTree),
+            (this.url = url),
+            (this.paramsInheritanceStrategy = paramsInheritanceStrategy),
+            (this.relativeLinkResolution = relativeLinkResolution),
+            (this.urlSerializer = urlSerializer);
+        }
+        recognize() {
+          const rootSegmentGroup = split(
+            this.urlTree.root,
+            [],
+            [],
+            this.config.filter((c) => void 0 === c.redirectTo),
+            this.relativeLinkResolution
+          ).segmentGroup;
+          return this.processSegmentGroup(
+            this.injector,
+            this.config,
+            rootSegmentGroup,
+            "primary"
+          ).pipe(
+            map((children) => {
+              if (null === children) return null;
+              const root = new ActivatedRouteSnapshot(
+                  [],
+                  Object.freeze({}),
+                  Object.freeze({
+                    ...this.urlTree.queryParams,
+                  }),
+                  this.urlTree.fragment,
+                  {},
+                  "primary",
+                  this.rootComponentType,
+                  null,
+                  this.urlTree.root,
+                  -1,
+                  {}
+                ),
+                rootNode = new TreeNode(root, children),
+                routeState = new RouterStateSnapshot(this.url, rootNode);
+              return this.inheritParamsAndData(routeState._root), routeState;
+            })
+          );
+        }
+        inheritParamsAndData(routeNode) {
+          const route = routeNode.value,
+            i = inheritedParamsDataResolve(
+              route,
+              this.paramsInheritanceStrategy
+            );
+          (route.params = Object.freeze(i.params)),
+            (route.data = Object.freeze(i.data)),
+            routeNode.children.forEach((n) => this.inheritParamsAndData(n));
+        }
+        processSegmentGroup(injector, config2, segmentGroup, outlet) {
+          return 0 === segmentGroup.segments.length &&
+            segmentGroup.hasChildren()
+            ? this.processChildren(injector, config2, segmentGroup)
+            : this.processSegment(
+                injector,
+                config2,
+                segmentGroup,
+                segmentGroup.segments,
+                outlet
+              );
+        }
+        processChildren(injector, config2, segmentGroup) {
+          return from(Object.keys(segmentGroup.children)).pipe(
+            concatMap((childOutlet) => {
+              const child = segmentGroup.children[childOutlet],
+                sortedConfig = sortByMatchingOutlets(config2, childOutlet);
+              return this.processSegmentGroup(
+                injector,
+                sortedConfig,
+                child,
+                childOutlet
+              );
+            }),
+            scan((children, outletChildren) =>
+              children && outletChildren
+                ? (children.push(...outletChildren), children)
+                : null
+            ),
+            (function takeWhile(predicate, inclusive = !1) {
+              return operate((source, subscriber) => {
+                let index = 0;
+                source.subscribe(
+                  createOperatorSubscriber(subscriber, (value) => {
+                    const result = predicate(value, index++);
+                    (result || inclusive) && subscriber.next(value),
+                      !result && subscriber.complete();
+                  })
+                );
+              });
+            })((children) => null !== children),
+            defaultIfEmpty(null),
+            last_last(),
+            map((children) => {
+              if (null === children) return null;
+              const mergedChildren = mergeEmptyPathMatches(children);
+              return (
+                (function sortActivatedRouteSnapshots(nodes) {
+                  nodes.sort((a, b) =>
+                    "primary" === a.value.outlet
+                      ? -1
+                      : "primary" === b.value.outlet
+                      ? 1
+                      : a.value.outlet.localeCompare(b.value.outlet)
+                  );
+                })(mergedChildren),
+                mergedChildren
+              );
+            })
+          );
+        }
+        processSegment(injector, routes2, segmentGroup, segments, outlet) {
+          return from(routes2).pipe(
+            concatMap((r) =>
+              this.processSegmentAgainstRoute(
+                r._injector ?? injector,
+                r,
+                segmentGroup,
+                segments,
+                outlet
+              )
+            ),
+            first((x) => !!x),
+            catchError_catchError((e) => {
+              if (isEmptyError(e))
+                return noLeftoversInUrl(segmentGroup, segments, outlet)
+                  ? of_of([])
+                  : of_of(null);
+              throw e;
+            })
+          );
+        }
+        processSegmentAgainstRoute(
+          injector,
+          route,
+          rawSegment,
+          segments,
+          outlet
+        ) {
+          if (
+            route.redirectTo ||
+            !isImmediateMatch(route, rawSegment, segments, outlet)
+          )
+            return of_of(null);
+          let matchResult;
+          if ("**" === route.path) {
+            const params =
+                segments.length > 0 ? router_last(segments).parameters : {},
+              pathIndexShift = getPathIndexShift(rawSegment) + segments.length;
+            matchResult = of_of({
+              snapshot: new ActivatedRouteSnapshot(
+                segments,
+                params,
+                Object.freeze({
+                  ...this.urlTree.queryParams,
+                }),
+                this.urlTree.fragment,
+                getData(route),
+                getOutlet(route),
+                route.component ?? route._loadedComponent ?? null,
+                route,
+                getSourceSegmentGroup(rawSegment),
+                pathIndexShift,
+                getResolve(route),
+                pathIndexShift
+              ),
+              consumedSegments: [],
+              remainingSegments: [],
+            });
+          } else
+            matchResult = matchWithChecks(
+              rawSegment,
+              route,
+              segments,
+              injector
+            ).pipe(
+              map(
+                ({
+                  matched,
+                  consumedSegments,
+                  remainingSegments,
+                  parameters,
+                }) => {
+                  if (!matched) return null;
+                  const pathIndexShift =
+                    getPathIndexShift(rawSegment) + consumedSegments.length;
+                  return {
+                    snapshot: new ActivatedRouteSnapshot(
+                      consumedSegments,
+                      parameters,
+                      Object.freeze({
+                        ...this.urlTree.queryParams,
+                      }),
+                      this.urlTree.fragment,
+                      getData(route),
+                      getOutlet(route),
+                      route.component ?? route._loadedComponent ?? null,
+                      route,
+                      getSourceSegmentGroup(rawSegment),
+                      pathIndexShift,
+                      getResolve(route),
+                      pathIndexShift
+                    ),
+                    consumedSegments,
+                    remainingSegments,
+                  };
+                }
+              )
+            );
+          return matchResult.pipe(
+            switchMap((result) => {
+              if (null === result) return of_of(null);
+              const { snapshot, consumedSegments, remainingSegments } = result;
+              injector = route._injector ?? injector;
+              const childInjector = route._loadedInjector ?? injector,
+                childConfig = (function getChildConfig(route) {
+                  return route.children
+                    ? route.children
+                    : route.loadChildren
+                    ? route._loadedRoutes
+                    : [];
+                })(route),
+                { segmentGroup, slicedSegments } = split(
+                  rawSegment,
+                  consumedSegments,
+                  remainingSegments,
+                  childConfig.filter((c) => void 0 === c.redirectTo),
+                  this.relativeLinkResolution
+                );
+              if (0 === slicedSegments.length && segmentGroup.hasChildren())
+                return this.processChildren(
+                  childInjector,
+                  childConfig,
+                  segmentGroup
+                ).pipe(
+                  map((children) =>
+                    null === children
+                      ? null
+                      : [new TreeNode(snapshot, children)]
+                  )
+                );
+              if (0 === childConfig.length && 0 === slicedSegments.length)
+                return of_of([new TreeNode(snapshot, [])]);
+              const matchedOnOutlet = getOutlet(route) === outlet;
+              return this.processSegment(
+                childInjector,
+                childConfig,
+                segmentGroup,
+                slicedSegments,
+                matchedOnOutlet ? "primary" : outlet
+              ).pipe(
+                map((children) =>
+                  null === children ? null : [new TreeNode(snapshot, children)]
+                )
+              );
+            })
+          );
+        }
+      }
+      function hasEmptyPathConfig(node) {
+        const config2 = node.value.routeConfig;
+        return config2 && "" === config2.path && void 0 === config2.redirectTo;
+      }
+      function mergeEmptyPathMatches(nodes) {
+        const result = [],
+          mergedNodes = new Set();
+        for (const node of nodes) {
+          if (!hasEmptyPathConfig(node)) {
+            result.push(node);
+            continue;
+          }
+          const duplicateEmptyPathNode = result.find(
+            (resultNode) =>
+              node.value.routeConfig === resultNode.value.routeConfig
+          );
+          void 0 !== duplicateEmptyPathNode
+            ? (duplicateEmptyPathNode.children.push(...node.children),
+              mergedNodes.add(duplicateEmptyPathNode))
+            : result.push(node);
+        }
+        for (const mergedNode of mergedNodes) {
+          const mergedChildren = mergeEmptyPathMatches(mergedNode.children);
+          result.push(new TreeNode(mergedNode.value, mergedChildren));
+        }
+        return result.filter((n) => !mergedNodes.has(n));
+      }
+      function getSourceSegmentGroup(segmentGroup) {
+        let s = segmentGroup;
+        for (; s._sourceSegment; ) s = s._sourceSegment;
+        return s;
+      }
+      function getPathIndexShift(segmentGroup) {
+        let s = segmentGroup,
+          res = s._segmentIndexShift ?? 0;
+        for (; s._sourceSegment; )
+          (s = s._sourceSegment), (res += s._segmentIndexShift ?? 0);
+        return res - 1;
+      }
+      function getData(route) {
+        return route.data || {};
+      }
+      function getResolve(route) {
+        return route.resolve || {};
+      }
+      function hasStaticTitle(config2) {
+        return "string" == typeof config2.title || null === config2.title;
+      }
+      function switchTap(next) {
+        return switchMap((v) => {
+          const nextResult = next(v);
+          return nextResult ? from(nextResult).pipe(map(() => v)) : of_of(v);
+        });
+      }
+      let TitleStrategy = (() => {
+          class TitleStrategy2 {
+            buildTitle(snapshot) {
+              let pageTitle,
+                route = snapshot.root;
+              for (; void 0 !== route; )
+                (pageTitle = this.getResolvedTitleForRoute(route) ?? pageTitle),
+                  (route = route.children.find(
+                    (child) => "primary" === child.outlet
+                  ));
+              return pageTitle;
+            }
+            getResolvedTitleForRoute(snapshot) {
+              return snapshot.data[RouteTitleKey];
+            }
+          }
+          return (
+            (TitleStrategy2.ɵfac = function (t) {
+              return new (t || TitleStrategy2)();
+            }),
+            (TitleStrategy2.ɵprov = ɵɵdefineInjectable({
+              token: TitleStrategy2,
+              factory: function () {
+                return fesm2020_core_inject(DefaultTitleStrategy);
+              },
+              providedIn: "root",
+            })),
+            TitleStrategy2
+          );
+        })(),
+        DefaultTitleStrategy = (() => {
+          class DefaultTitleStrategy2 extends TitleStrategy {
+            constructor(title) {
+              super(), (this.title = title);
+            }
+            updateTitle(snapshot) {
+              const title = this.buildTitle(snapshot);
+              void 0 !== title && this.title.setTitle(title);
+            }
+          }
+          return (
+            (DefaultTitleStrategy2.ɵfac = function (t) {
+              return new (t || DefaultTitleStrategy2)(core_inject(Title));
+            }),
+            (DefaultTitleStrategy2.ɵprov = ɵɵdefineInjectable({
+              token: DefaultTitleStrategy2,
+              factory: DefaultTitleStrategy2.ɵfac,
+              providedIn: "root",
+            })),
+            DefaultTitleStrategy2
+          );
+        })();
+      class RouteReuseStrategy {}
+      class DefaultRouteReuseStrategy extends class BaseRouteReuseStrategy {
+        shouldDetach(route) {
+          return !1;
+        }
+        store(route, detachedTree) {}
+        shouldAttach(route) {
+          return !1;
+        }
+        retrieve(route) {
+          return null;
+        }
+        shouldReuseRoute(future, curr) {
+          return future.routeConfig === curr.routeConfig;
+        }
+      } {}
+      const ROUTER_CONFIGURATION = new InjectionToken("", {
+          providedIn: "root",
+          factory: () => ({}),
+        }),
+        ROUTES = new InjectionToken("ROUTES");
+      let RouterConfigLoader = (() => {
+        class RouterConfigLoader2 {
+          constructor(injector, compiler) {
+            (this.injector = injector),
+              (this.compiler = compiler),
+              (this.componentLoaders = new WeakMap()),
+              (this.childrenLoaders = new WeakMap());
+          }
+          loadComponent(route) {
+            if (this.componentLoaders.get(route))
+              return this.componentLoaders.get(route);
+            if (route._loadedComponent) return of_of(route._loadedComponent);
+            this.onLoadStartListener && this.onLoadStartListener(route);
+            const loadRunner = wrapIntoObservable(route.loadComponent()).pipe(
+                tap((component) => {
+                  this.onLoadEndListener && this.onLoadEndListener(route),
+                    (route._loadedComponent = component);
+                }),
+                finalize(() => {
+                  this.componentLoaders.delete(route);
+                })
+              ),
+              loader = new ConnectableObservable(
+                loadRunner,
+                () => new Subject()
+              ).pipe(refCount());
+            return this.componentLoaders.set(route, loader), loader;
+          }
+          loadChildren(parentInjector, route) {
+            if (this.childrenLoaders.get(route))
+              return this.childrenLoaders.get(route);
+            if (route._loadedRoutes)
+              return of_of({
+                routes: route._loadedRoutes,
+                injector: route._loadedInjector,
+              });
+            this.onLoadStartListener && this.onLoadStartListener(route);
+            const loadRunner = this.loadModuleFactoryOrRoutes(
+                route.loadChildren
+              ).pipe(
+                map((factoryOrRoutes) => {
+                  this.onLoadEndListener && this.onLoadEndListener(route);
+                  let injector,
+                    rawRoutes,
+                    requireStandaloneComponents = !1;
+                  Array.isArray(factoryOrRoutes)
+                    ? (rawRoutes = factoryOrRoutes)
+                    : ((injector =
+                        factoryOrRoutes.create(parentInjector).injector),
+                      (rawRoutes = router_flatten(
+                        injector.get(
+                          ROUTES,
+                          [],
+                          InjectFlags.Self | InjectFlags.Optional
+                        )
+                      )));
+                  return {
+                    routes: rawRoutes.map(standardizeConfig),
+                    injector,
+                  };
+                }),
+                finalize(() => {
+                  this.childrenLoaders.delete(route);
+                })
+              ),
+              loader = new ConnectableObservable(
+                loadRunner,
+                () => new Subject()
+              ).pipe(refCount());
+            return this.childrenLoaders.set(route, loader), loader;
+          }
+          loadModuleFactoryOrRoutes(loadChildren) {
+            return wrapIntoObservable(loadChildren()).pipe(
+              mergeMap((t) =>
+                t instanceof NgModuleFactory$1 || Array.isArray(t)
+                  ? of_of(t)
+                  : from(this.compiler.compileModuleAsync(t))
+              )
             );
           }
-          updateTodoById(id, values = {}) {
-            let todo = this.getTodoById(id);
-            if (todo) return Object.assign(todo, values), todo;
+        }
+        return (
+          (RouterConfigLoader2.ɵfac = function (t) {
+            return new (t || RouterConfigLoader2)(
+              core_inject(core_Injector),
+              core_inject(Compiler)
+            );
+          }),
+          (RouterConfigLoader2.ɵprov = ɵɵdefineInjectable({
+            token: RouterConfigLoader2,
+            factory: RouterConfigLoader2.ɵfac,
+            providedIn: "root",
+          })),
+          RouterConfigLoader2
+        );
+      })();
+      class UrlHandlingStrategy {}
+      class DefaultUrlHandlingStrategy {
+        shouldProcessUrl(url) {
+          return !0;
+        }
+        extract(url) {
+          return url;
+        }
+        merge(newUrlPart, wholeUrl) {
+          return newUrlPart;
+        }
+      }
+      function router_defaultErrorHandler(error) {
+        throw error;
+      }
+      function defaultMalformedUriErrorHandler(error, urlSerializer, url) {
+        return urlSerializer.parse("/");
+      }
+      const exactMatchOptions = {
+          paths: "exact",
+          fragment: "ignored",
+          matrixParams: "ignored",
+          queryParams: "exact",
+        },
+        subsetMatchOptions = {
+          paths: "subset",
+          fragment: "ignored",
+          matrixParams: "ignored",
+          queryParams: "subset",
+        };
+      function setupRouter() {
+        const urlSerializer = fesm2020_core_inject(UrlSerializer),
+          contexts = fesm2020_core_inject(ChildrenOutletContexts),
+          location2 = fesm2020_core_inject(Location),
+          injector = fesm2020_core_inject(core_Injector),
+          compiler = fesm2020_core_inject(Compiler),
+          config2 =
+            fesm2020_core_inject(ROUTES, {
+              optional: !0,
+            }) ?? [],
+          opts =
+            fesm2020_core_inject(ROUTER_CONFIGURATION, {
+              optional: !0,
+            }) ?? {},
+          defaultTitleStrategy = fesm2020_core_inject(DefaultTitleStrategy),
+          titleStrategy = fesm2020_core_inject(TitleStrategy, {
+            optional: !0,
+          }),
+          urlHandlingStrategy = fesm2020_core_inject(UrlHandlingStrategy, {
+            optional: !0,
+          }),
+          routeReuseStrategy = fesm2020_core_inject(RouteReuseStrategy, {
+            optional: !0,
+          }),
+          router = new Router(
+            null,
+            urlSerializer,
+            contexts,
+            location2,
+            injector,
+            compiler,
+            router_flatten(config2)
+          );
+        return (
+          urlHandlingStrategy &&
+            (router.urlHandlingStrategy = urlHandlingStrategy),
+          routeReuseStrategy &&
+            (router.routeReuseStrategy = routeReuseStrategy),
+          (router.titleStrategy = titleStrategy ?? defaultTitleStrategy),
+          (function assignExtraOptionsToRouter(opts, router) {
+            opts.errorHandler && (router.errorHandler = opts.errorHandler),
+              opts.malformedUriErrorHandler &&
+                (router.malformedUriErrorHandler =
+                  opts.malformedUriErrorHandler),
+              opts.onSameUrlNavigation &&
+                (router.onSameUrlNavigation = opts.onSameUrlNavigation),
+              opts.paramsInheritanceStrategy &&
+                (router.paramsInheritanceStrategy =
+                  opts.paramsInheritanceStrategy),
+              opts.relativeLinkResolution &&
+                (router.relativeLinkResolution = opts.relativeLinkResolution),
+              opts.urlUpdateStrategy &&
+                (router.urlUpdateStrategy = opts.urlUpdateStrategy),
+              opts.canceledNavigationResolution &&
+                (router.canceledNavigationResolution =
+                  opts.canceledNavigationResolution);
+          })(opts, router),
+          router
+        );
+      }
+      let Router = (() => {
+        class Router2 {
+          constructor(
+            rootComponentType,
+            urlSerializer,
+            rootContexts,
+            location2,
+            injector,
+            compiler,
+            config2
+          ) {
+            (this.rootComponentType = rootComponentType),
+              (this.urlSerializer = urlSerializer),
+              (this.rootContexts = rootContexts),
+              (this.location = location2),
+              (this.config = config2),
+              (this.lastSuccessfulNavigation = null),
+              (this.currentNavigation = null),
+              (this.disposed = !1),
+              (this.navigationId = 0),
+              (this.currentPageId = 0),
+              (this.isNgZoneEnabled = !1),
+              (this.events = new Subject()),
+              (this.errorHandler = router_defaultErrorHandler),
+              (this.malformedUriErrorHandler = defaultMalformedUriErrorHandler),
+              (this.navigated = !1),
+              (this.lastSuccessfulId = -1),
+              (this.afterPreactivation = () => of_of(void 0)),
+              (this.urlHandlingStrategy = new DefaultUrlHandlingStrategy()),
+              (this.routeReuseStrategy = new DefaultRouteReuseStrategy()),
+              (this.onSameUrlNavigation = "ignore"),
+              (this.paramsInheritanceStrategy = "emptyOnly"),
+              (this.urlUpdateStrategy = "deferred"),
+              (this.relativeLinkResolution = "corrected"),
+              (this.canceledNavigationResolution = "replace"),
+              (this.configLoader = injector.get(RouterConfigLoader)),
+              (this.configLoader.onLoadEndListener = (r) =>
+                this.triggerEvent(new RouteConfigLoadEnd(r))),
+              (this.configLoader.onLoadStartListener = (r) =>
+                this.triggerEvent(new RouteConfigLoadStart(r))),
+              (this.ngModule = injector.get(NgModuleRef$1)),
+              (this.console = injector.get(Console));
+            const ngZone = injector.get(core_NgZone);
+            (this.isNgZoneEnabled =
+              ngZone instanceof core_NgZone && core_NgZone.isInAngularZone()),
+              this.resetConfig(config2),
+              (this.currentUrlTree = (function createEmptyUrlTree() {
+                return new UrlTree(new UrlSegmentGroup([], {}), {}, null);
+              })()),
+              (this.rawUrlTree = this.currentUrlTree),
+              (this.browserUrlTree = this.currentUrlTree),
+              (this.routerState = createEmptyState(
+                this.currentUrlTree,
+                this.rootComponentType
+              )),
+              (this.transitions = new BehaviorSubject({
+                id: 0,
+                targetPageId: 0,
+                currentUrlTree: this.currentUrlTree,
+                currentRawUrl: this.currentUrlTree,
+                extractedUrl: this.urlHandlingStrategy.extract(
+                  this.currentUrlTree
+                ),
+                urlAfterRedirects: this.urlHandlingStrategy.extract(
+                  this.currentUrlTree
+                ),
+                rawUrl: this.currentUrlTree,
+                extras: {},
+                resolve: null,
+                reject: null,
+                promise: Promise.resolve(!0),
+                source: "imperative",
+                restoredState: null,
+                currentSnapshot: this.routerState.snapshot,
+                targetSnapshot: null,
+                currentRouterState: this.routerState,
+                targetRouterState: null,
+                guards: {
+                  canActivateChecks: [],
+                  canDeactivateChecks: [],
+                },
+                guardsResult: null,
+              })),
+              (this.navigations = this.setupNavigations(this.transitions)),
+              this.processNavigations();
           }
-          getAllTodos() {
-            return this.todos;
+          get browserPageId() {
+            return this.location.getState()?.ɵrouterPageId;
           }
-          getTodoById(id) {
-            return this.todos.filter((todo) => todo.id === id).pop();
+          setupNavigations(transitions) {
+            const eventsSubject = this.events;
+            return transitions.pipe(
+              filter((t) => 0 !== t.id),
+              map((t) => ({
+                ...t,
+                extractedUrl: this.urlHandlingStrategy.extract(t.rawUrl),
+              })),
+              switchMap((overallTransitionState) => {
+                let completed = !1,
+                  errored = !1;
+                return of_of(overallTransitionState).pipe(
+                  tap((t) => {
+                    this.currentNavigation = {
+                      id: t.id,
+                      initialUrl: t.rawUrl,
+                      extractedUrl: t.extractedUrl,
+                      trigger: t.source,
+                      extras: t.extras,
+                      previousNavigation: this.lastSuccessfulNavigation
+                        ? {
+                            ...this.lastSuccessfulNavigation,
+                            previousNavigation: null,
+                          }
+                        : null,
+                    };
+                  }),
+                  switchMap((t) => {
+                    const browserUrlTree = this.browserUrlTree.toString(),
+                      urlTransition =
+                        !this.navigated ||
+                        t.extractedUrl.toString() !== browserUrlTree ||
+                        browserUrlTree !== this.currentUrlTree.toString();
+                    if (
+                      ("reload" === this.onSameUrlNavigation ||
+                        urlTransition) &&
+                      this.urlHandlingStrategy.shouldProcessUrl(t.rawUrl)
+                    )
+                      return (
+                        isBrowserTriggeredNavigation(t.source) &&
+                          (this.browserUrlTree = t.extractedUrl),
+                        of_of(t).pipe(
+                          switchMap((t2) => {
+                            const transition = this.transitions.getValue();
+                            return (
+                              eventsSubject.next(
+                                new NavigationStart(
+                                  t2.id,
+                                  this.serializeUrl(t2.extractedUrl),
+                                  t2.source,
+                                  t2.restoredState
+                                )
+                              ),
+                              transition !== this.transitions.getValue()
+                                ? EMPTY
+                                : Promise.resolve(t2)
+                            );
+                          }),
+                          (function applyRedirects(
+                            environmentInjector,
+                            configLoader,
+                            urlSerializer,
+                            config2
+                          ) {
+                            return switchMap((t) =>
+                              (function applyRedirects$1(
+                                injector,
+                                configLoader,
+                                urlSerializer,
+                                urlTree,
+                                config2
+                              ) {
+                                return new ApplyRedirects(
+                                  injector,
+                                  configLoader,
+                                  urlSerializer,
+                                  urlTree,
+                                  config2
+                                ).apply();
+                              })(
+                                environmentInjector,
+                                configLoader,
+                                urlSerializer,
+                                t.extractedUrl,
+                                config2
+                              ).pipe(
+                                map((urlAfterRedirects) => ({
+                                  ...t,
+                                  urlAfterRedirects,
+                                }))
+                              )
+                            );
+                          })(
+                            this.ngModule.injector,
+                            this.configLoader,
+                            this.urlSerializer,
+                            this.config
+                          ),
+                          tap((t2) => {
+                            (this.currentNavigation = {
+                              ...this.currentNavigation,
+                              finalUrl: t2.urlAfterRedirects,
+                            }),
+                              (overallTransitionState.urlAfterRedirects =
+                                t2.urlAfterRedirects);
+                          }),
+                          (function recognize(
+                            injector,
+                            rootComponentType,
+                            config2,
+                            serializer,
+                            paramsInheritanceStrategy,
+                            relativeLinkResolution
+                          ) {
+                            return mergeMap((t) =>
+                              (function recognize$1(
+                                injector,
+                                rootComponentType,
+                                config2,
+                                urlTree,
+                                url,
+                                urlSerializer,
+                                paramsInheritanceStrategy = "emptyOnly",
+                                relativeLinkResolution = "legacy"
+                              ) {
+                                return new Recognizer(
+                                  injector,
+                                  rootComponentType,
+                                  config2,
+                                  urlTree,
+                                  url,
+                                  paramsInheritanceStrategy,
+                                  relativeLinkResolution,
+                                  urlSerializer
+                                )
+                                  .recognize()
+                                  .pipe(
+                                    switchMap((result) =>
+                                      null === result
+                                        ? (function newObservableError(e) {
+                                            return new Observable_Observable(
+                                              (obs) => obs.error(e)
+                                            );
+                                          })(new NoMatch())
+                                        : of_of(result)
+                                    )
+                                  );
+                              })(
+                                injector,
+                                rootComponentType,
+                                config2,
+                                t.urlAfterRedirects,
+                                serializer.serialize(t.urlAfterRedirects),
+                                serializer,
+                                paramsInheritanceStrategy,
+                                relativeLinkResolution
+                              ).pipe(
+                                map((targetSnapshot) => ({
+                                  ...t,
+                                  targetSnapshot,
+                                }))
+                              )
+                            );
+                          })(
+                            this.ngModule.injector,
+                            this.rootComponentType,
+                            this.config,
+                            this.urlSerializer,
+                            this.paramsInheritanceStrategy,
+                            this.relativeLinkResolution
+                          ),
+                          tap((t2) => {
+                            if (
+                              ((overallTransitionState.targetSnapshot =
+                                t2.targetSnapshot),
+                              "eager" === this.urlUpdateStrategy)
+                            ) {
+                              if (!t2.extras.skipLocationChange) {
+                                const rawUrl = this.urlHandlingStrategy.merge(
+                                  t2.urlAfterRedirects,
+                                  t2.rawUrl
+                                );
+                                this.setBrowserUrl(rawUrl, t2);
+                              }
+                              this.browserUrlTree = t2.urlAfterRedirects;
+                            }
+                            const routesRecognized = new RoutesRecognized(
+                              t2.id,
+                              this.serializeUrl(t2.extractedUrl),
+                              this.serializeUrl(t2.urlAfterRedirects),
+                              t2.targetSnapshot
+                            );
+                            eventsSubject.next(routesRecognized);
+                          })
+                        )
+                      );
+                    if (
+                      urlTransition &&
+                      this.rawUrlTree &&
+                      this.urlHandlingStrategy.shouldProcessUrl(this.rawUrlTree)
+                    ) {
+                      const {
+                          id,
+                          extractedUrl,
+                          source,
+                          restoredState,
+                          extras,
+                        } = t,
+                        navStart = new NavigationStart(
+                          id,
+                          this.serializeUrl(extractedUrl),
+                          source,
+                          restoredState
+                        );
+                      eventsSubject.next(navStart);
+                      const targetSnapshot = createEmptyState(
+                        extractedUrl,
+                        this.rootComponentType
+                      ).snapshot;
+                      return of_of(
+                        (overallTransitionState = {
+                          ...t,
+                          targetSnapshot,
+                          urlAfterRedirects: extractedUrl,
+                          extras: {
+                            ...extras,
+                            skipLocationChange: !1,
+                            replaceUrl: !1,
+                          },
+                        })
+                      );
+                    }
+                    return (this.rawUrlTree = t.rawUrl), t.resolve(null), EMPTY;
+                  }),
+                  tap((t) => {
+                    const guardsStart = new GuardsCheckStart(
+                      t.id,
+                      this.serializeUrl(t.extractedUrl),
+                      this.serializeUrl(t.urlAfterRedirects),
+                      t.targetSnapshot
+                    );
+                    this.triggerEvent(guardsStart);
+                  }),
+                  map(
+                    (t) =>
+                      (overallTransitionState = {
+                        ...t,
+                        guards: getAllRouteGuards(
+                          t.targetSnapshot,
+                          t.currentSnapshot,
+                          this.rootContexts
+                        ),
+                      })
+                  ),
+                  (function checkGuards(injector, forwardEvent) {
+                    return mergeMap((t) => {
+                      const {
+                        targetSnapshot,
+                        currentSnapshot,
+                        guards: { canActivateChecks, canDeactivateChecks },
+                      } = t;
+                      return 0 === canDeactivateChecks.length &&
+                        0 === canActivateChecks.length
+                        ? of_of({
+                            ...t,
+                            guardsResult: !0,
+                          })
+                        : (function runCanDeactivateChecks(
+                            checks,
+                            futureRSS,
+                            currRSS,
+                            injector
+                          ) {
+                            return from(checks).pipe(
+                              mergeMap((check) =>
+                                (function runCanDeactivate(
+                                  component,
+                                  currARS,
+                                  currRSS,
+                                  futureRSS,
+                                  injector
+                                ) {
+                                  const canDeactivate =
+                                    currARS && currARS.routeConfig
+                                      ? currARS.routeConfig.canDeactivate
+                                      : null;
+                                  return canDeactivate &&
+                                    0 !== canDeactivate.length
+                                    ? of_of(
+                                        canDeactivate.map((c) => {
+                                          const closestInjector =
+                                              getClosestRouteInjector(
+                                                currARS
+                                              ) ?? injector,
+                                            guard = getTokenOrFunctionIdentity(
+                                              c,
+                                              closestInjector
+                                            );
+                                          return wrapIntoObservable(
+                                            (function isCanDeactivate(guard) {
+                                              return (
+                                                guard &&
+                                                router_isFunction(
+                                                  guard.canDeactivate
+                                                )
+                                              );
+                                            })(guard)
+                                              ? guard.canDeactivate(
+                                                  component,
+                                                  currARS,
+                                                  currRSS,
+                                                  futureRSS
+                                                )
+                                              : closestInjector.runInContext(
+                                                  () =>
+                                                    guard(
+                                                      component,
+                                                      currARS,
+                                                      currRSS,
+                                                      futureRSS
+                                                    )
+                                                )
+                                          ).pipe(first());
+                                        })
+                                      ).pipe(prioritizedGuardValue())
+                                    : of_of(!0);
+                                })(
+                                  check.component,
+                                  check.route,
+                                  currRSS,
+                                  futureRSS,
+                                  injector
+                                )
+                              ),
+                              first((result) => !0 !== result, !0)
+                            );
+                          })(
+                            canDeactivateChecks,
+                            targetSnapshot,
+                            currentSnapshot,
+                            injector
+                          ).pipe(
+                            mergeMap((canDeactivate) =>
+                              canDeactivate &&
+                              (function isBoolean(v) {
+                                return "boolean" == typeof v;
+                              })(canDeactivate)
+                                ? (function runCanActivateChecks(
+                                    futureSnapshot,
+                                    checks,
+                                    injector,
+                                    forwardEvent
+                                  ) {
+                                    return from(checks).pipe(
+                                      concatMap((check) =>
+                                        concat(
+                                          (function fireChildActivationStart(
+                                            snapshot,
+                                            forwardEvent
+                                          ) {
+                                            return (
+                                              null !== snapshot &&
+                                                forwardEvent &&
+                                                forwardEvent(
+                                                  new ChildActivationStart(
+                                                    snapshot
+                                                  )
+                                                ),
+                                              of_of(!0)
+                                            );
+                                          })(check.route.parent, forwardEvent),
+                                          (function fireActivationStart(
+                                            snapshot,
+                                            forwardEvent
+                                          ) {
+                                            return (
+                                              null !== snapshot &&
+                                                forwardEvent &&
+                                                forwardEvent(
+                                                  new ActivationStart(snapshot)
+                                                ),
+                                              of_of(!0)
+                                            );
+                                          })(check.route, forwardEvent),
+                                          (function runCanActivateChild(
+                                            futureRSS,
+                                            path,
+                                            injector
+                                          ) {
+                                            const futureARS =
+                                                path[path.length - 1],
+                                              canActivateChildGuardsMapped =
+                                                path
+                                                  .slice(0, path.length - 1)
+                                                  .reverse()
+                                                  .map((p) =>
+                                                    (function getCanActivateChild(
+                                                      p
+                                                    ) {
+                                                      const canActivateChild =
+                                                        p.routeConfig
+                                                          ? p.routeConfig
+                                                              .canActivateChild
+                                                          : null;
+                                                      return canActivateChild &&
+                                                        0 !==
+                                                          canActivateChild.length
+                                                        ? {
+                                                            node: p,
+                                                            guards:
+                                                              canActivateChild,
+                                                          }
+                                                        : null;
+                                                    })(p)
+                                                  )
+                                                  .filter((_) => null !== _)
+                                                  .map((d) =>
+                                                    defer(() =>
+                                                      of_of(
+                                                        d.guards.map(
+                                                          (
+                                                            canActivateChild
+                                                          ) => {
+                                                            const closestInjector =
+                                                                getClosestRouteInjector(
+                                                                  d.node
+                                                                ) ?? injector,
+                                                              guard =
+                                                                getTokenOrFunctionIdentity(
+                                                                  canActivateChild,
+                                                                  closestInjector
+                                                                );
+                                                            return wrapIntoObservable(
+                                                              (function isCanActivateChild(
+                                                                guard
+                                                              ) {
+                                                                return (
+                                                                  guard &&
+                                                                  router_isFunction(
+                                                                    guard.canActivateChild
+                                                                  )
+                                                                );
+                                                              })(guard)
+                                                                ? guard.canActivateChild(
+                                                                    futureARS,
+                                                                    futureRSS
+                                                                  )
+                                                                : closestInjector.runInContext(
+                                                                    () =>
+                                                                      guard(
+                                                                        futureARS,
+                                                                        futureRSS
+                                                                      )
+                                                                  )
+                                                            ).pipe(first());
+                                                          }
+                                                        )
+                                                      ).pipe(
+                                                        prioritizedGuardValue()
+                                                      )
+                                                    )
+                                                  );
+                                            return of_of(
+                                              canActivateChildGuardsMapped
+                                            ).pipe(prioritizedGuardValue());
+                                          })(
+                                            futureSnapshot,
+                                            check.path,
+                                            injector
+                                          ),
+                                          (function runCanActivate(
+                                            futureRSS,
+                                            futureARS,
+                                            injector
+                                          ) {
+                                            const canActivate =
+                                              futureARS.routeConfig
+                                                ? futureARS.routeConfig
+                                                    .canActivate
+                                                : null;
+                                            return canActivate &&
+                                              0 !== canActivate.length
+                                              ? of_of(
+                                                  canActivate.map(
+                                                    (canActivate2) =>
+                                                      defer(() => {
+                                                        const closestInjector =
+                                                            getClosestRouteInjector(
+                                                              futureARS
+                                                            ) ?? injector,
+                                                          guard =
+                                                            getTokenOrFunctionIdentity(
+                                                              canActivate2,
+                                                              closestInjector
+                                                            );
+                                                        return wrapIntoObservable(
+                                                          (function isCanActivate(
+                                                            guard
+                                                          ) {
+                                                            return (
+                                                              guard &&
+                                                              router_isFunction(
+                                                                guard.canActivate
+                                                              )
+                                                            );
+                                                          })(guard)
+                                                            ? guard.canActivate(
+                                                                futureARS,
+                                                                futureRSS
+                                                              )
+                                                            : closestInjector.runInContext(
+                                                                () =>
+                                                                  guard(
+                                                                    futureARS,
+                                                                    futureRSS
+                                                                  )
+                                                              )
+                                                        ).pipe(first());
+                                                      })
+                                                  )
+                                                ).pipe(prioritizedGuardValue())
+                                              : of_of(!0);
+                                          })(
+                                            futureSnapshot,
+                                            check.route,
+                                            injector
+                                          )
+                                        )
+                                      ),
+                                      first((result) => !0 !== result, !0)
+                                    );
+                                  })(
+                                    targetSnapshot,
+                                    canActivateChecks,
+                                    injector,
+                                    forwardEvent
+                                  )
+                                : of_of(canDeactivate)
+                            ),
+                            map((guardsResult) => ({
+                              ...t,
+                              guardsResult,
+                            }))
+                          );
+                    });
+                  })(this.ngModule.injector, (evt) => this.triggerEvent(evt)),
+                  tap((t) => {
+                    if (
+                      ((overallTransitionState.guardsResult = t.guardsResult),
+                      isUrlTree(t.guardsResult))
+                    )
+                      throw redirectingNavigationError(0, t.guardsResult);
+                    const guardsEnd = new GuardsCheckEnd(
+                      t.id,
+                      this.serializeUrl(t.extractedUrl),
+                      this.serializeUrl(t.urlAfterRedirects),
+                      t.targetSnapshot,
+                      !!t.guardsResult
+                    );
+                    this.triggerEvent(guardsEnd);
+                  }),
+                  filter(
+                    (t) =>
+                      !!t.guardsResult ||
+                      (this.restoreHistory(t),
+                      this.cancelNavigationTransition(t, "", 3),
+                      !1)
+                  ),
+                  switchTap((t) => {
+                    if (t.guards.canActivateChecks.length)
+                      return of_of(t).pipe(
+                        tap((t2) => {
+                          const resolveStart = new ResolveStart(
+                            t2.id,
+                            this.serializeUrl(t2.extractedUrl),
+                            this.serializeUrl(t2.urlAfterRedirects),
+                            t2.targetSnapshot
+                          );
+                          this.triggerEvent(resolveStart);
+                        }),
+                        switchMap((t2) => {
+                          let dataResolved = !1;
+                          return of_of(t2).pipe(
+                            (function resolveData(
+                              paramsInheritanceStrategy,
+                              injector
+                            ) {
+                              return mergeMap((t) => {
+                                const {
+                                  targetSnapshot,
+                                  guards: { canActivateChecks },
+                                } = t;
+                                if (!canActivateChecks.length) return of_of(t);
+                                let canActivateChecksResolved = 0;
+                                return from(canActivateChecks).pipe(
+                                  concatMap((check) =>
+                                    (function runResolve(
+                                      futureARS,
+                                      futureRSS,
+                                      paramsInheritanceStrategy,
+                                      injector
+                                    ) {
+                                      const config2 = futureARS.routeConfig,
+                                        resolve = futureARS._resolve;
+                                      return (
+                                        void 0 !== config2?.title &&
+                                          !hasStaticTitle(config2) &&
+                                          (resolve[RouteTitleKey] =
+                                            config2.title),
+                                        (function resolveNode(
+                                          resolve,
+                                          futureARS,
+                                          futureRSS,
+                                          injector
+                                        ) {
+                                          const keys = (function getDataKeys(
+                                            obj
+                                          ) {
+                                            return [
+                                              ...Object.keys(obj),
+                                              ...Object.getOwnPropertySymbols(
+                                                obj
+                                              ),
+                                            ];
+                                          })(resolve);
+                                          if (0 === keys.length)
+                                            return of_of({});
+                                          const data = {};
+                                          return from(keys).pipe(
+                                            mergeMap((key) =>
+                                              (function getResolver(
+                                                injectionToken,
+                                                futureARS,
+                                                futureRSS,
+                                                injector
+                                              ) {
+                                                const closestInjector =
+                                                    getClosestRouteInjector(
+                                                      futureARS
+                                                    ) ?? injector,
+                                                  resolver =
+                                                    getTokenOrFunctionIdentity(
+                                                      injectionToken,
+                                                      closestInjector
+                                                    );
+                                                return wrapIntoObservable(
+                                                  resolver.resolve
+                                                    ? resolver.resolve(
+                                                        futureARS,
+                                                        futureRSS
+                                                      )
+                                                    : closestInjector.runInContext(
+                                                        () =>
+                                                          resolver(
+                                                            futureARS,
+                                                            futureRSS
+                                                          )
+                                                      )
+                                                );
+                                              })(
+                                                resolve[key],
+                                                futureARS,
+                                                futureRSS,
+                                                injector
+                                              ).pipe(
+                                                first(),
+                                                tap((value) => {
+                                                  data[key] = value;
+                                                })
+                                              )
+                                            ),
+                                            takeLast(1),
+                                            (function mapTo(value) {
+                                              return map(() => value);
+                                            })(data),
+                                            catchError_catchError((e) =>
+                                              isEmptyError(e)
+                                                ? EMPTY
+                                                : throwError_throwError(e)
+                                            )
+                                          );
+                                        })(
+                                          resolve,
+                                          futureARS,
+                                          futureRSS,
+                                          injector
+                                        ).pipe(
+                                          map(
+                                            (resolvedData) => (
+                                              (futureARS._resolvedData =
+                                                resolvedData),
+                                              (futureARS.data =
+                                                inheritedParamsDataResolve(
+                                                  futureARS,
+                                                  paramsInheritanceStrategy
+                                                ).resolve),
+                                              config2 &&
+                                                hasStaticTitle(config2) &&
+                                                (futureARS.data[RouteTitleKey] =
+                                                  config2.title),
+                                              null
+                                            )
+                                          )
+                                        )
+                                      );
+                                    })(
+                                      check.route,
+                                      targetSnapshot,
+                                      paramsInheritanceStrategy,
+                                      injector
+                                    )
+                                  ),
+                                  tap(() => canActivateChecksResolved++),
+                                  takeLast(1),
+                                  mergeMap((_) =>
+                                    canActivateChecksResolved ===
+                                    canActivateChecks.length
+                                      ? of_of(t)
+                                      : EMPTY
+                                  )
+                                );
+                              });
+                            })(
+                              this.paramsInheritanceStrategy,
+                              this.ngModule.injector
+                            ),
+                            tap({
+                              next: () => (dataResolved = !0),
+                              complete: () => {
+                                dataResolved ||
+                                  (this.restoreHistory(t2),
+                                  this.cancelNavigationTransition(t2, "", 2));
+                              },
+                            })
+                          );
+                        }),
+                        tap((t2) => {
+                          const resolveEnd = new ResolveEnd(
+                            t2.id,
+                            this.serializeUrl(t2.extractedUrl),
+                            this.serializeUrl(t2.urlAfterRedirects),
+                            t2.targetSnapshot
+                          );
+                          this.triggerEvent(resolveEnd);
+                        })
+                      );
+                  }),
+                  switchTap((t) => {
+                    const loadComponents = (route) => {
+                      const loaders = [];
+                      route.routeConfig?.loadComponent &&
+                        !route.routeConfig._loadedComponent &&
+                        loaders.push(
+                          this.configLoader
+                            .loadComponent(route.routeConfig)
+                            .pipe(
+                              tap((loadedComponent) => {
+                                route.component = loadedComponent;
+                              }),
+                              map(() => {})
+                            )
+                        );
+                      for (const child of route.children)
+                        loaders.push(...loadComponents(child));
+                      return loaders;
+                    };
+                    return combineLatest(
+                      loadComponents(t.targetSnapshot.root)
+                    ).pipe(defaultIfEmpty(), take(1));
+                  }),
+                  switchTap(() => this.afterPreactivation()),
+                  map((t) => {
+                    const targetRouterState = (function createRouterState(
+                      routeReuseStrategy,
+                      curr,
+                      prevState
+                    ) {
+                      const root = createNode(
+                        routeReuseStrategy,
+                        curr._root,
+                        prevState ? prevState._root : void 0
+                      );
+                      return new RouterState(root, curr);
+                    })(
+                      this.routeReuseStrategy,
+                      t.targetSnapshot,
+                      t.currentRouterState
+                    );
+                    return (overallTransitionState = {
+                      ...t,
+                      targetRouterState,
+                    });
+                  }),
+                  tap((t) => {
+                    (this.currentUrlTree = t.urlAfterRedirects),
+                      (this.rawUrlTree = this.urlHandlingStrategy.merge(
+                        t.urlAfterRedirects,
+                        t.rawUrl
+                      )),
+                      (this.routerState = t.targetRouterState),
+                      "deferred" === this.urlUpdateStrategy &&
+                        (t.extras.skipLocationChange ||
+                          this.setBrowserUrl(this.rawUrlTree, t),
+                        (this.browserUrlTree = t.urlAfterRedirects));
+                  }),
+                  ((rootContexts = this.rootContexts),
+                  (routeReuseStrategy = this.routeReuseStrategy),
+                  (forwardEvent = (evt) => this.triggerEvent(evt)),
+                  map(
+                    (t) => (
+                      new ActivateRoutes(
+                        routeReuseStrategy,
+                        t.targetRouterState,
+                        t.currentRouterState,
+                        forwardEvent
+                      ).activate(rootContexts),
+                      t
+                    )
+                  )),
+                  tap({
+                    next() {
+                      completed = !0;
+                    },
+                    complete() {
+                      completed = !0;
+                    },
+                  }),
+                  finalize(() => {
+                    completed ||
+                      errored ||
+                      this.cancelNavigationTransition(
+                        overallTransitionState,
+                        "",
+                        1
+                      ),
+                      this.currentNavigation?.id ===
+                        overallTransitionState.id &&
+                        (this.currentNavigation = null);
+                  }),
+                  catchError_catchError((e) => {
+                    if (((errored = !0), isNavigationCancelingError$1(e))) {
+                      isRedirectingNavigationCancelingError$1(e) ||
+                        ((this.navigated = !0),
+                        this.restoreHistory(overallTransitionState, !0));
+                      const navCancel = new NavigationCancel(
+                        overallTransitionState.id,
+                        this.serializeUrl(overallTransitionState.extractedUrl),
+                        e.message,
+                        e.cancellationCode
+                      );
+                      if (
+                        (eventsSubject.next(navCancel),
+                        isRedirectingNavigationCancelingError$1(e))
+                      ) {
+                        const mergedTree = this.urlHandlingStrategy.merge(
+                            e.url,
+                            this.rawUrlTree
+                          ),
+                          extras = {
+                            skipLocationChange:
+                              overallTransitionState.extras.skipLocationChange,
+                            replaceUrl:
+                              "eager" === this.urlUpdateStrategy ||
+                              isBrowserTriggeredNavigation(
+                                overallTransitionState.source
+                              ),
+                          };
+                        this.scheduleNavigation(
+                          mergedTree,
+                          "imperative",
+                          null,
+                          extras,
+                          {
+                            resolve: overallTransitionState.resolve,
+                            reject: overallTransitionState.reject,
+                            promise: overallTransitionState.promise,
+                          }
+                        );
+                      } else overallTransitionState.resolve(!1);
+                    } else {
+                      this.restoreHistory(overallTransitionState, !0);
+                      const navError = new NavigationError(
+                        overallTransitionState.id,
+                        this.serializeUrl(overallTransitionState.extractedUrl),
+                        e,
+                        overallTransitionState.targetSnapshot ?? void 0
+                      );
+                      eventsSubject.next(navError);
+                      try {
+                        overallTransitionState.resolve(this.errorHandler(e));
+                      } catch (ee) {
+                        overallTransitionState.reject(ee);
+                      }
+                    }
+                    return EMPTY;
+                  })
+                );
+                var rootContexts, routeReuseStrategy, forwardEvent;
+              })
+            );
           }
-          toggleTodoComplete(todo) {
-            return this.updateTodoById(todo.id, {
-              complete: !todo.complete,
+          resetRootComponentType(rootComponentType) {
+            (this.rootComponentType = rootComponentType),
+              (this.routerState.root.component = this.rootComponentType);
+          }
+          setTransition(t) {
+            this.transitions.next({
+              ...this.transitions.value,
+              ...t,
+            });
+          }
+          initialNavigation() {
+            this.setUpLocationChangeListener(),
+              0 === this.navigationId &&
+                this.navigateByUrl(this.location.path(!0), {
+                  replaceUrl: !0,
+                });
+          }
+          setUpLocationChangeListener() {
+            this.locationSubscription ||
+              (this.locationSubscription = this.location.subscribe((event) => {
+                const source =
+                  "popstate" === event.type ? "popstate" : "hashchange";
+                "popstate" === source &&
+                  setTimeout(() => {
+                    const extras = {
+                        replaceUrl: !0,
+                      },
+                      state = event.state?.navigationId ? event.state : null;
+                    if (state) {
+                      const stateCopy = {
+                        ...state,
+                      };
+                      delete stateCopy.navigationId,
+                        delete stateCopy.ɵrouterPageId,
+                        0 !== Object.keys(stateCopy).length &&
+                          (extras.state = stateCopy);
+                    }
+                    const urlTree = this.parseUrl(event.url);
+                    this.scheduleNavigation(urlTree, source, state, extras);
+                  }, 0);
+              }));
+          }
+          get url() {
+            return this.serializeUrl(this.currentUrlTree);
+          }
+          getCurrentNavigation() {
+            return this.currentNavigation;
+          }
+          triggerEvent(event) {
+            this.events.next(event);
+          }
+          resetConfig(config2) {
+            (this.config = config2.map(standardizeConfig)),
+              (this.navigated = !1),
+              (this.lastSuccessfulId = -1);
+          }
+          ngOnDestroy() {
+            this.dispose();
+          }
+          dispose() {
+            this.transitions.complete(),
+              this.locationSubscription &&
+                (this.locationSubscription.unsubscribe(),
+                (this.locationSubscription = void 0)),
+              (this.disposed = !0);
+          }
+          createUrlTree(commands, navigationExtras = {}) {
+            const {
+                relativeTo,
+                queryParams,
+                fragment,
+                queryParamsHandling,
+                preserveFragment,
+              } = navigationExtras,
+              a = relativeTo || this.routerState.root,
+              f = preserveFragment ? this.currentUrlTree.fragment : fragment;
+            let q = null;
+            switch (queryParamsHandling) {
+              case "merge":
+                q = {
+                  ...this.currentUrlTree.queryParams,
+                  ...queryParams,
+                };
+                break;
+
+              case "preserve":
+                q = this.currentUrlTree.queryParams;
+                break;
+
+              default:
+                q = queryParams || null;
+            }
+            return (
+              null !== q && (q = this.removeEmptyProps(q)),
+              createUrlTree(a, this.currentUrlTree, commands, q, f ?? null)
+            );
+          }
+          navigateByUrl(
+            url,
+            extras = {
+              skipLocationChange: !1,
+            }
+          ) {
+            const urlTree = isUrlTree(url) ? url : this.parseUrl(url),
+              mergedTree = this.urlHandlingStrategy.merge(
+                urlTree,
+                this.rawUrlTree
+              );
+            return this.scheduleNavigation(
+              mergedTree,
+              "imperative",
+              null,
+              extras
+            );
+          }
+          navigate(
+            commands,
+            extras = {
+              skipLocationChange: !1,
+            }
+          ) {
+            return (
+              (function validateCommands(commands) {
+                for (let i = 0; i < commands.length; i++) {
+                  if (null == commands[i]) throw new RuntimeError(4008, !1);
+                }
+              })(commands),
+              this.navigateByUrl(this.createUrlTree(commands, extras), extras)
+            );
+          }
+          serializeUrl(url) {
+            return this.urlSerializer.serialize(url);
+          }
+          parseUrl(url) {
+            let urlTree;
+            try {
+              urlTree = this.urlSerializer.parse(url);
+            } catch (e) {
+              urlTree = this.malformedUriErrorHandler(
+                e,
+                this.urlSerializer,
+                url
+              );
+            }
+            return urlTree;
+          }
+          isActive(url, matchOptions) {
+            let options;
+            if (
+              ((options =
+                !0 === matchOptions
+                  ? {
+                      ...exactMatchOptions,
+                    }
+                  : !1 === matchOptions
+                  ? {
+                      ...subsetMatchOptions,
+                    }
+                  : matchOptions),
+              isUrlTree(url))
+            )
+              return containsTree(this.currentUrlTree, url, options);
+            const urlTree = this.parseUrl(url);
+            return containsTree(this.currentUrlTree, urlTree, options);
+          }
+          removeEmptyProps(params) {
+            return Object.keys(params).reduce((result, key) => {
+              const value = params[key];
+              return null != value && (result[key] = value), result;
+            }, {});
+          }
+          processNavigations() {
+            this.navigations.subscribe(
+              (t) => {
+                (this.navigated = !0),
+                  (this.lastSuccessfulId = t.id),
+                  (this.currentPageId = t.targetPageId),
+                  this.events.next(
+                    new NavigationEnd(
+                      t.id,
+                      this.serializeUrl(t.extractedUrl),
+                      this.serializeUrl(this.currentUrlTree)
+                    )
+                  ),
+                  (this.lastSuccessfulNavigation = this.currentNavigation),
+                  this.titleStrategy?.updateTitle(this.routerState.snapshot),
+                  t.resolve(!0);
+              },
+              (e) => {
+                this.console.warn(`Unhandled Navigation Error: ${e}`);
+              }
+            );
+          }
+          scheduleNavigation(
+            rawUrl,
+            source,
+            restoredState,
+            extras,
+            priorPromise
+          ) {
+            if (this.disposed) return Promise.resolve(!1);
+            let resolve, reject, promise2;
+            priorPromise
+              ? ((resolve = priorPromise.resolve),
+                (reject = priorPromise.reject),
+                (promise2 = priorPromise.promise))
+              : (promise2 = new Promise((res, rej) => {
+                  (resolve = res), (reject = rej);
+                }));
+            const id = ++this.navigationId;
+            let targetPageId;
+            return (
+              "computed" === this.canceledNavigationResolution
+                ? (0 === this.currentPageId &&
+                    (restoredState = this.location.getState()),
+                  (targetPageId =
+                    restoredState && restoredState.ɵrouterPageId
+                      ? restoredState.ɵrouterPageId
+                      : extras.replaceUrl || extras.skipLocationChange
+                      ? this.browserPageId ?? 0
+                      : (this.browserPageId ?? 0) + 1))
+                : (targetPageId = 0),
+              this.setTransition({
+                id,
+                targetPageId,
+                source,
+                restoredState,
+                currentUrlTree: this.currentUrlTree,
+                currentRawUrl: this.rawUrlTree,
+                rawUrl,
+                extras,
+                resolve,
+                reject,
+                promise: promise2,
+                currentSnapshot: this.routerState.snapshot,
+                currentRouterState: this.routerState,
+              }),
+              promise2.catch((e) => Promise.reject(e))
+            );
+          }
+          setBrowserUrl(url, t) {
+            const path = this.urlSerializer.serialize(url),
+              state = {
+                ...t.extras.state,
+                ...this.generateNgRouterState(t.id, t.targetPageId),
+              };
+            this.location.isCurrentPathEqualTo(path) || t.extras.replaceUrl
+              ? this.location.replaceState(path, "", state)
+              : this.location.go(path, "", state);
+          }
+          restoreHistory(t, restoringFromCaughtError = !1) {
+            if ("computed" === this.canceledNavigationResolution) {
+              const targetPagePosition = this.currentPageId - t.targetPageId;
+              ("popstate" !== t.source &&
+                "eager" !== this.urlUpdateStrategy &&
+                this.currentUrlTree !== this.currentNavigation?.finalUrl) ||
+              0 === targetPagePosition
+                ? this.currentUrlTree === this.currentNavigation?.finalUrl &&
+                  0 === targetPagePosition &&
+                  (this.resetState(t),
+                  (this.browserUrlTree = t.currentUrlTree),
+                  this.resetUrlToCurrentUrlTree())
+                : this.location.historyGo(targetPagePosition);
+            } else
+              "replace" === this.canceledNavigationResolution &&
+                (restoringFromCaughtError && this.resetState(t),
+                this.resetUrlToCurrentUrlTree());
+          }
+          resetState(t) {
+            (this.routerState = t.currentRouterState),
+              (this.currentUrlTree = t.currentUrlTree),
+              (this.rawUrlTree = this.urlHandlingStrategy.merge(
+                this.currentUrlTree,
+                t.rawUrl
+              ));
+          }
+          resetUrlToCurrentUrlTree() {
+            this.location.replaceState(
+              this.urlSerializer.serialize(this.rawUrlTree),
+              "",
+              this.generateNgRouterState(
+                this.lastSuccessfulId,
+                this.currentPageId
+              )
+            );
+          }
+          cancelNavigationTransition(t, reason, code) {
+            const navCancel = new NavigationCancel(
+              t.id,
+              this.serializeUrl(t.extractedUrl),
+              reason,
+              code
+            );
+            this.triggerEvent(navCancel), t.resolve(!1);
+          }
+          generateNgRouterState(navigationId, routerPageId) {
+            return "computed" === this.canceledNavigationResolution
+              ? {
+                  navigationId,
+                  ɵrouterPageId: routerPageId,
+                }
+              : {
+                  navigationId,
+                };
+          }
+        }
+        return (
+          (Router2.ɵfac = function (t) {
+            ɵɵinvalidFactory();
+          }),
+          (Router2.ɵprov = ɵɵdefineInjectable({
+            token: Router2,
+            factory: function () {
+              return setupRouter();
+            },
+            providedIn: "root",
+          })),
+          Router2
+        );
+      })();
+      function isBrowserTriggeredNavigation(source) {
+        return "imperative" !== source;
+      }
+      let RouterLinkWithHref = (() => {
+        class RouterLinkWithHref2 {
+          constructor(router, route, locationStrategy) {
+            (this.router = router),
+              (this.route = route),
+              (this.locationStrategy = locationStrategy),
+              (this._preserveFragment = !1),
+              (this._skipLocationChange = !1),
+              (this._replaceUrl = !1),
+              (this.commands = null),
+              (this.href = null),
+              (this.onChanges = new Subject()),
+              (this.subscription = router.events.subscribe((s) => {
+                s instanceof NavigationEnd && this.updateTargetUrlAndHref();
+              }));
+          }
+          set preserveFragment(preserveFragment) {
+            this._preserveFragment = coerceToBoolean(preserveFragment);
+          }
+          get preserveFragment() {
+            return this._preserveFragment;
+          }
+          set skipLocationChange(skipLocationChange) {
+            this._skipLocationChange = coerceToBoolean(skipLocationChange);
+          }
+          get skipLocationChange() {
+            return this._skipLocationChange;
+          }
+          set replaceUrl(replaceUrl) {
+            this._replaceUrl = coerceToBoolean(replaceUrl);
+          }
+          get replaceUrl() {
+            return this._replaceUrl;
+          }
+          set routerLink(commands) {
+            this.commands =
+              null != commands
+                ? Array.isArray(commands)
+                  ? commands
+                  : [commands]
+                : null;
+          }
+          ngOnChanges(changes) {
+            this.updateTargetUrlAndHref(), this.onChanges.next(this);
+          }
+          ngOnDestroy() {
+            this.subscription.unsubscribe();
+          }
+          onClick(button, ctrlKey, shiftKey, altKey, metaKey) {
+            return (
+              !!(
+                0 !== button ||
+                ctrlKey ||
+                shiftKey ||
+                altKey ||
+                metaKey ||
+                ("string" == typeof this.target && "_self" != this.target) ||
+                null === this.urlTree
+              ) ||
+              (this.router.navigateByUrl(this.urlTree, {
+                skipLocationChange: this.skipLocationChange,
+                replaceUrl: this.replaceUrl,
+                state: this.state,
+              }),
+              !1)
+            );
+          }
+          updateTargetUrlAndHref() {
+            this.href =
+              null !== this.urlTree
+                ? this.locationStrategy.prepareExternalUrl(
+                    this.router.serializeUrl(this.urlTree)
+                  )
+                : null;
+          }
+          get urlTree() {
+            return null === this.commands
+              ? null
+              : this.router.createUrlTree(this.commands, {
+                  relativeTo:
+                    void 0 !== this.relativeTo ? this.relativeTo : this.route,
+                  queryParams: this.queryParams,
+                  fragment: this.fragment,
+                  queryParamsHandling: this.queryParamsHandling,
+                  preserveFragment: this.preserveFragment,
+                });
+          }
+        }
+        return (
+          (RouterLinkWithHref2.ɵfac = function (t) {
+            return new (t || RouterLinkWithHref2)(
+              ɵɵdirectiveInject(Router),
+              ɵɵdirectiveInject(ActivatedRoute),
+              ɵɵdirectiveInject(LocationStrategy)
+            );
+          }),
+          (RouterLinkWithHref2.ɵdir = ɵɵdefineDirective({
+            type: RouterLinkWithHref2,
+            selectors: [
+              ["a", "routerLink", ""],
+              ["area", "routerLink", ""],
+            ],
+            hostVars: 2,
+            hostBindings: function (rf, ctx) {
+              1 & rf &&
+                ɵɵlistener("click", function ($event) {
+                  return ctx.onClick(
+                    $event.button,
+                    $event.ctrlKey,
+                    $event.shiftKey,
+                    $event.altKey,
+                    $event.metaKey
+                  );
+                }),
+                2 & rf &&
+                  ɵɵattribute("target", ctx.target)(
+                    "href",
+                    ctx.href,
+                    ɵɵsanitizeUrl
+                  );
+            },
+            inputs: {
+              target: "target",
+              queryParams: "queryParams",
+              fragment: "fragment",
+              queryParamsHandling: "queryParamsHandling",
+              state: "state",
+              relativeTo: "relativeTo",
+              preserveFragment: "preserveFragment",
+              skipLocationChange: "skipLocationChange",
+              replaceUrl: "replaceUrl",
+              routerLink: "routerLink",
+            },
+            standalone: !0,
+            features: [ɵɵNgOnChangesFeature],
+          })),
+          RouterLinkWithHref2
+        );
+      })();
+      class PreloadingStrategy {}
+      let RouterPreloader = (() => {
+        class RouterPreloader2 {
+          constructor(router, compiler, injector, preloadingStrategy, loader) {
+            (this.router = router),
+              (this.injector = injector),
+              (this.preloadingStrategy = preloadingStrategy),
+              (this.loader = loader);
+          }
+          setUpPreloading() {
+            this.subscription = this.router.events
+              .pipe(
+                filter((e) => e instanceof NavigationEnd),
+                concatMap(() => this.preload())
+              )
+              .subscribe(() => {});
+          }
+          preload() {
+            return this.processRoutes(this.injector, this.router.config);
+          }
+          ngOnDestroy() {
+            this.subscription && this.subscription.unsubscribe();
+          }
+          processRoutes(injector, routes2) {
+            const res = [];
+            for (const route of routes2) {
+              route.providers &&
+                !route._injector &&
+                (route._injector = createEnvironmentInjector(
+                  route.providers,
+                  injector,
+                  `Route: ${route.path}`
+                ));
+              const injectorForCurrentRoute = route._injector ?? injector,
+                injectorForChildren =
+                  route._loadedInjector ?? injectorForCurrentRoute;
+              (route.loadChildren &&
+                !route._loadedRoutes &&
+                void 0 === route.canLoad) ||
+              (route.loadComponent && !route._loadedComponent)
+                ? res.push(this.preloadConfig(injectorForCurrentRoute, route))
+                : (route.children || route._loadedRoutes) &&
+                  res.push(
+                    this.processRoutes(
+                      injectorForChildren,
+                      route.children ?? route._loadedRoutes
+                    )
+                  );
+            }
+            return from(res).pipe(mergeAll());
+          }
+          preloadConfig(injector, route) {
+            return this.preloadingStrategy.preload(route, () => {
+              let loadedChildren$;
+              loadedChildren$ =
+                route.loadChildren && void 0 === route.canLoad
+                  ? this.loader.loadChildren(injector, route)
+                  : of_of(null);
+              const recursiveLoadChildren$ = loadedChildren$.pipe(
+                mergeMap((config2) =>
+                  null === config2
+                    ? of_of(void 0)
+                    : ((route._loadedRoutes = config2.routes),
+                      (route._loadedInjector = config2.injector),
+                      this.processRoutes(
+                        config2.injector ?? injector,
+                        config2.routes
+                      ))
+                )
+              );
+              return route.loadComponent && !route._loadedComponent
+                ? from([
+                    recursiveLoadChildren$,
+                    this.loader.loadComponent(route),
+                  ]).pipe(mergeAll())
+                : recursiveLoadChildren$;
             });
           }
         }
         return (
-          (TodoDataService2.ɵfac = function (t) {
-            return new (t || TodoDataService2)();
+          (RouterPreloader2.ɵfac = function (t) {
+            return new (t || RouterPreloader2)(
+              core_inject(Router),
+              core_inject(Compiler),
+              core_inject(EnvironmentInjector),
+              core_inject(PreloadingStrategy),
+              core_inject(RouterConfigLoader)
+            );
           }),
-          (TodoDataService2.ɵprov = core_defineInjectable({
-            token: TodoDataService2,
-            factory: TodoDataService2.ɵfac,
+          (RouterPreloader2.ɵprov = ɵɵdefineInjectable({
+            token: RouterPreloader2,
+            factory: RouterPreloader2.ɵfac,
+            providedIn: "root",
           })),
-          TodoDataService2
+          RouterPreloader2
         );
       })();
-      function AppComponent_section_5_li_2_Template(rf, ctx) {
-        if (1 & rf) {
-          const _r5 = (function ɵɵgetCurrentView() {
-            return getLView();
-          })();
-          ɵɵelementStart(0, "li")(1, "div", 8)(2, "input", 9),
-            ɵɵlistener("click", function () {
-              const todo_r3 = ɵɵrestoreView(_r5).$implicit;
-              return ɵɵresetView(ɵɵnextContext(2).toggleTodoComplete(todo_r3));
-            }),
-            ɵɵelementEnd(),
-            ɵɵelementStart(3, "label"),
-            ɵɵtext(4),
-            ɵɵelementEnd(),
-            ɵɵelementStart(5, "button", 10),
-            ɵɵlistener("click", function () {
-              const todo_r3 = ɵɵrestoreView(_r5).$implicit;
-              return ɵɵresetView(ɵɵnextContext(2).removeTodo(todo_r3));
-            }),
-            ɵɵelementEnd()()();
-        }
-        if (2 & rf) {
-          const todo_r3 = ctx.$implicit;
-          ɵɵclassProp("completed", todo_r3.complete),
-            ɵɵadvance(2),
-            ɵɵproperty("checked", todo_r3.complete),
-            ɵɵadvance(2),
-            ɵɵtextInterpolate(todo_r3.title);
-        }
-      }
-      function AppComponent_section_5_Template(rf, ctx) {
-        if (
-          (1 & rf &&
-            (ɵɵelementStart(0, "section", 5)(1, "ul", 6),
-            ɵɵtemplate(2, AppComponent_section_5_li_2_Template, 6, 4, "li", 7),
-            ɵɵelementEnd()()),
-          2 & rf)
-        ) {
-          const ctx_r0 = ɵɵnextContext();
-          ɵɵadvance(2), ɵɵproperty("ngForOf", ctx_r0.todos);
-        }
-      }
-      function AppComponent_footer_6_Template(rf, ctx) {
-        if (
-          (1 & rf &&
-            (ɵɵelementStart(0, "footer", 11)(1, "span", 12)(2, "strong"),
-            ɵɵtext(3),
-            ɵɵelementEnd(),
-            ɵɵtext(4),
-            ɵɵelementEnd()()),
-          2 & rf)
-        ) {
-          const ctx_r1 = ɵɵnextContext();
-          ɵɵadvance(3),
-            ɵɵtextInterpolate(ctx_r1.todos.length),
-            ɵɵadvance(1),
-            ɵɵtextInterpolate1(
-              " ",
-              1 == ctx_r1.todos.length ? "item" : "items",
-              " left"
+      const ROUTER_SCROLLER = new InjectionToken("");
+      let RouterScroller = (() => {
+        class RouterScroller2 {
+          constructor(router, viewportScroller, options = {}) {
+            (this.router = router),
+              (this.viewportScroller = viewportScroller),
+              (this.options = options),
+              (this.lastId = 0),
+              (this.lastSource = "imperative"),
+              (this.restoredId = 0),
+              (this.store = {}),
+              (options.scrollPositionRestoration =
+                options.scrollPositionRestoration || "disabled"),
+              (options.anchorScrolling = options.anchorScrolling || "disabled");
+          }
+          init() {
+            "disabled" !== this.options.scrollPositionRestoration &&
+              this.viewportScroller.setHistoryScrollRestoration("manual"),
+              (this.routerEventsSubscription = this.createScrollEvents()),
+              (this.scrollEventsSubscription = this.consumeScrollEvents());
+          }
+          createScrollEvents() {
+            return this.router.events.subscribe((e) => {
+              e instanceof NavigationStart
+                ? ((this.store[this.lastId] =
+                    this.viewportScroller.getScrollPosition()),
+                  (this.lastSource = e.navigationTrigger),
+                  (this.restoredId = e.restoredState
+                    ? e.restoredState.navigationId
+                    : 0))
+                : e instanceof NavigationEnd &&
+                  ((this.lastId = e.id),
+                  this.scheduleScrollEvent(
+                    e,
+                    this.router.parseUrl(e.urlAfterRedirects).fragment
+                  ));
+            });
+          }
+          consumeScrollEvents() {
+            return this.router.events.subscribe((e) => {
+              e instanceof Scroll &&
+                (e.position
+                  ? "top" === this.options.scrollPositionRestoration
+                    ? this.viewportScroller.scrollToPosition([0, 0])
+                    : "enabled" === this.options.scrollPositionRestoration &&
+                      this.viewportScroller.scrollToPosition(e.position)
+                  : e.anchor && "enabled" === this.options.anchorScrolling
+                  ? this.viewportScroller.scrollToAnchor(e.anchor)
+                  : "disabled" !== this.options.scrollPositionRestoration &&
+                    this.viewportScroller.scrollToPosition([0, 0]));
+            });
+          }
+          scheduleScrollEvent(routerEvent, anchor) {
+            this.router.triggerEvent(
+              new Scroll(
+                routerEvent,
+                "popstate" === this.lastSource
+                  ? this.store[this.restoredId]
+                  : null,
+                anchor
+              )
             );
+          }
+          ngOnDestroy() {
+            this.routerEventsSubscription &&
+              this.routerEventsSubscription.unsubscribe(),
+              this.scrollEventsSubscription &&
+                this.scrollEventsSubscription.unsubscribe();
+          }
         }
+        return (
+          (RouterScroller2.ɵfac = function (t) {
+            ɵɵinvalidFactory();
+          }),
+          (RouterScroller2.ɵprov = ɵɵdefineInjectable({
+            token: RouterScroller2,
+            factory: RouterScroller2.ɵfac,
+          })),
+          RouterScroller2
+        );
+      })();
+      function routerFeature(kind, providers) {
+        return {
+          ɵkind: kind,
+          ɵproviders: providers,
+        };
       }
-      let AppComponent = (() => {
-          class AppComponent2 {
-            constructor(todoDataService) {
-              (this.todoDataService = todoDataService),
-                (this.newTodo = new Todo());
+      function provideRoutes(routes2) {
+        return [
+          {
+            provide: ROUTES,
+            multi: !0,
+            useValue: routes2,
+          },
+        ];
+      }
+      function getBootstrapListener() {
+        const injector = fesm2020_core_inject(core_Injector);
+        return (bootstrappedComponentRef) => {
+          const ref = injector.get(core_ApplicationRef);
+          if (bootstrappedComponentRef !== ref.components[0]) return;
+          const router = injector.get(Router),
+            bootstrapDone = injector.get(BOOTSTRAP_DONE);
+          1 === injector.get(INITIAL_NAVIGATION) && router.initialNavigation(),
+            injector
+              .get(ROUTER_PRELOADER, null, InjectFlags.Optional)
+              ?.setUpPreloading(),
+            injector.get(ROUTER_SCROLLER, null, InjectFlags.Optional)?.init(),
+            router.resetRootComponentType(ref.componentTypes[0]),
+            bootstrapDone.closed ||
+              (bootstrapDone.next(), bootstrapDone.unsubscribe());
+        };
+      }
+      const BOOTSTRAP_DONE = new InjectionToken("", {
+          factory: () => new Subject(),
+        }),
+        INITIAL_NAVIGATION = new InjectionToken("", {
+          providedIn: "root",
+          factory: () => 1,
+        });
+      const ROUTER_PRELOADER = new InjectionToken(""),
+        ROUTER_FORROOT_GUARD = new InjectionToken("ROUTER_FORROOT_GUARD"),
+        ROUTER_PROVIDERS = [
+          Location,
+          {
+            provide: UrlSerializer,
+            useClass: DefaultUrlSerializer,
+          },
+          {
+            provide: Router,
+            useFactory: setupRouter,
+          },
+          ChildrenOutletContexts,
+          {
+            provide: ActivatedRoute,
+            useFactory: function rootRoute(router) {
+              return router.routerState.root;
+            },
+            deps: [Router],
+          },
+          RouterConfigLoader,
+        ];
+      function routerNgProbeToken() {
+        return new NgProbeToken("Router", Router);
+      }
+      let RouterModule = (() => {
+        class RouterModule2 {
+          constructor(guard) {}
+          static forRoot(routes2, config2) {
+            return {
+              ngModule: RouterModule2,
+              providers: [
+                ROUTER_PROVIDERS,
+                [],
+                provideRoutes(routes2),
+                {
+                  provide: ROUTER_FORROOT_GUARD,
+                  useFactory: provideForRootGuard,
+                  deps: [[Router, new core_Optional(), new SkipSelf()]],
+                },
+                {
+                  provide: ROUTER_CONFIGURATION,
+                  useValue: config2 || {},
+                },
+                config2?.useHash
+                  ? {
+                      provide: LocationStrategy,
+                      useClass: HashLocationStrategy,
+                    }
+                  : {
+                      provide: LocationStrategy,
+                      useClass: PathLocationStrategy,
+                    },
+                {
+                  provide: ROUTER_SCROLLER,
+                  useFactory: () => {
+                    const router = fesm2020_core_inject(Router),
+                      viewportScroller = fesm2020_core_inject(
+                        common_ViewportScroller
+                      ),
+                      config2 = fesm2020_core_inject(ROUTER_CONFIGURATION);
+                    return (
+                      config2.scrollOffset &&
+                        viewportScroller.setOffset(config2.scrollOffset),
+                      new RouterScroller(router, viewportScroller, config2)
+                    );
+                  },
+                },
+                config2?.preloadingStrategy
+                  ? ((preloadingStrategy = config2.preloadingStrategy),
+                    routerFeature(0, [
+                      {
+                        provide: ROUTER_PRELOADER,
+                        useExisting: RouterPreloader,
+                      },
+                      {
+                        provide: PreloadingStrategy,
+                        useExisting: preloadingStrategy,
+                      },
+                    ])).ɵproviders
+                  : [],
+                {
+                  provide: NgProbeToken,
+                  multi: !0,
+                  useFactory: routerNgProbeToken,
+                },
+                config2?.initialNavigation
+                  ? provideInitialNavigation(config2)
+                  : [],
+                [
+                  {
+                    provide: ROUTER_INITIALIZER,
+                    useFactory: getBootstrapListener,
+                  },
+                  {
+                    provide: core_APP_BOOTSTRAP_LISTENER,
+                    multi: !0,
+                    useExisting: ROUTER_INITIALIZER,
+                  },
+                ],
+              ],
+            };
+            var preloadingStrategy;
+          }
+          static forChild(routes2) {
+            return {
+              ngModule: RouterModule2,
+              providers: [provideRoutes(routes2)],
+            };
+          }
+        }
+        return (
+          (RouterModule2.ɵfac = function (t) {
+            return new (t || RouterModule2)(
+              core_inject(ROUTER_FORROOT_GUARD, 8)
+            );
+          }),
+          (RouterModule2.ɵmod = ɵɵdefineNgModule({
+            type: RouterModule2,
+          })),
+          (RouterModule2.ɵinj = ɵɵdefineInjector({
+            imports: [ɵEmptyOutletComponent],
+          })),
+          RouterModule2
+        );
+      })();
+      function provideForRootGuard(router) {
+        return "guarded";
+      }
+      function provideInitialNavigation(config2) {
+        return [
+          "disabled" === config2.initialNavigation
+            ? routerFeature(3, [
+                {
+                  provide: APP_INITIALIZER,
+                  multi: !0,
+                  useFactory: () => {
+                    const router = fesm2020_core_inject(Router);
+                    return () => {
+                      router.setUpLocationChangeListener();
+                    };
+                  },
+                },
+                {
+                  provide: INITIAL_NAVIGATION,
+                  useValue: 2,
+                },
+              ]).ɵproviders
+            : [],
+          "enabledBlocking" === config2.initialNavigation
+            ? routerFeature(2, [
+                {
+                  provide: INITIAL_NAVIGATION,
+                  useValue: 0,
+                },
+                {
+                  provide: APP_INITIALIZER,
+                  multi: !0,
+                  deps: [core_Injector],
+                  useFactory: (injector) => {
+                    const locationInitialized = injector.get(
+                      LOCATION_INITIALIZED,
+                      Promise.resolve()
+                    );
+                    let initNavigation = !1;
+                    return () =>
+                      locationInitialized.then(
+                        () =>
+                          new Promise((resolve) => {
+                            const router = injector.get(Router),
+                              bootstrapDone = injector.get(BOOTSTRAP_DONE);
+                            (function afterNextNavigation(action) {
+                              injector
+                                .get(Router)
+                                .events.pipe(
+                                  filter(
+                                    (e) =>
+                                      e instanceof NavigationEnd ||
+                                      e instanceof NavigationCancel ||
+                                      e instanceof NavigationError
+                                  ),
+                                  map(
+                                    (e) =>
+                                      e instanceof NavigationEnd ||
+                                      (e instanceof NavigationCancel &&
+                                        (0 === e.code || 1 === e.code) &&
+                                        null)
+                                  ),
+                                  filter((result) => null !== result),
+                                  take(1)
+                                )
+                                .subscribe(() => {
+                                  action();
+                                });
+                            })(() => {
+                              resolve(!0), (initNavigation = !0);
+                            }),
+                              (router.afterPreactivation = () => (
+                                resolve(!0),
+                                initNavigation || bootstrapDone.closed
+                                  ? of_of(void 0)
+                                  : bootstrapDone
+                              )),
+                              router.initialNavigation();
+                          })
+                      );
+                  },
+                },
+              ]).ɵproviders
+            : [],
+        ];
+      }
+      const ROUTER_INITIALIZER = new InjectionToken("");
+      function uuid() {
+        let uuid2 = "";
+        for (let i = 0; i < 32; i++) {
+          const random = (16 * Math.random()) | 0;
+          (8 === i || 12 === i || 16 === i || 20 === i) && (uuid2 += "-"),
+            (uuid2 += (
+              12 === i ? 4 : 16 === i ? (3 & random) | 8 : random
+            ).toString(16));
+        }
+        return uuid2;
+      }
+      let TodosService = (() => {
+          class TodosService2 {
+            constructor() {
+              this.todos = [];
             }
-            addTodo() {
-              this.todoDataService.addTodo(this.newTodo),
-                (this.newTodo = new Todo());
+            addItem(title) {
+              const todo = {
+                id: uuid(),
+                title,
+                completed: !1,
+              };
+              this.todos.push(todo);
             }
-            toggleTodoComplete(todo) {
-              this.todoDataService.toggleTodoComplete(todo);
+            removeItem(todo) {
+              const index = this.todos.indexOf(todo);
+              this.todos.splice(index, 1);
             }
-            removeTodo(todo) {
-              this.todoDataService.deleteTodoById(todo.id);
+            clearCompleted() {
+              this.todos = this.todos.filter((todo) => !todo.completed);
             }
-            get todos() {
-              return this.todoDataService.getAllTodos();
+            toggleAll(completed) {
+              this.todos = this.todos.map((todo) => ({
+                ...todo,
+                completed,
+              }));
+            }
+            getItems(type = "all") {
+              switch (type) {
+                case "active":
+                  return this.todos.filter((todo) => !todo.completed);
+
+                case "completed":
+                  return this.todos.filter((todo) => todo.completed);
+              }
+              return this.todos;
             }
           }
           return (
-            (AppComponent2.ɵfac = function (t) {
-              return new (t || AppComponent2)(
-                ɵɵdirectiveInject(TodoDataService)
+            (TodosService2.ɵfac = function (t) {
+              return new (t || TodosService2)();
+            }),
+            (TodosService2.ɵprov = ɵɵdefineInjectable({
+              token: TodosService2,
+              factory: TodosService2.ɵfac,
+              providedIn: "root",
+            })),
+            TodosService2
+          );
+        })(),
+        TodoHeaderComponent = (() => {
+          class TodoHeaderComponent2 {
+            constructor(todosService) {
+              (this.todosService = todosService),
+                (this.titleFormControl = new FormControl(""));
+            }
+            addTodo() {
+              const title = this.titleFormControl.getRawValue()?.trim();
+              !title ||
+                (this.todosService.addItem(title),
+                this.titleFormControl.setValue(""));
+            }
+          }
+          return (
+            (TodoHeaderComponent2.ɵfac = function (t) {
+              return new (t || TodoHeaderComponent2)(
+                ɵɵdirectiveInject(TodosService)
               );
             }),
-            (AppComponent2.ɵcmp = ɵɵdefineComponent({
-              type: AppComponent2,
-              selectors: [["app-root"]],
-              features: [ɵɵProvidersFeature([TodoDataService])],
-              decls: 7,
-              vars: 3,
+            (TodoHeaderComponent2.ɵcmp = ɵɵdefineComponent({
+              type: TodoHeaderComponent2,
+              selectors: [["app-todo-header"]],
+              decls: 4,
+              vars: 1,
               consts: [
-                [1, "todoapp"],
                 [1, "header"],
                 [
                   "placeholder",
@@ -16266,68 +22206,510 @@ document.body.appendChild(document.createElement("app-root"));
                   1,
                   "new-todo",
                   3,
-                  "ngModel",
-                  "ngModelChange",
+                  "formControl",
                   "keyup.enter",
                 ],
-                ["class", "main", 4, "ngIf"],
-                ["class", "footer", 4, "ngIf"],
-                [1, "main"],
-                [1, "todo-list"],
-                [3, "completed", 4, "ngFor", "ngForOf"],
-                [1, "view"],
-                ["type", "checkbox", 1, "toggle", 3, "checked", "click"],
-                [1, "destroy", 3, "click"],
-                [1, "footer"],
-                [1, "todo-count"],
               ],
               template: function (rf, ctx) {
                 1 & rf &&
-                  (ɵɵelementStart(0, "section", 0)(1, "header", 1)(2, "h1"),
-                  ɵɵtext(3, "Todos"),
+                  (ɵɵelementStart(0, "header", 0)(1, "h1"),
+                  ɵɵtext(2, "todos"),
                   ɵɵelementEnd(),
-                  ɵɵelementStart(4, "input", 2),
-                  ɵɵlistener("ngModelChange", function ($event) {
-                    return (ctx.newTodo.title = $event);
-                  })("keyup.enter", function () {
+                  ɵɵelementStart(3, "input", 1),
+                  ɵɵlistener("keyup.enter", function () {
                     return ctx.addTodo();
                   }),
-                  ɵɵelementEnd()(),
-                  ɵɵtemplate(
-                    5,
-                    AppComponent_section_5_Template,
-                    3,
-                    1,
-                    "section",
-                    3
-                  ),
-                  ɵɵtemplate(
-                    6,
-                    AppComponent_footer_6_Template,
-                    5,
-                    2,
-                    "footer",
-                    4
-                  ),
-                  ɵɵelementEnd()),
+                  ɵɵelementEnd()()),
                   2 & rf &&
-                    (ɵɵadvance(4),
-                    ɵɵproperty("ngModel", ctx.newTodo.title),
-                    ɵɵadvance(1),
-                    ɵɵproperty("ngIf", ctx.todos.length > 0),
-                    ɵɵadvance(1),
-                    ɵɵproperty("ngIf", ctx.todos.length > 0));
+                    (ɵɵadvance(3),
+                    ɵɵproperty("formControl", ctx.titleFormControl));
               },
               dependencies: [
-                NgForOf,
-                NgIf,
                 DefaultValueAccessor,
                 NgControlStatus,
-                NgModel,
+                FormControlDirective,
+              ],
+              encapsulation: 2,
+            })),
+            TodoHeaderComponent2
+          );
+        })();
+      const _c0 = ["todoInputRef"];
+      function TodoItemComponent_div_6_Template(rf, ctx) {
+        if (1 & rf) {
+          const _r3 = ɵɵgetCurrentView();
+          ɵɵelementStart(0, "div", 5)(1, "input", 6, 7),
+            ɵɵlistener("focus", function ($event) {
+              return (
+                ɵɵrestoreView(_r3),
+                ɵɵresetView(ɵɵnextContext().handleFocus($event))
+              );
+            })("blur", function ($event) {
+              return (
+                ɵɵrestoreView(_r3),
+                ɵɵresetView(ɵɵnextContext().handleBlur($event))
+              );
+            })("keyup.enter", function () {
+              return (
+                ɵɵrestoreView(_r3), ɵɵresetView(ɵɵnextContext().updateTodo())
+              );
+            }),
+            ɵɵelementEnd(),
+            ɵɵelementStart(3, "label", 8),
+            ɵɵtext(4, " Edit Todo Input "),
+            ɵɵelementEnd()();
+        }
+        if (2 & rf) {
+          const ctx_r0 = ɵɵnextContext();
+          ɵɵadvance(1), ɵɵproperty("formControl", ctx_r0.titleFormControl);
+        }
+      }
+      let TodoItemComponent = (() => {
+        class TodoItemComponent2 {
+          constructor() {
+            (this.todo = {
+              id: "",
+              title: "",
+              completed: !1,
+            }),
+              (this.deleteEvent = new EventEmitter()),
+              (this.titleFormControl = new FormControl("")),
+              (this.isEditing = !1);
+          }
+          toggleTodo() {
+            this.todo.completed = !this.todo.completed;
+          }
+          removeTodo() {
+            this.deleteEvent.emit(this.todo);
+          }
+          startEdit() {
+            this.isEditing = !0;
+          }
+          handleBlur(e) {
+            this.isEditing = !1;
+          }
+          handleFocus(e) {
+            this.titleFormControl.setValue(this.todo.title);
+          }
+          updateTodo() {
+            const title = this.titleFormControl.getRawValue()?.trimEnd();
+            title
+              ? (this.todo.title = title)
+              : this.deleteEvent.emit(this.todo),
+              (this.isEditing = !1);
+          }
+          ngAfterViewChecked() {
+            this.isEditing && this.inputRef?.nativeElement.focus();
+          }
+        }
+        return (
+          (TodoItemComponent2.ɵfac = function (t) {
+            return new (t || TodoItemComponent2)();
+          }),
+          (TodoItemComponent2.ɵcmp = ɵɵdefineComponent({
+            type: TodoItemComponent2,
+            selectors: [["app-todo-item"]],
+            viewQuery: function (rf, ctx) {
+              if ((1 & rf && ɵɵviewQuery(_c0, 5), 2 & rf)) {
+                let _t;
+                ɵɵqueryRefresh(
+                  (_t = (function ɵɵloadQuery() {
+                    return (function loadQueryInternal(lView, queryIndex) {
+                      return lView[19].queries[queryIndex].queryList;
+                    })(getLView(), getCurrentQueryIndex());
+                  })())
+                ) && (ctx.inputRef = _t.first);
+              }
+            },
+            inputs: {
+              todo: "todo",
+            },
+            outputs: {
+              deleteEvent: "deleteEvent",
+            },
+            decls: 7,
+            vars: 7,
+            consts: [
+              [1, "view"],
+              ["type", "checkbox", 1, "toggle", 3, "checked", "click"],
+              [3, "dblclick"],
+              [1, "destroy", 3, "click"],
+              ["class", "input-container", 4, "ngIf"],
+              [1, "input-container"],
+              [
+                "id",
+                "edit-todo-input",
+                1,
+                "edit",
+                3,
+                "formControl",
+                "focus",
+                "blur",
+                "keyup.enter",
+              ],
+              ["todoInputRef", ""],
+              ["htmlFor", "edit-todo-input", 1, "visually-hidden"],
+            ],
+            template: function (rf, ctx) {
+              1 & rf &&
+                (ɵɵelementStart(0, "li")(1, "div", 0)(2, "input", 1),
+                ɵɵlistener("click", function () {
+                  return ctx.toggleTodo();
+                }),
+                ɵɵelementEnd(),
+                ɵɵelementStart(3, "label", 2),
+                ɵɵlistener("dblclick", function () {
+                  return ctx.startEdit();
+                }),
+                ɵɵtext(4),
+                ɵɵelementEnd(),
+                ɵɵelementStart(5, "button", 3),
+                ɵɵlistener("click", function () {
+                  return ctx.removeTodo();
+                }),
+                ɵɵelementEnd()(),
+                ɵɵtemplate(6, TodoItemComponent_div_6_Template, 5, 1, "div", 4),
+                ɵɵelementEnd()),
+                2 & rf &&
+                  (ɵɵclassProp("completed", ctx.todo.completed)(
+                    "editing",
+                    ctx.isEditing
+                  ),
+                  ɵɵadvance(2),
+                  ɵɵproperty("checked", ctx.todo.completed),
+                  ɵɵadvance(2),
+                  ɵɵtextInterpolate(ctx.todo.title),
+                  ɵɵadvance(2),
+                  ɵɵproperty("ngIf", ctx.isEditing));
+            },
+            dependencies: [
+              NgIf,
+              DefaultValueAccessor,
+              NgControlStatus,
+              FormControlDirective,
+            ],
+            encapsulation: 2,
+            changeDetection: 0,
+          })),
+          TodoItemComponent2
+        );
+      })();
+      function TodoListComponent_section_0_app_todo_item_6_Template(rf, ctx) {
+        if (1 & rf) {
+          const _r4 = ɵɵgetCurrentView();
+          ɵɵelementStart(0, "app-todo-item", 7),
+            ɵɵlistener("deleteEvent", function ($event) {
+              return (
+                ɵɵrestoreView(_r4),
+                ɵɵresetView(ɵɵnextContext(2).removeTodo($event))
+              );
+            }),
+            ɵɵelementEnd();
+        }
+        2 & rf && ɵɵproperty("todo", ctx.$implicit);
+      }
+      function TodoListComponent_section_0_Template(rf, ctx) {
+        if (1 & rf) {
+          const _r6 = ɵɵgetCurrentView();
+          ɵɵelementStart(0, "section", 1)(1, "div", 2)(2, "input", 3),
+            ɵɵlistener("change", function ($event) {
+              return (
+                ɵɵrestoreView(_r6),
+                ɵɵresetView(ɵɵnextContext().toggleAll($event))
+              );
+            }),
+            ɵɵelementEnd(),
+            ɵɵelementStart(3, "label", 4),
+            ɵɵtext(4, " Toggle All Input "),
+            ɵɵelementEnd()(),
+            ɵɵelementStart(5, "ul", 5),
+            ɵɵtemplate(
+              6,
+              TodoListComponent_section_0_app_todo_item_6_Template,
+              1,
+              1,
+              "app-todo-item",
+              6
+            ),
+            ɵɵelementEnd()();
+        }
+        if (2 & rf) {
+          const ctx_r0 = ɵɵnextContext();
+          ɵɵadvance(2),
+            ɵɵproperty("checked", !ctx_r0.activeTodos.length),
+            ɵɵadvance(4),
+            ɵɵproperty("ngForOf", ctx_r0.todos)(
+              "ngForTrackBy",
+              ctx_r0.trackByItem
+            );
+        }
+      }
+      let TodoListComponent = (() => {
+        class TodoListComponent2 {
+          constructor(todosService, location2) {
+            (this.todosService = todosService), (this.location = location2);
+          }
+          get todos() {
+            const filter2 = this.location.path().split("/")[1] || "all";
+            return this.todosService.getItems(filter2);
+          }
+          get activeTodos() {
+            return this.todosService.getItems("active");
+          }
+          removeTodo(todo) {
+            this.todosService.removeItem(todo);
+          }
+          toggleAll(e) {
+            this.todosService.toggleAll(e.target.checked);
+          }
+          trackByItem(index, todo) {
+            return todo.id;
+          }
+        }
+        return (
+          (TodoListComponent2.ɵfac = function (t) {
+            return new (t || TodoListComponent2)(
+              ɵɵdirectiveInject(TodosService),
+              ɵɵdirectiveInject(Location)
+            );
+          }),
+          (TodoListComponent2.ɵcmp = ɵɵdefineComponent({
+            type: TodoListComponent2,
+            selectors: [["app-todo-list"]],
+            decls: 1,
+            vars: 1,
+            consts: [
+              ["class", "main", 4, "ngIf"],
+              [1, "main"],
+              [1, "toggle-all-container"],
+              ["type", "checkbox", 1, "toggle-all", 3, "checked", "change"],
+              ["htmlFor", "toggle-all", 1, "toggle-all-label"],
+              [1, "todo-list"],
+              [3, "todo", "deleteEvent", 4, "ngFor", "ngForOf", "ngForTrackBy"],
+              [3, "todo", "deleteEvent"],
+            ],
+            template: function (rf, ctx) {
+              1 & rf &&
+                ɵɵtemplate(
+                  0,
+                  TodoListComponent_section_0_Template,
+                  7,
+                  3,
+                  "section",
+                  0
+                ),
+                2 & rf && ɵɵproperty("ngIf", ctx.todos.length > 0);
+            },
+            dependencies: [NgForOf, NgIf, TodoItemComponent],
+            encapsulation: 2,
+          })),
+          TodoListComponent2
+        );
+      })();
+      function TodoFooterComponent_footer_0_button_15_Template(rf, ctx) {
+        if (1 & rf) {
+          const _r3 = ɵɵgetCurrentView();
+          ɵɵelementStart(0, "button", 8),
+            ɵɵlistener("click", function () {
+              return (
+                ɵɵrestoreView(_r3),
+                ɵɵresetView(ɵɵnextContext(2).clearCompleted())
+              );
+            }),
+            ɵɵtext(1, "Clear Completed"),
+            ɵɵelementEnd();
+        }
+      }
+      function TodoFooterComponent_footer_0_Template(rf, ctx) {
+        if (
+          (1 & rf &&
+            (ɵɵelementStart(0, "footer", 1)(1, "span", 2)(2, "strong"),
+            ɵɵtext(3),
+            ɵɵelementEnd(),
+            ɵɵtext(4),
+            ɵɵelementEnd(),
+            ɵɵelementStart(5, "ul", 3)(6, "li")(7, "a", 4),
+            ɵɵtext(8, " All "),
+            ɵɵelementEnd()(),
+            ɵɵelementStart(9, "li")(10, "a", 5),
+            ɵɵtext(11, " Active "),
+            ɵɵelementEnd()(),
+            ɵɵelementStart(12, "li")(13, "a", 6),
+            ɵɵtext(14, " Completed "),
+            ɵɵelementEnd()()(),
+            ɵɵtemplate(
+              15,
+              TodoFooterComponent_footer_0_button_15_Template,
+              2,
+              0,
+              "button",
+              7
+            ),
+            ɵɵelementEnd()),
+          2 & rf)
+        ) {
+          const ctx_r0 = ɵɵnextContext();
+          ɵɵadvance(3),
+            ɵɵtextInterpolate(ctx_r0.activeTodos.length),
+            ɵɵadvance(1),
+            ɵɵtextInterpolate1(
+              " ",
+              1 == ctx_r0.activeTodos.length ? "item" : "items",
+              " left"
+            ),
+            ɵɵadvance(3),
+            ɵɵclassProp("selected", "all" === ctx_r0.filter),
+            ɵɵadvance(3),
+            ɵɵclassProp("selected", "active" === ctx_r0.filter),
+            ɵɵadvance(3),
+            ɵɵclassProp("selected", "completed" === ctx_r0.filter),
+            ɵɵadvance(2),
+            ɵɵproperty("ngIf", ctx_r0.completedTodos.length);
+        }
+      }
+      let TodoFooterComponent = (() => {
+          class TodoFooterComponent2 {
+            constructor(todosService, location2) {
+              (this.todosService = todosService), (this.location = location2);
+            }
+            get todos() {
+              return this.todosService.getItems();
+            }
+            get activeTodos() {
+              return this.todosService.getItems("active");
+            }
+            get completedTodos() {
+              return this.todosService.getItems("completed");
+            }
+            get filter() {
+              return this.location.path().split("/")[1] || "all";
+            }
+            clearCompleted() {
+              this.todosService.clearCompleted();
+            }
+          }
+          return (
+            (TodoFooterComponent2.ɵfac = function (t) {
+              return new (t || TodoFooterComponent2)(
+                ɵɵdirectiveInject(TodosService),
+                ɵɵdirectiveInject(Location)
+              );
+            }),
+            (TodoFooterComponent2.ɵcmp = ɵɵdefineComponent({
+              type: TodoFooterComponent2,
+              selectors: [["app-todo-footer"]],
+              decls: 1,
+              vars: 1,
+              consts: [
+                ["class", "footer", 4, "ngIf"],
+                [1, "footer"],
+                [1, "todo-count"],
+                [1, "filters"],
+                ["routerLink", "/"],
+                ["routerLink", "/active"],
+                ["routerLink", "/completed"],
+                [
+                  "type",
+                  "button",
+                  "class",
+                  "clear-completed",
+                  3,
+                  "click",
+                  4,
+                  "ngIf",
+                ],
+                ["type", "button", 1, "clear-completed", 3, "click"],
+              ],
+              template: function (rf, ctx) {
+                1 & rf &&
+                  ɵɵtemplate(
+                    0,
+                    TodoFooterComponent_footer_0_Template,
+                    16,
+                    9,
+                    "footer",
+                    0
+                  ),
+                  2 & rf && ɵɵproperty("ngIf", ctx.todos.length > 0);
+              },
+              dependencies: [NgIf, RouterLinkWithHref],
+              encapsulation: 2,
+            })),
+            TodoFooterComponent2
+          );
+        })(),
+        AppComponent = (() => {
+          class AppComponent2 {
+            constructor() {
+              this.title = "angular";
+            }
+          }
+          return (
+            (AppComponent2.ɵfac = function (t) {
+              return new (t || AppComponent2)();
+            }),
+            (AppComponent2.ɵcmp = ɵɵdefineComponent({
+              type: AppComponent2,
+              selectors: [["app-root"]],
+              decls: 4,
+              vars: 0,
+              consts: [[1, "todoapp"]],
+              template: function (rf, ctx) {
+                1 & rf &&
+                  (ɵɵelementStart(0, "section", 0),
+                  ɵɵelement(1, "app-todo-header")(2, "app-todo-list")(
+                    3,
+                    "app-todo-footer"
+                  ),
+                  ɵɵelementEnd());
+              },
+              dependencies: [
+                TodoHeaderComponent,
+                TodoListComponent,
+                TodoFooterComponent,
               ],
               encapsulation: 2,
             })),
             AppComponent2
+          );
+        })();
+      const routes = [
+        {
+          path: "all",
+          component: AppComponent,
+        },
+        {
+          path: "active",
+          component: AppComponent,
+        },
+        {
+          path: "completed",
+          component: AppComponent,
+        },
+        {
+          path: "",
+          redirectTo: "/all",
+          pathMatch: "full",
+        },
+      ];
+      let AppRoutingModule = (() => {
+          class AppRoutingModule2 {}
+          return (
+            (AppRoutingModule2.ɵfac = function (t) {
+              return new (t || AppRoutingModule2)();
+            }),
+            (AppRoutingModule2.ɵmod = ɵɵdefineNgModule({
+              type: AppRoutingModule2,
+            })),
+            (AppRoutingModule2.ɵinj = ɵɵdefineInjector({
+              imports: [
+                RouterModule.forRoot(routes, {
+                  useHash: !0,
+                }),
+                RouterModule,
+              ],
+            })),
+            AppRoutingModule2
           );
         })(),
         AppModule = (() => {
@@ -16341,7 +22723,7 @@ document.body.appendChild(document.createElement("app-root"));
               bootstrap: [AppComponent],
             })),
             (AppModule2.ɵinj = ɵɵdefineInjector({
-              imports: [BrowserModule, FormsModule, HttpClientModule],
+              imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
             })),
             AppModule2
           );
@@ -16352,7 +22734,7 @@ document.body.appendChild(document.createElement("app-root"));
     },
   },
   (__webpack_require__) => {
-    __webpack_require__((__webpack_require__.s = 826));
+    __webpack_require__((__webpack_require__.s = 677));
   },
 ]); // type="module"></script>
 drainJobQueue();
