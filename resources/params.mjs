@@ -7,7 +7,7 @@ class Params {
     startAutomatically = false;
     iterationCount = 10;
     suites = [];
-    asyncMetric = "timeout"; // or "raf"
+    asyncMetric = "raf"; // or "raf"
     stepWaitTime = 0;
     useWarmupSuite = false;
 
