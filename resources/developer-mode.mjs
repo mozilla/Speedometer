@@ -70,7 +70,7 @@ export function createUIForSuites(suites) {
         checkbox.checked = !suite.disabled;
         checkbox.onclick = (e) => {
             suite.disabled = !checkbox.checked;
-            if (e?.ctrlKey) {
+            if (e?.shiftKey) {
                 for (var suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
                     if (suites[suiteIndex] !== suite) {
                         suites[suiteIndex].disabled = true;
