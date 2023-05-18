@@ -13,7 +13,6 @@ export function createDeveloperModeContainer(suites) {
     container.className = "developer-mode";
 
     let details = document.createElement("details");
-    details.open = true;
 
     let summay = document.createElement("summary");
     summay.textContent = "Developer Mode";
