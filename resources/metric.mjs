@@ -3,6 +3,8 @@ import * as Statistics from "./statistics.mjs";
 export const MILLISECONDS_PER_MINUTE = 60 * 1000;
 
 export class Metric {
+    static separator = "/";
+
     constructor(name, unit = "ms") {
         if (typeof name !== "string")
             throw new Error(`Invalid metric.name=${name}, expected string.`);
@@ -20,18 +22,17 @@ export class Metric {
 
         this.values = [];
 
-        this.parent = undefined;
-        this.children = [];
-
         // Mark properties which refer to other Metric objects as
         // non-enumerable to avoid issue with JSON.stringify due to circular
         // references.
         Object.defineProperties(this, {
             parent: {
                 writable: true,
+                value: undefined,
             },
             children: {
                 writable: true,
+                value: [],
             },
         });
     }
@@ -73,14 +74,16 @@ export class Metric {
     computeAggregatedMetrics() {
         // Avoid the loss of significance for the sum.
         const sortedValues = this.values.concat().sort((a, b) => a - b);
-        const squareSum = Statistics.squareSum(sortedValues);
         this.sum = Statistics.sum(sortedValues);
         this.min = sortedValues[0];
         this.max = sortedValues[sortedValues.length - 1];
         this.mean = this.sum / this.values.length;
         const product = Statistics.product(sortedValues);
         this.geomean = Math.pow(product, 1 / this.values.length);
-        this.delta = Statistics.confidenceIntervalDelta(0.95, this.values.length, this.sum, squareSum);
-        this.percentDelta = isNaN(this.delta) ? undefined : (this.delta * 100) / this.mean;
+        if (this.values.length > 1) {
+            const squareSum = Statistics.squareSum(sortedValues);
+            this.delta = Statistics.confidenceIntervalDelta(0.95, this.values.length, this.sum, squareSum);
+            this.percentDelta = isNaN(this.delta) ? undefined : (this.delta * 100) / this.mean;
+        }
     }
 }

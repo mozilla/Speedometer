@@ -20,6 +20,7 @@ class MainBenchmarkClient {
     _progressCompleted = null;
     _isRunning = false;
     _hasResults = false;
+    _metrics = Object.create(null);
 
     constructor() {
         window.addEventListener("DOMContentLoaded", () => this.prepareUI());
@@ -42,6 +43,7 @@ class MainBenchmarkClient {
                 return false;
             }
         }
+        this._metrics = Object.create(null);
         this._isRunning = true;
         this.developerMode = params.developerMode;
 
@@ -87,6 +89,7 @@ class MainBenchmarkClient {
         console.assert(this._isRunning);
         this._isRunning = false;
         this._hasResults = true;
+        this._metrics = metrics;
 
         const scoreResults = this._computeResults(this._measuredValuesList, "score");
         this._updateGaugeNeedle(scoreResults.mean);
@@ -174,7 +177,7 @@ class MainBenchmarkClient {
         document.documentElement.style.setProperty("--metrics-line-height", `${trackHeight}px`);
         const plotWidth = (params.viewport.width - 120) / 2;
         document.getElementById("total-chart").innerHTML = renderMetricView({
-            metrics: [metrics["Total"]],
+            metrics: [metrics["Geomean"]],
             width: plotWidth,
             trackHeight,
             renderChildren: false,
@@ -200,12 +203,16 @@ class MainBenchmarkClient {
         }
         document.getElementById("metrics-results").innerHTML = html;
 
-        const jsonData = JSON.stringify(this._measuredValuesList);
-        const blob = new Blob([jsonData], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const link = document.getElementById("download-json");
-        link.href = url;
-        link.setAttribute("download", `speedometer_3-${new Date().toISOString()}.json`);
+        const filePrefix = `speedometer-3-${new Date().toISOString()}`;
+        const jsonData = this._getFormattedJSONResult();
+        const jsonLink = document.getElementById("download-json");
+        jsonLink.href = URL.createObjectURL(new Blob([jsonData], { type: "application/json" }));
+        jsonLink.setAttribute("download", `${filePrefix}.json`);
+
+        const csvData = this._formattedCSVResult();
+        const csvLink = document.getElementById("download-csv");
+        csvLink.href = URL.createObjectURL(new Blob([csvData], { type: "text/csv" }));
+        csvLink.setAttribute("download", `${filePrefix}.csv`);
     }
 
     prepareUI() {
@@ -217,6 +224,7 @@ class MainBenchmarkClient {
             button.onclick = this._logoClickHandler.bind(this);
         });
         document.getElementById("copy-json").onclick = this.copyJsonResults.bind(this);
+        document.getElementById("copy-csv").onclick = this.copyCSVResults.bind(this);
         document.querySelectorAll(".start-tests-button").forEach((button) => {
             button.onclick = this._startBenchmarkHandler.bind(this);
         });
@@ -265,12 +273,31 @@ class MainBenchmarkClient {
         return JSON.stringify(this._measuredValuesList, undefined, indent);
     }
 
+    _formattedCSVResult() {
+        // The CSV format is similar to the details view table. Each measurement is a row with
+        // the name and N columns with the measurement for each iteration:
+        // ```
+        // Measurement,#1,...,#N
+        // TodoMVC-JavaScript-ES5/Total,num,...,num
+        // TodoMVC-JavaScript-ES5/Adding100Items,num,...,num
+        // ...
+        const labels = ["Name"];
+        for (let i = 0; i < params.iterationCount; i++)
+            labels.push(`#${i + 1}`);
+        labels.push("Mean");
+        const metrics = Array.from(Object.values(this._metrics)).filter((metric) => !metric.name.startsWith("Iteration-"));
+        const metricsValues = metrics.map((metric) => [metric.name, ...metric.values, metric.mean].join(","));
+        const csv = [labels.join(","), ...metricsValues];
+
+        return csv.join("\n");
+    }
+
     copyJsonResults() {
         navigator.clipboard.writeText(this._getFormattedJSONResult());
     }
 
-    downloadJsonResults() {
-        navigator.clipboard.writeText(this._getFormattedJSONResult());
+    copyCSVResults() {
+        navigator.clipboard.writeText(this._formattedCSVResult());
     }
 
     _showSection(hash) {
