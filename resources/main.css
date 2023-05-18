@@ -176,22 +176,30 @@ button,
 .developer-mode {
     border: none !important;
     border-radius: 5px;
-    /* max-width: 80vw; */
     max-height: 80vh;
-    padding: 0;
     padding: 1rem;
+    background: #e84f4f;
     position: fixed;
     right: 10px;
     top: 10px;
     display: flex;
     flex-direction: column;
-    width: 400px;
   }
  .developer-mode-content {
     flex: 1;
     max-height: 80vh;
     /* max-height: 80vh; */
     overflow: auto;
+  }
+  .developer-mode-content ol {
+    list-style: none;
+    padding: 0;
+  }
+  .developer-mode-content ol li ol li {
+    display: none;
+  }
+  .developer-mode-content nav button {
+    display: none;
   }
 
 section {
