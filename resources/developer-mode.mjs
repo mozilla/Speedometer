@@ -2,27 +2,47 @@ function formatTestName(suiteName, testName) {
     return suiteName + (testName ? `/${testName}` : "");
 }
 
-let container = null;
+function fixupURL(suites) {
+    // If less than all suites are selected then change the URL "Suites" GET parameter
+    // to comma separate only the selected
+    let selectedSuites = [];
+    for (let suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
+        if (!suites[suiteIndex].disabled) {
+            selectedSuites.push(suites[suiteIndex].name);
+        }
+    }
+    if (selectedSuites.length == 0 || selectedSuites.length == suites.length) {
+        let url = new URL(window.location.href);
+        url.searchParams.delete("suites");
+        url.searchParams.delete("suite");
+        url.search = decodeURIComponent(url.search);
+
+        // Only push state if changed
+        if (url.href != window.location.href) {
+            window.history.pushState({}, "", url);
+        }
+    } else {
+        let url = new URL(window.location.href);
+        url.searchParams.delete("suite");
+        url.searchParams.set("suites", selectedSuites.join(","));
+        url.search = decodeURIComponent(url.search);
+        window.history.pushState({}, "", url);
+    }
+}
 
 export function createDeveloperModeContainer(suites) {
-    if (container) {
-        return container;
-    }
-
-    container = document.createElement("div");
+    let container = document.createElement("div");
     container.className = "developer-mode";
 
     let details = document.createElement("details");
-
-    let summay = document.createElement("summary");
-    summay.textContent = "Developer Mode";
-    details.append(summay);
+    let summary = document.createElement("summary");
+    summary.textContent = "Developer Mode";
+    details.append(summary);
 
     let content = document.createElement("div");
     content.className = "developer-mode-content";
-    details.append(content);
-
     content.append(createUIForSuites(suites));
+    details.append(content);
 
     container.append(details);
     return container;
@@ -33,35 +53,7 @@ export function createUIForSuites(suites) {
     const ol = document.createElement("ol");
     const checkboxes = [];
 
-    function fixupURL() {
-        // If less than all suites are selected then change the URL "Suites" GET parameter
-        // to comma separate only the selected
-        let selectedSuites = [];
-        for (var suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
-            if (!suites[suiteIndex].disabled) {
-                selectedSuites.push(suites[suiteIndex].name);
-            }
-        }
-        if (selectedSuites.length == 0 || selectedSuites.length == suites.length) {
-            let url = new URL(window.location.href);
-            url.searchParams.delete("suites");
-            url.searchParams.delete("suite");
-            url.search = decodeURIComponent(url.search);
-
-            // Only push state if changed
-            if (url.href != window.location.href) {
-                window.history.pushState({}, "", url);
-            }
-        } else {
-            let url = new URL(window.location.href);
-            url.searchParams.delete("suite");
-            url.searchParams.set("suites", selectedSuites.join(","));
-            url.search = decodeURIComponent(url.search);
-            window.history.pushState({}, "", url);
-        }
-    }
-    for (let suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
-        const suite = suites[suiteIndex];
+    for (let suite of suites) {
         const li = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.id = suite.name;
@@ -70,7 +62,7 @@ export function createUIForSuites(suites) {
         checkbox.onclick = (e) => {
             suite.disabled = !checkbox.checked;
             if (e?.ctrlKey || e?.metaKey) {
-                for (var suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
+                for (let suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
                     if (suites[suiteIndex] !== suite) {
                         suites[suiteIndex].disabled = true;
                         checkboxes[suiteIndex].checked = false;
@@ -80,7 +72,7 @@ export function createUIForSuites(suites) {
                     }
                 }
             }
-            fixupURL();
+            fixupURL(suites);
         };
         checkbox.onclick();
         checkboxes.push(checkbox);
@@ -99,22 +91,22 @@ export function createUIForSuites(suites) {
     let button = document.createElement("button");
     button.textContent = "Select all";
     button.onclick = () => {
-        for (var suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
+        for (let suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
             suites[suiteIndex].disabled = false;
             checkboxes[suiteIndex].checked = true;
         }
-        fixupURL();
+        fixupURL(suites);
     };
     control.appendChild(button);
 
     button = document.createElement("button");
     button.textContent = "Unselect all";
     button.onclick = () => {
-        for (var suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
+        for (let suiteIndex = 0; suiteIndex < suites.length; suiteIndex++) {
             suites[suiteIndex].disabled = true;
             checkboxes[suiteIndex].checked = false;
         }
-        fixupURL();
+        fixupURL(suites);
     };
     control.appendChild(button);
 
