@@ -22,7 +22,6 @@ class MainBenchmarkClient {
     constructor() {
         window.addEventListener("DOMContentLoaded", () => this.prepareUI());
         this._showSection(window.location.hash);
-        this.developerMode = params.developerMode;
     }
 
     startBenchmark() {
@@ -86,7 +85,7 @@ class MainBenchmarkClient {
 
         this._populateDetailedResults(metrics);
 
-        if (this.developerMode)
+        if (params.developerMode)
             this.showResultsDetails();
         else
             this.showResultsSummary();
