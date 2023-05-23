@@ -559,7 +559,8 @@ Suites.push({
 });
 
 // Instructions - put an html file that exposes a "run" function in resources/extra/autorun
-// and add it to the manifest (`npm run autorun-generate` will do this for you)
+// and add it to the manifest (`npm run autorun-generate` will theoretically do this for you, but
+// until we know if this is useful just add it yourself)
 import autorunManifest from "./extra/autorun-manifest.js";
 for (const path of autorunManifest) {
     Suites.push(createAutorunSuite(path));
