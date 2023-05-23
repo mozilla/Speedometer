@@ -525,5 +525,37 @@ Suites.push({
     ],
 });
 
+
+
+
+// In the KitchenSink branch, we want to empty the normal tests and only run the new ones
+Suites.splice(0, Suites.length);
+Suites.push({
+    name: "TodoMVC-Ember",
+    url: "extra/todomvc-ember/dist/index.html",
+    async prepare(page) {
+        const element = await page.waitForElement(".new-todo");
+        element.focus();
+    },
+    tests: [
+        new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
+            const newTodo = page.querySelector(".new-todo");
+            for (let i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.setValue(`Something to do ${i}`);
+                newTodo.enter("keydown");
+            }
+        }),
+        new BenchmarkTestStep("CompletingAllItems", (page) => {
+            const checkboxes = page.querySelectorAll(".toggle");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                checkboxes[i].click();
+        }),
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
+            const deleteButtons = page.querySelectorAll(".destroy");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                deleteButtons[i].click();
+        }),
+    ],
+});
 Object.freeze(Suites);
 globalThis.Suites = Suites;
