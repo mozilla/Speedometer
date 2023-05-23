@@ -530,9 +530,10 @@ Suites.push({
 
 // In the KitchenSink branch, we want to empty the normal tests and only run the new ones
 Suites.splice(0, Suites.length);
+
 Suites.push({
     name: "TodoMVC-Ember",
-    url: "extra/todomvc-ember/dist/index.html",
+    url: "extra/todomvc-emberjs/dist/index.html",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -557,6 +558,107 @@ Suites.push({
         }),
     ],
 });
+Suites.push({
+    name: "TodoMVC-Ember-Debug",
+    url: "extra/todomvc-emberjs-debug/index.html",
+    async prepare(page) {
+        const element = await page.waitForElement("#new-todo");
+        element.focus();
+    },
+    tests: [
+        new BenchmarkTestStep('Adding' + numberOfItemsToAdd + 'Items',  (page) => {
+            const newTodo = page.querySelector("#new-todo");
+            for (var i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.setValue(`Something to do ${i}`);
+                newTodo.enter("keydown");
+            }
+        }),
+        new BenchmarkTestStep('CompletingAllItems', (page) => {
+            var checkboxes = page.querySelectorAll('.toggle');
+            for (var i = 0; i < checkboxes.length; i++)
+                checkboxes[i].click();
+        }),
+        new BenchmarkTestStep('DeletingItems', (page) => {
+            var deleteButtons = page.querySelectorAll('.destroy');
+            for (var i = 0; i < deleteButtons.length; i++)
+                deleteButtons[i].click();
+        }),
+    ]
+});
+
+Suites.push({
+    name: 'TodoMVC-Inferno',
+    url: "extra/todomvc-inferno/index.html",
+    async prepare(page) {
+        const element = await page.waitForElement(".new-todo");
+        element.focus();
+    },
+    tests: [
+        new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
+            const newTodo = page.querySelector(".new-todo");
+            for (let i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.setValue(`Something to do ${i}`);
+                newTodo.enter("keydown");
+            }
+        }),
+        new BenchmarkTestStep("CompletingAllItems", (page) => {
+            const checkboxes = page.querySelectorAll(".toggle");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                checkboxes[i].click();
+        }),
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
+            const deleteButtons = page.querySelectorAll(".destroy");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                deleteButtons[i].click();
+        }),
+    ],
+});
+
+// function processElmWorkQueue(contentWindow)
+// {
+//     contentWindow.elmWork();
+//     var callbacks = contentWindow.rAFCallbackList;
+//     var i = 0;
+//     while (i < callbacks.length) {
+//         callbacks[i]();
+//         i++;
+//     }
+//     contentWindow.rAFCallbackList = [];
+// }
+
+// Suites.push({
+//     name: 'TodoMVC-Elm',
+//     url: 'extra/todomvc-elm/index.html',
+//     async prepare(page) {
+//         const element = await page.waitForElement(".new-todo");
+//         element.focus();
+//     },
+//     tests: [
+//         new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
+//             const newTodo = page.querySelector(".new-todo");
+//             for (let i = 0; i < numberOfItemsToAdd; i++) {
+//                 newTodo.setValue(`Something to do ${i}`);
+//                 processElmWorkQueue(page._frame.contentWindow);
+//                 newTodo.enter("keydown");
+//                 processElmWorkQueue(page._frame.contentWindow);
+//             }
+//         }),
+//         new BenchmarkTestStep("CompletingAllItems", (page) => {
+//             const checkboxes = page.querySelectorAll(".toggle");
+//             console.log(checkboxes.length, checkboxes)
+//             for (let i = 0; i < numberOfItemsToAdd; i++)
+//                 checkboxes[i].click();
+//                 processElmWorkQueue(page._frame.contentWindow);
+//         }),
+//         new BenchmarkTestStep("DeletingAllItems", (page) => {
+//             const deleteButtons = page.querySelectorAll(".destroy");
+//             for (let i = 0; i < numberOfItemsToAdd; i++)
+//                 deleteButtons[i].click();
+//                 processElmWorkQueue(page._frame.contentWindow);
+//         }),
+//     ],
+// });
+
 
 // Instructions - put an html file that exposes a "run" function in resources/extra/autorun
 // and add it to the manifest (`npm run autorun-generate` will theoretically do this for you, but
