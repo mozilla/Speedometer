@@ -557,5 +557,25 @@ Suites.push({
         }),
     ],
 });
+
+// Instructions - put an html file that exposes a "run" function in resources/extra/autorun
+// and add it to the manifest (`npm run autorun-generate` will do this for you)
+import autorunManifest from "./extra/autorun-manifest.js";
+for (const path of autorunManifest) {
+    Suites.push(createAutorunSuite(path));
+}
+function createAutorunSuite(path) {
+    return {
+        name: `Autorun-${path}`,
+        url: `extra/autorun/${path}`,
+        async prepare(page) {
+        },
+        tests: [
+            new BenchmarkTestStep("Run", (page) => {
+                page.call("run");
+            }
+        )],
+    };
+}
 Object.freeze(Suites);
 globalThis.Suites = Suites;

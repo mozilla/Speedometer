@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<title>checkbox.click() microbenchmark</title>
+
+<input type="button" value="Run benchmark" onclick="run()">
+
+<div style="height: 0; overflow: hidden;"><input type="checkbox" id="theCheckBox"></div>
+
+<p id="result"></p>
+
+<script>
+
+const theCheckBox = document.getElementById("theCheckBox");
+theCheckBox.addEventListener("click", function theListener() {});
+
+function run() {
+  const checkBox = theCheckBox;
+  const before = performance.now();
+  for (let i = 0; i < 100000; i++) {
+    checkBox.click();
+  }
+  const after = performance.now();
+  document.getElementById("result").textContent = `Took ${(after - before).toFixed(2)}ms.`;
+}
+
+</script>
