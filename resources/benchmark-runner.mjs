@@ -252,6 +252,7 @@ export class BenchmarkRunner {
         const style = frame.style;
         style.width = `${params.viewport.width}px`;
         style.height = `${params.viewport.height}px`;
+        style.maxWidth = "100%";
         style.border = "0px none";
         style.position = "absolute";
         frame.setAttribute("scrolling", "no");
@@ -348,9 +349,9 @@ export class BenchmarkRunner {
             performance.mark(asyncEndLabel);
             performance.measure(`${suite.name}.${test.name}-sync`, startLabel, syncEndLabel);
             performance.measure(`${suite.name}.${test.name}-async`, asyncStartLabel, asyncEndLabel);
-        }
+        };
         const report = () => this._recordTestResults(suite, test, syncTime, asyncTime);
-        const invokerClass = params.measurementMethod === 'raf' ? RAFTestInvoker : TimerTestInvoker;
+        const invokerClass = params.measurementMethod === "raf" ? RAFTestInvoker : TimerTestInvoker;
         const invoker = new invokerClass(runSync, measureAsync, report);
 
         return invoker.start();
