@@ -1,4 +1,4 @@
-import { Metric, MILLISECONDS_PER_MINUTE } from "./metric.mjs";
+import { Metric } from "./metric.mjs";
 import { params } from "./params.mjs";
 
 const performance = globalThis.performance;
@@ -13,6 +13,11 @@ export class BenchmarkTestStep {
 class Page {
     constructor(frame) {
         this._frame = frame;
+    }
+
+    layout() {
+        const body = this._frame.contentDocument.body.getBoundingClientRect();
+        this.layout.e = document.elementFromPoint((body.width / 2) | 0, (body.height / 2) | 0);
     }
 
     async waitForElement(selector) {
@@ -116,6 +121,11 @@ class PageElement {
     }
 }
 
+function geomeanToScore(geomean) {
+    const correctionFactor = 50; // This factor makes the test score look reasonably fit within 0 to 140.
+    return (60 * 1000) / geomean / correctionFactor;
+}
+
 // The WarmupSuite is used to make sure all runner helper functions and
 // classes are compiled, to avoid unnecessary pauses due to delayed
 // compilation of runner methods in the middle of the measuring cycle.
@@ -163,6 +173,55 @@ const WarmupSuite = {
     ],
 };
 
+class TestInvoker {
+    constructor(syncCallback, asyncCallback, reportCallback) {
+        this._syncCallback = syncCallback;
+        this._asyncCallback = asyncCallback;
+        this._reportCallback = reportCallback;
+    }
+}
+
+class TimerTestInvoker extends TestInvoker {
+    start() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                this._syncCallback();
+                setTimeout(() => {
+                    this._asyncCallback();
+                    requestAnimationFrame(async () => {
+                        await this._reportCallback();
+                        resolve();
+                    });
+                }, 0);
+            }, params.waitBeforeSync);
+        });
+    }
+}
+
+class RAFTestInvoker extends TestInvoker {
+    start() {
+        return new Promise((resolve) => {
+            if (params.waitBeforeSync)
+                setTimeout(() => this._scheduleCallbacks(resolve), params.waitBeforeSync);
+            else
+                this._scheduleCallbacks(resolve);
+        });
+    }
+
+    _scheduleCallbacks(resolve) {
+        requestAnimationFrame(() => this._syncCallback());
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                this._asyncCallback();
+                setTimeout(async () => {
+                    await this._reportCallback();
+                    resolve();
+                }, 0);
+            }, 0);
+        });
+    }
+}
+
 export class BenchmarkRunner {
     constructor(suites, client) {
         this._suites = suites;
@@ -178,8 +237,16 @@ export class BenchmarkRunner {
         this._iterationCount = iterationCount;
         if (this._client?.willStartFirstIteration)
             await this._client.willStartFirstIteration(iterationCount);
-        for (let i = 0; i < iterationCount; i++)
+
+        const iterationStartLabel = "iteration-start";
+        const iterationEndLabel = "iteration-end";
+        for (let i = 0; i < iterationCount; i++) {
+            performance.mark(iterationStartLabel);
             await this._runAllSuites();
+            performance.mark(iterationEndLabel);
+            performance.measure(`iteration-${i}`, iterationStartLabel, iterationEndLabel);
+        }
+
         if (this._client?.didFinishLastIteration)
             await this._client.didFinishLastIteration(this._metrics);
     }
@@ -215,33 +282,48 @@ export class BenchmarkRunner {
     async _runAllSuites() {
         this._measuredValues = { tests: {}, total: 0, mean: NaN, geomean: NaN, score: NaN };
 
+        const prepareStartLabel = "runner-prepare-start";
+        const prepareEndLabel = "runner-prepare-end";
+
+        performance.mark(prepareStartLabel);
         this._removeFrame();
         await this._appendFrame();
         this._page = new Page(this._frame);
+        performance.mark(prepareEndLabel);
+        performance.measure("runner-prepare", prepareStartLabel, prepareEndLabel);
 
         for (const suite of this._suites) {
             if (!suite.disabled)
                 await this._runSuite(suite);
         }
 
+        const finalizeStartLabel = "runner-finalize-start";
+        const finalizeEndLabel = "runner-finalize-end";
+
+        performance.mark(finalizeStartLabel);
         // Remove frame to clear the view for displaying the results.
         this._removeFrame();
         await this._finalize();
+        performance.mark(finalizeEndLabel);
+        performance.measure("runner-finalize", finalizeStartLabel, finalizeEndLabel);
     }
 
     async _runSuite(suite) {
-        const suitePrepareLabel = `suite-${suite.name}-prepare`;
+        const suitePrepareStartLabel = `suite-${suite.name}-prepare-start`;
+        const suitePrepareEndLabel = `suite-${suite.name}-prepare-end`;
         const suiteStartLabel = `suite-${suite.name}-start`;
         const suiteEndLabel = `suite-${suite.name}-end`;
 
-        performance.mark(suitePrepareLabel);
+        performance.mark(suitePrepareStartLabel);
         await this._prepareSuite(suite);
+        performance.mark(suitePrepareEndLabel);
 
         performance.mark(suiteStartLabel);
         for (const test of suite.tests)
             await this._runTestAndRecordResults(suite, test);
         performance.mark(suiteEndLabel);
 
+        performance.measure(`suite-${suite.name}-prepare`, suitePrepareStartLabel, suitePrepareEndLabel);
         performance.measure(`suite-${suite.name}`, suiteStartLabel, suiteEndLabel);
     }
 
@@ -258,56 +340,63 @@ export class BenchmarkRunner {
 
     async _runTestAndRecordResults(suite, test) {
         /* eslint-disable-next-line no-async-promise-executor */
-        return new Promise(async (resolve) => {
-            if (this._client?.willRunTest)
-                await this._client.willRunTest(suite, test);
+        if (this._client?.willRunTest)
+            await this._client.willRunTest(suite, test);
 
-            setTimeout(() => {
-                this._runTest(suite, test, this._page, resolve);
-            }, 0);
-        });
-    }
-
-    // This function ought be as simple as possible. Don't even use Promise.
-    _runTest(suite, test, page, testDoneCallback) {
         // Prepare all mark labels outside the measuring loop.
         const startLabel = `${suite.name}.${test.name}-start`;
         const syncEndLabel = `${suite.name}.${test.name}-sync-end`;
         const asyncStartLabel = `${suite.name}.${test.name}-async-start`;
         const asyncEndLabel = `${suite.name}.${test.name}-async-end`;
 
-        performance.mark(startLabel);
-        const syncStartTime = performance.now();
-        test.run(page);
-        const syncEndTime = performance.now();
-        performance.mark(syncEndLabel);
+        let syncTime;
+        let asyncStartTime;
+        let asyncTime;
+        const runSync = () => {
+            if (params.warmupBeforeSync) {
+                performance.mark("warmup-start");
+                const startTime = performance.now();
+                // Infinite loop for the specified ms.
+                while (performance.now() - startTime < params.warmupBeforeSync)
+                    continue;
+                performance.mark("warmup-end");
+            }
+            performance.mark(startLabel);
+            const syncStartTime = performance.now();
+            test.run(this._page);
+            const syncEndTime = performance.now();
+            performance.mark(syncEndLabel);
 
-        const syncTime = syncEndTime - syncStartTime;
+            syncTime = syncEndTime - syncStartTime;
 
-        performance.mark(asyncStartLabel);
-        const asyncStartTime = performance.now();
-        setTimeout(() => {
+            performance.mark(asyncStartLabel);
+            asyncStartTime = performance.now();
+        };
+        const measureAsync = () => {
             // Some browsers don't immediately update the layout for paint.
             // Force the layout here to ensure we're measuring the layout time.
             const height = this._frame.contentDocument.body.getBoundingClientRect().height;
             const asyncEndTime = performance.now();
-            const asyncTime = asyncEndTime - asyncStartTime;
+            asyncTime = asyncEndTime - asyncStartTime;
             this._frame.contentWindow._unusedHeightValue = height; // Prevent dead code elimination.
             performance.mark(asyncEndLabel);
+            if (params.warmupBeforeSync)
+                performance.measure("warmup", "warmup-start", "warmup-end");
             performance.measure(`${suite.name}.${test.name}-sync`, startLabel, syncEndLabel);
             performance.measure(`${suite.name}.${test.name}-async`, asyncStartLabel, asyncEndLabel);
-            window.requestAnimationFrame(() => {
-                this._recordTestResults(suite, test, syncTime, asyncTime, height, testDoneCallback);
-            });
-        }, 0);
+        };
+        const report = () => this._recordTestResults(suite, test, syncTime, asyncTime);
+        const invokerClass = params.measurementMethod === "raf" ? RAFTestInvoker : TimerTestInvoker;
+        const invoker = new invokerClass(runSync, measureAsync, report);
+
+        return invoker.start();
     }
 
-    async _recordTestResults(suite, test, syncTime, asyncTime, unused_height, testDoneCallback) {
+    async _recordTestResults(suite, test, syncTime, asyncTime) {
         // Skip reporting updates for the warmup suite.
-        if (suite === WarmupSuite) {
-            testDoneCallback();
+        if (suite === WarmupSuite)
             return;
-        }
+
         const suiteResults = this._measuredValues.tests[suite.name] || { tests: {}, total: 0 };
         const total = syncTime + asyncTime;
         this._measuredValues.tests[suite.name] = suiteResults;
@@ -316,8 +405,6 @@ export class BenchmarkRunner {
 
         if (this._client?.didRunTest)
             await this._client.didRunTest(suite, test);
-
-        testDoneCallback();
     }
 
     async _finalize() {
@@ -335,24 +422,22 @@ export class BenchmarkRunner {
             const total = values.reduce((a, b) => a + b);
             const geomean = Math.pow(product, 1 / values.length);
 
-            const correctionFactor = 3; // This factor makes the test score look reasonably fit within 0 to 140.
             this._measuredValues.total = total;
             this._measuredValues.mean = total / values.length;
             this._measuredValues.geomean = geomean;
-            this._measuredValues.score = (60 * 1000) / geomean / correctionFactor;
+            this._measuredValues.score = geomeanToScore(geomean);
             await this._client.didRunSuites(this._measuredValues);
         }
     }
 
-    getIterationTotalMetric(i) {
-        if (i >= params.iterationCount)
-            throw new Error(`Requested iteration=${i} does not exist.`);
-        return this.getMetric(`Iteration-${i}-Total`);
-    }
-
     _appendIterationMetrics() {
         const getMetric = (name) => this._metrics[name] || (this._metrics[name] = new Metric(name));
-        const getIterationTotalMetric = (i) => getMetric(`Iteration-${i}-Total`);
+        const iterationTotalMetric = (i) => {
+            if (i >= params.iterationCount)
+                throw new Error(`Requested iteration=${i} does not exist.`);
+            return getMetric(`Iteration-${i}-Total`);
+        };
+
         const collectSubMetrics = (prefix, items, parent) => {
             for (let name in items) {
                 const results = items[name];
@@ -375,17 +460,18 @@ export class BenchmarkRunner {
             // Prepare all iteration metrics so they are listed at the end of
             // of the _metrics object, before "Total" and "Score".
             for (let i = 0; i < this._iterationCount; i++)
-                getIterationTotalMetric(i);
+                iterationTotalMetric(i);
             getMetric("Geomean");
             getMetric("Score");
         }
 
-        const iterationTotal = getIterationTotalMetric(this._metrics.Geomean.length);
+        const geomean = getMetric("Geomean");
+        const iterationTotal = iterationTotalMetric(geomean.length);
         for (const results of Object.values(iterationResults))
             iterationTotal.add(results.total);
         iterationTotal.computeAggregatedMetrics();
-        getMetric("Geomean").add(iterationTotal.geomean);
-        getMetric("Score").add(MILLISECONDS_PER_MINUTE / iterationTotal.geomean);
+        geomean.add(iterationTotal.geomean);
+        getMetric("Score").add(geomeanToScore(iterationTotal.geomean));
 
         for (const metric of Object.values(this._metrics))
             metric.computeAggregatedMetrics();

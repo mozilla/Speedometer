@@ -10,7 +10,6 @@ Suites.enable = function (names) {
             suite.disabled = false;
         else
             suite.disabled = true;
-
     });
 };
 
@@ -102,7 +101,36 @@ Suites.push({
 
 Suites.push({
     name: "TodoMVC-React",
-    url: "todomvc/architecture-examples/react/dist/index.html",
+    url: "todomvc/architecture-examples/react/dist/index.html#/home",
+    async prepare(page) {
+        const element = await page.waitForElement(".new-todo");
+        element.focus();
+    },
+    tests: [
+        new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
+            const newTodo = page.querySelector(".new-todo");
+            for (let i = 0; i < numberOfItemsToAdd; i++) {
+                newTodo.setValue(`Something to do ${i}`);
+                newTodo.dispatchEvent("input");
+                newTodo.enter("keydown");
+            }
+        }),
+        new BenchmarkTestStep("CompletingAllItems", (page) => {
+            const checkboxes = page.querySelectorAll(".toggle");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                checkboxes[i].click();
+        }),
+        new BenchmarkTestStep("DeletingAllItems", (page) => {
+            const deleteButtons = page.querySelectorAll(".destroy");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                deleteButtons[i].click();
+        }),
+    ],
+});
+
+Suites.push({
+    name: "TodoMVC-React-Complex-DOM",
+    url: "tentative/complex-static-html/dist/index.html#/home",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -275,7 +303,7 @@ Suites.push({
 
 Suites.push({
     name: "TodoMVC-Preact",
-    url: "todomvc/architecture-examples/preact/dist/index.html",
+    url: "todomvc/architecture-examples/preact/dist/index.html#/home",
     async prepare(page) {
         const element = await page.waitForElement(".new-todo");
         element.focus();
@@ -330,6 +358,46 @@ Suites.push({
 });
 
 Suites.push({
+    name: "NewsSite-Next",
+    url: "tentative/newssite/news-next/dist/index.html#/home",
+    async prepare(page) {
+        await page.waitForElement("#navbar-dropdown-toggle");
+    },
+    tests: [
+        new BenchmarkTestStep("NavigateToUS", (page) => {
+            for (let i = 0; i < 25; i++) {
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+            }
+            page.querySelector("#navbar-navlist-us-link").click();
+            page.layout();
+        }),
+        new BenchmarkTestStep("NavigateToWorld", (page) => {
+            for (let i = 0; i < 25; i++) {
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+            }
+            page.querySelector("#navbar-navlist-world-link").click();
+            page.layout();
+        }),
+        new BenchmarkTestStep("NavigateToPolitics", (page) => {
+            for (let i = 0; i < 25; i++) {
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+                page.querySelector("#navbar-dropdown-toggle").click();
+                page.layout();
+            }
+            page.querySelector("#navbar-navlist-politics-link").click();
+            page.layout();
+        }),
+    ],
+});
+
+Suites.push({
     name: "Editor-CodeMirror",
     url: "tentative/editors/dist/codemirror.html",
     async prepare(page) {},
@@ -338,8 +406,8 @@ Suites.push({
             page.querySelector("#create").click();
             page.querySelector("#layout").click();
         }),
-        new BenchmarkTestStep("Big", (page) => {
-            page.querySelector("#big").click();
+        new BenchmarkTestStep("Long", (page) => {
+            page.querySelector("#long").click();
             page.querySelector("#layout").click();
         }),
         new BenchmarkTestStep("Highlight", (page) => {
@@ -358,8 +426,8 @@ Suites.push({
             page.querySelector("#create").click();
             page.querySelector("#layout").click();
         }),
-        new BenchmarkTestStep("Big", (page) => {
-            page.querySelector("#big").click();
+        new BenchmarkTestStep("Long", (page) => {
+            page.querySelector("#long").click();
             page.querySelector("#layout").click();
         }),
         new BenchmarkTestStep("Highlight", (page) => {
@@ -400,64 +468,22 @@ Suites.push({
 });
 
 Suites.push({
-    name: "React-Stockcharts",
-    url: "tentative/react-stockcharts/build/index.html?type=hybrid",
-    async prepare(page) {
-        await page.waitForElement("#render");
-    },
+    name: "Charts-chartjs",
+    url: "tentative/charts/dist/chartjs.html",
+    async prepare(page) {},
     tests: [
-        new BenchmarkTestStep("Render", (page) => {
-            page.getElementById("render").click();
+        new BenchmarkTestStep("Prepare", (page) => {
+            page.querySelector("#prepare").click();
         }),
-        new BenchmarkTestStep("PanTheChart", (page) => {
-            const cursor = page.querySelector(".react-stockcharts-crosshair-cursor");
-            let x = 150;
-            let y = 200;
-            const coords = (i) => ({ clientX: x + i * 10, clientY: y + i * 2, bubbles: true, cancelable: true });
-            for (let i = 0; i < 100; ) {
-                cursor.dispatchEvent("mousedown", coords(i), MouseEvent);
-                for (let j = 10; j--; )
-                    cursor.dispatchEvent("mousemove", coords(++i), MouseEvent);
-                cursor.dispatchEvent("mouseup", coords(i), MouseEvent);
-            }
+        new BenchmarkTestStep("Draw scatter", (page) => {
+            page.querySelector("#add-scatter-chart-button").click();
         }),
-        new BenchmarkTestStep("ZoomTheChart", (page) => {
-            const cursor = page.querySelector(".react-stockcharts-crosshair-cursor");
-            let event = {
-                clientX: 200,
-                clientY: 200,
-                deltaMode: 0,
-                delta: -10,
-                deltaY: -10,
-                bubbles: true,
-                cancelable: true,
-            };
-            for (let i = 0; i < 30; i++)
-                cursor.dispatchEvent("wheel", event, WheelEvent);
-
-            event = {
-                clientX: 650,
-                clientY: 200,
-                deltaMode: 0,
-                delta: 10,
-                deltaY: 10,
-                bubbles: true,
-                cancelable: true,
-            };
-            for (let i = 0; i < 10; i++)
-                cursor.dispatchEvent("wheel", event, WheelEvent);
-
-            event = {
-                clientX: 200,
-                clientY: 200,
-                deltaMode: 0,
-                delta: -10,
-                deltaY: -10,
-                bubbles: true,
-                cancelable: true,
-            };
-            for (let i = 0; i < 10; i++)
-                cursor.dispatchEvent("wheel", event, WheelEvent);
+        new BenchmarkTestStep("Show tooltip", (page) => {
+            page.querySelector("#open-tooltip").click();
+        }),
+        new BenchmarkTestStep("Draw opaque scatter", (page) => {
+            page.querySelector("#opaque-color").click();
+            page.querySelector("#add-scatter-chart-button").click();
         }),
     ],
 });
@@ -477,11 +503,11 @@ Suites.push({
             let x = 150;
             let y = 200;
             const coords = (i) => ({ clientX: x + i * 10, clientY: y + i * 2, bubbles: true, cancelable: true });
-            for (let i = 0; i < 100; ) {
-                cursor.dispatchEvent("mousedown", coords(i), MouseEvent);
-                for (let j = 10; j--; )
-                    cursor.dispatchEvent("mousemove", coords(++i), MouseEvent);
-                cursor.dispatchEvent("mouseup", coords(i), MouseEvent);
+            for (let i = 0; i < 5; i++) {
+                cursor.dispatchEvent("mousedown", coords(0), MouseEvent);
+                for (let j = 0; j < 10; j++)
+                    cursor.dispatchEvent("mousemove", coords(j), MouseEvent);
+                cursor.dispatchEvent("mouseup", coords(10), MouseEvent);
             }
         }),
         new BenchmarkTestStep("ZoomTheChart", (page) => {
@@ -495,31 +521,7 @@ Suites.push({
                 bubbles: true,
                 cancelable: true,
             };
-            for (let i = 0; i < 30; i++)
-                cursor.dispatchEvent("wheel", event, WheelEvent);
-
-            event = {
-                clientX: 650,
-                clientY: 200,
-                deltaMode: 0,
-                delta: 10,
-                deltaY: 10,
-                bubbles: true,
-                cancelable: true,
-            };
-            for (let i = 0; i < 10; i++)
-                cursor.dispatchEvent("wheel", event, WheelEvent);
-
-            event = {
-                clientX: 200,
-                clientY: 200,
-                deltaMode: 0,
-                delta: -10,
-                deltaY: -10,
-                bubbles: true,
-                cancelable: true,
-            };
-            for (let i = 0; i < 10; i++)
+            for (let i = 0; i < 15; i++)
                 cursor.dispatchEvent("wheel", event, WheelEvent);
         }),
     ],

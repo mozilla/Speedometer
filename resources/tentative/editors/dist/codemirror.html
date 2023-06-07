@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
         <title>CodeMirror Test</title>
-      <script type="module" crossorigin src="./assets/codemirror-22d82ce2.js"></script>
-      <link rel="modulepreload" crossorigin href="./assets/index.es-8aa334e1.js">
-      <link rel="stylesheet" href="./assets/index-54888ccc.css">
+      <script type="module" crossorigin src="./assets/codemirror-77870192.js"></script>
+      <link rel="modulepreload" crossorigin href="./assets/index.es-02a92ebc.js">
+      <link rel="stylesheet" href="./assets/index-2feebe42.css">
     </head>
     <body>
         <div id="app">
@@ -23,7 +23,7 @@
                     Create
                 </button>
                 &nbsp;
-                <button id="big">
+                <button id="long">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-arrow-big-up-lines-filled"
@@ -45,9 +45,9 @@
                         <path d="M15 20a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="currentColor"></path>
                         <path d="M15 17a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="currentColor"></path>
                     </svg>
-                    Big text
+                    Long text
                 </button>
-                <button id="small">
+                <button id="short">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="icon icon-tabler icon-tabler-arrow-big-down-lines-filled"
@@ -69,7 +69,7 @@
                         <path d="M15 2a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="currentColor"></path>
                         <path d="M15 5a1 1 0 0 1 .117 1.993l-.117 .007h-6a1 1 0 0 1 -.117 -1.993l.117 -.007h6z" stroke-width="0" fill="currentColor"></path>
                     </svg>
-                    Small text
+                    Short text
                 </button>
                 &nbsp;
                 <button id="highlight">
@@ -129,6 +129,12 @@
             </div>
             <div id="editor"></div>
         </div>
+        <script>
+            // This hack allows to capture the work normally happening in a rAF. We
+            // may be able to remove it if the runner improves.
+            window.requestAnimationFrame = (cb) => window.setTimeout(cb, 0);
+            window.cancelAnimationFrame = window.clearTimeout;
+        </script>
         
     </body>
 </html>
