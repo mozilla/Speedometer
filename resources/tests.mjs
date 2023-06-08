@@ -489,7 +489,7 @@ Suites.push({
 
 Suites.push({
     name: "Charts-observable-plot",
-    url: "tentative/charts/dist/observable-plot.html",
+    url: "charts/dist/observable-plot.html",
     tags: ["chart"],
     async prepare(page) {},
     tests: [
@@ -520,7 +520,7 @@ Suites.push({
 
 Suites.push({
     name: "Charts-chartjs",
-    url: "tentative/charts/dist/chartjs.html",
+    url: "charts/dist/chartjs.html",
     tags: ["chart"],
     async prepare(page) {},
     tests: [
