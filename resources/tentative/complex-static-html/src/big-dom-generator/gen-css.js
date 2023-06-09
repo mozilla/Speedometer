@@ -209,7 +209,7 @@ const cssProperties = ["accent-color", "border-bottom-color", "border-color", "b
 export const genCss = () => {
     const matchingSelectors = [];
     const nonMatchingSelectors = [];
-    for (let index = 0; index < 0; index++) {
+    for (let index = 0; index < 1000; index++) {
         // Add `.targeted` to the matching selectors to match only the todoMVC items.
         matchingSelectors.push(`${buildMatchingSelector(6, index, "", 0, random.randRange(3, MAX_SELECTOR_LENGTH_TO_GENERATE))}.targeted`);
         matchingSelectors.push(`${buildMatchingSelector(7, index, "", 0, random.randRange(3, MAX_SELECTOR_LENGTH_TO_GENERATE))}.targeted`);
