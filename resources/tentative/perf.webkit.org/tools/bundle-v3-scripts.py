@@ -51,7 +51,7 @@ def main(argv):
 
                 bundled_script += script_content
 
-    jsmin = subprocess.Popen(['python3', os.path.join(tools_dir, 'jsmin.py')], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    jsmin = subprocess.Popen(['cat'], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     minified_script = jsmin.communicate(input=bundled_script.encode())[0]
 
     new_size = float(len(minified_script))
