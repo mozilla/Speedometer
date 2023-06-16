@@ -45,4 +45,7 @@ export default defineNuxtConfig({
         cdnURL: "./",
         baseURL: "./",
     },
+    vite: {
+        build: { minify: false }
+    },
 });
