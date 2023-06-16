@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "next build --no-mangling",
         "start": "next start",
         "lint": "next lint",
         "serve": "http-server ./dist -p 7002 -c-1 --cors"
@@ -21,5 +21,8 @@
         "react-router-dom": "^6.11.1",
         "react-router-hash-link": "^2.4.3",
         "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "terser-webpack-plugin": "^5.3.9"
     }
 }
