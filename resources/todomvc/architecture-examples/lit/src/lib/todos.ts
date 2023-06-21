@@ -60,7 +60,7 @@ export class Todos extends EventTarget {
     }
 
     #notifyChange() {
-        window.localStorage.setItem("todos", JSON.stringify({ todos: this.#todos, nextId: this.#nextId }));
+        // window.localStorage.setItem("todos", JSON.stringify({ todos: this.#todos, nextId: this.#nextId }));
         this.dispatchEvent(new Event("change"));
     }
 
