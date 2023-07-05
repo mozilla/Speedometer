@@ -13182,7 +13182,8 @@ var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 const Item = /*#__PURE__*/(0,react.memo)(function Item(_ref) {
   let {
     todo,
-    dispatch
+    dispatch,
+    index
   } = _ref;
   const [isWritable, setIsWritable] = (0,react.useState)(false);
   const {
@@ -13220,12 +13221,12 @@ const Item = /*#__PURE__*/(0,react.memo)(function Item(_ref) {
     setIsWritable(false);
   }, [id, removeItem, updateItem]);
   return /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
-    className: classnames_default()({
+    className: classnames_default()("targeted", `li-${index}`, {
       completed: todo.completed
     }),
     "data-testid": "todo-item",
     children: /*#__PURE__*/(0,jsx_runtime.jsx)("div", {
-      className: "view",
+      className: classnames_default()("targeted", `view-${index}`),
       children: isWritable ? /*#__PURE__*/(0,jsx_runtime.jsx)(Input, {
         onSubmit: handleUpdate,
         label: "Edit Todo Input",
@@ -13295,9 +13296,10 @@ function Main(_ref) {
     }) : null, /*#__PURE__*/(0,jsx_runtime.jsx)("ul", {
       className: "todo-list",
       "data-testid": "todo-list",
-      children: visibleTodos.map(todo => /*#__PURE__*/(0,jsx_runtime.jsx)(Item, {
+      children: visibleTodos.map((todo, index) => /*#__PURE__*/(0,jsx_runtime.jsx)(Item, {
         todo: todo,
-        dispatch: dispatch
+        dispatch: dispatch,
+        index: index
       }, todo.id))
     })]
   });

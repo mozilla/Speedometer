@@ -1433,7 +1433,8 @@
       onSave,
       onRemove,
       onToggle,
-      todo
+      todo,
+      index
     } = _ref;
     const [editing, setEditing] = h(false);
     const inputRef = _(null);
@@ -1471,12 +1472,12 @@
       onRemove(todo);
     }
     return createElement("li", {
-      class: cx({
+      class: cx("targeted", `li-${index}`, {
         completed: todo.completed,
         editing
       })
     }, createElement("div", {
-      class: "view"
+      class: cx("targeted", `view-${index}`)
     }, createElement("input", {
       class: "toggle",
       type: "checkbox",
@@ -1519,7 +1520,7 @@
     } = _ref;
     const visibleTodos = todos.filter(FILTERS[route]);
     const activeTodoCount = todos.filter(FILTERS["active"]).length;
-    return createElement("section", {
+    return createElement("main", {
       class: "main"
     }, createElement("div", {
       class: "toggle-all-container"
@@ -1533,12 +1534,13 @@
       htmlFor: "toggle-all"
     }, "Toggle All Input")), createElement("ul", {
       class: "todo-list"
-    }, visibleTodos.map(todo => createElement(TodoItem, {
+    }, visibleTodos.map((todo, index) => createElement(TodoItem, {
       key: todo.id,
       todo: todo,
       onToggle: onToggle,
       onRemove: onRemove,
-      onSave: onSave
+      onSave: onSave,
+      index: index
     }))));
   }
 
@@ -1619,9 +1621,9 @@
     function toggleAll(e) {
       model.toggleAll(e.target.checked);
     }
-    return createElement("div", null, createElement(TodoHeader, {
+    return createElement(Fragment, null, createElement(TodoHeader, {
       onKeyDown: handleKeyDown
-    }), model.getTodos().length > 0 ? createElement("div", null, createElement(TodoMain, {
+    }), model.getTodos().length > 0 ? createElement(Fragment, null, createElement(TodoMain, {
       todos: model.getTodos(),
       route: route,
       onChange: toggleAll,
