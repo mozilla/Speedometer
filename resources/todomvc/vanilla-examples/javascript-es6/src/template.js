@@ -18,19 +18,19 @@ const escapeHtmlChar = (chr) => htmlEscapes[chr];
 
 const stringReplaceRegex = /{{id}}|{{title}}|{{completed}}|{{checked}}|{{list-index}}|{{view-index}}/gi;
 
-class Template {
-    constructor() {
-        this.defaultTemplate = `
-            <li data-id="{{id}}" class="targeted li-{{list-index}} {{completed}}">
-                <div class="targeted view-{{view-index}}">
-                    <input class="toggle" type="checkbox" {{checked}}>
-                    <label>{{title}}</label>
-                    <button class="destroy"></button>
-                </div>
-            </li>
-        `;
-    }
+function template({ id, title, completed, checked, listindex, viewindex }) {
+    return `
+        <li data-id="${id}" class="targeted li-${listindex} ${completed}">
+            <div class="targeted view-${viewindex}">
+                <input class="toggle" type="checkbox" ${checked}>
+                <label>${title}</label>
+                <button class="destroy"></button>
+            </div>
+        </li>
+  `;
+}
 
+class Template {
     /**
      * Creates an <li> HTML string and returns it for placement in your app.
      *
@@ -56,19 +56,17 @@ class Template {
             const checked = data[i].completed ? "checked" : "";
 
             const valuesToReplace = {
-                "{{id}}": data[i].id,
-                "{{title}}": escape(data[i].title),
-                "{{completed}}": completed,
-                "{{checked}}": checked,
-                "{{list-index}}": i,
-                "{{view-index}}": i,
+                id: data[i].id,
+                title: escape(data[i].title),
+                completed: completed,
+                checked: checked,
+                listindex: i,
+                viewindex: i,
             };
 
-            const template = this.defaultTemplate.replace(stringReplaceRegex, function (matched) {
-                return valuesToReplace[matched];
-            });
+            const result = template(valuesToReplace);
 
-            view += template;
+            view += result;
         }
 
         return view;
