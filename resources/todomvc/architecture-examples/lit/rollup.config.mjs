@@ -20,6 +20,8 @@ export default {
             ecma: 2022,
             module: true,
             warnings: true,
+            mangle: false,
+            format: { beautify: true },
         }),
     ],
     input: "src/index.ts",

@@ -1,0 +1,49 @@
+modified rollup terser config to not mangle and beautify
+rebuilt upstream lit package and copy over the stuff in node_modules with:
+diff --git a/rollup-common.js b/rollup-common.js
+index fb89f349..d05334a5 100644
+--- a/rollup-common.js
++++ b/rollup-common.js
+@@ -223,39 +223,33 @@ const generateTerserOptions = (
+   ecma: 2017,
+   compress: {
+     unsafe: true,
+     // An extra pass can squeeze out an extra byte or two.
+     passes: 2,
+   },
+   output: {
+     // "some" preserves @license and @preserve comments
+     comments: CHECKSIZE ? false : 'some',
+     inline_script: false,
++    beautify: true,
+   },
+   // This is implemented as a getter, so that we apply the class property prefix
+   // after the `nameCacheSeeder` build runs
+   get nameCache() {
+     return prefixProperties(
+       this,
+       nameCache,
+       classPropertyPrefix,
+       testPropertyPrefix
+     );
+   },
+-  mangle: {
+-    properties: {
+-      regex: /^_/,
+-      reserved: reservedProperties,
+-      // Set to true to mangle to readable names
+-      debug: false,
+-    },
+-  },
++  mangle: false
+ });
+
+ /**
+  * Inject an import for the SSR DOM Shim into the Node build of
+  * `@lit-labs/reactive-element`, and modify the `extends` clause of
+  * `ReactiveElement` to use that `HTMLElement` shim, unless a global version has
+  * already been defined.
+  *
+  * ```js
+  * import {HTMLElement, customElements} from '@lit-labs/ssr-dom-shim';
+
