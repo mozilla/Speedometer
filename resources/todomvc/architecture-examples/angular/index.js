@@ -29,7 +29,7 @@ document.body.appendChild(document.createElement("app-root"));
 
 load("dist/runtime.e42baa953544dd4f.js")// type="module"></script>
 load("dist/polyfills.e666e00fbdd942b1.js")// type="module"></script>
-load("dist/main.a554e93481d86451.js")// type="module"></script>
+load("dist/main.03896c19beb31b06.js")// type="module"></script>
 
 drainJobQueue()        
 

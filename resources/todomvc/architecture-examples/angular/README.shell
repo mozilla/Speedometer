@@ -1,0 +1,2 @@
+node_modules/@angular-devkit/build-angular/src/webpack/plugins/ needs to be patched.
+The angular-speed docker image does this
