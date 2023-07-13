@@ -19252,7 +19252,7 @@ object-assign
         });
       }
       render() {
-        const { todo, toggleTodo, deleteTodo } = this.props;
+        const { todo, toggleTodo, deleteTodo, index } = this.props;
         let element;
         if (this.state.editing) {
           element = /*#__PURE__*/ (0, jsx_runtime.jsx)(TextInput, {
@@ -19262,7 +19262,7 @@ object-assign
           });
         } else {
           element = /*#__PURE__*/ (0, jsx_runtime.jsxs)("div", {
-            className: "view",
+            className: classnames_default()("targeted", `view-${index}`),
             children: [
               /*#__PURE__*/ (0, jsx_runtime.jsx)("input", {
                 className: "toggle",
@@ -19285,7 +19285,7 @@ object-assign
           });
         }
         return /*#__PURE__*/ (0, jsx_runtime.jsx)("li", {
-          className: classnames_default()({
+          className: classnames_default()("targeted", `li-${index}`, {
             completed: todo.completed,
             editing: this.state.editing,
           }),
@@ -19299,6 +19299,7 @@ object-assign
       editTodo: prop_types_default().func.isRequired,
       deleteTodo: prop_types_default().func.isRequired,
       toggleTodo: prop_types_default().func.isRequired,
+      index: prop_types_default().number.isRequired,
     }); // CONCATENATED MODULE: ./src/constants/todo-filters.js
     const SHOW_ALL = "/";
     const SHOW_COMPLETED = "/completed";
@@ -19440,7 +19441,7 @@ object-assign
           activeCount,
         } = this.props;
         if (todos.length === 0) return null;
-        return /*#__PURE__*/ (0, jsx_runtime.jsxs)("section", {
+        return /*#__PURE__*/ (0, jsx_runtime.jsxs)("main", {
           className: "main",
           "data-testid": "main",
           children: [
@@ -19464,7 +19465,7 @@ object-assign
             /*#__PURE__*/ (0, jsx_runtime.jsx)("ul", {
               className: "todo-list",
               "data-testid": "todo-list",
-              children: visibleTodos.map((todo) =>
+              children: visibleTodos.map((todo, index) =>
                 /*#__PURE__*/ (0, jsx_runtime.jsx)(
                   Item,
                   {
@@ -19472,6 +19473,7 @@ object-assign
                     editTodo: editTodo,
                     deleteTodo: deleteTodo,
                     toggleTodo: toggleTodo,
+                    index: index,
                   },
                   todo.id
                 )
@@ -19483,7 +19485,6 @@ object-assign
               filter: location.pathname,
               onClearCompleted: clearCompleted,
             }),
-            ";",
           ],
         });
       }

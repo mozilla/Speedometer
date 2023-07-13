@@ -1060,7 +1060,7 @@ document.body.appendChild(section)
             m(target, anchor) {
                 var action_result;
                 insert(target, div, anchor), append(div, input), append(div, t0), append(div, label), 
-                mounted || (dispose = [ listen(input, "keydown", ctx[4]), listen(input, "blur", ctx[5]), (action_result = ctx[6].call(null, input), 
+                mounted || (dispose = [ listen(input, "keydown", ctx[5]), listen(input, "blur", ctx[6]), (action_result = ctx[7].call(null, input), 
                 action_result && is_function(action_result.destroy) ? action_result.destroy : noop) ], 
                 mounted = !0);
             },
@@ -1073,27 +1073,28 @@ document.body.appendChild(section)
         };
     }
     function create_fragment$1(ctx) {
-        let li, div, input, input_checked_value, t0, label, t1, t2, button, t3, li_class_value, mounted, dispose, t1_value = ctx[0].description + "", if_block = ctx[1] && create_if_block$1(ctx);
+        let li, div, input, input_checked_value, t0, label, t1, t2, button, div_class_value, t3, li_class_value, mounted, dispose, t1_value = ctx[0].description + "", if_block = ctx[2] && create_if_block$1(ctx);
         return {
             c() {
                 li = element("li"), div = element("div"), input = element("input"), t0 = space(), 
                 label = element("label"), t1 = text(t1_value), t2 = space(), button = element("button"), 
                 t3 = space(), if_block && if_block.c(), attr(input, "class", "toggle"), attr(input, "type", "checkbox"), 
                 input.checked = input_checked_value = ctx[0].completed, attr(button, "class", "destroy"), 
-                attr(div, "class", "view"), attr(li, "class", li_class_value = (ctx[0].completed ? "completed" : "") + " " + (ctx[1] ? "editing" : ""));
+                attr(div, "class", div_class_value = "targeted view-" + ctx[1]), attr(li, "class", li_class_value = "targeted li-" + ctx[1] + (ctx[0].completed ? " completed" : "") + (ctx[2] ? " editing" : ""));
             },
             m(target, anchor) {
                 insert(target, li, anchor), append(li, div), append(div, input), append(div, t0), 
                 append(div, label), append(label, t1), append(div, t2), append(div, button), append(li, t3), 
-                if_block && if_block.m(li, null), mounted || (dispose = [ listen(input, "change", ctx[7]), listen(label, "dblclick", ctx[3]), listen(button, "click", ctx[2]) ], 
+                if_block && if_block.m(li, null), mounted || (dispose = [ listen(input, "change", ctx[8]), listen(label, "dblclick", ctx[4]), listen(button, "click", ctx[3]) ], 
                 mounted = !0);
             },
             p(ctx, [dirty]) {
                 1 & dirty && input_checked_value !== (input_checked_value = ctx[0].completed) && (input.checked = input_checked_value), 
                 1 & dirty && t1_value !== (t1_value = ctx[0].description + "") && set_data(t1, t1_value), 
-                ctx[1] ? if_block ? if_block.p(ctx, dirty) : (if_block = create_if_block$1(ctx), 
+                2 & dirty && div_class_value !== (div_class_value = "targeted view-" + ctx[1]) && attr(div, "class", div_class_value), 
+                ctx[2] ? if_block ? if_block.p(ctx, dirty) : (if_block = create_if_block$1(ctx), 
                 if_block.c(), if_block.m(li, null)) : if_block && (if_block.d(1), if_block = null), 
-                3 & dirty && li_class_value !== (li_class_value = (ctx[0].completed ? "completed" : "") + " " + (ctx[1] ? "editing" : "")) && attr(li, "class", li_class_value);
+                7 & dirty && li_class_value !== (li_class_value = "targeted li-" + ctx[1] + (ctx[0].completed ? " completed" : "") + (ctx[2] ? " editing" : "")) && attr(li, "class", li_class_value);
             },
             i: noop,
             o: noop,
@@ -1103,21 +1104,21 @@ document.body.appendChild(section)
         };
     }
     function instance$1($$self, $$props, $$invalidate) {
-        let {item: item} = $$props, editing = !1;
+        let {item: item} = $$props, {index: index} = $$props, editing = !1;
         const dispatch = createEventDispatcher();
         function removeItem() {
             dispatch("removeItem");
         }
         return $$self.$$set = $$props => {
-            "item" in $$props && $$invalidate(0, item = $$props.item);
-        }, [ item, editing, removeItem, function() {
-            $$invalidate(1, editing = !0);
+            "item" in $$props && $$invalidate(0, item = $$props.item), "index" in $$props && $$invalidate(1, index = $$props.index);
+        }, [ item, index, editing, removeItem, function() {
+            $$invalidate(2, editing = !0);
         }, function(event) {
-            "Enter" === event.key ? event.target.blur() : "Escape" === event.key && $$invalidate(1, editing = !1);
+            "Enter" === event.key ? event.target.blur() : "Escape" === event.key && $$invalidate(2, editing = !1);
         }, function(event) {
             if (!editing) return;
             const {value: value} = event.target;
-            value.length ? $$invalidate(0, item.description = value, item) : removeItem(), $$invalidate(1, editing = !1);
+            value.length ? $$invalidate(0, item.description = value, item) : removeItem(), $$invalidate(2, editing = !1);
         }, async function(element) {
             await (schedule_update(), resolved_promise), element.focus();
         }, event => $$invalidate(0, item.completed = event.target.checked, item) ];
@@ -1125,7 +1126,8 @@ document.body.appendChild(section)
     class Item extends SvelteComponent {
         constructor(options) {
             super(), init(this, options, instance$1, create_fragment$1, safe_not_equal, {
-                item: 0
+                item: 0,
+                index: 1
             });
         }
     }
@@ -1134,7 +1136,7 @@ document.body.appendChild(section)
         return child_ctx[11] = list[i], child_ctx[12] = list, child_ctx[13] = i, child_ctx;
     }
     function create_if_block(ctx) {
-        let section, input, input_checked_value, t0, label, t2, ul, t3, footer, current, mounted, dispose, each_blocks = [], each_1_lookup = new Map, each_value = ctx[4];
+        let main, div, input, input_checked_value, t0, label, t2, ul, t3, footer, current, mounted, dispose, each_blocks = [], each_1_lookup = new Map, each_value = ctx[4];
         const get_key = ctx => ctx[11].id;
         for (let i = 0; i < each_value.length; i += 1) {
             let child_ctx = get_each_context(ctx, each_value, i), key = get_key(child_ctx);
@@ -1148,18 +1150,20 @@ document.body.appendChild(section)
             }
         }), footer.$on("removeCompletedItems", ctx[8]), {
             c() {
-                section = element("section"), input = element("input"), t0 = space(), label = element("label"), 
-                label.textContent = "Mark all as complete", t2 = space(), ul = element("ul");
+                main = element("main"), div = element("div"), input = element("input"), t0 = space(), 
+                label = element("label"), label.textContent = "Mark all as complete", t2 = space(), 
+                ul = element("ul");
                 for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].c();
                 t3 = space(), create_component(footer.$$.fragment), attr(input, "id", "toggle-all"), 
                 attr(input, "class", "toggle-all"), attr(input, "type", "checkbox"), input.checked = input_checked_value = ctx[2] === ctx[1].length, 
-                attr(label, "for", "toggle-all"), attr(ul, "class", "todo-list"), attr(section, "class", "main");
+                attr(label, "for", "toggle-all"), attr(div, "class", "toggle-all-container"), attr(ul, "class", "todo-list"), 
+                attr(main, "class", "main");
             },
             m(target, anchor) {
-                insert(target, section, anchor), append(section, input), append(section, t0), append(section, label), 
-                append(section, t2), append(section, ul);
+                insert(target, main, anchor), append(main, div), append(div, input), append(div, t0), 
+                append(div, label), append(main, t2), append(main, ul);
                 for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i] && each_blocks[i].m(ul, null);
-                append(section, t3), mount_component(footer, section, null), current = !0, mounted || (dispose = listen(input, "change", ctx[7]), 
+                append(main, t3), mount_component(footer, main, null), current = !0, mounted || (dispose = listen(input, "change", ctx[7]), 
                 mounted = !0);
             },
             p(ctx, dirty) {
@@ -1209,7 +1213,7 @@ document.body.appendChild(section)
                 transition_out(footer.$$.fragment, local), current = !1;
             },
             d(detaching) {
-                detaching && detach(section);
+                detaching && detach(main);
                 for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].d();
                 destroy_component(footer), mounted = !1, dispose();
             }
@@ -1221,7 +1225,8 @@ document.body.appendChild(section)
             ctx[9](value, ctx[11], ctx[12], ctx[13]);
         }
         let item_props = {
-            editing: editing
+            editing: editing,
+            index: ctx[13]
         };
         return void 0 !== ctx[11] && (item_props.item = ctx[11]), item = new Item({
             props: item_props
@@ -1243,8 +1248,9 @@ document.body.appendChild(section)
                 ctx = new_ctx;
                 const item_changes = {};
                 var fn;
-                !updating_item && 16 & dirty && (updating_item = !0, item_changes.item = ctx[11], 
-                fn = () => updating_item = !1, flush_callbacks.push(fn)), item.$set(item_changes);
+                16 & dirty && (item_changes.index = ctx[13]), !updating_item && 16 & dirty && (updating_item = !0, 
+                item_changes.item = ctx[11], fn = () => updating_item = !1, flush_callbacks.push(fn)), 
+                item.$set(item_changes);
             },
             i(local) {
                 current || (transition_in(item.$$.fragment, local), current = !0);
