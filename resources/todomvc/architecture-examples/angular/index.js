@@ -63,9 +63,20 @@ function benchmark() {
             checkboxes[i].dispatchEvent({ type: 'click' });
         }
     }
-    toggleItems()
+    start = performance.now();
+    for (let j = 0; j < 1000; j++) {
+     toggleItems()
+    }
     end = performance.now();
     console.log(`RESULTS-CompletingAllItems ${end - start}`);
+    total += end - start;
+
+    start = performance.now();
+    for (let j = 0; j < 1000; j++) {
+     toggleItems()
+    }
+    end = performance.now();
+    console.log(`RESULTS-ReCompletingAllItems ${end - start}`);
     total += end - start;
 
     start = performance.now();
