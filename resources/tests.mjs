@@ -309,9 +309,18 @@ Suites.push({
             }
         }),
         new BenchmarkTestStep("CompletingAllItems", (page) => {
+            for (var j = 0; j < 1000; j++) {
             const checkboxes = page.querySelectorAll(".toggle");
             for (let i = 0; i < numberOfItemsToAdd; i++)
                 checkboxes[i].click();
+            }
+        }),
+        new BenchmarkTestStep("ReCompletingAllItems", (page) => {
+            for (var j = 0; j < 1000; j++) {
+            const checkboxes = page.querySelectorAll(".toggle");
+            for (let i = 0; i < numberOfItemsToAdd; i++)
+                checkboxes[i].click();
+            }
         }),
         new BenchmarkTestStep("DeletingAllItems", (page) => {
             const deleteButtons = page.querySelectorAll(".destroy");
