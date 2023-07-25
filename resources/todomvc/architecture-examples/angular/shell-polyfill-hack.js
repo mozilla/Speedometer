@@ -9,6 +9,25 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 
 var timeoutHandlers = [];
 
+if (!globalThis.console) {
+    globalThis.console = { log: (msg) => print(msg) }
+}
+if (!("assert" in console)) {
+    console["assert"] = function(value) {
+        if (!value) {
+            console.log("assertion failed")
+            throw value
+        }
+    }
+}
+globalThis.console.error = globalThis.console.log;
+globalThis.console.warn = globalThis.console.log;
+// For JSC
+if (!globalThis.performance) {
+    globalThis.performance = { now: () => preciseTime() * 1000 }
+}
+
+
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
     globalThis.window = globalThis;
