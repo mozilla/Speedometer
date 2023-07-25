@@ -170,7 +170,10 @@ if (!("window" in globalThis)) {
             case "react":
                 return globalThis.HTMLUnknownElement;
         }
-        console.log("UNKNOWN-HTMLELEMENT", tagName);
+        // custom elements must contain a hyphen
+        if (!tagName.includes("-")) {
+           console.log("UNKNOWN-HTMLELEMENT", tagName);
+        }
         return globalThis.HTMLElement;
     }
 
