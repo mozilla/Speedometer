@@ -2056,7 +2056,7 @@ document.body.appendChild(document.createElement("app-root"));
 ;// type="module"></script>
 
 
-// Load contents of ../resources/todomvc/architecture-examples/angular/dist/main.a554e93481d86451.js
+// Load contents of ../resources/todomvc/architecture-examples/angular/dist/main.03896c19beb31b06.js
 ;"use strict";
 
 (self.webpackChunkangular = self.webpackChunkangular || []).push([ [ 179 ], {
@@ -5353,9 +5353,10 @@ document.body.appendChild(document.createElement("app-root"));
             return _symbolIterator;
         }
         function isListLikeIterable(obj) {
-            return !!function isJsObject(o) {
-                return null !== o && ("function" == typeof o || "object" == typeof o);
-            }(obj) && (Array.isArray(obj) || !(obj instanceof Map) && core_getSymbolIterator() in obj);
+            return !!isJsObject(obj) && (Array.isArray(obj) || !(obj instanceof Map) && core_getSymbolIterator() in obj);
+        }
+        function isJsObject(o) {
+            return null !== o && ("function" == typeof o || "object" == typeof o);
         }
         function bindingUpdated(lView, bindingIndex, value) {
             return !Object.is(lView[bindingIndex], value) && (lView[bindingIndex] = value, !0);
@@ -7227,6 +7228,124 @@ document.body.appendChild(document.createElement("app-root"));
             return moveOffsets && previousIndex < moveOffsets.length && (moveOffset = moveOffsets[previousIndex]), 
             previousIndex + addRemoveOffset + moveOffset;
         }
+        class DefaultKeyValueDifferFactory {
+            constructor() {}
+            supports(obj) {
+                return obj instanceof Map || isJsObject(obj);
+            }
+            create() {
+                return new DefaultKeyValueDiffer;
+            }
+        }
+        class DefaultKeyValueDiffer {
+            constructor() {
+                this._records = new Map, this._mapHead = null, this._appendAfter = null, this._previousMapHead = null, 
+                this._changesHead = null, this._changesTail = null, this._additionsHead = null, 
+                this._additionsTail = null, this._removalsHead = null, this._removalsTail = null;
+            }
+            get isDirty() {
+                return null !== this._additionsHead || null !== this._changesHead || null !== this._removalsHead;
+            }
+            forEachItem(fn) {
+                let record;
+                for (record = this._mapHead; null !== record; record = record._next) fn(record);
+            }
+            forEachPreviousItem(fn) {
+                let record;
+                for (record = this._previousMapHead; null !== record; record = record._nextPrevious) fn(record);
+            }
+            forEachChangedItem(fn) {
+                let record;
+                for (record = this._changesHead; null !== record; record = record._nextChanged) fn(record);
+            }
+            forEachAddedItem(fn) {
+                let record;
+                for (record = this._additionsHead; null !== record; record = record._nextAdded) fn(record);
+            }
+            forEachRemovedItem(fn) {
+                let record;
+                for (record = this._removalsHead; null !== record; record = record._nextRemoved) fn(record);
+            }
+            diff(map2) {
+                if (map2) {
+                    if (!(map2 instanceof Map || isJsObject(map2))) throw new RuntimeError(900, !1);
+                } else map2 = new Map;
+                return this.check(map2) ? this : null;
+            }
+            onDestroy() {}
+            check(map2) {
+                this._reset();
+                let insertBefore = this._mapHead;
+                if (this._appendAfter = null, this._forEach(map2, (value, key) => {
+                    if (insertBefore && insertBefore.key === key) this._maybeAddToChanges(insertBefore, value), 
+                    this._appendAfter = insertBefore, insertBefore = insertBefore._next; else {
+                        const record = this._getOrCreateRecordForKey(key, value);
+                        insertBefore = this._insertBeforeOrAppend(insertBefore, record);
+                    }
+                }), insertBefore) {
+                    insertBefore._prev && (insertBefore._prev._next = null), this._removalsHead = insertBefore;
+                    for (let record = insertBefore; null !== record; record = record._nextRemoved) record === this._mapHead && (this._mapHead = null), 
+                    this._records.delete(record.key), record._nextRemoved = record._next, record.previousValue = record.currentValue, 
+                    record.currentValue = null, record._prev = null, record._next = null;
+                }
+                return this._changesTail && (this._changesTail._nextChanged = null), this._additionsTail && (this._additionsTail._nextAdded = null), 
+                this.isDirty;
+            }
+            _insertBeforeOrAppend(before, record) {
+                if (before) {
+                    const prev = before._prev;
+                    return record._next = before, record._prev = prev, before._prev = record, prev && (prev._next = record), 
+                    before === this._mapHead && (this._mapHead = record), this._appendAfter = before, 
+                    before;
+                }
+                return this._appendAfter ? (this._appendAfter._next = record, record._prev = this._appendAfter) : this._mapHead = record, 
+                this._appendAfter = record, null;
+            }
+            _getOrCreateRecordForKey(key, value) {
+                if (this._records.has(key)) {
+                    const record2 = this._records.get(key);
+                    this._maybeAddToChanges(record2, value);
+                    const prev = record2._prev, next = record2._next;
+                    return prev && (prev._next = next), next && (next._prev = prev), record2._next = null, 
+                    record2._prev = null, record2;
+                }
+                const record = new KeyValueChangeRecord_(key);
+                return this._records.set(key, record), record.currentValue = value, this._addToAdditions(record), 
+                record;
+            }
+            _reset() {
+                if (this.isDirty) {
+                    let record;
+                    for (this._previousMapHead = this._mapHead, record = this._previousMapHead; null !== record; record = record._next) record._nextPrevious = record._next;
+                    for (record = this._changesHead; null !== record; record = record._nextChanged) record.previousValue = record.currentValue;
+                    for (record = this._additionsHead; null != record; record = record._nextAdded) record.previousValue = record.currentValue;
+                    this._changesHead = this._changesTail = null, this._additionsHead = this._additionsTail = null, 
+                    this._removalsHead = null;
+                }
+            }
+            _maybeAddToChanges(record, newValue) {
+                Object.is(newValue, record.currentValue) || (record.previousValue = record.currentValue, 
+                record.currentValue = newValue, this._addToChanges(record));
+            }
+            _addToAdditions(record) {
+                null === this._additionsHead ? this._additionsHead = this._additionsTail = record : (this._additionsTail._nextAdded = record, 
+                this._additionsTail = record);
+            }
+            _addToChanges(record) {
+                null === this._changesHead ? this._changesHead = this._changesTail = record : (this._changesTail._nextChanged = record, 
+                this._changesTail = record);
+            }
+            _forEach(obj, fn) {
+                obj instanceof Map ? obj.forEach(fn) : Object.keys(obj).forEach(k => fn(obj[k], k));
+            }
+        }
+        class KeyValueChangeRecord_ {
+            constructor(key) {
+                this.key = key, this.previousValue = null, this.currentValue = null, this._nextPrevious = null, 
+                this._next = null, this._prev = null, this._nextAdded = null, this._nextRemoved = null, 
+                this._nextChanged = null;
+            }
+        }
         function defaultIterableDiffersFactory() {
             return new IterableDiffers([ new DefaultIterableDifferFactory ]);
         }
@@ -7260,6 +7379,40 @@ document.body.appendChild(document.createElement("app-root"));
                 providedIn: "root",
                 factory: defaultIterableDiffersFactory
             }), IterableDiffers2;
+        })();
+        function defaultKeyValueDiffersFactory() {
+            return new KeyValueDiffers([ new DefaultKeyValueDifferFactory ]);
+        }
+        let KeyValueDiffers = (() => {
+            class KeyValueDiffers2 {
+                constructor(factories) {
+                    this.factories = factories;
+                }
+                static create(factories, parent) {
+                    if (parent) {
+                        const copied = parent.factories.slice();
+                        factories = factories.concat(copied);
+                    }
+                    return new KeyValueDiffers2(factories);
+                }
+                static extend(factories) {
+                    return {
+                        provide: KeyValueDiffers2,
+                        useFactory: parent => KeyValueDiffers2.create(factories, parent || defaultKeyValueDiffersFactory()),
+                        deps: [ [ KeyValueDiffers2, new SkipSelf, new core_Optional ] ]
+                    };
+                }
+                find(kv) {
+                    const factory = this.factories.find(f => f.supports(kv));
+                    if (factory) return factory;
+                    throw new RuntimeError(901, !1);
+                }
+            }
+            return KeyValueDiffers2.ɵprov = ɵɵdefineInjectable({
+                token: KeyValueDiffers2,
+                providedIn: "root",
+                factory: defaultKeyValueDiffersFactory
+            }), KeyValueDiffers2;
         })();
         const platformCore = createPlatformFactory(null, "core", []);
         let ApplicationModule = (() => {
@@ -7592,6 +7745,68 @@ document.body.appendChild(document.createElement("app-root"));
         function _stripIndexHtml(url) {
             return url.replace(/\/index.html$/, "");
         }
+        let NgClass = (() => {
+            class NgClass2 {
+                constructor(_iterableDiffers, _keyValueDiffers, _ngEl, _renderer) {
+                    this._iterableDiffers = _iterableDiffers, this._keyValueDiffers = _keyValueDiffers, 
+                    this._ngEl = _ngEl, this._renderer = _renderer, this._iterableDiffer = null, this._keyValueDiffer = null, 
+                    this._initialClasses = [], this._rawClass = null;
+                }
+                set klass(value) {
+                    this._removeClasses(this._initialClasses), this._initialClasses = "string" == typeof value ? value.split(/\s+/) : [], 
+                    this._applyClasses(this._initialClasses), this._applyClasses(this._rawClass);
+                }
+                set ngClass(value) {
+                    this._removeClasses(this._rawClass), this._applyClasses(this._initialClasses), this._iterableDiffer = null, 
+                    this._keyValueDiffer = null, this._rawClass = "string" == typeof value ? value.split(/\s+/) : value, 
+                    this._rawClass && (isListLikeIterable(this._rawClass) ? this._iterableDiffer = this._iterableDiffers.find(this._rawClass).create() : this._keyValueDiffer = this._keyValueDiffers.find(this._rawClass).create());
+                }
+                ngDoCheck() {
+                    if (this._iterableDiffer) {
+                        const iterableChanges = this._iterableDiffer.diff(this._rawClass);
+                        iterableChanges && this._applyIterableChanges(iterableChanges);
+                    } else if (this._keyValueDiffer) {
+                        const keyValueChanges = this._keyValueDiffer.diff(this._rawClass);
+                        keyValueChanges && this._applyKeyValueChanges(keyValueChanges);
+                    }
+                }
+                _applyKeyValueChanges(changes) {
+                    changes.forEachAddedItem(record => this._toggleClass(record.key, record.currentValue)), 
+                    changes.forEachChangedItem(record => this._toggleClass(record.key, record.currentValue)), 
+                    changes.forEachRemovedItem(record => {
+                        record.previousValue && this._toggleClass(record.key, !1);
+                    });
+                }
+                _applyIterableChanges(changes) {
+                    changes.forEachAddedItem(record => {
+                        if ("string" != typeof record.item) throw new Error(`NgClass can only toggle CSS classes expressed as strings, got ${stringify(record.item)}`);
+                        this._toggleClass(record.item, !0);
+                    }), changes.forEachRemovedItem(record => this._toggleClass(record.item, !1));
+                }
+                _applyClasses(rawClassVal) {
+                    rawClassVal && (Array.isArray(rawClassVal) || rawClassVal instanceof Set ? rawClassVal.forEach(klass => this._toggleClass(klass, !0)) : Object.keys(rawClassVal).forEach(klass => this._toggleClass(klass, !!rawClassVal[klass])));
+                }
+                _removeClasses(rawClassVal) {
+                    rawClassVal && (Array.isArray(rawClassVal) || rawClassVal instanceof Set ? rawClassVal.forEach(klass => this._toggleClass(klass, !1)) : Object.keys(rawClassVal).forEach(klass => this._toggleClass(klass, !1)));
+                }
+                _toggleClass(klass, enabled) {
+                    (klass = klass.trim()) && klass.split(/\s+/g).forEach(klass2 => {
+                        enabled ? this._renderer.addClass(this._ngEl.nativeElement, klass2) : this._renderer.removeClass(this._ngEl.nativeElement, klass2);
+                    });
+                }
+            }
+            return NgClass2.ɵfac = function(t) {
+                return new (t || NgClass2)(ɵɵdirectiveInject(IterableDiffers), ɵɵdirectiveInject(KeyValueDiffers), ɵɵdirectiveInject(core_ElementRef), ɵɵdirectiveInject(core_Renderer2));
+            }, NgClass2.ɵdir = ɵɵdefineDirective({
+                type: NgClass2,
+                selectors: [ [ "", "ngClass", "" ] ],
+                inputs: {
+                    klass: [ "class", "klass" ],
+                    ngClass: "ngClass"
+                },
+                standalone: !0
+            }), NgClass2;
+        })();
         class NgForOfContext {
             constructor($implicit, ngForOf, index, count) {
                 this.$implicit = $implicit, this.ngForOf = ngForOf, this.index = index, this.count = count;
@@ -12241,7 +12456,7 @@ document.body.appendChild(document.createElement("app-root"));
                         id: "",
                         title: "",
                         completed: !1
-                    }, this.deleteEvent = new EventEmitter, this.titleFormControl = new FormControl(""), 
+                    }, this.index = 0, this.deleteEvent = new EventEmitter, this.titleFormControl = new FormControl(""), 
                     this.isEditing = !1;
                 }
                 toggleTodo() {
@@ -12283,47 +12498,52 @@ document.body.appendChild(document.createElement("app-root"));
                     }
                 },
                 inputs: {
-                    todo: "todo"
+                    todo: "todo",
+                    index: "index"
                 },
                 outputs: {
                     deleteEvent: "deleteEvent"
                 },
                 decls: 7,
-                vars: 7,
-                consts: [ [ 1, "view" ], [ "type", "checkbox", 1, "toggle", 3, "checked", "click" ], [ 3, "dblclick" ], [ 1, "destroy", 3, "click" ], [ "class", "input-container", 4, "ngIf" ], [ 1, "input-container" ], [ "id", "edit-todo-input", 1, "edit", 3, "formControl", "focus", "blur", "keyup.enter" ], [ "todoInputRef", "" ], [ "htmlFor", "edit-todo-input", 1, "visually-hidden" ] ],
+                vars: 5,
+                consts: [ [ 3, "ngClass" ], [ "type", "checkbox", 1, "toggle", 3, "checked", "click" ], [ 3, "dblclick" ], [ 1, "destroy", 3, "click" ], [ "class", "input-container", 4, "ngIf" ], [ 1, "input-container" ], [ "id", "edit-todo-input", 1, "edit", 3, "formControl", "focus", "blur", "keyup.enter" ], [ "todoInputRef", "" ], [ "htmlFor", "edit-todo-input", 1, "visually-hidden" ] ],
                 template: function(rf, ctx) {
-                    1 & rf && (ɵɵelementStart(0, "li")(1, "div", 0)(2, "input", 1), ɵɵlistener("click", function() {
+                    1 & rf && (ɵɵelementStart(0, "li", 0)(1, "div", 0)(2, "input", 1), ɵɵlistener("click", function() {
                         return ctx.toggleTodo();
                     }), ɵɵelementEnd(), ɵɵelementStart(3, "label", 2), ɵɵlistener("dblclick", function() {
                         return ctx.startEdit();
                     }), ɵɵtext(4), ɵɵelementEnd(), ɵɵelementStart(5, "button", 3), ɵɵlistener("click", function() {
                         return ctx.removeTodo();
                     }), ɵɵelementEnd()(), ɵɵtemplate(6, TodoItemComponent_div_6_Template, 5, 1, "div", 4), 
-                    ɵɵelementEnd()), 2 & rf && (ɵɵclassProp("completed", ctx.todo.completed)("editing", ctx.isEditing), 
-                    ɵɵadvance(2), ɵɵproperty("checked", ctx.todo.completed), ɵɵadvance(2), ɵɵtextInterpolate(ctx.todo.title), 
+                    ɵɵelementEnd()), 2 & rf && (ɵɵproperty("ngClass", "targeted li-" + ctx.index + (ctx.todo.completed ? " completed" : "") + (ctx.isEditing ? " editing" : "")), 
+                    ɵɵadvance(1), ɵɵproperty("ngClass", "targeted view-" + ctx.index), ɵɵadvance(1), 
+                    ɵɵproperty("checked", ctx.todo.completed), ɵɵadvance(2), ɵɵtextInterpolate(ctx.todo.title), 
                     ɵɵadvance(2), ɵɵproperty("ngIf", ctx.isEditing));
                 },
-                dependencies: [ NgIf, DefaultValueAccessor, NgControlStatus, FormControlDirective ],
+                dependencies: [ NgClass, NgIf, DefaultValueAccessor, NgControlStatus, FormControlDirective ],
                 encapsulation: 2,
                 changeDetection: 0
             }), TodoItemComponent2;
         })();
-        function TodoListComponent_section_0_app_todo_item_6_Template(rf, ctx) {
+        function TodoListComponent_main_0_app_todo_item_6_Template(rf, ctx) {
             if (1 & rf) {
-                const _r4 = ɵɵgetCurrentView();
+                const _r5 = ɵɵgetCurrentView();
                 ɵɵelementStart(0, "app-todo-item", 7), ɵɵlistener("deleteEvent", function($event) {
-                    return ɵɵrestoreView(_r4), ɵɵresetView(ɵɵnextContext(2).removeTodo($event));
+                    return ɵɵrestoreView(_r5), ɵɵresetView(ɵɵnextContext(2).removeTodo($event));
                 }), ɵɵelementEnd();
             }
-            2 & rf && ɵɵproperty("todo", ctx.$implicit);
+            if (2 & rf) {
+                const i_r3 = ctx.index;
+                ɵɵproperty("todo", ctx.$implicit)("index", i_r3);
+            }
         }
-        function TodoListComponent_section_0_Template(rf, ctx) {
+        function TodoListComponent_main_0_Template(rf, ctx) {
             if (1 & rf) {
-                const _r6 = ɵɵgetCurrentView();
-                ɵɵelementStart(0, "section", 1)(1, "div", 2)(2, "input", 3), ɵɵlistener("change", function($event) {
-                    return ɵɵrestoreView(_r6), ɵɵresetView(ɵɵnextContext().toggleAll($event));
+                const _r7 = ɵɵgetCurrentView();
+                ɵɵelementStart(0, "main", 1)(1, "div", 2)(2, "input", 3), ɵɵlistener("change", function($event) {
+                    return ɵɵrestoreView(_r7), ɵɵresetView(ɵɵnextContext().toggleAll($event));
                 }), ɵɵelementEnd(), ɵɵelementStart(3, "label", 4), ɵɵtext(4, " Toggle All Input "), 
-                ɵɵelementEnd()(), ɵɵelementStart(5, "ul", 5), ɵɵtemplate(6, TodoListComponent_section_0_app_todo_item_6_Template, 1, 1, "app-todo-item", 6), 
+                ɵɵelementEnd()(), ɵɵelementStart(5, "ul", 5), ɵɵtemplate(6, TodoListComponent_main_0_app_todo_item_6_Template, 1, 2, "app-todo-item", 6), 
                 ɵɵelementEnd()();
             }
             if (2 & rf) {
@@ -12360,10 +12580,9 @@ document.body.appendChild(document.createElement("app-root"));
                 selectors: [ [ "app-todo-list" ] ],
                 decls: 1,
                 vars: 1,
-                consts: [ [ "class", "main", 4, "ngIf" ], [ 1, "main" ], [ 1, "toggle-all-container" ], [ "type", "checkbox", 1, "toggle-all", 3, "checked", "change" ], [ "htmlFor", "toggle-all", 1, "toggle-all-label" ], [ 1, "todo-list" ], [ 3, "todo", "deleteEvent", 4, "ngFor", "ngForOf", "ngForTrackBy" ], [ 3, "todo", "deleteEvent" ] ],
+                consts: [ [ "class", "main", 4, "ngIf" ], [ 1, "main" ], [ 1, "toggle-all-container" ], [ "type", "checkbox", 1, "toggle-all", 3, "checked", "change" ], [ "htmlFor", "toggle-all", 1, "toggle-all-label" ], [ 1, "todo-list" ], [ 3, "todo", "index", "deleteEvent", 4, "ngFor", "ngForOf", "ngForTrackBy" ], [ 3, "todo", "index", "deleteEvent" ] ],
                 template: function(rf, ctx) {
-                    1 & rf && ɵɵtemplate(0, TodoListComponent_section_0_Template, 7, 3, "section", 0), 
-                    2 & rf && ɵɵproperty("ngIf", ctx.todos.length > 0);
+                    1 & rf && ɵɵtemplate(0, TodoListComponent_main_0_Template, 7, 3, "main", 0), 2 & rf && ɵɵproperty("ngIf", ctx.todos.length > 0);
                 },
                 dependencies: [ NgForOf, NgIf, TodoItemComponent ],
                 encapsulation: 2

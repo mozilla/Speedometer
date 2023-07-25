@@ -9,6 +9,25 @@ DumpMissingPropertiesBase.prototype = new Proxy({}, {
 
 var timeoutHandlers = [];
 
+if (!globalThis.console) {
+    globalThis.console = { log: (msg) => print(msg) }
+}
+if (!("assert" in console)) {
+    console["assert"] = function(value) {
+        if (!value) {
+            console.log("assertion failed")
+            throw value
+        }
+    }
+}
+globalThis.console.error = globalThis.console.log;
+globalThis.console.warn = globalThis.console.log;
+// For JSC
+if (!globalThis.performance) {
+    globalThis.performance = { now: () => preciseTime() * 1000 }
+}
+
+
 // In jsshell, mock just enough details of DOM for matrix to work.
 if (!("window" in globalThis)) {
     globalThis.window = globalThis;
@@ -33,6 +52,7 @@ if (!("window" in globalThis)) {
 
     globalThis.XMLHttpRequest = function () { }
     globalThis.Worker = function () { };
+    globalThis.history = { pushState() {}, popState() {}, replaceState() {} }
 
     // A live lazily populated collection of nodes that have query(node) == true
     class HTMLCollection {
@@ -151,7 +171,10 @@ if (!("window" in globalThis)) {
             case "react":
                 return globalThis.HTMLUnknownElement;
         }
-        console.log("UNKNOWN-HTMLELEMENT", tagName);
+        // custom elements must contain a hyphen
+        if (!tagName.includes("-")) {
+           console.log("UNKNOWN-HTMLELEMENT", tagName);
+        }
         return globalThis.HTMLElement;
     }
 

@@ -2526,7 +2526,7 @@ document.body.appendChild(section);
   var cx = classnamesExports;
 
   function TodoItem(_ref) {
-    let { onSave, onRemove, onToggle, todo } = _ref;
+    let { onSave, onRemove, onToggle, todo, index } = _ref;
     const [editing, setEditing] = h(false);
     const inputRef = _(null);
 
@@ -2569,7 +2569,7 @@ document.body.appendChild(section);
     return createElement(
       "li",
       {
-        class: cx({
+        class: cx("targeted", `li-${index}`, {
           completed: todo.completed,
           editing,
         }),
@@ -2577,7 +2577,7 @@ document.body.appendChild(section);
       createElement(
         "div",
         {
-          class: "view",
+          class: cx("targeted", `view-${index}`),
         },
         createElement("input", {
           class: "toggle",
@@ -2636,7 +2636,7 @@ document.body.appendChild(section);
     const visibleTodos = todos.filter(FILTERS[route]);
     const activeTodoCount = todos.filter(FILTERS["active"]).length;
     return createElement(
-      "section",
+      "main",
       {
         class: "main",
       },
@@ -2665,13 +2665,14 @@ document.body.appendChild(section);
         {
           class: "todo-list",
         },
-        visibleTodos.map((todo) =>
+        visibleTodos.map((todo, index) =>
           createElement(TodoItem, {
             key: todo.id,
             todo: todo,
             onToggle: onToggle,
             onRemove: onRemove,
             onSave: onSave,
+            index: index,
           })
         )
       )
@@ -2801,14 +2802,14 @@ document.body.appendChild(section);
       model.toggleAll(e.target.checked);
     }
     return createElement(
-      "div",
+      Fragment,
       null,
       createElement(TodoHeader, {
         onKeyDown: handleKeyDown,
       }),
       model.getTodos().length > 0
         ? createElement(
-            "div",
+            Fragment,
             null,
             createElement(TodoMain, {
               todos: model.getTodos(),

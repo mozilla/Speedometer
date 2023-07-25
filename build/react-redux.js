@@ -13049,7 +13049,8 @@ class Item extends react.PureComponent {
     const {
       todo,
       toggleTodo,
-      deleteTodo
+      deleteTodo,
+      index
     } = this.props;
     let element;
     if (this.state.editing) {
@@ -13060,7 +13061,7 @@ class Item extends react.PureComponent {
       });
     } else {
       element = /*#__PURE__*/(0,jsx_runtime.jsxs)("div", {
-        className: "view",
+        className: classnames_default()("targeted", `view-${index}`),
         children: [/*#__PURE__*/(0,jsx_runtime.jsx)("input", {
           className: "toggle",
           type: "checkbox",
@@ -13079,7 +13080,7 @@ class Item extends react.PureComponent {
       });
     }
     return /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
-      className: classnames_default()({
+      className: classnames_default()("targeted", `li-${index}`, {
         completed: todo.completed,
         editing: this.state.editing
       }),
@@ -13092,7 +13093,8 @@ item_defineProperty(Item, "propTypes", {
   todo: (prop_types_default()).object.isRequired,
   editTodo: (prop_types_default()).func.isRequired,
   deleteTodo: (prop_types_default()).func.isRequired,
-  toggleTodo: (prop_types_default()).func.isRequired
+  toggleTodo: (prop_types_default()).func.isRequired,
+  index: (prop_types_default()).number.isRequired
 });
 ;// CONCATENATED MODULE: ./src/constants/todo-filters.js
 const SHOW_ALL = "/";
@@ -13189,7 +13191,7 @@ class Main extends react.Component {
       activeCount
     } = this.props;
     if (todos.length === 0) return null;
-    return /*#__PURE__*/(0,jsx_runtime.jsxs)("section", {
+    return /*#__PURE__*/(0,jsx_runtime.jsxs)("main", {
       className: "main",
       "data-testid": "main",
       children: [/*#__PURE__*/(0,jsx_runtime.jsxs)("div", {
@@ -13208,18 +13210,19 @@ class Main extends react.Component {
       }), /*#__PURE__*/(0,jsx_runtime.jsx)("ul", {
         className: "todo-list",
         "data-testid": "todo-list",
-        children: visibleTodos.map(todo => /*#__PURE__*/(0,jsx_runtime.jsx)(Item, {
+        children: visibleTodos.map((todo, index) => /*#__PURE__*/(0,jsx_runtime.jsx)(Item, {
           todo: todo,
           editTodo: editTodo,
           deleteTodo: deleteTodo,
-          toggleTodo: toggleTodo
+          toggleTodo: toggleTodo,
+          index: index
         }, todo.id))
       }), /*#__PURE__*/(0,jsx_runtime.jsx)(Footer, {
         completedCount: completedCount,
         activeCount: activeCount,
         filter: location.pathname,
         onClearCompleted: clearCompleted
-      }), ";"]
+      })]
     });
   }
 }

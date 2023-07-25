@@ -23,8 +23,8 @@ if ("drainMicrotasks" in globalThis) {
    // run with --allow-natives-syntax
    var drainJobQueue = eval("() => { %PerformMicrotaskCheckpoint(); }")
 }
-performance.measure = function() {}
 load('shell-polyfill-hack.js')
+performance.measure = function() {}
 document.body.appendChild(document.createElement("app-root"));
 
 load("dist/runtime.e42baa953544dd4f.js")// type="module"></script>

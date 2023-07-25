@@ -1318,9 +1318,9 @@ var app = (function () {
           append(div, label),
           mounted ||
             ((dispose = [
-              listen(input, "keydown", ctx[4]),
-              listen(input, "blur", ctx[5]),
-              ((action_result = ctx[6].call(null, input)),
+              listen(input, "keydown", ctx[5]),
+              listen(input, "blur", ctx[6]),
+              ((action_result = ctx[7].call(null, input)),
               action_result && is_function(action_result.destroy)
                 ? action_result.destroy
                 : noop),
@@ -1348,12 +1348,13 @@ var app = (function () {
       t1,
       t2,
       button,
+      div_class_value,
       t3,
       li_class_value,
       mounted,
       dispose,
       t1_value = ctx[0].description + "",
-      if_block = ctx[1] && create_if_block$1(ctx);
+      if_block = ctx[2] && create_if_block$1(ctx);
     return {
       c() {
         (li = element("li")),
@@ -1370,14 +1371,15 @@ var app = (function () {
           attr(input, "type", "checkbox"),
           (input.checked = input_checked_value = ctx[0].completed),
           attr(button, "class", "destroy"),
-          attr(div, "class", "view"),
+          attr(div, "class", (div_class_value = "targeted view-" + ctx[1])),
           attr(
             li,
             "class",
             (li_class_value =
-              (ctx[0].completed ? "completed" : "") +
-              " " +
-              (ctx[1] ? "editing" : ""))
+              "targeted li-" +
+              ctx[1] +
+              (ctx[0].completed ? " completed" : "") +
+              (ctx[2] ? " editing" : ""))
           );
       },
       m(target, anchor) {
@@ -1393,9 +1395,9 @@ var app = (function () {
           if_block && if_block.m(li, null),
           mounted ||
             ((dispose = [
-              listen(input, "change", ctx[7]),
-              listen(label, "dblclick", ctx[3]),
-              listen(button, "click", ctx[2]),
+              listen(input, "change", ctx[8]),
+              listen(label, "dblclick", ctx[4]),
+              listen(button, "click", ctx[3]),
             ]),
             (mounted = !0));
       },
@@ -1406,19 +1408,23 @@ var app = (function () {
           1 & dirty &&
             t1_value !== (t1_value = ctx[0].description + "") &&
             set_data(t1, t1_value),
-          ctx[1]
+          2 & dirty &&
+            div_class_value !== (div_class_value = "targeted view-" + ctx[1]) &&
+            attr(div, "class", div_class_value),
+          ctx[2]
             ? if_block
               ? if_block.p(ctx, dirty)
               : ((if_block = create_if_block$1(ctx)),
                 if_block.c(),
                 if_block.m(li, null))
             : if_block && (if_block.d(1), (if_block = null)),
-          3 & dirty &&
+          7 & dirty &&
             li_class_value !==
               (li_class_value =
-                (ctx[0].completed ? "completed" : "") +
-                " " +
-                (ctx[1] ? "editing" : "")) &&
+                "targeted li-" +
+                ctx[1] +
+                (ctx[0].completed ? " completed" : "") +
+                (ctx[2] ? " editing" : "")) &&
             attr(li, "class", li_class_value);
       },
       i: noop,
@@ -1433,6 +1439,7 @@ var app = (function () {
   }
   function instance$1($$self, $$props, $$invalidate) {
     let { item: item } = $$props,
+      { index: index } = $$props,
       editing = !1;
     const dispatch = createEventDispatcher();
     function removeItem() {
@@ -1440,19 +1447,21 @@ var app = (function () {
     }
     return (
       ($$self.$$set = ($$props) => {
-        "item" in $$props && $$invalidate(0, (item = $$props.item));
+        "item" in $$props && $$invalidate(0, (item = $$props.item)),
+          "index" in $$props && $$invalidate(1, (index = $$props.index));
       }),
       [
         item,
+        index,
         editing,
         removeItem,
         function () {
-          $$invalidate(1, (editing = !0));
+          $$invalidate(2, (editing = !0));
         },
         function (event) {
           "Enter" === event.key
             ? event.target.blur()
-            : "Escape" === event.key && $$invalidate(1, (editing = !1));
+            : "Escape" === event.key && $$invalidate(2, (editing = !1));
         },
         function (event) {
           if (!editing) return;
@@ -1460,7 +1469,7 @@ var app = (function () {
           value.length
             ? $$invalidate(0, (item.description = value), item)
             : removeItem(),
-            $$invalidate(1, (editing = !1));
+            $$invalidate(2, (editing = !1));
         },
         async function (element) {
           await (schedule_update(), resolved_promise), element.focus();
@@ -1475,6 +1484,7 @@ var app = (function () {
       super(),
         init(this, options, instance$1, create_fragment$1, safe_not_equal, {
           item: 0,
+          index: 1,
         });
     }
   }
@@ -1488,7 +1498,8 @@ var app = (function () {
     );
   }
   function create_if_block(ctx) {
-    let section,
+    let main,
+      div,
       input,
       input_checked_value,
       t0,
@@ -1523,7 +1534,8 @@ var app = (function () {
       footer.$on("removeCompletedItems", ctx[8]),
       {
         c() {
-          (section = element("section")),
+          (main = element("main")),
+            (div = element("div")),
             (input = element("input")),
             (t0 = space()),
             (label = element("label")),
@@ -1538,20 +1550,22 @@ var app = (function () {
             attr(input, "type", "checkbox"),
             (input.checked = input_checked_value = ctx[2] === ctx[1].length),
             attr(label, "for", "toggle-all"),
+            attr(div, "class", "toggle-all-container"),
             attr(ul, "class", "todo-list"),
-            attr(section, "class", "main");
+            attr(main, "class", "main");
         },
         m(target, anchor) {
-          insert(target, section, anchor),
-            append(section, input),
-            append(section, t0),
-            append(section, label),
-            append(section, t2),
-            append(section, ul);
+          insert(target, main, anchor),
+            append(main, div),
+            append(div, input),
+            append(div, t0),
+            append(div, label),
+            append(main, t2),
+            append(main, ul);
           for (let i = 0; i < each_blocks.length; i += 1)
             each_blocks[i] && each_blocks[i].m(ul, null);
-          append(section, t3),
-            mount_component(footer, section, null),
+          append(main, t3),
+            mount_component(footer, main, null),
             (current = !0),
             mounted ||
               ((dispose = listen(input, "change", ctx[7])), (mounted = !0));
@@ -1665,7 +1679,7 @@ var app = (function () {
           transition_out(footer.$$.fragment, local), (current = !1);
         },
         d(detaching) {
-          detaching && detach(section);
+          detaching && detach(main);
           for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].d();
           destroy_component(footer), (mounted = !1), dispose();
         },
@@ -1679,6 +1693,7 @@ var app = (function () {
     }
     let item_props = {
       editing: editing,
+      index: ctx[13],
     };
     return (
       void 0 !== ctx[11] && (item_props.item = ctx[11]),
@@ -1713,12 +1728,13 @@ var app = (function () {
           ctx = new_ctx;
           const item_changes = {};
           var fn;
-          !updating_item &&
-            16 & dirty &&
-            ((updating_item = !0),
-            (item_changes.item = ctx[11]),
-            (fn = () => (updating_item = !1)),
-            flush_callbacks.push(fn)),
+          16 & dirty && (item_changes.index = ctx[13]),
+            !updating_item &&
+              16 & dirty &&
+              ((updating_item = !0),
+              (item_changes.item = ctx[11]),
+              (fn = () => (updating_item = !1)),
+              flush_callbacks.push(fn)),
             item.$set(item_changes);
         },
         i(local) {

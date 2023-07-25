@@ -16762,7 +16762,9 @@ var app = app || {};
     // appending its element to the `<ul>`.
     addOne: function (todo) {
       const view = new app.TodoView({ model: todo });
-      this.$list.append(view.render().el);
+      const $el = view.render().$el;
+      $el.addClass(`targeted li-${todo.get("order") - 1}`);
+      this.$list.append($el);
     },
 
     // Add all items in the **Todos** collection at once.
