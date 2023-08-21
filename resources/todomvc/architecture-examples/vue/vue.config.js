@@ -5,7 +5,9 @@ module.exports = defineConfig({
     terser: {
         minify: "terser",
         terserOptions: {
-            compress: true,
+            compress: false,
+            mangle: false,
+            format: { beautify: true },
         },
     },
 });
