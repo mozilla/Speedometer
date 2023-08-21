@@ -1,4 +1,4 @@
-
+/* eslint no-restricted-globals: off */
 import React from 'react';
 import { render } from 'react-dom';
 import Chart from './chart';

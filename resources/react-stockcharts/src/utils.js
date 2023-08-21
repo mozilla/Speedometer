@@ -1,3 +1,4 @@
+/* eslint import/no-webpack-loader-syntax: off */
 import data from '!!raw-loader!./data.tsv';
 import { tsvParse } from  "d3-dsv";
 import { timeParse } from "d3-time-format";
