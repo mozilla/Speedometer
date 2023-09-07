@@ -1,5 +1,6 @@
 import { Metric } from "./metric.mjs";
 import { params } from "./params.mjs";
+import Stats from "./fps.mjs";
 
 const performance = globalThis.performance;
 
@@ -333,6 +334,27 @@ export class BenchmarkRunner {
         this._page = null;
         this._metrics = null;
         this._iterationCount = params.iterationCount;
+
+        const USE_FPS = true;
+
+        if (USE_FPS) {
+            this.suiteStats = new Stats();
+            this.suiteStats.dom.style.top = "100px";
+            document.body.append(this.suiteStats.dom);
+
+            // Todo move this to the actual start and stop looping when done
+            const animate = () => {
+                if (this._isRunningSuite)
+                    this.suiteStats.update();
+                else
+                    this.suiteStats.begin();
+
+                requestAnimationFrame(animate);
+            };
+
+            requestAnimationFrame(animate);
+        }
+
         if (params.shuffleSeed !== "off")
             this._suiteOrderRandomNumberGenerator = seededHashRandomNumberGenerator(params.shuffleSeed);
     }
@@ -460,6 +482,7 @@ export class BenchmarkRunner {
         if (this._client?.willRunTest)
             await this._client.willRunTest(suite, test);
 
+        this._isRunningSuite = true;
         // Prepare all mark labels outside the measuring loop.
         const startLabel = `${suite.name}.${test.name}-start`;
         const syncEndLabel = `${suite.name}.${test.name}-sync-end`;
@@ -506,7 +529,9 @@ export class BenchmarkRunner {
         const invokerClass = params.measurementMethod === "raf" ? RAFTestInvoker : TimerTestInvoker;
         const invoker = new invokerClass(runSync, measureAsync, report);
 
-        return invoker.start();
+        let results = await invoker.start();
+        this._isRunningSuite = false;
+        return results;
     }
 
     async _recordTestResults(suite, test, syncTime, asyncTime) {
