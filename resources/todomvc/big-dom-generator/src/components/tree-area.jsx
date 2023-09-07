@@ -1,30 +1,24 @@
-import { LCG } from "random-seedable";
-import { useRef } from "react";
-import { DEFAULT_SEED_FOR_RANDOM_NUMBER_GENERATOR, MAX_GENERATED_DOM_DEPTH, MAX_NUMBER_OF_CHILDREN, PROBABILITY_OF_HAVING_CHILDREN, TARGET_SIZE, MAX_VISIBLE_TREE_VIEW_ITEM_DEPTH } from "../../params";
+import { MAX_VISIBLE_TREE_VIEW_ITEM_DEPTH } from "../../params";
+import { generateTreeHead } from "./../tree-generator";
 
 import ChevronRight from "./../assets/Smock_ChevronRight_18_N.svg";
 import TaskListIcon from "./../assets/Smock_TaskList_18_N.svg";
 
 const FolderWrapper = (props) => {
-    const { nodeCount, random, maxDepth, maxNumChildren, childProbability, currentDepth } = props;
-    // prettier-ignore
-    if (currentDepth >= maxDepth)
-        return null;
-    // Choose a random number of children.
-    const numChildren = random.randRange(1, maxNumChildren);
-    const children = [];
-    for (let i = 0; i < numChildren && nodeCount.current < TARGET_SIZE; i++)
-        children.push(<TreeItem key={i} nodeCount={nodeCount} random={random} numChildren={numChildren} maxNumChildren={maxNumChildren} maxDepth={maxDepth} childProbability={childProbability} currentDepth={currentDepth + 1} />);
+    const { treeNode, currentDepth } = props;
 
-    nodeCount.current = nodeCount.current + 1;
+    const children = [];
+    treeNode.children.forEach((child) => {
+        children.push(<TreeItem treeNode={child} currentDepth={currentDepth + 1} />);
+    });
+
     return <ul className="spectrum-TreeView spectrum-TreeView--sizeS">{children}</ul>;
 };
 
 const TreeItem = (props) => {
-    const { nodeCount, random, maxDepth, maxNumChildren, childProbability, currentDepth } = props;
-    nodeCount.current = nodeCount.current + 4;
-    // Choose whether to have children.
-    const children = random.coin(childProbability) ? <FolderWrapper nodeCount={nodeCount} random={random} maxNumChildren={maxNumChildren} maxDepth={maxDepth} childProbability={childProbability} currentDepth={currentDepth + 1} /> : null;
+    const { treeNode, currentDepth } = props;
+
+    const children = treeNode.children.length ? <FolderWrapper treeNode={treeNode.children[0]} currentDepth={currentDepth + 1} /> : null;
     const treeViewItemIsOpen = children && currentDepth < MAX_VISIBLE_TREE_VIEW_ITEM_DEPTH ? "is-open" : "";
     return (
         <li className={`spectrum-TreeView-item ${treeViewItemIsOpen}`}>
@@ -42,15 +36,16 @@ const TreeItem = (props) => {
 };
 
 export const TreeArea = () => {
-    const nodeCount = useRef(0);
-    const random = new LCG(DEFAULT_SEED_FOR_RANDOM_NUMBER_GENERATOR);
-    const maxNumChildren = MAX_NUMBER_OF_CHILDREN;
-    const maxDepth = MAX_GENERATED_DOM_DEPTH;
-    const childProbability = PROBABILITY_OF_HAVING_CHILDREN;
+    // FolderWrapper generates 1 dom element.
+    // TreeItem generates either 5 or 10 elements because ChevronRight is
+    // inlined as a svg element with one path child and TaskListIcon is
+    // inlined as a svg element with 4 path children and one defs child.
+    const treeOptions = { listWeight: 1, openItemWeight: 5, closedItemWeight: 10 };
+    const treeHead = generateTreeHead(treeOptions);
     return (
         <div className="tree-area">
             <h4 className="spectrum-Heading spectrum-Heading--sizeXS">Sprints</h4>
-            <FolderWrapper nodeCount={nodeCount} random={random} maxNumChildren={maxNumChildren} maxDepth={maxDepth} childProbability={childProbability} currentDepth={0} />
+            <FolderWrapper treeNode={treeHead} currentDepth={0} />
         </div>
     );
 };
