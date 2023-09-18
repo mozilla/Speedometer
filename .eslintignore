@@ -4,6 +4,7 @@ package-lock.json
 **/.angular
 
 /resources/tentative/*
+!/resources/tentative/react-redux-toolkit
 
 /resources/todomvc/architecture-examples/*
 !/resources/todomvc/architecture-examples/angular
