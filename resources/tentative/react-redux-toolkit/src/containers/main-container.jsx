@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import Main from "../components/main";
-import { editTodo, toggleTodo, deleteTodo, toggleAll, clearCompleted } from "../actions";
+import { editTodo, toggleTodo, deleteTodo, toggleAll, clearCompleted, selectTodos } from "../slices/todos";
 import { withRouter } from "react-router-dom";
 import { getCompletedTodos, getVisibleTodos } from "../selectors/filters";
 
 const mapStateToProps = (state, ownProps) => {
-    const { todos } = state;
+    const todos = selectTodos(state);
     const { location } = ownProps;
 
     const visibleTodos = getVisibleTodos(todos, location.pathname);

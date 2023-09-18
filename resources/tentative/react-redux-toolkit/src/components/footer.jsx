@@ -35,7 +35,7 @@ export default class Footer extends Component {
                     </li>
                 </ul>
                 {completedCount > 0 ? (
-                    <button className="clear-completed" onClick={onClearCompleted}>
+                    <button className="clear-completed" onClick={() => onClearCompleted()}>
                         Clear completed
                     </button>
                 ) : null}
