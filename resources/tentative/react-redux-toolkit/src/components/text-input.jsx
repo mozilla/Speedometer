@@ -1,56 +1,50 @@
-import { Component } from "react";
+import { useState } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-export default class TextInput extends Component {
-    static propTypes = {
-        onSave: PropTypes.func.isRequired,
-        text: PropTypes.string,
-        placeholder: PropTypes.string,
-        editing: PropTypes.bool, // input is used in Item to edit the todo.
-        newTodo: PropTypes.bool, // input is used in Header to create a todo.
-    };
+export default function TextInput({ onSave, text: initialText, placeholder, editing, newTodo }) {
+    const [text, setText] = useState(initialText || "");
 
-    state = {
-        text: this.props.text || "",
-    };
-
-    handleSubmit = (e) => {
-        const text = e.target.value.trim();
+    const handleSubmit = (e) => {
         if (e.key === "Enter") {
-            this.props.onSave(text);
-            if (this.props.newTodo)
-                this.setState({ text: "" });
+            onSave(text);
+            if (newTodo)
+                setText("");
         }
     };
 
-    handleChange = (e) => {
-        this.setState({ text: e.target.value });
+    const handleChange = (e) => {
+        setText(e.currentTarget.value);
     };
 
-    handleBlur = (e) => {
+    const handleBlur = (e) => {
         // If this input is used in the Header, call onSave to create a new todo.
-
-        if (!this.props.newTodo)
-            this.props.onSave(e.target.value);
+        if (!newTodo)
+            onSave(text);
     };
 
-    render() {
-        return (
-            <input
-                className={classnames({
-                    edit: this.props.editing,
-                    "new-todo": this.props.newTodo,
-                })}
-                type="text"
-                data-testid="text-input"
-                placeholder={this.props.placeholder}
-                autoFocus
-                value={this.state.text}
-                onBlur={this.handleBlur}
-                onChange={this.handleChange}
-                onKeyDown={this.handleSubmit}
-            />
-        );
-    }
+    return (
+        <input
+            className={classnames({
+                edit: editing,
+                "new-todo": newTodo,
+            })}
+            type="text"
+            data-testid="text-input"
+            placeholder={placeholder}
+            autoFocus
+            value={text}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            onKeyDown={handleSubmit}
+        />
+    );
 }
+
+TextInput.propTypes = {
+    onSave: PropTypes.func.isRequired,
+    text: PropTypes.string,
+    placeholder: PropTypes.string,
+    editing: PropTypes.bool, // input is used in Item to edit the todo.
+    newTodo: PropTypes.bool, // input is used in Header to create a todo.
+};
