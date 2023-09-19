@@ -1,14 +1,16 @@
 import { useCallback } from "react";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import TextInput from "./text-input";
+import { addTodo } from "../slices/todos";
 
-export default function Header({ addTodo }) {
+export default function Header() {
+    const dispatch = useDispatch();
     const handleSave = useCallback(
         (text) => {
             if (text.length !== 0)
-                addTodo(text);
+                dispatch(addTodo(text));
         },
-        [addTodo]
+        [dispatch]
     );
 
     return (
@@ -19,6 +21,4 @@ export default function Header({ addTodo }) {
     );
 }
 
-Header.propTypes = {
-    addTodo: PropTypes.func.isRequired,
-};
+Header.propTypes = {};

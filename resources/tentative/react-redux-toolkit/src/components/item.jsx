@@ -1,16 +1,19 @@
 import { useState, memo } from "react";
+import { useDispatch } from "react-redux";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import TextInput from "./text-input";
+import { toggleTodo, deleteTodo, editTodo } from "../slices/todos";
 
-function Item({ todo, toggleTodo, deleteTodo, index, editTodo }) {
+function Item({ todo, index }) {
+    const dispatch = useDispatch();
     const [isEditing, setIsEditing] = useState(false);
 
     const handleSave = (text) => {
         if (text.length === 0)
-            deleteTodo(todo.id);
+            dispatch(deleteTodo(todo.id));
         else
-            editTodo({ id: todo.id, text });
+            dispatch(editTodo({ id: todo.id, text }));
 
         setIsEditing(false);
     };
@@ -21,11 +24,11 @@ function Item({ todo, toggleTodo, deleteTodo, index, editTodo }) {
     } else {
         element = (
             <div className="view">
-                <input className="toggle" type="checkbox" data-testid="todo-item-toggle" checked={todo.completed} onChange={() => toggleTodo(todo.id)} />
+                <input className="toggle" type="checkbox" data-testid="todo-item-toggle" checked={todo.completed} onChange={() => dispatch(toggleTodo(todo.id))} />
                 <label onDoubleClick={() => setIsEditing(true)} data-testid="todo-item-label">
                     {todo.text}
                 </label>
-                <button className="destroy" data-testid="todo-item-button" onClick={() => deleteTodo(todo.id)} />
+                <button className="destroy" data-testid="todo-item-button" onClick={() => dispatch(deleteTodo(todo.id))} />
             </div>
         );
     }
@@ -48,8 +51,5 @@ export default memo(Item);
 
 Item.propTypes = {
     todo: PropTypes.object.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    toggleTodo: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
 };
