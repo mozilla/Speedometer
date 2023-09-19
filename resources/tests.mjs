@@ -251,6 +251,7 @@ Suites.push({
             const newTodo = page.querySelector(".new-todo");
             for (let i = 0; i < numberOfItemsToAdd; i++) {
                 newTodo.setValue(getTodoText(defaultLanguage, i));
+                newTodo.dispatchEvent("input");
                 newTodo.enter("keydown");
             }
         }),

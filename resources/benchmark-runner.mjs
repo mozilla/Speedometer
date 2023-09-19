@@ -131,8 +131,22 @@ class PageElement {
         this.#node = node;
     }
 
+    // Imported from dom-testing-library in
+    // https://github.com/testing-library/dom-testing-library/blob/2653fd934f33ce19377c98029efe3e983a1c602b/src/events.js#L106-L123
     setValue(value) {
-        this.#node.value = value;
+        const { set: valueSetter } = Object.getOwnPropertyDescriptor(this.#node, "value") || {};
+        const prototype = Object.getPrototypeOf(this.#node);
+        const { set: prototypeValueSetter } = Object.getOwnPropertyDescriptor(prototype, "value") || {};
+        if (prototypeValueSetter && valueSetter !== prototypeValueSetter) {
+            prototypeValueSetter.call(this.#node, value);
+        } else {
+            /* istanbul ignore if */
+            // eslint-disable-next-line no-lonely-if -- Can't be ignored by istanbul otherwise
+            if (valueSetter)
+                valueSetter.call(this.#node, value);
+            else
+                throw new Error("The given element does not have a value setter");
+        }
     }
 
     click() {
