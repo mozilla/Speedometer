@@ -1,9 +1,20 @@
 import classnames from "classnames";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { clearCompleted, selectTodos } from "../slices/todos";
 
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from "../constants/todo-filters";
+import { getCompletedTodos } from "../selectors/filters";
 
-export default function Footer({ completedCount, onClearCompleted, activeCount, filter }) {
+export default function Footer() {
+    const dispatch = useDispatch();
+    const todos = useSelector(selectTodos);
+    const location = useLocation();
+
+    const completedCount = getCompletedTodos(todos).length;
+    const activeCount = todos.length - completedCount;
+    const filter = location.pathname;
+
     return (
         <footer className="footer" data-testid="footer">
             <span className="todo-count">{`${activeCount} ${activeCount === 1 ? "item" : "items"} left!`}</span>
@@ -25,7 +36,7 @@ export default function Footer({ completedCount, onClearCompleted, activeCount, 
                 </li>
             </ul>
             {completedCount > 0 ? (
-                <button className="clear-completed" onClick={() => onClearCompleted()}>
+                <button className="clear-completed" onClick={() => dispatch(clearCompleted())}>
                     Clear completed
                 </button>
             ) : null}
@@ -33,9 +44,4 @@ export default function Footer({ completedCount, onClearCompleted, activeCount, 
     );
 }
 
-Footer.propTypes = {
-    completedCount: PropTypes.number.isRequired,
-    activeCount: PropTypes.number.isRequired,
-    filter: PropTypes.string.isRequired,
-    onClearCompleted: PropTypes.func.isRequired,
-};
+Footer.propTypes = {};
