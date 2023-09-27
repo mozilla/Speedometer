@@ -1,6 +1,4 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
-
-const initialState = {};
+import { createSlice, createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 
 function uuid() {
     let uuid = "";
@@ -19,34 +17,44 @@ function uuid() {
     return uuid;
 }
 
+const todosAdapter = createEntityAdapter();
+const todosSelectors = todosAdapter.getSelectors();
+
 export const todosSlice = createSlice({
     name: "todos",
-    initialState,
+    initialState: todosAdapter.getInitialState(),
     reducers: {
         addTodo: (state, { payload }) => {
             const id = uuid();
-            state[id] = { id, text: payload, completed: false };
+            todosAdapter.setOne(state, { id, text: payload, completed: false });
         },
-        deleteTodo: (state, { payload }) => {
-            delete state[payload];
-        },
-        editTodo: (state, { payload }) => {
-            state[payload.id].text = payload.text;
-        },
+        deleteTodo: todosAdapter.removeOne,
+        editTodo: todosAdapter.updateOne,
         toggleTodo: (state, { payload }) => {
-            state[payload].completed = !state[payload].completed;
+            const todo = todosSelectors.selectById(state, payload);
+            todosAdapter.updateOne(state, { id: payload, changes: { completed: !todo.completed } });
         },
         toggleAll: (state) => {
-            const todos = Object.values(state);
+            const todos = todosSelectors.selectAll(state);
             const areAllMarked = todos.every((todo) => todo.completed);
-            todos.forEach((todo) => (todo.completed = !areAllMarked));
+            if (areAllMarked) {
+                todosAdapter.updateMany(
+                    state,
+                    todosSelectors.selectIds(state).map((id) => ({ id, changes: { completed: false } }))
+                );
+            } else {
+                todosAdapter.updateMany(
+                    state,
+                    todos.filter((todo) => !todo.completed).map((todo) => ({ id: todo.id, changes: { completed: true } }))
+                );
+            }
         },
         clearCompleted: (state) => {
-            for (const id in state) {
-                if (state[id].completed)
-                    delete state[id];
-            }
-
+            const todos = todosSelectors.selectAll(state);
+            todosAdapter.removeMany(
+                state,
+                todos.filter((todo) => todo.completed).map((todo) => todo.id)
+            );
         },
     },
 });
@@ -54,7 +62,4 @@ export const todosSlice = createSlice({
 export const { addTodo, deleteTodo, editTodo, toggleTodo, toggleAll, clearCompleted } = todosSlice.actions;
 export default todosSlice.reducer;
 
-export const selectTodos = createSelector(
-    (state) => state.todos,
-    (todos) => Object.values(todos)
-);
+export const selectTodos = (state) => todosSelectors.selectAll(state.todos);
