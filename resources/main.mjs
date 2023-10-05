@@ -113,6 +113,19 @@ class MainBenchmarkClient {
             this.showResultsDetails();
         else
             this.showResultsSummary();
+
+        // Todo - param and interstitial UI
+        fetch("https://us-central1-benchmark-results.cloudfunctions.net/insertData", {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                json: this._metrics,
+                csv: this._formattedCSVResult()
+            })
+        });
     }
 
     _computeResults(measuredValuesList, displayUnit) {
