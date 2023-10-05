@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
+import { Virtuoso } from "react-virtuoso";
 import Item from "./item";
 import Footer from "./footer";
 
@@ -23,9 +24,7 @@ export default function Main(props) {
                 </label>
             </div>
             <ul className={classnames("todo-list", "show-priority")} data-testid="todo-list">
-                {visibleTodos.map((todo, index) => (
-                    <Item key={todo.id} todo={todo} index={index} />
-                ))}
+                <Virtuoso useWindowScroll data={visibleTodos} itemContent={(index, todo) => <Item key={todo.id} todo={todo} index={index} />} />
             </ul>
             <Footer />
         </main>
