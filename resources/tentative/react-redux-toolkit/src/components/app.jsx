@@ -1,7 +1,7 @@
-import Header from "./components/header";
-import Main from "./components/main";
+import Header from "./header";
+import Main from "./main";
 
-import "./styles/app.css";
+import "../styles/app.css";
 
 export default function App() {
     return (

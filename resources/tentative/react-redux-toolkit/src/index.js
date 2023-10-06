@@ -1,7 +1,7 @@
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { HashRouter, Route } from "react-router-dom";
-import App from "./app";
+import App from "./components/app";
 import { store } from "./store";
 import "todomvc-app-css/index.css";
 
