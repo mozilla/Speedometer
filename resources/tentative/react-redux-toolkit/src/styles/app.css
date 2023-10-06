@@ -29,3 +29,10 @@ but useful for people who use screen readers */
   border-radius: 3px;
   margin: 5px;
 }
+
+.action-buttons label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 5px;;
+}

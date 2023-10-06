@@ -1,3 +1,4 @@
+import { useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 import { Virtuoso } from "react-virtuoso";
@@ -11,6 +12,11 @@ export default function Main(props) {
     const todos = useSelector(selectTodos);
     const visibleTodos = useSelector(selectVisibleTodos);
     const completedCount = useSelector((state) => selectCompletedTodos(state).length);
+    const virtuoso = useRef(null);
+    const scrollToItemValue = useSelector((state) => state.viewOptions.scrollToItemValue);
+    useLayoutEffect(() => {
+        virtuoso.current?.scrollToIndex({ index: scrollToItemValue });
+    }, [scrollToItemValue]);
 
     if (todos.length === 0)
         return null;
@@ -24,7 +30,7 @@ export default function Main(props) {
                 </label>
             </div>
             <ul className={classnames("todo-list", "show-priority")} data-testid="todo-list">
-                <Virtuoso useWindowScroll data={visibleTodos} itemContent={(index, todo) => <Item key={todo.id} todo={todo} index={index} />} />
+                <Virtuoso ref={virtuoso} useWindowScroll data={visibleTodos} itemContent={(index, todo) => <Item key={todo.id} todo={todo} index={index} />} />
             </ul>
             <Footer />
         </main>
