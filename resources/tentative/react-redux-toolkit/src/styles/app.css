@@ -22,3 +22,10 @@ but useful for people who use screen readers */
 .toggle-all-label {
     pointer-events: none;
 }
+
+.action-buttons button {
+  background: #ddd;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin: 5px;
+}

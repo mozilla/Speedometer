@@ -20,6 +20,11 @@ function uuid() {
     return uuid;
 }
 
+const verbs = ["remember", "pick up", "buy"];
+const things = ["the milk", "the butter", "the meat", "fruits", "vegetables", "salt and pepper", "eggs"];
+const locations = ["supermarket", "grocery shop", "local market", "organic market"];
+const ITEM_COUNT = 100_000;
+
 export const todosSlice = createSlice({
     name: "todos",
     initialState,
@@ -49,10 +54,21 @@ export const todosSlice = createSlice({
             }
 
         },
+        generateStateWithLotsOfItems: () => {
+            const newState = {};
+            for (let i = 0; i < ITEM_COUNT; i++) {
+                const verb = verbs[i % verbs.length];
+                const thing = things[i % things.length];
+                const location = locations[i % locations.length];
+                const id = uuid();
+                newState[id] = { id, text: `${verb} ${thing} at the ${location}`, completed: false };
+            }
+            return newState;
+        },
     },
 });
 
-export const { addTodo, deleteTodo, editTodo, toggleTodo, toggleAll, clearCompleted } = todosSlice.actions;
+export const { addTodo, deleteTodo, editTodo, toggleTodo, toggleAll, clearCompleted, generateStateWithLotsOfItems } = todosSlice.actions;
 export default todosSlice.reducer;
 
 export const selectTodos = createSelector(
