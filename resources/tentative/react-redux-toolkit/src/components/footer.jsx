@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { clearCompleted, selectTodos } from "../slices/todos";
+import { clearCompleted, selectTodos, selectCompletedTodos } from "../slices/todos";
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from "../constants/todo-filters";
-import { getCompletedTodos } from "../selectors/filters";
 
 export default function Footer() {
     const dispatch = useDispatch();
     const todos = useSelector(selectTodos);
-    const completedCount = getCompletedTodos(todos).length;
+    const completedCount = useSelector((state) => selectCompletedTodos(state).length);
     const activeCount = todos.length - completedCount;
 
     return (

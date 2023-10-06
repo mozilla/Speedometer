@@ -1,4 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from "../constants/todo-filters";
 
 const initialState = {};
 
@@ -58,3 +59,22 @@ export const selectTodos = createSelector(
     (state) => state.todos,
     (todos) => Object.values(todos)
 );
+
+export const selectVisibleTodos = createSelector(
+    selectTodos,
+    (state) => state.pathname,
+    (todos, pathname) => {
+        switch (pathname) {
+            case SHOW_ALL:
+                return todos;
+            case SHOW_COMPLETED:
+                return todos.filter((t) => t.completed);
+            case SHOW_ACTIVE:
+                return todos.filter((t) => !t.completed);
+            default:
+                throw new Error(`Unknown filter: ${pathname}.`);
+        }
+    }
+);
+
+export const selectCompletedTodos = createSelector(selectTodos, (todos) => todos.filter((t) => t.completed));

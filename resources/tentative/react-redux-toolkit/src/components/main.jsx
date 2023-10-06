@@ -1,22 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
-import { useLocation } from "react-router-dom";
 import Item from "./item";
 import Footer from "./footer";
 
-import { toggleAll, selectTodos } from "../slices/todos";
-import { getCompletedTodos, getVisibleTodos } from "../selectors/filters";
+import { toggleAll, selectTodos, selectVisibleTodos, selectCompletedTodos } from "../slices/todos";
 
 export default function Main(props) {
     const dispatch = useDispatch();
     const todos = useSelector(selectTodos);
-    const location = useLocation();
+    const visibleTodos = useSelector(selectVisibleTodos);
+    const completedCount = useSelector((state) => selectCompletedTodos(state).length);
 
     if (todos.length === 0)
         return null;
-
-    const visibleTodos = getVisibleTodos(todos, location.pathname);
-    const completedCount = getCompletedTodos(todos).length;
 
     return (
         <main className="main" data-testid="main">

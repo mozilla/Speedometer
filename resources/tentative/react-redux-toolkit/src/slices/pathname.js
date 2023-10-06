@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const pathnameSlice = createSlice({
     name: "pathname",
-    initialState: "",
+    initialState: "/",
     reducers: {
         setPathname: (state, { payload }) => {
             return payload;
