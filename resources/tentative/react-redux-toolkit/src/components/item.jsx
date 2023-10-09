@@ -1,6 +1,5 @@
 import { useState, memo } from "react";
 import { useDispatch } from "react-redux";
-import classnames from "classnames";
 import PropTypes from "prop-types";
 import TextInput from "./text-input";
 import { toggleTodo, deleteTodo, editTodo } from "../slices/todos";
@@ -33,18 +32,7 @@ function Item({ todo, index }) {
         );
     }
 
-    return (
-        <li
-            className={classnames({
-                completed: todo.completed,
-                editing: isEditing,
-            })}
-            data-testid="todo-item"
-            data-priority={4 - (index % 5)}
-        >
-            {element}
-        </li>
-    );
+    return element;
 }
 
 export default memo(Item);
