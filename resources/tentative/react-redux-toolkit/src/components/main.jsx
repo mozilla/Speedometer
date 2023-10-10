@@ -1,37 +1,42 @@
-import { forwardRef, useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Virtuoso } from "react-virtuoso";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import Item from "./item";
 import Footer from "./footer";
 
 import { toggleAll, selectTodos, selectVisibleTodos, selectCompletedTodos } from "../slices/todos";
-
-const ListElement = forwardRef(function ListElement(props, ref) {
-    return <ul {...props} ref={ref} className="todo-list show-priority" />;
-});
-
-// It's a bit weird that we need both ItemElement and itemContent below, but
-// this is how the lib works: ItemElement is the container, while itemContent is
-// the content inside this container.
-function ItemElement(props) {
-    const index = props["data-item-index"];
-    const dataPriority = 4 - (index % 5);
-    return <li {...props} data-priority={dataPriority} />;
-}
 
 export default function Main(props) {
     const dispatch = useDispatch();
     const todos = useSelector(selectTodos);
     const visibleTodos = useSelector(selectVisibleTodos);
     const completedCount = useSelector((state) => selectCompletedTodos(state).length);
-    const virtuoso = useRef(null);
     const scrollToItemValue = useSelector((state) => state.viewOptions.scrollToItemValue);
+
+    // Most of the virtual list code comes from https://tanstack.com/virtual/v3/docs/examples/react/dynamic
+    const parentRef = useRef(null);
+    const parentOffsetRef = useRef(0);
     useLayoutEffect(() => {
-        virtuoso.current?.scrollToIndex({ index: scrollToItemValue });
-    }, [scrollToItemValue]);
+        parentOffsetRef.current = parentRef.current?.offsetTop ?? 0;
+    }, []);
+
+    const getItemKey = useCallback((index) => visibleTodos[index].id, [visibleTodos]);
+    const virtualizer = useWindowVirtualizer({
+        count: visibleTodos.length,
+        estimateSize: () => 88,
+        scrollMargin: parentOffsetRef.current,
+        getItemKey,
+    });
+
+    useLayoutEffect(() => {
+        if (visibleTodos.length > 0)
+            virtualizer.scrollToIndex(scrollToItemValue);
+    }, [visibleTodos.length, virtualizer, scrollToItemValue]);
 
     if (todos.length === 0)
         return null;
+
+    const items = virtualizer.getVirtualItems();
 
     return (
         <main className="main" data-testid="main">
@@ -41,7 +46,38 @@ export default function Main(props) {
                     Toggle All Input
                 </label>
             </div>
-            <Virtuoso ref={virtuoso} useWindowScroll components={{ List: ListElement, Item: ItemElement }} data={visibleTodos} itemContent={(index, todo) => <Item key={todo.id} todo={todo} index={index} />} />
+            <div ref={parentRef} className="scroll-container">
+                <div
+                    style={{
+                        height: virtualizer.getTotalSize(),
+                        width: "100%",
+                        position: "relative",
+                    }}
+                >
+                    <ul
+                        className="todo-list show-priority"
+                        style={{
+                            background: "white",
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            transform: `translateY(${items[0] ? items[0].start - virtualizer.options.scrollMargin : 0}px)`,
+                        }}
+                    >
+                        {items.map((virtualRow) => {
+                            const { index } = virtualRow;
+                            const todo = visibleTodos[index];
+                            const dataPriority = 4 - (index % 5);
+                            return (
+                                <li key={todo.id} data-priority={dataPriority} ref={virtualizer.measureElement} data-index={index}>
+                                    <Item key={todo.id} todo={todo} index={index} />
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            </div>
             <Footer />
         </main>
     );
