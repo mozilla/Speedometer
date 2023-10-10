@@ -43,3 +43,10 @@ but useful for people who use screen readers */
   margin-left: 43px !important;
   width: calc(100% - 43px) !important;
 }
+
+.header {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
