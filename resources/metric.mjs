@@ -3,15 +3,13 @@ import * as Statistics from "./statistics.mjs";
 export const MILLISECONDS_PER_MINUTE = 60 * 1000;
 
 export function exportObjectToMetricObject(json) {
-    console.log("Processing export");
     // This object doesn't have the getters and `parent` relationship. We need to loop through and make sure everything is
     // connected so the UI will work
     const metrics = {};
-    const metricNames = Object.keys(json);
 
-    for (const metricName of metricNames) {
-        const { unit, mean, geomean, delta, percentDelta, sum, min, max, values, children } = json[metricName];
-        const metric = new Metric(metricName, unit);
+    function exportIndividualObjectToMetricObject(json) {
+        const { name, unit, mean, geomean, delta, percentDelta, sum, min, max, values, children } = json;
+        const metric = new Metric(name, unit);
         metric.mean = mean;
         metric.geomean = geomean;
         metric.delta = delta;
@@ -23,13 +21,28 @@ export function exportObjectToMetricObject(json) {
 
         if (children) {
             for (const child of children) {
-                const childMetric = exportObjectToMetricObject(child);
+                const childMetric = exportIndividualObjectToMetricObject(child);
                 metric.addChild(childMetric);
             }
         }
         if (metric.parent === undefined)
-            metrics[metricName] = metric;
+            metrics[name] = metric;
 
+        return metric;
+    }
+
+    let childSet = new Set();
+    function collectChildren(json) {
+        for (const child of json.children || []) {
+            childSet.add(child.name);
+            collectChildren(child);
+        }
+    }
+    Object.values(json).forEach(collectChildren);
+
+    for (const topLevelMetric of Object.values(json)) {
+        if (!childSet.has(topLevelMetric.name))
+            exportIndividualObjectToMetricObject(topLevelMetric);
     }
 
     return metrics;

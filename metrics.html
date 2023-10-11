@@ -15,9 +15,28 @@
             }
         </style>
         <script type="module">
-            import { params } from "./resources/params.mjs";
             import { exportObjectToMetricObject } from "./resources/metric.mjs";
             import { renderMetricView } from "./resources/metric-ui.mjs";
+
+            const params = {
+                viewport: {
+                    width: 800,
+                    height: 600,
+                },
+            };
+            const searchParams = new URLSearchParams(window.location.search);
+            const load = searchParams.get("load");
+            if (load) {
+                fetch(load)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        let metrics = exportObjectToMetricObject(json);
+                        populateDetailedResults(metrics);
+                    })
+                    .catch((e) => {
+                        console.error(e);
+                    });
+            }
 
             function setupDrop(dropbox, opts = {}) {
                 var { dragClass, onDrop } = opts;
