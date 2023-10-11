@@ -247,23 +247,24 @@ Suites.push({
         element.focus();
     },
     tests: [
-        new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
-            const newTodo = page.querySelector(".new-todo");
-            for (let i = 0; i < numberOfItemsToAdd; i++) {
-                newTodo.setValue(getTodoText(defaultLanguage, i));
-                newTodo.dispatchEvent("input");
-                newTodo.enter("keydown");
-            }
+        new BenchmarkTestStep("Adding a lot of items", (page) => {
+            const addButton = page.querySelector("button");
+            addButton.click();
         }),
-        new BenchmarkTestStep("CompletingAllItems", (page) => {
-            const checkboxes = page.querySelectorAll(".toggle");
-            for (let i = 0; i < numberOfItemsToAdd; i++)
-                checkboxes[i].click();
+        new BenchmarkTestStep("scroll down the page 1", (page) => {
+            const scrollInput = page.querySelector("input[type=range]");
+            scrollInput.setValue(30000);
+            scrollInput.dispatchEvent("input");
         }),
-        new BenchmarkTestStep("DeletingAllItems", (page) => {
-            const deleteButtons = page.querySelectorAll(".destroy");
-            for (let i = numberOfItemsToAdd - 1; i >= 0; i--)
-                deleteButtons[i].click();
+        new BenchmarkTestStep("scroll down the page 2", (page) => {
+            const scrollInput = page.querySelector("input[type=range]");
+            scrollInput.setValue(60000);
+            scrollInput.dispatchEvent("input");
+        }),
+        new BenchmarkTestStep("scroll down the page 3", (page) => {
+            const scrollInput = page.querySelector("input[type=range]");
+            scrollInput.setValue(90000);
+            scrollInput.dispatchEvent("input");
         }),
     ],
 });

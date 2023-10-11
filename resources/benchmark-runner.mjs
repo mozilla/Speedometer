@@ -161,6 +161,10 @@ class PageElement {
         return new PageElement(this.#node[name]());
     }
 
+    getPropertyValue(name) {
+        return this.#node[name];
+    }
+
     dispatchEvent(eventName, options = NATIVE_OPTIONS, eventType = Event) {
         if (eventName === "submit")
             // FIXME FireFox doesn't like `new Event('submit')
