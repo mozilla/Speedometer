@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=850" />
+        <title>Speedometer Result Viewer</title>
+        <link rel="stylesheet" href="resources/main.css" />
+        <link rel="icon" href="resources/favicon.png" />
+        <style>
+            #details {
+                display: block;
+            }
+            .dragging {
+                background: rgb(116, 59, 59);
+            }
+        </style>
+        <script type="module">
+            import { params } from "./resources/params.mjs";
+            import { exportObjectToMetricObject } from "./resources/metric.mjs";
+            import { renderMetricView } from "./resources/metric-ui.mjs";
+
+            function setupDrop(dropbox, opts = {}) {
+                var { dragClass, onDrop } = opts;
+                var initializedOnBody = false;
+
+                // Bind drag events to the dropbox to add the class while dragging, and accept the drop data transfer.
+                dropbox.addEventListener("dragenter", onlyWithFiles(dragenter), false);
+                dropbox.addEventListener("dragleave", onlyWithFiles(dragleave), false);
+                dropbox.addEventListener("dragover", onlyWithFiles(dragover), false);
+                dropbox.addEventListener("drop", onlyWithFiles(drop), false);
+
+                // Bind to body to prevent the dropbox events from firing when it was initialized on the page.
+                document.body.addEventListener("dragstart", bodydragstart, true);
+                document.body.addEventListener("dragend", bodydragend, true);
+                document.body.addEventListener("drop", bodydrop, false);
+
+                function bodydragend(e) {
+                    initializedOnBody = false;
+                }
+
+                function bodydragstart(e) {
+                    initializedOnBody = true;
+                }
+
+                function bodydrop(e) {
+                    if (e.dataTransfer.files && e.dataTransfer.files.length) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                }
+
+                function onlyWithFiles(fn) {
+                    return function () {
+                        if (!initializedOnBody) {
+                            fn.apply(this, arguments);
+                        }
+                    };
+                }
+
+                function drop(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (dragClass) {
+                        dropbox.classList.remove(dragClass);
+                    }
+                    onDrop(e, e.dataTransfer.files);
+                }
+
+                function dragenter(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (dragClass) {
+                        dropbox.classList.add(dragClass);
+                    }
+                }
+
+                function dragleave(e) {
+                    if (dragClass) {
+                        dropbox.classList.remove(dragClass);
+                    }
+                }
+
+                function dragover(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    if (dragClass) {
+                        dropbox.classList.add(dragClass);
+                    }
+                }
+            }
+
+            function populateDetailedResults(metrics) {
+                const trackHeight = 24;
+                document.documentElement.style.setProperty("--metrics-line-height", `${trackHeight}px`);
+                const plotWidth = (params.viewport.width - 120) / 2;
+                document.getElementById("geomean-chart").innerHTML = renderMetricView({
+                    metrics: [metrics.Geomean],
+                    width: plotWidth,
+                    trackHeight,
+                    renderChildren: false,
+                    colors: ["white"],
+                });
+                const toplevelMetrics = Object.values(metrics).filter((each) => !each.parent && each.children.length > 0);
+                document.getElementById("tests-chart").innerHTML = renderMetricView({
+                    metrics: toplevelMetrics,
+                    width: plotWidth,
+                    trackHeight,
+                    renderChildren: false,
+                });
+
+                let html = "";
+                for (const metric of toplevelMetrics) {
+                    html += renderMetricView({
+                        metrics: metric.children,
+                        width: plotWidth,
+                        trackHeight,
+                        title: metric.name,
+                    });
+                }
+                document.getElementById("metrics-results").innerHTML = html;
+            }
+
+            setupDrop(document.body, {
+                dragClass: "dragging",
+                async onDrop(e, files) {
+                    try {
+                        let firstFile = files?.[0];
+                        let text = await firstFile.text();
+                        let json = JSON.parse(text);
+                        let metrics = exportObjectToMetricObject(json);
+                        populateDetailedResults(metrics);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                },
+            });
+        </script>
+    </head>
+    <body>
+        <main>
+            <section id="details">
+                <div class="section-grid">
+                    <h1 class="section-header">Result Viewer</h1>
+                    <div class="section-content all-metric-results">
+                        <div class="aggregated-metric-result">
+                            <h2>Geomean</h2>
+                            <div id="geomean-chart"></div>
+                            <h2>Tests</h2>
+                            <div id="tests-chart"></div>
+                        </div>
+                        <br />
+                        <h2>Detailed Metrics</h2>
+                        <div id="metrics-results"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
