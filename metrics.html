@@ -15,7 +15,7 @@
             }
         </style>
         <script type="module">
-            import { exportObjectToMetricObject } from "./resources/metric.mjs";
+            import { hydrateExportedMetrics } from "./resources/metric.mjs";
             import { renderMetricView } from "./resources/metric-ui.mjs";
 
             const params = {
@@ -30,7 +30,7 @@
                 fetch(load)
                     .then((response) => response.json())
                     .then((json) => {
-                        let metrics = exportObjectToMetricObject(json);
+                        let metrics = hydrateExportedMetrics(json);
                         populateDetailedResults(metrics);
                     })
                     .catch((e) => {
@@ -146,7 +146,7 @@
                         let firstFile = files?.[0];
                         let text = await firstFile.text();
                         let json = JSON.parse(text);
-                        let metrics = exportObjectToMetricObject(json);
+                        let metrics = hydrateExportedMetrics(json);
                         populateDetailedResults(metrics);
                     } catch (e) {
                         console.error(e);

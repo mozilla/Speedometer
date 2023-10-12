@@ -2,35 +2,36 @@ import * as Statistics from "./statistics.mjs";
 
 export const MILLISECONDS_PER_MINUTE = 60 * 1000;
 
-export function exportObjectToMetricObject(json) {
-    // This object doesn't have the getters and `parent` relationship. We need to loop through and make sure everything is
-    // connected so the UI will work
+export function hydrateExportedMetrics(json) {
+    // The exported object doesn't have the getters and `parent` relationships. We need to hydrate it to
+    // act as if the run was just completed.
     const metrics = {};
 
-    function exportIndividualObjectToMetricObject(json) {
-        const { name, unit, mean, geomean, delta, percentDelta, sum, min, max, values, children } = json;
+    function hydrateIndividualMetric(json) {
+        const { name, unit, children } = json;
         const metric = new Metric(name, unit);
-        metric.mean = mean;
-        metric.geomean = geomean;
-        metric.delta = delta;
-        metric.percentDelta = percentDelta;
-        metric.sum = sum;
-        metric.min = min;
-        metric.max = max;
-        metric.values = values;
+
+        const keys = Object.keys(json);
+        for (const key of keys) {
+            if (key === "name" || key === "unit" || key === "children")
+                continue;
+            metric[key] = json[key];
+        }
 
         if (children) {
             for (const child of children) {
-                const childMetric = exportIndividualObjectToMetricObject(child);
+                const childMetric = hydrateIndividualMetric(child);
                 metric.addChild(childMetric);
             }
         }
-        if (metric.parent === undefined)
-            metrics[name] = metric;
 
         return metric;
     }
 
+    // The exported object includes steps as top-level keys, but they've lost the parent
+    // associations which causes them to be treated as tests. They are also children of other
+    // top-level metrics, so they don't need to exist at the top level at all.
+    // We'll check if they are a child of anything else and skip them if so.
     let childSet = new Set();
     function collectChildren(json) {
         for (const child of json.children || []) {
@@ -41,8 +42,10 @@ export function exportObjectToMetricObject(json) {
     Object.values(json).forEach(collectChildren);
 
     for (const topLevelMetric of Object.values(json)) {
-        if (!childSet.has(topLevelMetric.name))
-            exportIndividualObjectToMetricObject(topLevelMetric);
+        if (!childSet.has(topLevelMetric.name)) {
+            let metric = hydrateIndividualMetric(topLevelMetric);
+            metrics[metric.name] = metric;
+        }
     }
 
     return metrics;
