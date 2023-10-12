@@ -7,7 +7,16 @@
         <link rel="stylesheet" href="resources/main.css" />
         <link rel="icon" href="resources/favicon.png" />
         <style>
+            #upload {
+                display: block;
+            }
+            .viewing-results #upload {
+                display: none;
+            }
             #details {
+                display: none;
+            }
+            .viewing-results #details {
                 display: block;
             }
             .dragging {
@@ -137,6 +146,7 @@
                     });
                 }
                 document.getElementById("metrics-results").innerHTML = html;
+                document.body.classList.add("viewing-results");
             }
 
             setupDrop(document.body, {
@@ -157,6 +167,12 @@
     </head>
     <body>
         <main>
+            <section id="upload">
+                <div class="section-grid">
+                    <h1 class="section-header">Upload a profile</h1>
+                    <div class="section-content all-metric-results">Drag a profile onto the page, or use the `?load=` query parameter to load a profile from a URL.</div>
+                </div>
+            </section>
             <section id="details">
                 <div class="section-grid">
                     <h1 class="section-header">Result Viewer</h1>
