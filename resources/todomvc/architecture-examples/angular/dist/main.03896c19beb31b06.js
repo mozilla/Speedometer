@@ -1094,13 +1094,14 @@
             for (;null !== parent && (1 === amount && 1 === viewOrContainer[5] || -1 === amount && 0 === viewOrContainer[5]); ) parent[5] += amount, 
             viewOrContainer = parent, parent = parent[3];
         }
-        const instructionState = {
+        var instructionState = {
             lFrame: createLFrame(null),
             bindingsEnabled: !0
         };
         function getBindingsEnabled() {
             return instructionState.bindingsEnabled;
         }
+
         function getLView() {
             return instructionState.lFrame.lView;
         }

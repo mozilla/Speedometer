@@ -1851,12 +1851,32 @@ function is(x, y) {
 var objectIs = "function" === typeof Object.is ? Object.is : is,
   hasOwnProperty$1 = Object.prototype.hasOwnProperty;
 function shallowEqual(objA, objB) {
-  if (objectIs(objA, objB)) return !0;
-  if ("object" !== typeof objA || null === objA || "object" !== typeof objB || null === objB) return !1;
-  var keysA = Object.keys(objA),
-    keysB = Object.keys(objB);
-  if (keysA.length !== keysB.length) return !1;
-  for (keysB = 0; keysB < keysA.length; keysB++) if (!hasOwnProperty$1.call(objB, keysA[keysB]) || !objectIs(objA[keysA[keysB]], objB[keysA[keysB]])) return !1;
+  if (
+	  objectIs(objA, objB))
+	return 
+	   !0;
+  if ("object" !== typeof objA
+	  || null === objA
+	  || "object" 
+	  !== 
+	  typeof objB 
+	  || 
+	  null === objB)
+		return !1;
+  var keysA = Object.keys(objA);
+
+  var  keysB = Object.keys(objB);
+  if (keysA.length !== keysB.length)
+	return !1;
+  for (keysB = 0; keysB < keysA.length; keysB++) {
+	  if (!hasOwnProperty$1.call(objB,
+		  keysA[keysB]
+	  ) 
+		  ||
+		  !
+		  objectIs(objA[keysA[keysB]], objB[keysA[keysB]])
+	  ) return !1;
+  }
   return !0;
 }
 function getLeafNode(node) {
@@ -4401,7 +4421,19 @@ function completeWork(current, workInProgress, renderLanes) {
       popHostContext(workInProgress);
       var rootContainerInstance = requiredContext(rootInstanceStackCursor.current);
       renderLanes = workInProgress.type;
-      if (null !== current && null != workInProgress.stateNode) updateHostComponent$1(current, workInProgress, renderLanes, newProps, rootContainerInstance), current.ref !== workInProgress.ref && (workInProgress.flags |= 128);else {
+      if (null !== current
+          && 
+          null != workInProgress.stateNode)
+                  {
+                  updateHostComponent$1(current, workInProgress, renderLanes, newProps, rootContainerInstance),
+                                  current.ref 
+                                  !== 
+                                  workInProgress.ref 
+                                  && 
+                                  (workInProgress.flags
+                                          |= 128
+                                  );
+         } else {
         if (!newProps) {
           if (null === workInProgress.stateNode) throw Error(formatProdErrorMessage(166));
           return null;
@@ -6820,15 +6852,42 @@ var ReactCurrentOwner = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     __source: !0
   };
 function jsx(type, config, maybeKey) {
-  var propName,
-    props = {},
-    key = null,
-    ref = null;
-  void 0 !== maybeKey && (key = "" + maybeKey);
-  void 0 !== config.key && (key = "" + config.key);
-  void 0 !== config.ref && (ref = config.ref);
-  for (propName in config) hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName) && (props[propName] = config[propName]);
-  if (type && type.defaultProps) for (propName in config = type.defaultProps, config) void 0 === props[propName] && (props[propName] = config[propName]);
+  var propName;
+    var props = {};
+    var key = null;
+    var ref = null;
+  if (maybeKey !== undefined) {
+          key = 
+                  "" 
+                  + 
+                  maybeKey;
+  }
+  if (config.key !== undefined) {
+          key = 
+                  "" 
+                  + 
+                  config.key;
+  }
+  if (config.ref !== undefined) {
+          ref 
+                  = 
+                  config.ref;
+  }
+  for (propName in config)
+        if (hasOwnProperty.call(config, propName) 
+                && !RESERVED_PROPS.hasOwnProperty(propName)
+        )
+                props[propName]
+                        =
+                        config[propName];
+
+  if (type && type.defaultProps)
+        for (propName in config = type.defaultProps, config)
+                void 0 === 
+                        props[propName] &&
+                        (props[propName] 
+                                = 
+                                config[propName]);
   return {
     $$typeof: REACT_ELEMENT_TYPE,
     type: type,
