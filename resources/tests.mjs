@@ -342,7 +342,7 @@ Suites.push({
         new BenchmarkTestStep(`Adding${numberOfItemsToAdd}Items`, (page) => {
             const newTodo = page.querySelector(".new-todo");
             for (let i = 0; i < numberOfItemsToAdd; i++) {
-                newTodo.setValue(getTodoText(defaultLanguage, i));
+                newTodo.setValue(getTodoText("ja", i));
                 newTodo.enter("keyup");
             }
         }),
