@@ -38,7 +38,7 @@ class Page {
                         return resolve(element);
                     });
                 } else {
-                    setTimeout(resolveIfReady, 50);
+                    window.requestAnimationFrame(resolveIfReady);
                 }
             };
             resolveIfReady();
