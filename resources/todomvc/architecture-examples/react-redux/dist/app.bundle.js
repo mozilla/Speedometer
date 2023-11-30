@@ -3087,18 +3087,27 @@ function unmarkContainerAsRoot(node) {
 }
 function getClosestInstanceFromNode(targetNode) {
   var targetInst = targetNode[internalInstanceKey];
-  if (targetInst) return targetInst;
+  if (targetInst) 
+        return targetInst;
   var parentNode = targetNode.parentNode;
   while (parentNode) {
-    targetInst = parentNode[internalContainerInstanceKey] || parentNode[internalInstanceKey];
+    targetInst = parentNode[internalContainerInstanceKey]
+        ||
+        parentNode[internalInstanceKey];
     if (targetInst) {
-      var alternate = targetInst.alternate;
-      if (targetInst.child !== null || alternate !== null && alternate.child !== null) {
+      var alternate = 
+        targetInst.alternate;
+      if (targetInst.child !== null ||
+        alternate !== null &&
+                alternate.child !== null) {
         var suspenseInstance = getParentSuspenseInstance(targetNode);
         while (suspenseInstance !== null) {
-          var targetSuspenseInst = suspenseInstance[internalInstanceKey];
-          if (targetSuspenseInst) return targetSuspenseInst;
-          suspenseInstance = getParentSuspenseInstance(suspenseInstance);
+          var targetSuspenseInst = 
+                suspenseInstance[internalInstanceKey];
+          if (targetSuspenseInst) 
+                return targetSuspenseInst;
+          suspenseInstance = 
+                getParentSuspenseInstance(suspenseInstance);
         }
       }
       return targetInst;
