@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     mode: "production",
@@ -68,4 +69,9 @@ module.exports = {
             'process.env.NODE_DEBUG': JSON.stringify(false),
         }),
     ],
+
+    optimization: {
+        minimize: false,
+        minimizer: [new TerserPlugin()],
+    },
 };
