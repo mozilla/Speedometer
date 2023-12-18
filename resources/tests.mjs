@@ -957,6 +957,21 @@ Suites.push({
 });
 
 Suites.push({
+    name: "Matrix-React",
+    url: "matrix-react-bench/matrix_demo.html",
+    tags: ["react", "input"],
+    async prepare(page) {},
+    tests: [
+        new BenchmarkTestStep("Render room 1", (page) => {
+            page.querySelector("#renderRoom1").click();
+        }),
+        new BenchmarkTestStep("Render room 2", (page) => {
+            page.querySelector("#renderRoom2").click();
+        }),
+    ],
+});
+
+Suites.push({
     name: "React-Stockcharts-SVG",
     url: "react-stockcharts/build/index.html?type=svg",
     tags: ["chart", "svg"],
