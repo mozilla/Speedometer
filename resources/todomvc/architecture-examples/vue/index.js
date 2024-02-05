@@ -20,11 +20,11 @@ if ("drainMicrotasks" in globalThis) {
     // run with --allow-natives-syntax
     globalThis["drainJobQueue"] = eval("() => { %PerformMicrotaskCheckpoint(); }")
 }
-    load('dist/js/chunk-vendors.ae0404f1.js')
+    load('dist/js/chunk-vendors.aee056c1.js')
     let div = document.createElement("div")
     div.id = "app"
     document.body.appendChild(div)
-    load('dist/js/app.5ffa017b.js')
+    load('dist/js/app.1117c11b.js')
     drainJobQueue()
     
 

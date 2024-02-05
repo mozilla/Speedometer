@@ -46,15 +46,19 @@ var app = function() {
     function set_data(text, data) {
         data = "" + data, text.data !== data && (text.data = data);
     }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? "add" : "remove"](name);
+    }
     let current_component;
     function set_current_component(component) {
         current_component = component;
     }
+    function get_current_component() {
+        if (!current_component) throw new Error("Function called outside component initialization");
+        return current_component;
+    }
     function createEventDispatcher() {
-        const component = function() {
-            if (!current_component) throw new Error("Function called outside component initialization");
-            return current_component;
-        }();
+        const component = get_current_component();
         return (type, detail, {cancelable: cancelable = !1} = {}) => {
             const callbacks = component.$$.callbacks[type];
             if (callbacks) {
@@ -271,32 +275,29 @@ var app = function() {
         };
     }
     function create_fragment$2(ctx) {
-        let footer, span, strong, t0, t1, t2, t3, t4, ul, li0, a0, t5, a0_class_value, t6, li1, a1, t7, a1_class_value, t8, li2, a2, t9, a2_class_value, t10, t2_value = 1 === ctx[0] ? "item" : "items", if_block = ctx[2] && create_if_block$2(ctx);
+        let footer, span, strong, t0, t1, t2, t3, t4, ul, li0, a0, t6, li1, a1, t8, li2, a2, t10, t2_value = 1 === ctx[0] ? "item" : "items", if_block = ctx[2] && create_if_block$2(ctx);
         return {
             c() {
                 footer = element("footer"), span = element("span"), strong = element("strong"), 
                 t0 = text(ctx[0]), t1 = space(), t2 = text(t2_value), t3 = text(" left"), t4 = space(), 
-                ul = element("ul"), li0 = element("li"), a0 = element("a"), t5 = text("All"), t6 = space(), 
-                li1 = element("li"), a1 = element("a"), t7 = text("Active"), t8 = space(), li2 = element("li"), 
-                a2 = element("a"), t9 = text("Completed"), t10 = space(), if_block && if_block.c(), 
-                attr(span, "class", "todo-count"), attr(a0, "class", a0_class_value = "all" === ctx[1] ? "selected" : ""), 
-                attr(a0, "href", "#/"), attr(a1, "class", a1_class_value = "active" === ctx[1] ? "selected" : ""), 
-                attr(a1, "href", "#/active"), attr(a2, "class", a2_class_value = "completed" === ctx[1] ? "selected" : ""), 
-                attr(a2, "href", "#/completed"), attr(ul, "class", "filters"), attr(footer, "class", "footer");
+                ul = element("ul"), li0 = element("li"), a0 = element("a"), a0.textContent = "All", 
+                t6 = space(), li1 = element("li"), a1 = element("a"), a1.textContent = "Active", 
+                t8 = space(), li2 = element("li"), a2 = element("a"), a2.textContent = "Completed", 
+                t10 = space(), if_block && if_block.c(), attr(span, "class", "todo-count"), attr(a0, "href", "#/"), 
+                toggle_class(a0, "selected", "all" === ctx[1]), attr(a1, "href", "#/active"), toggle_class(a1, "selected", "active" === ctx[1]), 
+                attr(a2, "href", "#/completed"), toggle_class(a2, "selected", "completed" === ctx[1]), 
+                attr(ul, "class", "filters"), attr(footer, "class", "footer");
             },
             m(target, anchor) {
                 insert(target, footer, anchor), append(footer, span), append(span, strong), append(strong, t0), 
                 append(span, t1), append(span, t2), append(span, t3), append(footer, t4), append(footer, ul), 
-                append(ul, li0), append(li0, a0), append(a0, t5), append(ul, t6), append(ul, li1), 
-                append(li1, a1), append(a1, t7), append(ul, t8), append(ul, li2), append(li2, a2), 
-                append(a2, t9), append(footer, t10), if_block && if_block.m(footer, null);
+                append(ul, li0), append(li0, a0), append(ul, t6), append(ul, li1), append(li1, a1), 
+                append(ul, t8), append(ul, li2), append(li2, a2), append(footer, t10), if_block && if_block.m(footer, null);
             },
             p(ctx, [dirty]) {
                 1 & dirty && set_data(t0, ctx[0]), 1 & dirty && t2_value !== (t2_value = 1 === ctx[0] ? "item" : "items") && set_data(t2, t2_value), 
-                2 & dirty && a0_class_value !== (a0_class_value = "all" === ctx[1] ? "selected" : "") && attr(a0, "class", a0_class_value), 
-                2 & dirty && a1_class_value !== (a1_class_value = "active" === ctx[1] ? "selected" : "") && attr(a1, "class", a1_class_value), 
-                2 & dirty && a2_class_value !== (a2_class_value = "completed" === ctx[1] ? "selected" : "") && attr(a2, "class", a2_class_value), 
-                ctx[2] ? if_block ? if_block.p(ctx, dirty) : (if_block = create_if_block$2(ctx), 
+                2 & dirty && toggle_class(a0, "selected", "all" === ctx[1]), 2 & dirty && toggle_class(a1, "selected", "active" === ctx[1]), 
+                2 & dirty && toggle_class(a2, "selected", "completed" === ctx[1]), ctx[2] ? if_block ? if_block.p(ctx, dirty) : (if_block = create_if_block$2(ctx), 
                 if_block.c(), if_block.m(footer, null)) : if_block && (if_block.d(1), if_block = null);
             },
             i: noop,
@@ -350,14 +351,15 @@ var app = function() {
         };
     }
     function create_fragment$1(ctx) {
-        let li, div, input, input_checked_value, t0, label, t1, t2, button, div_class_value, t3, li_class_value, mounted, dispose, t1_value = ctx[0].description + "", if_block = ctx[2] && create_if_block$1(ctx);
+        let li, div, input, input_checked_value, t0, label, t1, t2, button, t3, li_data_priority_value, mounted, dispose, t1_value = ctx[0].description + "", if_block = ctx[2] && create_if_block$1(ctx);
         return {
             c() {
                 li = element("li"), div = element("div"), input = element("input"), t0 = space(), 
                 label = element("label"), t1 = text(t1_value), t2 = space(), button = element("button"), 
                 t3 = space(), if_block && if_block.c(), attr(input, "class", "toggle"), attr(input, "type", "checkbox"), 
                 input.checked = input_checked_value = ctx[0].completed, attr(button, "class", "destroy"), 
-                attr(div, "class", div_class_value = "targeted view-" + ctx[1]), attr(li, "class", li_class_value = "targeted li-" + ctx[1] + (ctx[0].completed ? " completed" : "") + (ctx[2] ? " editing" : ""));
+                attr(div, "class", "view"), attr(li, "data-priority", li_data_priority_value = 4 - ctx[1] % 5), 
+                toggle_class(li, "completed", ctx[0].completed), toggle_class(li, "editing", ctx[2]);
             },
             m(target, anchor) {
                 insert(target, li, anchor), append(li, div), append(div, input), append(div, t0), 
@@ -368,10 +370,10 @@ var app = function() {
             p(ctx, [dirty]) {
                 1 & dirty && input_checked_value !== (input_checked_value = ctx[0].completed) && (input.checked = input_checked_value), 
                 1 & dirty && t1_value !== (t1_value = ctx[0].description + "") && set_data(t1, t1_value), 
-                2 & dirty && div_class_value !== (div_class_value = "targeted view-" + ctx[1]) && attr(div, "class", div_class_value), 
                 ctx[2] ? if_block ? if_block.p(ctx, dirty) : (if_block = create_if_block$1(ctx), 
                 if_block.c(), if_block.m(li, null)) : if_block && (if_block.d(1), if_block = null), 
-                7 & dirty && li_class_value !== (li_class_value = "targeted li-" + ctx[1] + (ctx[0].completed ? " completed" : "") + (ctx[2] ? " editing" : "")) && attr(li, "class", li_class_value);
+                2 & dirty && li_data_priority_value !== (li_data_priority_value = 4 - ctx[1] % 5) && attr(li, "data-priority", li_data_priority_value), 
+                1 & dirty && toggle_class(li, "completed", ctx[0].completed), 4 & dirty && toggle_class(li, "editing", ctx[2]);
             },
             i: noop,
             o: noop,
@@ -381,8 +383,9 @@ var app = function() {
         };
     }
     function instance$1($$self, $$props, $$invalidate) {
-        let {item: item} = $$props, {index: index} = $$props, editing = !1;
+        let {item: item} = $$props, {index: index} = $$props;
         const dispatch = createEventDispatcher();
+        let editing = !1;
         function removeItem() {
             dispatch("removeItem");
         }
@@ -433,7 +436,7 @@ var app = function() {
                 for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].c();
                 t3 = space(), create_component(footer.$$.fragment), attr(input, "id", "toggle-all"), 
                 attr(input, "class", "toggle-all"), attr(input, "type", "checkbox"), input.checked = input_checked_value = ctx[2] === ctx[1].length, 
-                attr(label, "for", "toggle-all"), attr(div, "class", "toggle-all-container"), attr(ul, "class", "todo-list"), 
+                attr(label, "for", "toggle-all"), attr(div, "class", "toggle-all-container"), attr(ul, "class", "todo-list show-priority"), 
                 attr(main, "class", "main");
             },
             m(target, anchor) {
@@ -502,7 +505,6 @@ var app = function() {
             ctx[9](value, ctx[11], ctx[12], ctx[13]);
         }
         let item_props = {
-            editing: editing,
             index: ctx[13]
         };
         return void 0 !== ctx[11] && (item_props.item = ctx[11]), item = new Item({
@@ -571,35 +573,37 @@ var app = function() {
             }
         };
     }
-    let editing = null;
     function instance($$self, $$props, $$invalidate) {
         let filtered, numActive, numCompleted, currentFilter = "all", items = [];
         function removeItem(index) {
             items.splice(index, 1), $$invalidate(1, items);
         }
-        (function(onChange) {
-            let route = "all";
-            function handleChange() {
-                switch (window.location.hash) {
-                  case "#/active":
-                    route = "active";
-                    break;
+        var fn;
+        fn = () => {
+            (function(onChange) {
+                let route = "all";
+                function handleChange() {
+                    switch (window.location.hash) {
+                      case "#/active":
+                        route = "active";
+                        break;
 
-                  case "#/completed":
-                    route = "completed";
-                    break;
+                      case "#/completed":
+                        route = "completed";
+                        break;
 
-                  default:
-                    route = "all";
+                      default:
+                        route = "all";
+                    }
+                    onChange(route);
                 }
-                onChange(route);
-            }
-            return {
-                init: function() {
-                    window.addEventListener("hashchange", handleChange);
-                }
-            };
-        })((route => $$invalidate(0, currentFilter = route))).init();
+                return {
+                    init: function() {
+                        window.addEventListener("hashchange", handleChange);
+                    }
+                };
+            })((route => $$invalidate(0, currentFilter = route))).init();
+        }, get_current_component().$$.on_mount.push(fn);
         return $$self.$$.update = () => {
             3 & $$self.$$.dirty && $$invalidate(4, filtered = "all" === currentFilter ? items : "completed" === currentFilter ? items.filter((item => item.completed)) : items.filter((item => !item.completed))), 
             2 & $$self.$$.dirty && $$invalidate(3, numActive = items.filter((item => !item.completed)).length), 

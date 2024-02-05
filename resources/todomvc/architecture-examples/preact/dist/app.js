@@ -881,7 +881,6 @@
         excessDomChildren[excessDomChildren.indexOf(oldDom)] = null; // ^ could possibly be simplified to:
         // excessDomChildren.length = 0;
       }
-
       options.__e(e, newVNode, oldVNode);
     }
   }
@@ -1472,12 +1471,13 @@
       onRemove(todo);
     }
     return createElement("li", {
-      class: cx("targeted", `li-${index}`, {
+      class: cx({
         completed: todo.completed,
         editing
-      })
+      }),
+      "data-priority": 4 - index % 5
     }, createElement("div", {
-      class: cx("targeted", `view-${index}`)
+      class: "view"
     }, createElement("input", {
       class: "toggle",
       type: "checkbox",
@@ -1533,7 +1533,7 @@
       class: "toggle-all-label",
       htmlFor: "toggle-all"
     }, "Toggle All Input")), createElement("ul", {
-      class: "todo-list"
+      class: "todo-list show-priority"
     }, visibleTodos.map((todo, index) => createElement(TodoItem, {
       key: todo.id,
       todo: todo,

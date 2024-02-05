@@ -31,7 +31,7 @@ class n$2 {
     }
 }
 
-const i$2 = (t, ...e) => {
+const r$2 = t => new n$2("string" == typeof t ? t : t + "", void 0, s), i$2 = (t, ...e) => {
     const o = 1 === t.length ? t[0] : e.reduce(((e, s, o) => e + (t => {
         if (!0 === t._$cssResult$) return t.cssText;
         if ("number" == typeof t) return t;
@@ -41,7 +41,7 @@ const i$2 = (t, ...e) => {
 }, c$1 = e$3 ? t => t : t => t instanceof CSSStyleSheet ? (t => {
     let e = "";
     for (const s of t.cssRules) e += s.cssText;
-    return (t => new n$2("string" == typeof t ? t : t + "", void 0, s))(e);
+    return r$2(e);
 })(t) : t
 /**
  * @license
@@ -259,36 +259,25 @@ class l extends HTMLElement {
     firstUpdated(t) {}
 }
 
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-var _d;
-
 l[c] = !0, l.elementProperties = new Map, l.elementStyles = [], l.shadowRootOptions = {
     mode: "open"
 }, r$1?.({
     ReactiveElement: l
 }), (i$1.reactiveElementVersions ??= []).push("2.0.0-pre.0");
 
-const global = window, trustedTypes = global.trustedTypes, policy = trustedTypes ? trustedTypes.createPolicy("lit-html", {
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const global = globalThis, trustedTypes = global.trustedTypes, policy = trustedTypes ? trustedTypes.createPolicy("lit-html", {
     createHTML: s => s
-}) : void 0, marker = `lit$${(Math.random() + "").slice(9)}$`, markerMatch = "?" + marker, nodeMarker = `<${markerMatch}>`, d = document, createMarker$1 = () => d.createComment(""), isPrimitive = value => null === value || "object" != typeof value && "function" != typeof value, isArray = Array.isArray, isIterable = value => isArray(value) || "function" == typeof (null == value ? void 0 : value[Symbol.iterator]), textEndRegex = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, commentEndRegex = /-->/g, comment2EndRegex = />/g, tagEndRegex = RegExp(">|[ \t\n\f\r](?:([^\\s\"'>=/]+)([ \t\n\f\r]*=[ \t\n\f\r]*(?:[^ \t\n\f\r\"'`<>=]|(\"|')|))|$)", "g"), singleQuoteAttrEndRegex = /'/g, doubleQuoteAttrEndRegex = /"/g, rawTextElement = /^(?:script|style|textarea|title)$/i, html = (type = 1, 
+}) : void 0, marker = `lit$${(Math.random() + "").slice(9)}$`, markerMatch = "?" + marker, nodeMarker = `<${markerMatch}>`, d = document, createMarker$1 = () => d.createComment(""), isPrimitive = value => null === value || "object" != typeof value && "function" != typeof value, isArray = Array.isArray, isIterable = value => isArray(value) || "function" == typeof value?.[Symbol.iterator], textEndRegex = /<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g, commentEndRegex = /-->/g, comment2EndRegex = />/g, tagEndRegex = RegExp(">|[ \t\n\f\r](?:([^\\s\"'>=/]+)([ \t\n\f\r]*=[ \t\n\f\r]*(?:[^ \t\n\f\r\"'`<>=]|(\"|')|))|$)", "g"), singleQuoteAttrEndRegex = /'/g, doubleQuoteAttrEndRegex = /"/g, rawTextElement = /^(?:script|style|textarea|title)$/i, html = (type = 1, 
 (strings, ...values) => ({
     _$litType$: type,
     strings,
     values
-})), noChange = Symbol.for("lit-noChange"), nothing = Symbol.for("lit-nothing"), templateCache = new WeakMap, walker = d.createTreeWalker(d, 129, null, !1);
-
-var type;
-
-function trustFromTemplateString(tsa, stringFromTSA) {
-    if (!Array.isArray(tsa) || !tsa.hasOwnProperty("raw")) throw Error("invalid template strings array");
-    return void 0 !== policy ? policy.createHTML(stringFromTSA) : stringFromTSA;
-}
-
-const getTemplateHtml = (strings, type) => {
+})), noChange = Symbol.for("lit-noChange"), nothing = Symbol.for("lit-nothing"), templateCache = new WeakMap, walker = d.createTreeWalker(d, 129), getTemplateHtml = (strings, type) => {
     const l = strings.length - 1, attrNames = [];
     let rawTextEndRegex, html = 2 === type ? "<svg>" : "", regex = textEndRegex;
     for (let i = 0; i < l; i++) {
@@ -296,17 +285,20 @@ const getTemplateHtml = (strings, type) => {
         let attrName, match, attrNameEndIndex = -1, lastIndex = 0;
         for (;lastIndex < s.length && (regex.lastIndex = lastIndex, match = regex.exec(s), 
         null !== match); ) lastIndex = regex.lastIndex, regex === textEndRegex ? "!--" === match[1] ? regex = commentEndRegex : void 0 !== match[1] ? regex = comment2EndRegex : void 0 !== match[2] ? (rawTextElement.test(match[2]) && (rawTextEndRegex = RegExp("</" + match[2], "g")), 
-        regex = tagEndRegex) : void 0 !== match[3] && (regex = tagEndRegex) : regex === tagEndRegex ? ">" === match[0] ? (regex = null != rawTextEndRegex ? rawTextEndRegex : textEndRegex, 
+        regex = tagEndRegex) : void 0 !== match[3] && (regex = tagEndRegex) : regex === tagEndRegex ? ">" === match[0] ? (regex = rawTextEndRegex ?? textEndRegex, 
         attrNameEndIndex = -1) : void 0 === match[1] ? attrNameEndIndex = -2 : (attrNameEndIndex = regex.lastIndex - match[2].length, 
         attrName = match[1], regex = void 0 === match[3] ? tagEndRegex : '"' === match[3] ? doubleQuoteAttrEndRegex : singleQuoteAttrEndRegex) : regex === doubleQuoteAttrEndRegex || regex === singleQuoteAttrEndRegex ? regex = tagEndRegex : regex === commentEndRegex || regex === comment2EndRegex ? regex = textEndRegex : (regex = tagEndRegex, 
         rawTextEndRegex = void 0);
         const end = regex === tagEndRegex && strings[i + 1].startsWith("/>") ? " " : "";
         html += regex === textEndRegex ? s + nodeMarker : attrNameEndIndex >= 0 ? (attrNames.push(attrName), 
-        s.slice(0, attrNameEndIndex) + "$lit$" + s.slice(attrNameEndIndex) + marker + end) : s + marker + (-2 === attrNameEndIndex ? (attrNames.push(void 0), 
-        i) : end);
+        s.slice(0, attrNameEndIndex) + "$lit$" + s.slice(attrNameEndIndex) + marker + end) : s + marker + (-2 === attrNameEndIndex ? i : end);
     }
-    return [ trustFromTemplateString(strings, html + (strings[l] || "<?>") + (2 === type ? "</svg>" : "")), attrNames ];
+    const htmlResult = html + (strings[l] || "<?>") + (2 === type ? "</svg>" : "");
+    if (!Array.isArray(strings) || !strings.hasOwnProperty("raw")) throw Error("invalid template strings array");
+    return [ void 0 !== policy ? policy.createHTML(htmlResult) : htmlResult, attrNames ];
 };
+
+var type;
 
 class Template {
     constructor({strings, _$litType$: type}, options) {
@@ -316,31 +308,24 @@ class Template {
         const partCount = strings.length - 1, parts = this.parts, [html, attrNames] = getTemplateHtml(strings, type);
         if (this.el = Template.createElement(html, options), walker.currentNode = this.el.content, 
         2 === type) {
-            const content = this.el.content, svgElement = content.firstChild;
-            svgElement.remove(), content.append(...svgElement.childNodes);
+            const svgElement = this.el.content.firstChild;
+            svgElement.replaceWith(...svgElement.childNodes);
         }
         for (;null !== (node = walker.nextNode()) && parts.length < partCount; ) {
             if (1 === node.nodeType) {
-                if (node.hasAttributes()) {
-                    const attrsToRemove = [];
-                    for (const name of node.getAttributeNames()) if (name.endsWith("$lit$") || name.startsWith(marker)) {
-                        const realName = attrNames[attrNameIndex++];
-                        if (attrsToRemove.push(name), void 0 !== realName) {
-                            const statics = node.getAttribute(realName.toLowerCase() + "$lit$").split(marker), m = /([.?@])?(.*)/.exec(realName);
-                            parts.push({
-                                type: 1,
-                                index: nodeIndex,
-                                name: m[2],
-                                strings: statics,
-                                ctor: "." === m[1] ? PropertyPart : "?" === m[1] ? BooleanAttributePart : "@" === m[1] ? EventPart : AttributePart
-                            });
-                        } else parts.push({
-                            type: 6,
-                            index: nodeIndex
-                        });
-                    }
-                    for (const name of attrsToRemove) node.removeAttribute(name);
-                }
+                if (node.hasAttributes()) for (const name of node.getAttributeNames()) if (name.endsWith("$lit$")) {
+                    const realName = attrNames[attrNameIndex++], statics = node.getAttribute(name).split(marker), m = /([.?@])?(.*)/.exec(realName);
+                    parts.push({
+                        type: 1,
+                        index: nodeIndex,
+                        name: m[2],
+                        strings: statics,
+                        ctor: "." === m[1] ? PropertyPart : "?" === m[1] ? BooleanAttributePart : "@" === m[1] ? EventPart : AttributePart
+                    }), node.removeAttribute(name);
+                } else name.startsWith(marker) && (parts.push({
+                    type: 6,
+                    index: nodeIndex
+                }), node.removeAttribute(name));
                 if (rawTextElement.test(node.tagName)) {
                     const strings = node.textContent.split(marker), lastIndex = strings.length - 1;
                     if (lastIndex > 0) {
@@ -373,13 +358,12 @@ class Template {
 }
 
 function resolveDirective(part, value, parent = part, attributeIndex) {
-    var _a, _b, _c, _d;
     if (value === noChange) return value;
-    let currentDirective = void 0 !== attributeIndex ? null === (_a = parent.__directives) || void 0 === _a ? void 0 : _a[attributeIndex] : parent.__directive;
+    let currentDirective = void 0 !== attributeIndex ? parent.__directives?.[attributeIndex] : parent.__directive;
     const nextDirectiveConstructor = isPrimitive(value) ? void 0 : value._$litDirective$;
-    return (null == currentDirective ? void 0 : currentDirective.constructor) !== nextDirectiveConstructor && (null === (_b = null == currentDirective ? void 0 : currentDirective._$notifyDirectiveConnectionChanged) || void 0 === _b || _b.call(currentDirective, !1), 
+    return currentDirective?.constructor !== nextDirectiveConstructor && (currentDirective?._$notifyDirectiveConnectionChanged?.(!1), 
     void 0 === nextDirectiveConstructor ? currentDirective = void 0 : (currentDirective = new nextDirectiveConstructor(part), 
-    currentDirective._$initialize(part, parent, attributeIndex)), void 0 !== attributeIndex ? (null !== (_c = (_d = parent).__directives) && void 0 !== _c ? _c : _d.__directives = [])[attributeIndex] = currentDirective : parent.__directive = currentDirective), 
+    currentDirective._$initialize(part, parent, attributeIndex)), void 0 !== attributeIndex ? (parent.__directives ??= [])[attributeIndex] = currentDirective : parent.__directive = currentDirective), 
     void 0 !== currentDirective && (value = resolveDirective(part, currentDirective._$resolve(part, value.values), currentDirective, attributeIndex)), 
     value;
 }
@@ -396,8 +380,7 @@ class TemplateInstance {
         return this._$parent._$isConnected;
     }
     _clone(options) {
-        var _a;
-        const {el: {content}, parts} = this._$template, fragment = (null !== (_a = null == options ? void 0 : options.creationScope) && void 0 !== _a ? _a : d).importNode(content, !0);
+        const {el: {content}, parts} = this._$template, fragment = (options?.creationScope ?? d).importNode(content, !0);
         walker.currentNode = fragment;
         let node = walker.nextNode(), nodeIndex = 0, partIndex = 0, templatePart = parts[0];
         for (;void 0 !== templatePart; ) {
@@ -406,10 +389,9 @@ class TemplateInstance {
                 2 === templatePart.type ? part = new ChildPart$1(node, node.nextSibling, this, options) : 1 === templatePart.type ? part = new templatePart.ctor(node, templatePart.name, templatePart.strings, this, options) : 6 === templatePart.type && (part = new ElementPart(node, this, options)), 
                 this._$parts.push(part), templatePart = parts[++partIndex];
             }
-            nodeIndex !== (null == templatePart ? void 0 : templatePart.index) && (node = walker.nextNode(), 
-            nodeIndex++);
+            nodeIndex !== templatePart?.index && (node = walker.nextNode(), nodeIndex++);
         }
-        return walker.currentNode = d, fragment;
+        return fragment;
     }
     _update(values) {
         let i = 0;
@@ -419,20 +401,18 @@ class TemplateInstance {
 }
 
 class ChildPart$1 {
+    get _$isConnected() {
+        return this._$parent?._$isConnected ?? this.__isConnected;
+    }
     constructor(startNode, endNode, parent, options) {
-        var _a;
         this.type = 2, this._$committedValue = nothing, this._$disconnectableChildren = void 0, 
         this._$startNode = startNode, this._$endNode = endNode, this._$parent = parent, 
-        this.options = options, this.__isConnected = null === (_a = null == options ? void 0 : options.isConnected) || void 0 === _a || _a;
-    }
-    get _$isConnected() {
-        var _a, _b;
-        return null !== (_b = null === (_a = this._$parent) || void 0 === _a ? void 0 : _a._$isConnected) && void 0 !== _b ? _b : this.__isConnected;
+        this.options = options, this.__isConnected = options?.isConnected ?? !0;
     }
     get parentNode() {
         let parentNode = this._$startNode.parentNode;
         const parent = this._$parent;
-        return void 0 !== parent && 11 === (null == parentNode ? void 0 : parentNode.nodeType) && (parentNode = parent.parentNode), 
+        return void 0 !== parent && 11 === parentNode?.nodeType && (parentNode = parent.parentNode), 
         parentNode;
     }
     get startNode() {
@@ -452,14 +432,15 @@ class ChildPart$1 {
         this._$committedValue !== value && (this._$clear(), this._$committedValue = this._insert(value));
     }
     _commitText(value) {
-        this._$committedValue !== nothing && isPrimitive(this._$committedValue) ? this._$startNode.nextSibling.data = value : this._commitNode(d.createTextNode(value)), 
+        if (this._$committedValue !== nothing && isPrimitive(this._$committedValue)) {
+            this._$startNode.nextSibling.data = value;
+        } else this._commitNode(d.createTextNode(value));
         this._$committedValue = value;
     }
     _commitTemplateResult(result) {
-        var _a;
-        const {values, _$litType$: type} = result, template = "number" == typeof type ? this._$getTemplate(result) : (void 0 === type.el && (type.el = Template.createElement(trustFromTemplateString(type.h, type.h[0]), this.options)), 
+        const {values, _$litType$: type} = result, template = "number" == typeof type ? this._$getTemplate(result) : (void 0 === type.el && (type.el = Template.createElement(type.h, this.options)), 
         type);
-        if ((null === (_a = this._$committedValue) || void 0 === _a ? void 0 : _a._$template) === template) this._$committedValue._update(values); else {
+        if (this._$committedValue?._$template === template) this._$committedValue._update(values); else {
             const instance = new TemplateInstance(template, this), fragment = instance._clone(this.options);
             instance._update(values), this._commitNode(fragment), this._$committedValue = instance;
         }
@@ -479,30 +460,28 @@ class ChildPart$1 {
         itemParts.length = partIndex);
     }
     _$clear(start = this._$startNode.nextSibling, from) {
-        var _a;
-        for (null === (_a = this._$notifyConnectionChanged) || void 0 === _a || _a.call(this, !1, !0, from); start && start !== this._$endNode; ) {
+        for (this._$notifyConnectionChanged?.(!1, !0, from); start && start !== this._$endNode; ) {
             const n = start.nextSibling;
             start.remove(), start = n;
         }
     }
     setConnected(isConnected) {
-        var _a;
-        void 0 === this._$parent && (this.__isConnected = isConnected, null === (_a = this._$notifyConnectionChanged) || void 0 === _a || _a.call(this, isConnected));
+        void 0 === this._$parent && (this.__isConnected = isConnected, this._$notifyConnectionChanged?.(isConnected));
     }
 }
 
 class AttributePart {
-    constructor(element, name, strings, parent, options) {
-        this.type = 1, this._$committedValue = nothing, this._$disconnectableChildren = void 0, 
-        this.element = element, this.name = name, this._$parent = parent, this.options = options, 
-        strings.length > 2 || "" !== strings[0] || "" !== strings[1] ? (this._$committedValue = Array(strings.length - 1).fill(new String), 
-        this.strings = strings) : this._$committedValue = nothing;
-    }
     get tagName() {
         return this.element.tagName;
     }
     get _$isConnected() {
         return this._$parent._$isConnected;
+    }
+    constructor(element, name, strings, parent, options) {
+        this.type = 1, this._$committedValue = nothing, this._$disconnectableChildren = void 0, 
+        this.element = element, this.name = name, this._$parent = parent, this.options = options, 
+        strings.length > 2 || "" !== strings[0] || "" !== strings[1] ? (this._$committedValue = Array(strings.length - 1).fill(new String), 
+        this.strings = strings) : this._$committedValue = nothing;
     }
     _$setValue(value, directiveParent = this, valueIndex, noCommit) {
         const strings = this.strings;
@@ -513,14 +492,14 @@ class AttributePart {
             const values = value;
             let i, v;
             for (value = strings[0], i = 0; i < strings.length - 1; i++) v = resolveDirective(this, values[valueIndex + i], directiveParent, i), 
-            v === noChange && (v = this._$committedValue[i]), change || (change = !isPrimitive(v) || v !== this._$committedValue[i]), 
-            v === nothing ? value = nothing : value !== nothing && (value += (null != v ? v : "") + strings[i + 1]), 
+            v === noChange && (v = this._$committedValue[i]), change ||= !isPrimitive(v) || v !== this._$committedValue[i], 
+            v === nothing ? value = nothing : value !== nothing && (value += (v ?? "") + strings[i + 1]), 
             this._$committedValue[i] = v;
         }
         change && !noCommit && this._commitValue(value);
     }
     _commitValue(value) {
-        value === nothing ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, null != value ? value : "");
+        value === nothing ? this.element.removeAttribute(this.name) : this.element.setAttribute(this.name, value ?? "");
     }
 }
 
@@ -533,14 +512,12 @@ class PropertyPart extends AttributePart {
     }
 }
 
-const emptyStringForBooleanAttribute = trustedTypes ? trustedTypes.emptyScript : "";
-
 class BooleanAttributePart extends AttributePart {
     constructor() {
         super(...arguments), this.type = 4;
     }
     _commitValue(value) {
-        value && value !== nothing ? this.element.setAttribute(this.name, emptyStringForBooleanAttribute) : this.element.removeAttribute(this.name);
+        this.element.toggleAttribute(this.name, !!value && value !== nothing);
     }
 }
 
@@ -549,16 +526,14 @@ class EventPart extends AttributePart {
         super(element, name, strings, parent, options), this.type = 5;
     }
     _$setValue(newListener, directiveParent = this) {
-        var _a;
-        if ((newListener = null !== (_a = resolveDirective(this, newListener, directiveParent, 0)) && void 0 !== _a ? _a : nothing) === noChange) return;
+        if ((newListener = resolveDirective(this, newListener, directiveParent, 0) ?? nothing) === noChange) return;
         const oldListener = this._$committedValue, shouldRemoveListener = newListener === nothing && oldListener !== nothing || newListener.capture !== oldListener.capture || newListener.once !== oldListener.once || newListener.passive !== oldListener.passive, shouldAddListener = newListener !== nothing && (oldListener === nothing || shouldRemoveListener);
         shouldRemoveListener && this.element.removeEventListener(this.name, this, oldListener), 
         shouldAddListener && this.element.addEventListener(this.name, this, newListener), 
         this._$committedValue = newListener;
     }
     handleEvent(event) {
-        var _a, _b;
-        "function" == typeof this._$committedValue ? this._$committedValue.call(null !== (_b = null === (_a = this.options) || void 0 === _a ? void 0 : _a.host) && void 0 !== _b ? _b : this.element, event) : this._$committedValue.handleEvent(event);
+        "function" == typeof this._$committedValue ? this._$committedValue.call(this.options?.host ?? this.element, event) : this._$committedValue.handleEvent(event);
     }
 }
 
@@ -592,15 +567,13 @@ const _$LH = {
     _ElementPart: ElementPart
 }, polyfillSupport$1 = global.litHtmlPolyfillSupport;
 
-null == polyfillSupport$1 || polyfillSupport$1(Template, ChildPart$1), (null !== (_d = global.litHtmlVersions) && void 0 !== _d ? _d : global.litHtmlVersions = []).push("2.7.5");
+polyfillSupport$1?.(Template, ChildPart$1), (global.litHtmlVersions ??= []).push("3.0.0-pre.0");
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-var _b, _c;
-
 class LitElement extends l {
     constructor() {
         super(...arguments), this.renderOptions = {
@@ -608,47 +581,42 @@ class LitElement extends l {
         }, this.__childPart = void 0;
     }
     createRenderRoot() {
-        var _a, _b;
         const renderRoot = super.createRenderRoot();
-        return null !== (_a = (_b = this.renderOptions).renderBefore) && void 0 !== _a || (_b.renderBefore = renderRoot.firstChild), 
-        renderRoot;
+        return this.renderOptions.renderBefore ??= renderRoot.firstChild, renderRoot;
     }
     update(changedProperties) {
         const value = this.render();
         this.hasUpdated || (this.renderOptions.isConnected = this.isConnected), super.update(changedProperties), 
         this.__childPart = ((value, container, options) => {
-            var _a, _b;
-            const partOwnerNode = null !== (_a = null == options ? void 0 : options.renderBefore) && void 0 !== _a ? _a : container;
+            const partOwnerNode = options?.renderBefore ?? container;
             let part = partOwnerNode._$litPart$;
             if (void 0 === part) {
-                const endNode = null !== (_b = null == options ? void 0 : options.renderBefore) && void 0 !== _b ? _b : null;
-                partOwnerNode._$litPart$ = part = new ChildPart$1(container.insertBefore(createMarker$1(), endNode), endNode, void 0, null != options ? options : {});
+                const endNode = options?.renderBefore ?? null;
+                partOwnerNode._$litPart$ = part = new ChildPart$1(container.insertBefore(createMarker$1(), endNode), endNode, void 0, options ?? {});
             }
             return part._$setValue(value), part;
         })(value, this.renderRoot, this.renderOptions);
     }
     connectedCallback() {
-        var _a;
-        super.connectedCallback(), null === (_a = this.__childPart) || void 0 === _a || _a.setConnected(!0);
+        super.connectedCallback(), this.__childPart?.setConnected(!0);
     }
     disconnectedCallback() {
-        var _a;
-        super.disconnectedCallback(), null === (_a = this.__childPart) || void 0 === _a || _a.setConnected(!1);
+        super.disconnectedCallback(), this.__childPart?.setConnected(!1);
     }
     render() {
         return noChange;
     }
 }
 
-LitElement.finalized = !0, LitElement._$litElement$ = !0, null === (_b = globalThis.litElementHydrateSupport) || void 0 === _b || _b.call(globalThis, {
+LitElement.finalized = !0, LitElement._$litElement$ = !0, globalThis.litElementHydrateSupport?.({
     LitElement
 });
 
 const polyfillSupport = globalThis.litElementPolyfillSupport;
 
-null == polyfillSupport || polyfillSupport({
+polyfillSupport?.({
     LitElement
-}), (null !== (_c = globalThis.litElementVersions) && void 0 !== _c ? _c : globalThis.litElementVersions = []).push("3.3.2");
+}), (globalThis.litElementVersions ??= []).push("4.0.0-pre.0");
 
 /**
  * @license
@@ -682,26 +650,23 @@ class Directive {
  * SPDX-License-Identifier: BSD-3-Clause
  */ const classMap = directive(class extends Directive {
     constructor(partInfo) {
-        var _a;
-        if (super(partInfo), partInfo.type !== PartType_ATTRIBUTE || "class" !== partInfo.name || (null === (_a = partInfo.strings) || void 0 === _a ? void 0 : _a.length) > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
+        if (super(partInfo), partInfo.type !== PartType_ATTRIBUTE || "class" !== partInfo.name || partInfo.strings?.length > 2) throw Error("`classMap()` can only be used in the `class` attribute and must be the only part in the attribute.");
     }
     render(classInfo) {
         return " " + Object.keys(classInfo).filter((key => classInfo[key])).join(" ") + " ";
     }
     update(part, [classInfo]) {
-        var _a, _b;
         if (void 0 === this._previousClasses) {
             this._previousClasses = new Set, void 0 !== part.strings && (this._staticClasses = new Set(part.strings.join(" ").split(/\s/).filter((s => "" !== s))));
-            for (const name in classInfo) classInfo[name] && !(null === (_a = this._staticClasses) || void 0 === _a ? void 0 : _a.has(name)) && this._previousClasses.add(name);
+            for (const name in classInfo) classInfo[name] && !this._staticClasses?.has(name) && this._previousClasses.add(name);
             return this.render(classInfo);
         }
         const classList = part.element.classList;
-        this._previousClasses.forEach((name => {
-            name in classInfo || (classList.remove(name), this._previousClasses.delete(name));
-        }));
+        for (const name of this._previousClasses) name in classInfo || (classList.remove(name), 
+        this._previousClasses.delete(name));
         for (const name in classInfo) {
             const value = !!classInfo[name];
-            value === this._previousClasses.has(name) || (null === (_b = this._staticClasses) || void 0 === _b ? void 0 : _b.has(name)) || (value ? (classList.add(name), 
+            value === this._previousClasses.has(name) || this._staticClasses?.has(name) || (value ? (classList.add(name), 
             this._previousClasses.add(name)) : (classList.remove(name), this._previousClasses.delete(name)));
         }
         return noChange;
@@ -856,7 +821,6 @@ class Todos extends EventTarget {
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */ const {_ChildPart: ChildPart} = _$LH, createMarker = () => document.createComment(""), insertPart = (containerPart, refPart, part) => {
-    var _a;
     const container = containerPart._$startNode.parentNode, refNode = void 0 === refPart ? containerPart._$endNode : refPart._$startNode;
     if (void 0 === part) {
         const startNode = container.insertBefore(createMarker(), refNode), endNode = container.insertBefore(createMarker(), refNode);
@@ -865,8 +829,8 @@ class Todos extends EventTarget {
         const endNode = part._$endNode.nextSibling, oldParent = part._$parent, parentChanged = oldParent !== containerPart;
         if (parentChanged) {
             let newConnectionState;
-            null === (_a = part._$reparentDisconnectables) || void 0 === _a || _a.call(part, containerPart), 
-            part._$parent = containerPart, void 0 !== part._$notifyConnectionChanged && (newConnectionState = containerPart._$isConnected) !== oldParent._$isConnected && part._$notifyConnectionChanged(newConnectionState);
+            part._$reparentDisconnectables?.(containerPart), part._$parent = containerPart, 
+            void 0 !== part._$notifyConnectionChanged && (newConnectionState = containerPart._$isConnected) !== oldParent._$isConnected && part._$notifyConnectionChanged(newConnectionState);
         }
         if (endNode !== refNode || parentChanged) {
             let start = part._$startNode;
@@ -879,8 +843,7 @@ class Todos extends EventTarget {
     return part;
 }, setChildPartValue = (part, value, directiveParent = part) => (part._$setValue(value, directiveParent), 
 part), RESET_VALUE = {}, removePart = part => {
-    var _a;
-    null === (_a = part._$notifyConnectionChanged) || void 0 === _a || _a.call(part, !1, !0);
+    part._$notifyConnectionChanged?.(!1, !0);
     let start = part._$startNode;
     const end = part._$endNode.nextSibling;
     for (;start !== end; ) {
@@ -911,10 +874,9 @@ part), RESET_VALUE = {}, removePart = part => {
         return this._getValuesAndKeys(items, keyFnOrTemplate, template).values;
     }
     update(containerPart, [items, keyFnOrTemplate, template]) {
-        var _a;
         const oldParts = containerPart._$committedValue, {values: newValues, keys: newKeys} = this._getValuesAndKeys(items, keyFnOrTemplate, template);
         if (!Array.isArray(oldParts)) return this._itemKeys = newKeys, newValues;
-        const oldKeys = null !== (_a = this._itemKeys) && void 0 !== _a ? _a : this._itemKeys = [], newParts = [];
+        const oldKeys = this._itemKeys ??= [], newParts = [];
         let newKeyToIndexMap, oldKeyToIndexMap, oldHead = 0, oldTail = oldParts.length - 1, newHead = 0, newTail = newValues.length - 1;
         for (;oldHead <= oldTail && newHead <= newTail; ) if (null === oldParts[oldHead]) oldHead++; else if (null === oldParts[oldTail]) oldTail--; else if (oldKeys[oldHead] === newKeys[newHead]) newParts[newHead] = setChildPartValue(oldParts[oldHead], newValues[newHead]), 
         oldHead++, newHead++; else if (oldKeys[oldTail] === newKeys[newTail]) newParts[newTail] = setChildPartValue(oldParts[oldTail], newValues[newTail]), 
@@ -1015,7 +977,7 @@ let TodoItem = class extends LitElement {
         super(...arguments), this.todoId = "", this.text = "", this.completed = !1, this.isEditing = !1;
     }
     static {
-        this.styles = [ todoStyles, i$2`:host{display:block}li{position:relative;font-size:24px}.editing{border-bottom:none;padding:0}.editing .edit{display:block;width:calc(100% - 43px);padding:12px 16px;margin:0 0 0 43px}.editing .view{display:none}.toggle{text-align:center;width:40px;height:auto;position:absolute;top:0;bottom:0;margin:auto 0;border:none;-webkit-appearance:none;appearance:none}.toggle{opacity:0}.toggle+label{background-image:url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23949494%22%20stroke-width%3D%223%22/%3E%3C/svg%3E);background-repeat:no-repeat;background-position:center left}.toggle:checked+label{background-image:url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%2359A193%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20fill%3D%22%233EA390%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22%2F%3E%3C%2Fsvg%3E)}label{word-break:break-all;padding:15px 15px 15px 60px;display:block;line-height:1.2;transition:color .4s;font-weight:400;color:#484848}.completed label{color:#949494;text-decoration:line-through}.destroy{display:none;position:absolute;top:0;right:10px;bottom:0;width:40px;height:40px;margin:auto 0;font-size:30px;color:#949494;transition:color .2s ease-out}.destroy:focus,.destroy:hover{color:#c18585}.destroy:after{content:"×";display:block;height:100%;line-height:1.1}li:hover .destroy{display:block}.edit{display:none}.editing:last-child{margin-bottom:-1px}` ];
+        this.styles = [ todoStyles, i$2`:host{display:block}li{position:relative;font-size:24px}.editing{border-bottom:none;padding:0}.editing .edit{display:block;width:calc(100% - 43px);padding:12px 16px;margin:0 0 0 43px}.editing .view{display:none}.toggle{text-align:center;width:40px;height:auto;position:absolute;top:0;bottom:0;margin:auto 0;border:none;-webkit-appearance:none;appearance:none}.toggle{opacity:0}.toggle+label{background-image:url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%23949494%22%20stroke-width%3D%223%22/%3E%3C/svg%3E);background-repeat:no-repeat;background-position:center left}.toggle:checked+label{background-image:url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22-10%20-18%20100%20135%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2250%22%20fill%3D%22none%22%20stroke%3D%22%2359A193%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20fill%3D%22%233EA390%22%20d%3D%22M72%2025L42%2071%2027%2056l-4%204%2020%2020%2034-52z%22%2F%3E%3C%2Fsvg%3E)}label{word-break:break-all;padding:15px 15px 15px 60px;display:block;line-height:1.2;transition:color .4s;font-weight:400;color:#484848}.completed label{color:#949494;text-decoration:line-through}.destroy{display:none;position:absolute;top:0;right:10px;bottom:0;width:40px;height:40px;margin:auto 0;font-size:30px;color:#949494;transition:color .2s ease-out}.destroy:focus,.destroy:hover{color:#c18585}.destroy:after{content:"×";display:block;height:100%;line-height:1.1}li:hover .destroy{display:block}.edit{display:none}:host(:last-child) .editing{margin-bottom:-1px}`, window.extraTodoItemCssToAdopt ? i$2`${r$2(window.extraTodoItemCssToAdopt)}` : i$2`` ];
     }
     render() {
         const itemClassList = {
@@ -1072,10 +1034,10 @@ const updateOnEvent = eventName => (target, propertyKey) => {
 
 let TodoList = class extends LitElement {
     static {
-        this.styles = [ todoStyles, i$2`:host{display:block}:focus{box-shadow:none!important}.todo-list{margin:0;padding:0;list-style:none}.toggle-all{width:1px;height:1px;border:none;opacity:0;position:absolute;right:100%;bottom:100%}.toggle-all+label{display:flex;align-items:center;justify-content:center;width:45px;height:65px;font-size:0;position:absolute;top:-65px;left:0}.toggle-all+label:before{content:"❯";display:inline-block;font-size:22px;color:#949494;padding:10px 27px 10px 27px;transform:rotate(90deg)}.toggle-all:checked+label:before{color:#484848}todo-item{border-bottom:1px solid #ededed}todo-item:last-child{border-bottom:none}` ];
+        this.styles = [ todoStyles, i$2`:host{display:block}:focus{box-shadow:none!important}.todo-list{margin:0;padding:0;list-style:none}.toggle-all{width:1px;height:1px;border:none;opacity:0;position:absolute;right:100%;bottom:100%}.toggle-all+label{display:flex;align-items:center;justify-content:center;width:45px;height:65px;font-size:0;position:absolute;top:-65px;left:0}.toggle-all+label:before{content:"❯";display:inline-block;font-size:22px;color:#949494;padding:10px 27px 10px 27px;transform:rotate(90deg)}.toggle-all:checked+label:before{color:#484848}todo-item{border-bottom:1px solid #ededed}todo-item:last-child{border-bottom:none}`, window.extraTodoListCssToAdopt ? i$2`${r$2(window.extraTodoListCssToAdopt)}` : i$2`` ];
     }
     render() {
-        return html`${(this.todoList?.all.length ?? 0) > 0 ? html`<input @change="${this.#onToggleAllChange}" id="toggle-all" type="checkbox" class="toggle-all" .checked="${this.todoList?.allCompleted ?? !1}"> <label for="toggle-all">Mark all as complete</label>` : nothing}<ul class="todo-list">${repeat(this.todoList?.filtered() ?? [], (todo => todo.id), (todo => html`<todo-item .todoId="${todo.id}" .text="${todo.text}" .completed="${todo.completed}"></todo-item>`))}</ul>`;
+        return html`${(this.todoList?.all.length ?? 0) > 0 ? html`<input @change="${this.#onToggleAllChange}" id="toggle-all" type="checkbox" class="toggle-all" .checked="${this.todoList?.allCompleted ?? !1}"> <label for="toggle-all">Mark all as complete</label>` : nothing}<ul class="todo-list">${repeat(this.todoList?.filtered() ?? [], (todo => todo.id), ((todo, index) => html`<todo-item data-priority="${4 - index % 5}" .todoId="${todo.id}" .text="${todo.text}" .completed="${todo.completed}"></todo-item>`))}</ul>`;
     }
     #onToggleAllChange() {
         this.dispatchEvent(new ToggleAllTodoEvent);
@@ -1213,7 +1175,7 @@ let TodoApp = class extends LitElement {
         super.disconnectedCallback(), this.todoList.disconnect();
     }
     render() {
-        return html`<section><header class="header"><h1>todos</h1><todo-form .todoList="${this.todoList}"></todo-form></header><main class="main"><todo-list .todoList="${this.todoList}"></todo-list></main><todo-footer class="${classMap({
+        return html`<section><header class="header"><h1>todos</h1><todo-form .todoList="${this.todoList}"></todo-form></header><main class="main"><todo-list class="show-priority" .todoList="${this.todoList}"></todo-list></main><todo-footer class="${classMap({
             hidden: 0 === this.todoList.all.length
         })}" .todoList="${this.todoList}"></todo-footer></section>`;
     }

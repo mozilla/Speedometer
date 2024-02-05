@@ -1,5 +1,6 @@
 modified rollup terser config to not mangle and beautify
 rebuilt upstream lit package and copy over the stuff in node_modules with:
+rm -R .wireit to clear cache
 diff --git a/rollup-common.js b/rollup-common.js
 index fb89f349..d05334a5 100644
 --- a/rollup-common.js

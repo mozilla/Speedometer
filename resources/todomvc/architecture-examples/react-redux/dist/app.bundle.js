@@ -125,13 +125,13 @@ var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 var getPrototypeOf = Object.getPrototypeOf;
 var objectPrototype = Object.prototype;
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+function hoistNonReactStatics(targetComponent, sourceComponent, disallowlist) {
   if (typeof sourceComponent !== 'string') {
     // don't hoist over string (html) components
     if (objectPrototype) {
       var inheritedComponent = getPrototypeOf(sourceComponent);
       if (inheritedComponent && inheritedComponent !== objectPrototype) {
-        hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+        hoistNonReactStatics(targetComponent, inheritedComponent, disallowlist);
       }
     }
     var keys = getOwnPropertyNames(sourceComponent);
@@ -142,7 +142,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     var sourceStatics = getStatics(sourceComponent);
     for (var i = 0; i < keys.length; ++i) {
       var key = keys[i];
-      if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
+      if (!KNOWN_STATICS[key] && !(disallowlist && disallowlist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
         var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
         try {
           // Avoid failures from read-only properties
@@ -7335,7 +7335,7 @@ function pathToRegexp(path, keys, options) {
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-/** @license React vundefined
+/** @license React v16.14.0
  * react-jsx-runtime.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -7345,7 +7345,6 @@ function pathToRegexp(path, keys, options) {
  */
 
 
-__webpack_require__(103);
 var f = __webpack_require__(709),
   g = 60103;
 exports.Fragment = 60107;
@@ -8588,7 +8587,6 @@ function warning(message) {
     throw new Error(message);
   } catch (e) {} // eslint-disable-line no-empty
 }
-
 function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
   var reducerKeys = Object.keys(reducers);
   var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
@@ -11765,39 +11763,41 @@ var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(373);
 ;// CONCATENATED MODULE: ./src/components/text-input.jsx
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
 
 class TextInput extends react.Component {
-  constructor() {
-    super(...arguments);
-    _defineProperty(this, "state", {
-      text: this.props.text || ""
-    });
-    _defineProperty(this, "handleSubmit", e => {
-      const text = e.target.value.trim();
-      if (e.key === "Enter") {
-        this.props.onSave(text);
-        if (this.props.newTodo) this.setState({
-          text: ""
-        });
-      }
-    });
-    _defineProperty(this, "handleChange", e => {
-      this.setState({
-        text: e.target.value
+  static propTypes = {
+    onSave: (prop_types_default()).func.isRequired,
+    text: (prop_types_default()).string,
+    placeholder: (prop_types_default()).string,
+    editing: (prop_types_default()).bool,
+    // input is used in Item to edit the todo.
+    newTodo: (prop_types_default()).bool // input is used in Header to create a todo.
+  };
+  state = {
+    text: this.props.text || ""
+  };
+  handleSubmit = e => {
+    const text = e.target.value.trim();
+    if (e.key === "Enter") {
+      this.props.onSave(text);
+      if (this.props.newTodo) this.setState({
+        text: ""
       });
+    }
+  };
+  handleChange = e => {
+    this.setState({
+      text: e.target.value
     });
-    _defineProperty(this, "handleBlur", e => {
-      // If this input is used in the Header, call onSave to create a new todo.
+  };
+  handleBlur = e => {
+    // If this input is used in the Header, call onSave to create a new todo.
 
-      if (!this.props.newTodo) this.props.onSave(e.target.value);
-    });
-  }
+    if (!this.props.newTodo) this.props.onSave(e.target.value);
+  };
   render() {
     return /*#__PURE__*/(0,jsx_runtime.jsx)("input", {
       className: classnames_default()({
@@ -11815,30 +11815,19 @@ class TextInput extends react.Component {
     });
   }
 }
-_defineProperty(TextInput, "propTypes", {
-  onSave: (prop_types_default()).func.isRequired,
-  text: (prop_types_default()).string,
-  placeholder: (prop_types_default()).string,
-  editing: (prop_types_default()).bool,
-  // input is used in Item to edit the todo.
-  newTodo: (prop_types_default()).bool // input is used in Header to create a todo.
-});
 ;// CONCATENATED MODULE: ./src/components/header.jsx
-function header_defineProperty(obj, key, value) { key = header_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function header_toPropertyKey(arg) { var key = header_toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function header_toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
 
 
 class Header extends react.Component {
-  constructor() {
-    super(...arguments);
-    header_defineProperty(this, "handleSave", text => {
-      if (text.length !== 0) this.props.addTodo(text);
-    });
-  }
+  static propTypes = {
+    addTodo: (prop_types_default()).func.isRequired
+  };
+  handleSave = text => {
+    if (text.length !== 0) this.props.addTodo(text);
+  };
   render() {
     return /*#__PURE__*/(0,jsx_runtime.jsxs)("header", {
       className: "header",
@@ -11853,9 +11842,6 @@ class Header extends react.Component {
     });
   }
 }
-header_defineProperty(Header, "propTypes", {
-  addTodo: (prop_types_default()).func.isRequired
-});
 ;// CONCATENATED MODULE: ./src/constants/action-types.js
 const ADD_TODO = "ADD_TODO";
 const DELETE_TODO = "DELETE_TODO";
@@ -11896,9 +11882,6 @@ const clearCompleted = () => ({
   addTodo: addTodo
 })(Header));
 ;// CONCATENATED MODULE: ./src/components/item.jsx
-function item_defineProperty(obj, key, value) { key = item_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function item_toPropertyKey(arg) { var key = item_toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function item_toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
@@ -11906,23 +11889,27 @@ function item_toPrimitive(input, hint) { if (typeof input !== "object" || input 
 
 
 class Item extends react.PureComponent {
-  constructor() {
-    super(...arguments);
-    item_defineProperty(this, "state", {
+  static propTypes = {
+    todo: (prop_types_default()).object.isRequired,
+    editTodo: (prop_types_default()).func.isRequired,
+    deleteTodo: (prop_types_default()).func.isRequired,
+    toggleTodo: (prop_types_default()).func.isRequired,
+    index: (prop_types_default()).number.isRequired
+  };
+  state = {
+    editing: false
+  };
+  handleDoubleClick = () => {
+    this.setState({
+      editing: true
+    });
+  };
+  handleSave = (id, text) => {
+    if (text.length === 0) this.props.deleteTodo(id);else this.props.editTodo(id, text);
+    this.setState({
       editing: false
     });
-    item_defineProperty(this, "handleDoubleClick", () => {
-      this.setState({
-        editing: true
-      });
-    });
-    item_defineProperty(this, "handleSave", (id, text) => {
-      if (text.length === 0) this.props.deleteTodo(id);else this.props.editTodo(id, text);
-      this.setState({
-        editing: false
-      });
-    });
-  }
+  };
   render() {
     const {
       todo,
@@ -11939,7 +11926,7 @@ class Item extends react.PureComponent {
       });
     } else {
       element = /*#__PURE__*/(0,jsx_runtime.jsxs)("div", {
-        className: classnames_default()("targeted", `view-${index}`),
+        className: "view",
         children: [/*#__PURE__*/(0,jsx_runtime.jsx)("input", {
           className: "toggle",
           type: "checkbox",
@@ -11958,30 +11945,21 @@ class Item extends react.PureComponent {
       });
     }
     return /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
-      className: classnames_default()("targeted", `li-${index}`, {
+      className: classnames_default()({
         completed: todo.completed,
         editing: this.state.editing
       }),
       "data-testid": "todo-item",
+      "data-priority": 4 - index % 5,
       children: element
     });
   }
 }
-item_defineProperty(Item, "propTypes", {
-  todo: (prop_types_default()).object.isRequired,
-  editTodo: (prop_types_default()).func.isRequired,
-  deleteTodo: (prop_types_default()).func.isRequired,
-  toggleTodo: (prop_types_default()).func.isRequired,
-  index: (prop_types_default()).number.isRequired
-});
 ;// CONCATENATED MODULE: ./src/constants/todo-filters.js
 const SHOW_ALL = "/";
 const SHOW_COMPLETED = "/completed";
 const SHOW_ACTIVE = "/active";
 ;// CONCATENATED MODULE: ./src/components/footer.jsx
-function footer_defineProperty(obj, key, value) { key = footer_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function footer_toPropertyKey(arg) { var key = footer_toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function footer_toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 
 
@@ -11989,6 +11967,12 @@ function footer_toPrimitive(input, hint) { if (typeof input !== "object" || inpu
 
 
 class Footer extends react.Component {
+  static propTypes = {
+    completedCount: (prop_types_default()).number.isRequired,
+    activeCount: (prop_types_default()).number.isRequired,
+    filter: (prop_types_default()).string.isRequired,
+    onClearCompleted: (prop_types_default()).func.isRequired
+  };
   render() {
     const {
       completedCount,
@@ -12038,16 +12022,8 @@ class Footer extends react.Component {
     });
   }
 }
-footer_defineProperty(Footer, "propTypes", {
-  completedCount: (prop_types_default()).number.isRequired,
-  activeCount: (prop_types_default()).number.isRequired,
-  filter: (prop_types_default()).string.isRequired,
-  onClearCompleted: (prop_types_default()).func.isRequired
-});
 ;// CONCATENATED MODULE: ./src/components/main.jsx
-function main_defineProperty(obj, key, value) { key = main_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function main_toPropertyKey(arg) { var key = main_toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function main_toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -12055,6 +12031,18 @@ function main_toPrimitive(input, hint) { if (typeof input !== "object" || input 
 
 
 class Main extends react.Component {
+  static propTypes = {
+    todos: (prop_types_default()).array.isRequired,
+    location: (prop_types_default()).object.isRequired,
+    visibleTodos: (prop_types_default()).array.isRequired,
+    completedCount: (prop_types_default()).number.isRequired,
+    activeCount: (prop_types_default()).number.isRequired,
+    editTodo: (prop_types_default()).func.isRequired,
+    deleteTodo: (prop_types_default()).func.isRequired,
+    toggleTodo: (prop_types_default()).func.isRequired,
+    toggleAll: (prop_types_default()).func.isRequired,
+    clearCompleted: (prop_types_default()).func.isRequired
+  };
   render() {
     const {
       todos,
@@ -12086,7 +12074,7 @@ class Main extends react.Component {
           children: "Toggle All Input"
         })]
       }), /*#__PURE__*/(0,jsx_runtime.jsx)("ul", {
-        className: "todo-list",
+        className: classnames_default()("todo-list", "show-priority"),
         "data-testid": "todo-list",
         children: visibleTodos.map((todo, index) => /*#__PURE__*/(0,jsx_runtime.jsx)(Item, {
           todo: todo,
@@ -12104,18 +12092,6 @@ class Main extends react.Component {
     });
   }
 }
-main_defineProperty(Main, "propTypes", {
-  todos: (prop_types_default()).array.isRequired,
-  location: (prop_types_default()).object.isRequired,
-  visibleTodos: (prop_types_default()).array.isRequired,
-  completedCount: (prop_types_default()).number.isRequired,
-  activeCount: (prop_types_default()).number.isRequired,
-  editTodo: (prop_types_default()).func.isRequired,
-  deleteTodo: (prop_types_default()).func.isRequired,
-  toggleTodo: (prop_types_default()).func.isRequired,
-  toggleAll: (prop_types_default()).func.isRequired,
-  clearCompleted: (prop_types_default()).func.isRequired
-});
 ;// CONCATENATED MODULE: ./src/selectors/filters.js
 
 function getFilteredTodos(todos, filter) {
