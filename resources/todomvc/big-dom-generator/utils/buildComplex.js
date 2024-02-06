@@ -134,7 +134,7 @@ function prepareComplex(options) {
 
     // Run npm i in the standalone directory
     console.log(`Running npm ci in the standalone directory: ${standaloneDirectory}`);
-    execSync("npm ci", { cwd: standaloneDirectory, stdio: "inherit" });
+    //execSync("npm ci", { cwd: standaloneDirectory, stdio: "inherit" });
 
     // Run npm run build in the standalone directory
     console.log(`Running npm run build in the standalone directory: ${standaloneDirectory}`);
