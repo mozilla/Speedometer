@@ -1,53 +1,53 @@
-/*! For license information please see index-b2781c6d085e9baa.js.LICENSE.txt */
+/*! For license information please see index-429e5200b5e9fc5a.js.LICENSE.txt */
 (self.webpackChunk_N_E = self.webpackChunk_N_E || []).push([ [ 405 ], {
-    4184: function(e, t) {
-        var i;
+    4184: function(module, exports) {
+        var __WEBPACK_AMD_DEFINE_RESULT__;
         !function() {
             "use strict";
-            var a = {}.hasOwnProperty;
-            function l() {
-                for (var e = [], t = 0; t < arguments.length; t++) {
-                    var i = arguments[t];
-                    if (i) {
-                        var s = typeof i;
-                        if ("string" === s || "number" === s) e.push(i); else if (Array.isArray(i)) {
-                            if (i.length) {
-                                var n = l.apply(null, i);
-                                n && e.push(n);
+            var hasOwn = {}.hasOwnProperty;
+            function classNames() {
+                for (var classes = [], i = 0; i < arguments.length; i++) {
+                    var arg = arguments[i];
+                    if (arg) {
+                        var argType = typeof arg;
+                        if ("string" === argType || "number" === argType) classes.push(arg); else if (Array.isArray(arg)) {
+                            if (arg.length) {
+                                var inner = classNames.apply(null, arg);
+                                inner && classes.push(inner);
                             }
-                        } else if ("object" === s) {
-                            if (i.toString !== Object.prototype.toString && !i.toString.toString().includes("[native code]")) {
-                                e.push(i.toString());
+                        } else if ("object" === argType) {
+                            if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
+                                classes.push(arg.toString());
                                 continue;
                             }
-                            for (var r in i) a.call(i, r) && i[r] && e.push(r);
+                            for (var key in arg) hasOwn.call(arg, key) && arg[key] && classes.push(key);
                         }
                     }
                 }
-                return e.join(" ");
+                return classes.join(" ");
             }
-            e.exports ? (l.default = l, e.exports = l) : void 0 === (i = function() {
-                return l;
-            }.apply(t, [])) || (e.exports = i);
+            module.exports ? (classNames.default = classNames, module.exports = classNames) : void 0 === (__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+                return classNames;
+            }.apply(exports, [])) || (module.exports = __WEBPACK_AMD_DEFINE_RESULT__);
         }();
     },
-    5557: function(e, t, i) {
+    5557: function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
         (window.__NEXT_P = window.__NEXT_P || []).push([ "/", function() {
-            return i(9074);
+            return __webpack_require__(9074);
         } ]);
     },
-    3740: function(e, t, i) {
+    3740: function(module, exports, __webpack_require__) {
         "use strict";
-        Object.defineProperty(t, "__esModule", {
+        Object.defineProperty(exports, "__esModule", {
             value: !0
-        }), Object.defineProperty(t, "default", {
+        }), Object.defineProperty(exports, "default", {
             enumerable: !0,
             get: function() {
-                return v;
+                return _default;
             }
         });
-        const a = i(8754), l = i(1757)._(i(7294)), s = a._(i(2636)), n = i(7757), r = i(3735), c = i(3341), o = (i(4210), 
-        a._(i(7746))), u = {
+        const _interop_require_default = __webpack_require__(8754), _react = __webpack_require__(1757)._(__webpack_require__(7294)), _head = _interop_require_default._(__webpack_require__(2636)), _imageblursvg = __webpack_require__(7757), _imageconfig = __webpack_require__(3735), _imageconfigcontext = __webpack_require__(3341), _imageloader = (__webpack_require__(4210), 
+        _interop_require_default._(__webpack_require__(7746))), configEnv = {
             deviceSizes: [ 640, 750, 828, 1080, 1200, 1920, 2048, 3840 ],
             imageSizes: [ 16, 32, 48, 64, 96, 128, 256, 384 ],
             path: "/_next/image",
@@ -56,155 +56,156 @@
             unoptimized: !0
         };
         new Map;
-        function h(e) {
-            return void 0 !== e.default;
+        function isStaticRequire(src) {
+            return void 0 !== src.default;
         }
-        function d(e) {
-            let {config: t, src: i, unoptimized: a, width: l, quality: s, sizes: n, loader: r} = e;
-            if (a) return {
-                src: i,
+        function generateImgAttrs(param) {
+            let {config: config, src: src, unoptimized: unoptimized, width: width, quality: quality, sizes: sizes, loader: loader} = param;
+            if (unoptimized) return {
+                src: src,
                 srcSet: void 0,
                 sizes: void 0
             };
-            const {widths: c, kind: o} = function(e, t, i) {
-                let {deviceSizes: a, allSizes: l} = e;
-                if (i) {
-                    const e = /(^|\s)(1?\d?\d)vw/g, t = [];
-                    for (let a; a = e.exec(i); a) t.push(parseInt(a[2]));
-                    if (t.length) {
-                        const e = .01 * Math.min(...t);
+            const {widths: widths, kind: kind} = function(param, width, sizes) {
+                let {deviceSizes: deviceSizes, allSizes: allSizes} = param;
+                if (sizes) {
+                    const viewportWidthRe = /(^|\s)(1?\d?\d)vw/g, percentSizes = [];
+                    for (let match; match = viewportWidthRe.exec(sizes); match) percentSizes.push(parseInt(match[2]));
+                    if (percentSizes.length) {
+                        const smallestRatio = .01 * Math.min(...percentSizes);
                         return {
-                            widths: l.filter((t => t >= a[0] * e)),
+                            widths: allSizes.filter((s => s >= deviceSizes[0] * smallestRatio)),
                             kind: "w"
                         };
                     }
                     return {
-                        widths: l,
+                        widths: allSizes,
                         kind: "w"
                     };
                 }
-                return "number" != typeof t ? {
-                    widths: a,
+                return "number" != typeof width ? {
+                    widths: deviceSizes,
                     kind: "w"
                 } : {
-                    widths: [ ...new Set([ t, 2 * t ].map((e => l.find((t => t >= e)) || l[l.length - 1]))) ],
+                    widths: [ ...new Set([ width, 2 * width ].map((w => allSizes.find((p => p >= w)) || allSizes[allSizes.length - 1]))) ],
                     kind: "x"
                 };
-            }(t, l, n), u = c.length - 1;
+            }(config, width, sizes), last = widths.length - 1;
             return {
-                sizes: n || "w" !== o ? n : "100vw",
-                srcSet: c.map(((e, a) => r({
-                    config: t,
-                    src: i,
-                    quality: s,
-                    width: e
-                }) + " " + ("w" === o ? e : a + 1) + o)).join(", "),
-                src: r({
-                    config: t,
-                    src: i,
-                    quality: s,
-                    width: c[u]
+                sizes: sizes || "w" !== kind ? sizes : "100vw",
+                srcSet: widths.map(((w, i) => loader({
+                    config: config,
+                    src: src,
+                    quality: quality,
+                    width: w
+                }) + " " + ("w" === kind ? w : i + 1) + kind)).join(", "),
+                src: loader({
+                    config: config,
+                    src: src,
+                    quality: quality,
+                    width: widths[last]
                 })
             };
         }
-        function m(e) {
-            return void 0 === e ? e : "number" == typeof e ? Number.isFinite(e) ? e : NaN : "string" == typeof e && /^[0-9]+$/.test(e) ? parseInt(e, 10) : NaN;
+        function getInt(x) {
+            return void 0 === x ? x : "number" == typeof x ? Number.isFinite(x) ? x : NaN : "string" == typeof x && /^[0-9]+$/.test(x) ? parseInt(x, 10) : NaN;
         }
-        function g(e, t, i, a, l, s, n) {
-            if (!e || e["data-loaded-src"] === t) return;
-            e["data-loaded-src"] = t;
-            ("decode" in e ? e.decode() : Promise.resolve()).catch((() => {})).then((() => {
-                if (e.parentElement && e.isConnected) {
-                    if ("blur" === i && s(!0), null == a ? void 0 : a.current) {
-                        const t = new Event("load");
-                        Object.defineProperty(t, "target", {
+        function handleLoading(img, src, placeholder, onLoadRef, onLoadingCompleteRef, setBlurComplete, unoptimized) {
+            if (!img || img["data-loaded-src"] === src) return;
+            img["data-loaded-src"] = src;
+            ("decode" in img ? img.decode() : Promise.resolve()).catch((() => {})).then((() => {
+                if (img.parentElement && img.isConnected) {
+                    if ("blur" === placeholder && setBlurComplete(!0), null == onLoadRef ? void 0 : onLoadRef.current) {
+                        const event = new Event("load");
+                        Object.defineProperty(event, "target", {
                             writable: !1,
-                            value: e
+                            value: img
                         });
-                        let i = !1, l = !1;
-                        a.current({
-                            ...t,
-                            nativeEvent: t,
-                            currentTarget: e,
-                            target: e,
-                            isDefaultPrevented: () => i,
-                            isPropagationStopped: () => l,
+                        let prevented = !1, stopped = !1;
+                        onLoadRef.current({
+                            ...event,
+                            nativeEvent: event,
+                            currentTarget: img,
+                            target: img,
+                            isDefaultPrevented: () => prevented,
+                            isPropagationStopped: () => stopped,
                             persist: () => {},
                             preventDefault: () => {
-                                i = !0, t.preventDefault();
+                                prevented = !0, event.preventDefault();
                             },
                             stopPropagation: () => {
-                                l = !0, t.stopPropagation();
+                                stopped = !0, event.stopPropagation();
                             }
                         });
                     }
-                    (null == l ? void 0 : l.current) && l.current(e);
+                    (null == onLoadingCompleteRef ? void 0 : onLoadingCompleteRef.current) && onLoadingCompleteRef.current(img);
                 }
             }));
         }
-        function p(e) {
-            const [t, i] = l.version.split("."), a = parseInt(t, 10), s = parseInt(i, 10);
-            return a > 18 || 18 === a && s >= 3 ? {
-                fetchPriority: e
+        function getDynamicProps(fetchPriority) {
+            const [majorStr, minorStr] = _react.version.split("."), major = parseInt(majorStr, 10), minor = parseInt(minorStr, 10);
+            return major > 18 || 18 === major && minor >= 3 ? {
+                fetchPriority: fetchPriority
             } : {
-                fetchpriority: e
+                fetchpriority: fetchPriority
             };
         }
-        const b = (0, l.forwardRef)(((e, t) => {
-            let {imgAttributes: i, heightInt: a, widthInt: s, qualityInt: n, className: r, imgStyle: c, blurStyle: o, isLazy: u, fetchPriority: h, fill: d, placeholder: m, loading: b, srcString: v, config: w, unoptimized: _, loader: y, onLoadRef: j, onLoadingCompleteRef: f, setBlurComplete: q, setShowAltText: x, onLoad: P, onError: k, ...E} = e;
-            return b = u ? "lazy" : b, l.default.createElement(l.default.Fragment, null, l.default.createElement("img", {
-                ...E,
-                ...p(h),
-                loading: b,
-                width: s,
-                height: a,
+        const ImageElement = (0, _react.forwardRef)(((param, forwardedRef) => {
+            let {imgAttributes: imgAttributes, heightInt: heightInt, widthInt: widthInt, qualityInt: qualityInt, className: className, imgStyle: imgStyle, blurStyle: blurStyle, isLazy: isLazy, fetchPriority: fetchPriority, fill: fill, placeholder: placeholder, loading: loading, srcString: srcString, config: config, unoptimized: unoptimized, loader: loader, onLoadRef: onLoadRef, onLoadingCompleteRef: onLoadingCompleteRef, setBlurComplete: setBlurComplete, setShowAltText: setShowAltText, onLoad: onLoad, onError: onError, ...rest} = param;
+            return loading = isLazy ? "lazy" : loading, _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("img", {
+                ...rest,
+                ...getDynamicProps(fetchPriority),
+                loading: loading,
+                width: widthInt,
+                height: heightInt,
                 decoding: "async",
-                "data-nimg": d ? "fill" : "1",
-                className: r,
+                "data-nimg": fill ? "fill" : "1",
+                className: className,
                 style: {
-                    ...c,
-                    ...o
+                    ...imgStyle,
+                    ...blurStyle
                 },
-                ...i,
-                ref: (0, l.useCallback)((e => {
-                    t && ("function" == typeof t ? t(e) : "object" == typeof t && (t.current = e)), 
-                    e && (k && (e.src = e.src), e.complete && g(e, v, m, j, f, q));
-                }), [ v, m, j, f, q, k, _, t ]),
-                onLoad: e => {
-                    g(e.currentTarget, v, m, j, f, q);
+                ...imgAttributes,
+                ref: (0, _react.useCallback)((img => {
+                    forwardedRef && ("function" == typeof forwardedRef ? forwardedRef(img) : "object" == typeof forwardedRef && (forwardedRef.current = img)), 
+                    img && (onError && (img.src = img.src), img.complete && handleLoading(img, srcString, placeholder, onLoadRef, onLoadingCompleteRef, setBlurComplete));
+                }), [ srcString, placeholder, onLoadRef, onLoadingCompleteRef, setBlurComplete, onError, unoptimized, forwardedRef ]),
+                onLoad: event => {
+                    handleLoading(event.currentTarget, srcString, placeholder, onLoadRef, onLoadingCompleteRef, setBlurComplete);
                 },
-                onError: e => {
-                    x(!0), "blur" === m && q(!0), k && k(e);
+                onError: event => {
+                    setShowAltText(!0), "blur" === placeholder && setBlurComplete(!0), onError && onError(event);
                 }
             }));
-        })), v = (0, l.forwardRef)(((e, t) => {
-            let {src: i, sizes: a, unoptimized: g = !1, priority: v = !1, loading: w, className: _, quality: y, width: j, height: f, fill: q, style: x, onLoad: P, onLoadingComplete: k, placeholder: E = "empty", blurDataURL: N, fetchPriority: S, layout: C, objectFit: I, objectPosition: A, lazyBoundary: U, lazyRoot: M, ...D} = e;
-            const T = (0, l.useContext)(c.ImageConfigContext), L = (0, l.useMemo)((() => {
-                const e = u || T || r.imageConfigDefault, t = [ ...e.deviceSizes, ...e.imageSizes ].sort(((e, t) => e - t)), i = e.deviceSizes.sort(((e, t) => e - t));
+        })), _default = (0, _react.forwardRef)(((param, forwardedRef) => {
+            let {src: src, sizes: sizes, unoptimized: unoptimized = !1, priority: priority = !1, loading: loading, className: className, quality: quality, width: width, height: height, fill: fill, style: style, onLoad: onLoad, onLoadingComplete: onLoadingComplete, placeholder: placeholder = "empty", blurDataURL: blurDataURL, fetchPriority: fetchPriority, layout: layout, objectFit: objectFit, objectPosition: objectPosition, lazyBoundary: lazyBoundary, lazyRoot: lazyRoot, ...all} = param;
+            const configContext = (0, _react.useContext)(_imageconfigcontext.ImageConfigContext), config = (0, 
+            _react.useMemo)((() => {
+                const c = configEnv || configContext || _imageconfig.imageConfigDefault, allSizes = [ ...c.deviceSizes, ...c.imageSizes ].sort(((a, b) => a - b)), deviceSizes = c.deviceSizes.sort(((a, b) => a - b));
                 return {
-                    ...e,
-                    allSizes: t,
-                    deviceSizes: i
+                    ...c,
+                    allSizes: allSizes,
+                    deviceSizes: deviceSizes
                 };
-            }), [ T ]);
-            let V = D, R = V.loader || o.default;
-            delete V.loader;
-            const F = "__next_img_default" in R;
-            if (F) {
-                if ("custom" === L.loader) throw new Error('Image with src "' + i + '" is missing "loader" prop.\nRead more: https://nextjs.org/docs/messages/next-image-missing-loader');
+            }), [ configContext ]);
+            let rest = all, loader = rest.loader || _imageloader.default;
+            delete rest.loader;
+            const isDefaultLoader = "__next_img_default" in loader;
+            if (isDefaultLoader) {
+                if ("custom" === config.loader) throw new Error('Image with src "' + src + '" is missing "loader" prop.\nRead more: https://nextjs.org/docs/messages/next-image-missing-loader');
             } else {
-                const e = R;
-                R = t => {
-                    const {config: i, ...a} = t;
-                    return e(a);
+                const customImageLoader = loader;
+                loader = obj => {
+                    const {config: _, ...opts} = obj;
+                    return customImageLoader(opts);
                 };
             }
-            if (C) {
-                "fill" === C && (q = !0);
-                const e = {
+            if (layout) {
+                "fill" === layout && (fill = !0);
+                const layoutToSizes = {
                     responsive: "100vw",
                     fill: "100vw"
-                }, t = {
+                }, layoutStyle = {
                     intrinsic: {
                         maxWidth: "100%",
                         height: "auto"
@@ -213,39 +214,43 @@
                         width: "100%",
                         height: "auto"
                     }
-                }[C];
-                t && (x = {
-                    ...x,
-                    ...t
+                }[layout];
+                layoutStyle && (style = {
+                    ...style,
+                    ...layoutStyle
                 });
-                const i = e[C];
-                i && !a && (a = i);
+                const layoutSizes = layoutToSizes[layout];
+                layoutSizes && !sizes && (sizes = layoutSizes);
             }
-            let O, B, z = "", H = m(j), Q = m(f);
-            if (function(e) {
-                return "object" == typeof e && (h(e) || function(e) {
-                    return void 0 !== e.src;
-                }(e));
-            }(i)) {
-                const e = h(i) ? i.default : i;
-                if (!e.src) throw new Error("An object should only be passed to the image component src parameter if it comes from a static image import. It must include src. Received " + JSON.stringify(e));
-                if (!e.height || !e.width) throw new Error("An object should only be passed to the image component src parameter if it comes from a static image import. It must include height and width. Received " + JSON.stringify(e));
-                if (O = e.blurWidth, B = e.blurHeight, N = N || e.blurDataURL, z = e.src, !q) if (H || Q) {
-                    if (H && !Q) {
-                        const t = H / e.width;
-                        Q = Math.round(e.height * t);
-                    } else if (!H && Q) {
-                        const t = Q / e.height;
-                        H = Math.round(e.width * t);
+            let blurWidth, blurHeight, staticSrc = "", widthInt = getInt(width), heightInt = getInt(height);
+            if (function(src) {
+                return "object" == typeof src && (isStaticRequire(src) || function(src) {
+                    return void 0 !== src.src;
+                }(src));
+            }(src)) {
+                const staticImageData = isStaticRequire(src) ? src.default : src;
+                if (!staticImageData.src) throw new Error("An object should only be passed to the image component src parameter if it comes from a static image import. It must include src. Received " + JSON.stringify(staticImageData));
+                if (!staticImageData.height || !staticImageData.width) throw new Error("An object should only be passed to the image component src parameter if it comes from a static image import. It must include height and width. Received " + JSON.stringify(staticImageData));
+                if (blurWidth = staticImageData.blurWidth, blurHeight = staticImageData.blurHeight, 
+                blurDataURL = blurDataURL || staticImageData.blurDataURL, staticSrc = staticImageData.src, 
+                !fill) if (widthInt || heightInt) {
+                    if (widthInt && !heightInt) {
+                        const ratio = widthInt / staticImageData.width;
+                        heightInt = Math.round(staticImageData.height * ratio);
+                    } else if (!widthInt && heightInt) {
+                        const ratio = heightInt / staticImageData.height;
+                        widthInt = Math.round(staticImageData.width * ratio);
                     }
-                } else H = e.width, Q = e.height;
+                } else widthInt = staticImageData.width, heightInt = staticImageData.height;
             }
-            i = "string" == typeof i ? i : z;
-            let W = !v && ("lazy" === w || void 0 === w);
-            (!i || i.startsWith("data:") || i.startsWith("blob:")) && (g = !0, W = !1), L.unoptimized && (g = !0), 
-            F && i.endsWith(".svg") && !L.dangerouslyAllowSVG && (g = !0), v && (S = "high");
-            const [G, J] = (0, l.useState)(!1), [K, $] = (0, l.useState)(!1), Z = m(y);
-            const X = Object.assign(q ? {
+            src = "string" == typeof src ? src : staticSrc;
+            let isLazy = !priority && ("lazy" === loading || void 0 === loading);
+            (!src || src.startsWith("data:") || src.startsWith("blob:")) && (unoptimized = !0, 
+            isLazy = !1), config.unoptimized && (unoptimized = !0), isDefaultLoader && src.endsWith(".svg") && !config.dangerouslyAllowSVG && (unoptimized = !0), 
+            priority && (fetchPriority = "high");
+            const [blurComplete, setBlurComplete] = (0, _react.useState)(!1), [showAltText, setShowAltText] = (0, 
+            _react.useState)(!1), qualityInt = getInt(quality);
+            const imgStyle = Object.assign(fill ? {
                 position: "absolute",
                 height: "100%",
                 width: "100%",
@@ -253,1040 +258,1064 @@
                 top: 0,
                 right: 0,
                 bottom: 0,
-                objectFit: I,
-                objectPosition: A
-            } : {}, K ? {} : {
+                objectFit: objectFit,
+                objectPosition: objectPosition
+            } : {}, showAltText ? {} : {
                 color: "transparent"
-            }, x), Y = "blur" === E && N && !G ? {
-                backgroundSize: X.objectFit || "cover",
-                backgroundPosition: X.objectPosition || "50% 50%",
+            }, style), blurStyle = "blur" === placeholder && blurDataURL && !blurComplete ? {
+                backgroundSize: imgStyle.objectFit || "cover",
+                backgroundPosition: imgStyle.objectPosition || "50% 50%",
                 backgroundRepeat: "no-repeat",
-                backgroundImage: 'url("data:image/svg+xml;charset=utf-8,' + (0, n.getImageBlurSvg)({
-                    widthInt: H,
-                    heightInt: Q,
-                    blurWidth: O,
-                    blurHeight: B,
-                    blurDataURL: N,
-                    objectFit: X.objectFit
+                backgroundImage: 'url("data:image/svg+xml;charset=utf-8,' + (0, _imageblursvg.getImageBlurSvg)({
+                    widthInt: widthInt,
+                    heightInt: heightInt,
+                    blurWidth: blurWidth,
+                    blurHeight: blurHeight,
+                    blurDataURL: blurDataURL,
+                    objectFit: imgStyle.objectFit
                 }) + '")'
             } : {};
-            const ee = d({
-                config: L,
-                src: i,
-                unoptimized: g,
-                width: H,
-                quality: Z,
-                sizes: a,
-                loader: R
+            const imgAttributes = generateImgAttrs({
+                config: config,
+                src: src,
+                unoptimized: unoptimized,
+                width: widthInt,
+                quality: qualityInt,
+                sizes: sizes,
+                loader: loader
             });
-            let te = i;
-            const ie = (0, l.useRef)(P);
-            (0, l.useEffect)((() => {
-                ie.current = P;
-            }), [ P ]);
-            const ae = (0, l.useRef)(k);
-            (0, l.useEffect)((() => {
-                ae.current = k;
-            }), [ k ]);
-            const le = {
-                isLazy: W,
-                imgAttributes: ee,
-                heightInt: Q,
-                widthInt: H,
-                qualityInt: Z,
-                className: _,
-                imgStyle: X,
-                blurStyle: Y,
-                loading: w,
-                config: L,
-                fetchPriority: S,
-                fill: q,
-                unoptimized: g,
-                placeholder: E,
-                loader: R,
-                srcString: te,
-                onLoadRef: ie,
-                onLoadingCompleteRef: ae,
-                setBlurComplete: J,
-                setShowAltText: $,
-                ...V
+            let srcString = src;
+            const onLoadRef = (0, _react.useRef)(onLoad);
+            (0, _react.useEffect)((() => {
+                onLoadRef.current = onLoad;
+            }), [ onLoad ]);
+            const onLoadingCompleteRef = (0, _react.useRef)(onLoadingComplete);
+            (0, _react.useEffect)((() => {
+                onLoadingCompleteRef.current = onLoadingComplete;
+            }), [ onLoadingComplete ]);
+            const imgElementArgs = {
+                isLazy: isLazy,
+                imgAttributes: imgAttributes,
+                heightInt: heightInt,
+                widthInt: widthInt,
+                qualityInt: qualityInt,
+                className: className,
+                imgStyle: imgStyle,
+                blurStyle: blurStyle,
+                loading: loading,
+                config: config,
+                fetchPriority: fetchPriority,
+                fill: fill,
+                unoptimized: unoptimized,
+                placeholder: placeholder,
+                loader: loader,
+                srcString: srcString,
+                onLoadRef: onLoadRef,
+                onLoadingCompleteRef: onLoadingCompleteRef,
+                setBlurComplete: setBlurComplete,
+                setShowAltText: setShowAltText,
+                ...rest
             };
-            return l.default.createElement(l.default.Fragment, null, l.default.createElement(b, {
-                ...le,
-                ref: t
-            }), v ? l.default.createElement(s.default, null, l.default.createElement("link", {
-                key: "__nimg-" + ee.src + ee.srcSet + ee.sizes,
+            return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement(ImageElement, {
+                ...imgElementArgs,
+                ref: forwardedRef
+            }), priority ? _react.default.createElement(_head.default, null, _react.default.createElement("link", {
+                key: "__nimg-" + imgAttributes.src + imgAttributes.srcSet + imgAttributes.sizes,
                 rel: "preload",
                 as: "image",
-                href: ee.srcSet ? void 0 : ee.src,
-                imageSrcSet: ee.srcSet,
-                imageSizes: ee.sizes,
-                crossOrigin: V.crossOrigin,
-                ...p(S)
+                href: imgAttributes.srcSet ? void 0 : imgAttributes.src,
+                imageSrcSet: imgAttributes.srcSet,
+                imageSizes: imgAttributes.sizes,
+                crossOrigin: rest.crossOrigin,
+                ...getDynamicProps(fetchPriority)
             })) : null);
         }));
-        ("function" == typeof t.default || "object" == typeof t.default && null !== t.default) && void 0 === t.default.__esModule && (Object.defineProperty(t.default, "__esModule", {
+        ("function" == typeof exports.default || "object" == typeof exports.default && null !== exports.default) && void 0 === exports.default.__esModule && (Object.defineProperty(exports.default, "__esModule", {
             value: !0
-        }), Object.assign(t.default, t), e.exports = t.default);
+        }), Object.assign(exports.default, exports), module.exports = exports.default);
     },
-    7757: function(e, t) {
+    7757: function(__unused_webpack_module, exports) {
         "use strict";
-        function i(e) {
-            let {widthInt: t, heightInt: i, blurWidth: a, blurHeight: l, blurDataURL: s, objectFit: n} = e;
-            const r = a && l ? "1" : "20", c = a || t, o = l || i, u = s.startsWith("data:image/jpeg") ? "%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1'/%3E%3C/feComponentTransfer%3E%" : "";
-            if (c && o) return "%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 " + c + " " + o + "'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='" + r + "'/%3E" + u + "%3C/filter%3E%3Cimage preserveAspectRatio='none' filter='url(%23b)' x='0' y='0' height='100%25' width='100%25' href='" + s + "'/%3E%3C/svg%3E";
-            return "%3Csvg xmlns='http%3A//www.w3.org/2000/svg'%3E%3Cimage style='filter:blur(20px)' preserveAspectRatio='" + ("contain" === n ? "xMidYMid" : "cover" === n ? "xMidYMid slice" : "none") + "' x='0' y='0' height='100%25' width='100%25' href='" + s + "'/%3E%3C/svg%3E";
+        function getImageBlurSvg(param) {
+            let {widthInt: widthInt, heightInt: heightInt, blurWidth: blurWidth, blurHeight: blurHeight, blurDataURL: blurDataURL, objectFit: objectFit} = param;
+            const std = blurWidth && blurHeight ? "1" : "20", svgWidth = blurWidth || widthInt, svgHeight = blurHeight || heightInt, feComponentTransfer = blurDataURL.startsWith("data:image/jpeg") ? "%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1'/%3E%3C/feComponentTransfer%3E%" : "";
+            if (svgWidth && svgHeight) return "%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 " + svgWidth + " " + svgHeight + "'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='" + std + "'/%3E" + feComponentTransfer + "%3C/filter%3E%3Cimage preserveAspectRatio='none' filter='url(%23b)' x='0' y='0' height='100%25' width='100%25' href='" + blurDataURL + "'/%3E%3C/svg%3E";
+            return "%3Csvg xmlns='http%3A//www.w3.org/2000/svg'%3E%3Cimage style='filter:blur(20px)' preserveAspectRatio='" + ("contain" === objectFit ? "xMidYMid" : "cover" === objectFit ? "xMidYMid slice" : "none") + "' x='0' y='0' height='100%25' width='100%25' href='" + blurDataURL + "'/%3E%3C/svg%3E";
         }
-        Object.defineProperty(t, "__esModule", {
+        Object.defineProperty(exports, "__esModule", {
             value: !0
-        }), Object.defineProperty(t, "getImageBlurSvg", {
+        }), Object.defineProperty(exports, "getImageBlurSvg", {
             enumerable: !0,
             get: function() {
-                return i;
+                return getImageBlurSvg;
             }
         });
     },
-    7746: function(e, t) {
+    7746: function(__unused_webpack_module, exports) {
         "use strict";
-        function i(e) {
-            let {config: t, src: i, width: a, quality: l} = e;
-            return t.path + "?url=" + encodeURIComponent(i) + "&w=" + a + "&q=" + (l || 75);
+        function defaultLoader(param) {
+            let {config: config, src: src, width: width, quality: quality} = param;
+            return config.path + "?url=" + encodeURIComponent(src) + "&w=" + width + "&q=" + (quality || 75);
         }
-        Object.defineProperty(t, "__esModule", {
+        Object.defineProperty(exports, "__esModule", {
             value: !0
-        }), Object.defineProperty(t, "default", {
+        }), Object.defineProperty(exports, "default", {
             enumerable: !0,
             get: function() {
-                return a;
+                return _default;
             }
-        }), i.__next_img_default = !0;
-        const a = i;
+        }), defaultLoader.__next_img_default = !0;
+        const _default = defaultLoader;
     },
-    9074: function(e, t, i) {
+    9074: function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        i.r(t), i.d(t, {
+        __webpack_require__.r(__webpack_exports__), __webpack_require__.d(__webpack_exports__, {
             default: function() {
-                return Si;
+                return App;
             }
         });
-        var a = {};
-        i.r(a), i.d(a, {
+        var buttons_namespaceObject = {};
+        __webpack_require__.r(buttons_namespaceObject), __webpack_require__.d(buttons_namespaceObject, {
             login: function() {
-                return Ke;
+                return login;
             },
             more: function() {
-                return $e;
+                return more;
             }
         });
-        var l = {};
-        i.r(l), i.d(l, {
+        var jp_buttons_namespaceObject = {};
+        __webpack_require__.r(jp_buttons_namespaceObject), __webpack_require__.d(jp_buttons_namespaceObject, {
             login: function() {
-                return Ze;
+                return buttons_login;
             },
             more: function() {
-                return Xe;
+                return buttons_more;
             }
         });
-        var s = {};
-        i.r(s), i.d(s, {
+        var ar_buttons_namespaceObject = {};
+        __webpack_require__.r(ar_buttons_namespaceObject), __webpack_require__.d(ar_buttons_namespaceObject, {
             login: function() {
-                return Ye;
+                return ar_buttons_login;
             },
             more: function() {
-                return et;
+                return ar_buttons_more;
             }
         });
-        var n = {};
-        i.r(n), i.d(n, {
+        var links_namespaceObject = {};
+        __webpack_require__.r(links_namespaceObject), __webpack_require__.d(links_namespaceObject, {
             a11y: function() {
-                return at;
+                return a11y;
             },
             legal: function() {
-                return it;
+                return legal;
             },
             social: function() {
-                return tt;
+                return social;
             }
         });
-        var r = {};
-        i.r(r), i.d(r, {
+        var jp_links_namespaceObject = {};
+        __webpack_require__.r(jp_links_namespaceObject), __webpack_require__.d(jp_links_namespaceObject, {
             a11y: function() {
-                return nt;
+                return links_a11y;
             },
             legal: function() {
-                return st;
+                return links_legal;
             },
             social: function() {
-                return lt;
+                return links_social;
             }
         });
-        var c = {};
-        i.r(c), i.d(c, {
+        var ar_links_namespaceObject = {};
+        __webpack_require__.r(ar_links_namespaceObject), __webpack_require__.d(ar_links_namespaceObject, {
             a11y: function() {
-                return ot;
+                return ar_links_a11y;
             },
             legal: function() {
-                return ct;
+                return ar_links_legal;
             },
             social: function() {
-                return rt;
+                return ar_links_social;
             }
         });
-        var o, u = i(5893), h = i(7294);
-        function d() {
-            return d = Object.assign ? Object.assign.bind() : function(e) {
-                for (var t = 1; t < arguments.length; t++) {
-                    var i = arguments[t];
-                    for (var a in i) Object.prototype.hasOwnProperty.call(i, a) && (e[a] = i[a]);
+        var Action, jsx_runtime = __webpack_require__(5893), react = __webpack_require__(7294);
+        function _extends() {
+            return _extends = Object.assign ? Object.assign.bind() : function(target) {
+                for (var i = 1; i < arguments.length; i++) {
+                    var source = arguments[i];
+                    for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
                 }
-                return e;
-            }, d.apply(this, arguments);
+                return target;
+            }, _extends.apply(this, arguments);
         }
-        !function(e) {
-            e.Pop = "POP", e.Push = "PUSH", e.Replace = "REPLACE";
-        }(o || (o = {}));
-        const m = "popstate";
-        function g(e, t) {
-            if (!1 === e || null == e) throw new Error(t);
+        !function(Action) {
+            Action.Pop = "POP", Action.Push = "PUSH", Action.Replace = "REPLACE";
+        }(Action || (Action = {}));
+        const PopStateEventType = "popstate";
+        function invariant(value, message) {
+            if (!1 === value || null == value) throw new Error(message);
         }
-        function p(e, t) {
-            if (!e) {
-                "undefined" != typeof console && console.warn(t);
+        function warning(cond, message) {
+            if (!cond) {
+                "undefined" != typeof console && console.warn(message);
                 try {
-                    throw new Error(t);
+                    throw new Error(message);
                 } catch (e) {}
             }
         }
-        function b(e, t) {
+        function getHistoryState(location, index) {
             return {
-                usr: e.state,
-                key: e.key,
-                idx: t
+                usr: location.state,
+                key: location.key,
+                idx: index
             };
         }
-        function v(e, t, i, a) {
-            return void 0 === i && (i = null), d({
-                pathname: "string" == typeof e ? e : e.pathname,
+        function createLocation(current, to, state, key) {
+            return void 0 === state && (state = null), _extends({
+                pathname: "string" == typeof current ? current : current.pathname,
                 search: "",
                 hash: ""
-            }, "string" == typeof t ? _(t) : t, {
-                state: i,
-                key: t && t.key || a || Math.random().toString(36).substr(2, 8)
+            }, "string" == typeof to ? parsePath(to) : to, {
+                state: state,
+                key: to && to.key || key || Math.random().toString(36).substr(2, 8)
             });
         }
-        function w(e) {
-            let {pathname: t = "/", search: i = "", hash: a = ""} = e;
-            return i && "?" !== i && (t += "?" === i.charAt(0) ? i : "?" + i), a && "#" !== a && (t += "#" === a.charAt(0) ? a : "#" + a), 
-            t;
+        function router_createPath(_ref) {
+            let {pathname: pathname = "/", search: search = "", hash: hash = ""} = _ref;
+            return search && "?" !== search && (pathname += "?" === search.charAt(0) ? search : "?" + search), 
+            hash && "#" !== hash && (pathname += "#" === hash.charAt(0) ? hash : "#" + hash), 
+            pathname;
         }
-        function _(e) {
-            let t = {};
-            if (e) {
-                let i = e.indexOf("#");
-                i >= 0 && (t.hash = e.substr(i), e = e.substr(0, i));
-                let a = e.indexOf("?");
-                a >= 0 && (t.search = e.substr(a), e = e.substr(0, a)), e && (t.pathname = e);
+        function parsePath(path) {
+            let parsedPath = {};
+            if (path) {
+                let hashIndex = path.indexOf("#");
+                hashIndex >= 0 && (parsedPath.hash = path.substr(hashIndex), path = path.substr(0, hashIndex));
+                let searchIndex = path.indexOf("?");
+                searchIndex >= 0 && (parsedPath.search = path.substr(searchIndex), path = path.substr(0, searchIndex)), 
+                path && (parsedPath.pathname = path);
             }
-            return t;
+            return parsedPath;
         }
-        function y(e, t, i, a) {
-            void 0 === a && (a = {});
-            let {window: l = document.defaultView, v5Compat: s = !1} = a, n = l.history, r = o.Pop, c = null, u = h();
-            function h() {
-                return (n.state || {
+        function getUrlBasedHistory(getLocation, createHref, validateLocation, options) {
+            void 0 === options && (options = {});
+            let {window: window = document.defaultView, v5Compat: v5Compat = !1} = options, globalHistory = window.history, action = Action.Pop, listener = null, index = getIndex();
+            function getIndex() {
+                return (globalHistory.state || {
                     idx: null
                 }).idx;
             }
-            function p() {
-                r = o.Pop;
-                let e = h(), t = null == e ? null : e - u;
-                u = e, c && c({
-                    action: r,
-                    location: y.location,
-                    delta: t
+            function handlePop() {
+                action = Action.Pop;
+                let nextIndex = getIndex(), delta = null == nextIndex ? null : nextIndex - index;
+                index = nextIndex, listener && listener({
+                    action: action,
+                    location: history.location,
+                    delta: delta
                 });
             }
-            function _(e) {
-                let t = "null" !== l.location.origin ? l.location.origin : l.location.href, i = "string" == typeof e ? e : w(e);
-                return g(t, "No window.location.(origin|href) available to create URL for href: " + i), 
-                new URL(i, t);
+            function createURL(to) {
+                let base = "null" !== window.location.origin ? window.location.origin : window.location.href, href = "string" == typeof to ? to : router_createPath(to);
+                return invariant(base, "No window.location.(origin|href) available to create URL for href: " + href), 
+                new URL(href, base);
             }
-            null == u && (u = 0, n.replaceState(d({}, n.state, {
-                idx: u
+            null == index && (index = 0, globalHistory.replaceState(_extends({}, globalHistory.state, {
+                idx: index
             }), ""));
-            let y = {
+            let history = {
                 get action() {
-                    return r;
+                    return action;
                 },
                 get location() {
-                    return e(l, n);
+                    return getLocation(window, globalHistory);
                 },
-                listen(e) {
-                    if (c) throw new Error("A history only accepts one active listener");
-                    return l.addEventListener(m, p), c = e, () => {
-                        l.removeEventListener(m, p), c = null;
+                listen(fn) {
+                    if (listener) throw new Error("A history only accepts one active listener");
+                    return window.addEventListener(PopStateEventType, handlePop), listener = fn, () => {
+                        window.removeEventListener(PopStateEventType, handlePop), listener = null;
                     };
                 },
-                createHref(e) {
-                    return t(l, e);
+                createHref(to) {
+                    return createHref(window, to);
                 },
-                createURL: _,
-                encodeLocation(e) {
-                    let t = _(e);
+                createURL: createURL,
+                encodeLocation(to) {
+                    let url = createURL(to);
                     return {
-                        pathname: t.pathname,
-                        search: t.search,
-                        hash: t.hash
+                        pathname: url.pathname,
+                        search: url.search,
+                        hash: url.hash
                     };
                 },
-                push: function(e, t) {
-                    r = o.Push;
-                    let a = v(y.location, e, t);
-                    i && i(a, e), u = h() + 1;
-                    let d = b(a, u), m = y.createHref(a);
+                push: function(to, state) {
+                    action = Action.Push;
+                    let location = createLocation(history.location, to, state);
+                    validateLocation && validateLocation(location, to), index = getIndex() + 1;
+                    let historyState = getHistoryState(location, index), url = history.createHref(location);
                     try {
-                        n.pushState(d, "", m);
-                    } catch (e) {
-                        l.location.assign(m);
+                        globalHistory.pushState(historyState, "", url);
+                    } catch (error) {
+                        window.location.assign(url);
                     }
-                    s && c && c({
-                        action: r,
-                        location: y.location,
+                    v5Compat && listener && listener({
+                        action: action,
+                        location: history.location,
                         delta: 1
                     });
                 },
-                replace: function(e, t) {
-                    r = o.Replace;
-                    let a = v(y.location, e, t);
-                    i && i(a, e), u = h();
-                    let l = b(a, u), d = y.createHref(a);
-                    n.replaceState(l, "", d), s && c && c({
-                        action: r,
-                        location: y.location,
+                replace: function(to, state) {
+                    action = Action.Replace;
+                    let location = createLocation(history.location, to, state);
+                    validateLocation && validateLocation(location, to), index = getIndex();
+                    let historyState = getHistoryState(location, index), url = history.createHref(location);
+                    globalHistory.replaceState(historyState, "", url), v5Compat && listener && listener({
+                        action: action,
+                        location: history.location,
                         delta: 0
                     });
                 },
-                go(e) {
-                    return n.go(e);
+                go(n) {
+                    return globalHistory.go(n);
                 }
             };
-            return y;
+            return history;
         }
-        var j;
-        !function(e) {
-            e.data = "data", e.deferred = "deferred", e.redirect = "redirect", e.error = "error";
-        }(j || (j = {}));
+        var ResultType;
+        !function(ResultType) {
+            ResultType.data = "data", ResultType.deferred = "deferred", ResultType.redirect = "redirect", 
+            ResultType.error = "error";
+        }(ResultType || (ResultType = {}));
         new Set([ "lazy", "caseSensitive", "path", "id", "index", "children" ]);
-        function f(e, t, i) {
-            void 0 === i && (i = "/");
-            let a = T(("string" == typeof t ? _(t) : t).pathname || "/", i);
-            if (null == a) return null;
-            let l = q(e);
-            !function(e) {
-                e.sort(((e, t) => e.score !== t.score ? t.score - e.score : function(e, t) {
-                    let i = e.length === t.length && e.slice(0, -1).every(((e, i) => e === t[i]));
-                    return i ? e[e.length - 1] - t[t.length - 1] : 0;
-                }(e.routesMeta.map((e => e.childrenIndex)), t.routesMeta.map((e => e.childrenIndex)))));
-            }(l);
-            let s = null;
-            for (let e = 0; null == s && e < l.length; ++e) s = U(l[e], D(a));
-            return s;
+        function matchRoutes(routes, locationArg, basename) {
+            void 0 === basename && (basename = "/");
+            let pathname = router_stripBasename(("string" == typeof locationArg ? parsePath(locationArg) : locationArg).pathname || "/", basename);
+            if (null == pathname) return null;
+            let branches = flattenRoutes(routes);
+            !function(branches) {
+                branches.sort(((a, b) => a.score !== b.score ? b.score - a.score : function(a, b) {
+                    let siblings = a.length === b.length && a.slice(0, -1).every(((n, i) => n === b[i]));
+                    return siblings ? a[a.length - 1] - b[b.length - 1] : 0;
+                }(a.routesMeta.map((meta => meta.childrenIndex)), b.routesMeta.map((meta => meta.childrenIndex)))));
+            }(branches);
+            let matches = null;
+            for (let i = 0; null == matches && i < branches.length; ++i) matches = matchRouteBranch(branches[i], safelyDecodeURI(pathname));
+            return matches;
         }
-        function q(e, t, i, a) {
-            void 0 === t && (t = []), void 0 === i && (i = []), void 0 === a && (a = "");
-            let l = (e, l, s) => {
-                let n = {
-                    relativePath: void 0 === s ? e.path || "" : s,
-                    caseSensitive: !0 === e.caseSensitive,
-                    childrenIndex: l,
-                    route: e
+        function flattenRoutes(routes, branches, parentsMeta, parentPath) {
+            void 0 === branches && (branches = []), void 0 === parentsMeta && (parentsMeta = []), 
+            void 0 === parentPath && (parentPath = "");
+            let flattenRoute = (route, index, relativePath) => {
+                let meta = {
+                    relativePath: void 0 === relativePath ? route.path || "" : relativePath,
+                    caseSensitive: !0 === route.caseSensitive,
+                    childrenIndex: index,
+                    route: route
                 };
-                n.relativePath.startsWith("/") && (g(n.relativePath.startsWith(a), 'Absolute route path "' + n.relativePath + '" nested under path "' + a + '" is not valid. An absolute child route path must start with the combined path of all its parent routes.'), 
-                n.relativePath = n.relativePath.slice(a.length));
-                let r = F([ a, n.relativePath ]), c = i.concat(n);
-                e.children && e.children.length > 0 && (g(!0 !== e.index, 'Index routes must not have child routes. Please remove all child routes from route path "' + r + '".'), 
-                q(e.children, t, c, r)), (null != e.path || e.index) && t.push({
-                    path: r,
-                    score: A(r, e.index),
-                    routesMeta: c
+                meta.relativePath.startsWith("/") && (invariant(meta.relativePath.startsWith(parentPath), 'Absolute route path "' + meta.relativePath + '" nested under path "' + parentPath + '" is not valid. An absolute child route path must start with the combined path of all its parent routes.'), 
+                meta.relativePath = meta.relativePath.slice(parentPath.length));
+                let path = router_joinPaths([ parentPath, meta.relativePath ]), routesMeta = parentsMeta.concat(meta);
+                route.children && route.children.length > 0 && (invariant(!0 !== route.index, 'Index routes must not have child routes. Please remove all child routes from route path "' + path + '".'), 
+                flattenRoutes(route.children, branches, routesMeta, path)), (null != route.path || route.index) && branches.push({
+                    path: path,
+                    score: computeScore(path, route.index),
+                    routesMeta: routesMeta
                 });
             };
-            return e.forEach(((e, t) => {
-                var i;
-                if ("" !== e.path && null != (i = e.path) && i.includes("?")) for (let i of x(e.path)) l(e, t, i); else l(e, t);
-            })), t;
+            return routes.forEach(((route, index) => {
+                var _route$path;
+                if ("" !== route.path && null != (_route$path = route.path) && _route$path.includes("?")) for (let exploded of explodeOptionalSegments(route.path)) flattenRoute(route, index, exploded); else flattenRoute(route, index);
+            })), branches;
         }
-        function x(e) {
-            let t = e.split("/");
-            if (0 === t.length) return [];
-            let [i, ...a] = t, l = i.endsWith("?"), s = i.replace(/\?$/, "");
-            if (0 === a.length) return l ? [ s, "" ] : [ s ];
-            let n = x(a.join("/")), r = [];
-            return r.push(...n.map((e => "" === e ? s : [ s, e ].join("/")))), l && r.push(...n), 
-            r.map((t => e.startsWith("/") && "" === t ? "/" : t));
+        function explodeOptionalSegments(path) {
+            let segments = path.split("/");
+            if (0 === segments.length) return [];
+            let [first, ...rest] = segments, isOptional = first.endsWith("?"), required = first.replace(/\?$/, "");
+            if (0 === rest.length) return isOptional ? [ required, "" ] : [ required ];
+            let restExploded = explodeOptionalSegments(rest.join("/")), result = [];
+            return result.push(...restExploded.map((subpath => "" === subpath ? required : [ required, subpath ].join("/")))), 
+            isOptional && result.push(...restExploded), result.map((exploded => path.startsWith("/") && "" === exploded ? "/" : exploded));
         }
-        const P = /^:\w+$/, k = 3, E = 2, N = 1, S = 10, C = -2, I = e => "*" === e;
-        function A(e, t) {
-            let i = e.split("/"), a = i.length;
-            return i.some(I) && (a += C), t && (a += E), i.filter((e => !I(e))).reduce(((e, t) => e + (P.test(t) ? k : "" === t ? N : S)), a);
+        const paramRe = /^:\w+$/, dynamicSegmentValue = 3, indexRouteValue = 2, emptySegmentValue = 1, staticSegmentValue = 10, splatPenalty = -2, isSplat = s => "*" === s;
+        function computeScore(path, index) {
+            let segments = path.split("/"), initialScore = segments.length;
+            return segments.some(isSplat) && (initialScore += splatPenalty), index && (initialScore += indexRouteValue), 
+            segments.filter((s => !isSplat(s))).reduce(((score, segment) => score + (paramRe.test(segment) ? dynamicSegmentValue : "" === segment ? emptySegmentValue : staticSegmentValue)), initialScore);
         }
-        function U(e, t) {
-            let {routesMeta: i} = e, a = {}, l = "/", s = [];
-            for (let e = 0; e < i.length; ++e) {
-                let n = i[e], r = e === i.length - 1, c = "/" === l ? t : t.slice(l.length) || "/", o = M({
-                    path: n.relativePath,
-                    caseSensitive: n.caseSensitive,
-                    end: r
-                }, c);
-                if (!o) return null;
-                Object.assign(a, o.params);
-                let u = n.route;
-                s.push({
-                    params: a,
-                    pathname: F([ l, o.pathname ]),
-                    pathnameBase: O(F([ l, o.pathnameBase ])),
-                    route: u
-                }), "/" !== o.pathnameBase && (l = F([ l, o.pathnameBase ]));
+        function matchRouteBranch(branch, pathname) {
+            let {routesMeta: routesMeta} = branch, matchedParams = {}, matchedPathname = "/", matches = [];
+            for (let i = 0; i < routesMeta.length; ++i) {
+                let meta = routesMeta[i], end = i === routesMeta.length - 1, remainingPathname = "/" === matchedPathname ? pathname : pathname.slice(matchedPathname.length) || "/", match = router_matchPath({
+                    path: meta.relativePath,
+                    caseSensitive: meta.caseSensitive,
+                    end: end
+                }, remainingPathname);
+                if (!match) return null;
+                Object.assign(matchedParams, match.params);
+                let route = meta.route;
+                matches.push({
+                    params: matchedParams,
+                    pathname: router_joinPaths([ matchedPathname, match.pathname ]),
+                    pathnameBase: normalizePathname(router_joinPaths([ matchedPathname, match.pathnameBase ])),
+                    route: route
+                }), "/" !== match.pathnameBase && (matchedPathname = router_joinPaths([ matchedPathname, match.pathnameBase ]));
             }
-            return s;
+            return matches;
         }
-        function M(e, t) {
-            "string" == typeof e && (e = {
-                path: e,
+        function router_matchPath(pattern, pathname) {
+            "string" == typeof pattern && (pattern = {
+                path: pattern,
                 caseSensitive: !1,
                 end: !0
             });
-            let [i, a] = function(e, t, i) {
-                void 0 === t && (t = !1);
-                void 0 === i && (i = !0);
-                p("*" === e || !e.endsWith("*") || e.endsWith("/*"), 'Route path "' + e + '" will be treated as if it were "' + e.replace(/\*$/, "/*") + '" because the `*` character must always follow a `/` in the pattern. To get rid of this warning, please change the route path to "' + e.replace(/\*$/, "/*") + '".');
-                let a = [], l = "^" + e.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^$?{}|()[\]]/g, "\\$&").replace(/\/:(\w+)/g, ((e, t) => (a.push(t), 
+            let [matcher, paramNames] = function(path, caseSensitive, end) {
+                void 0 === caseSensitive && (caseSensitive = !1);
+                void 0 === end && (end = !0);
+                warning("*" === path || !path.endsWith("*") || path.endsWith("/*"), 'Route path "' + path + '" will be treated as if it were "' + path.replace(/\*$/, "/*") + '" because the `*` character must always follow a `/` in the pattern. To get rid of this warning, please change the route path to "' + path.replace(/\*$/, "/*") + '".');
+                let paramNames = [], regexpSource = "^" + path.replace(/\/*\*?$/, "").replace(/^\/*/, "/").replace(/[\\.*+^$?{}|()[\]]/g, "\\$&").replace(/\/:(\w+)/g, ((_, paramName) => (paramNames.push(paramName), 
                 "/([^\\/]+)")));
-                e.endsWith("*") ? (a.push("*"), l += "*" === e || "/*" === e ? "(.*)$" : "(?:\\/(.+)|\\/*)$") : i ? l += "\\/*$" : "" !== e && "/" !== e && (l += "(?:(?=\\/|$))");
-                let s = new RegExp(l, t ? void 0 : "i");
-                return [ s, a ];
-            }(e.path, e.caseSensitive, e.end), l = t.match(i);
-            if (!l) return null;
-            let s = l[0], n = s.replace(/(.)\/+$/, "$1"), r = l.slice(1);
+                path.endsWith("*") ? (paramNames.push("*"), regexpSource += "*" === path || "/*" === path ? "(.*)$" : "(?:\\/(.+)|\\/*)$") : end ? regexpSource += "\\/*$" : "" !== path && "/" !== path && (regexpSource += "(?:(?=\\/|$))");
+                let matcher = new RegExp(regexpSource, caseSensitive ? void 0 : "i");
+                return [ matcher, paramNames ];
+            }(pattern.path, pattern.caseSensitive, pattern.end), match = pathname.match(matcher);
+            if (!match) return null;
+            let matchedPathname = match[0], pathnameBase = matchedPathname.replace(/(.)\/+$/, "$1"), captureGroups = match.slice(1);
             return {
-                params: a.reduce(((e, t, i) => {
-                    if ("*" === t) {
-                        let e = r[i] || "";
-                        n = s.slice(0, s.length - e.length).replace(/(.)\/+$/, "$1");
+                params: paramNames.reduce(((memo, paramName, index) => {
+                    if ("*" === paramName) {
+                        let splatValue = captureGroups[index] || "";
+                        pathnameBase = matchedPathname.slice(0, matchedPathname.length - splatValue.length).replace(/(.)\/+$/, "$1");
                     }
-                    return e[t] = function(e, t) {
+                    return memo[paramName] = function(value, paramName) {
                         try {
-                            return decodeURIComponent(e);
-                        } catch (i) {
-                            return p(!1, 'The value for the URL param "' + t + '" will not be decoded because the string "' + e + '" is a malformed URL segment. This is probably due to a bad percent encoding (' + i + ")."), 
-                            e;
+                            return decodeURIComponent(value);
+                        } catch (error) {
+                            return warning(!1, 'The value for the URL param "' + paramName + '" will not be decoded because the string "' + value + '" is a malformed URL segment. This is probably due to a bad percent encoding (' + error + ")."), 
+                            value;
                         }
-                    }(r[i] || "", t), e;
+                    }(captureGroups[index] || "", paramName), memo;
                 }), {}),
-                pathname: s,
-                pathnameBase: n,
-                pattern: e
+                pathname: matchedPathname,
+                pathnameBase: pathnameBase,
+                pattern: pattern
             };
         }
-        function D(e) {
+        function safelyDecodeURI(value) {
             try {
-                return decodeURI(e);
-            } catch (t) {
-                return p(!1, 'The URL path "' + e + '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent encoding (' + t + ")."), 
-                e;
+                return decodeURI(value);
+            } catch (error) {
+                return warning(!1, 'The URL path "' + value + '" could not be decoded because it is is a malformed URL segment. This is probably due to a bad percent encoding (' + error + ")."), 
+                value;
             }
         }
-        function T(e, t) {
-            if ("/" === t) return e;
-            if (!e.toLowerCase().startsWith(t.toLowerCase())) return null;
-            let i = t.endsWith("/") ? t.length - 1 : t.length, a = e.charAt(i);
-            return a && "/" !== a ? null : e.slice(i) || "/";
+        function router_stripBasename(pathname, basename) {
+            if ("/" === basename) return pathname;
+            if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) return null;
+            let startIndex = basename.endsWith("/") ? basename.length - 1 : basename.length, nextChar = pathname.charAt(startIndex);
+            return nextChar && "/" !== nextChar ? null : pathname.slice(startIndex) || "/";
         }
-        function L(e, t, i, a) {
-            return "Cannot include a '" + e + "' character in a manually specified `to." + t + "` field [" + JSON.stringify(a) + "].  Please separate it out to the `to." + i + '` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.';
+        function getInvalidPathError(char, field, dest, path) {
+            return "Cannot include a '" + char + "' character in a manually specified `to." + field + "` field [" + JSON.stringify(path) + "].  Please separate it out to the `to." + dest + '` field. Alternatively you may provide the full path as a string in <Link to="..."> and the router will parse it for you.';
         }
-        function V(e) {
-            return e.filter(((e, t) => 0 === t || e.route.path && e.route.path.length > 0));
+        function getPathContributingMatches(matches) {
+            return matches.filter(((match, index) => 0 === index || match.route.path && match.route.path.length > 0));
         }
-        function R(e, t, i, a) {
-            let l;
-            void 0 === a && (a = !1), "string" == typeof e ? l = _(e) : (l = d({}, e), g(!l.pathname || !l.pathname.includes("?"), L("?", "pathname", "search", l)), 
-            g(!l.pathname || !l.pathname.includes("#"), L("#", "pathname", "hash", l)), g(!l.search || !l.search.includes("#"), L("#", "search", "hash", l)));
-            let s, n = "" === e || "" === l.pathname, r = n ? "/" : l.pathname;
-            if (a || null == r) s = i; else {
-                let e = t.length - 1;
-                if (r.startsWith("..")) {
-                    let t = r.split("/");
-                    for (;".." === t[0]; ) t.shift(), e -= 1;
-                    l.pathname = t.join("/");
+        function router_resolveTo(toArg, routePathnames, locationPathname, isPathRelative) {
+            let to;
+            void 0 === isPathRelative && (isPathRelative = !1), "string" == typeof toArg ? to = parsePath(toArg) : (to = _extends({}, toArg), 
+            invariant(!to.pathname || !to.pathname.includes("?"), getInvalidPathError("?", "pathname", "search", to)), 
+            invariant(!to.pathname || !to.pathname.includes("#"), getInvalidPathError("#", "pathname", "hash", to)), 
+            invariant(!to.search || !to.search.includes("#"), getInvalidPathError("#", "search", "hash", to)));
+            let from, isEmptyPath = "" === toArg || "" === to.pathname, toPathname = isEmptyPath ? "/" : to.pathname;
+            if (isPathRelative || null == toPathname) from = locationPathname; else {
+                let routePathnameIndex = routePathnames.length - 1;
+                if (toPathname.startsWith("..")) {
+                    let toSegments = toPathname.split("/");
+                    for (;".." === toSegments[0]; ) toSegments.shift(), routePathnameIndex -= 1;
+                    to.pathname = toSegments.join("/");
                 }
-                s = e >= 0 ? t[e] : "/";
+                from = routePathnameIndex >= 0 ? routePathnames[routePathnameIndex] : "/";
             }
-            let c = function(e, t) {
-                void 0 === t && (t = "/");
-                let {pathname: i, search: a = "", hash: l = ""} = "string" == typeof e ? _(e) : e, s = i ? i.startsWith("/") ? i : function(e, t) {
-                    let i = t.replace(/\/+$/, "").split("/");
-                    return e.split("/").forEach((e => {
-                        ".." === e ? i.length > 1 && i.pop() : "." !== e && i.push(e);
-                    })), i.length > 1 ? i.join("/") : "/";
-                }(i, t) : t;
+            let path = function(to, fromPathname) {
+                void 0 === fromPathname && (fromPathname = "/");
+                let {pathname: toPathname, search: search = "", hash: hash = ""} = "string" == typeof to ? parsePath(to) : to, pathname = toPathname ? toPathname.startsWith("/") ? toPathname : function(relativePath, fromPathname) {
+                    let segments = fromPathname.replace(/\/+$/, "").split("/");
+                    return relativePath.split("/").forEach((segment => {
+                        ".." === segment ? segments.length > 1 && segments.pop() : "." !== segment && segments.push(segment);
+                    })), segments.length > 1 ? segments.join("/") : "/";
+                }(toPathname, fromPathname) : fromPathname;
                 return {
-                    pathname: s,
-                    search: B(a),
-                    hash: z(l)
+                    pathname: pathname,
+                    search: normalizeSearch(search),
+                    hash: normalizeHash(hash)
                 };
-            }(l, s), o = r && "/" !== r && r.endsWith("/"), u = (n || "." === r) && i.endsWith("/");
-            return c.pathname.endsWith("/") || !o && !u || (c.pathname += "/"), c;
+            }(to, from), hasExplicitTrailingSlash = toPathname && "/" !== toPathname && toPathname.endsWith("/"), hasCurrentTrailingSlash = (isEmptyPath || "." === toPathname) && locationPathname.endsWith("/");
+            return path.pathname.endsWith("/") || !hasExplicitTrailingSlash && !hasCurrentTrailingSlash || (path.pathname += "/"), 
+            path;
         }
-        const F = e => e.join("/").replace(/\/\/+/g, "/"), O = e => e.replace(/\/+$/, "").replace(/^\/*/, "/"), B = e => e && "?" !== e ? e.startsWith("?") ? e : "?" + e : "", z = e => e && "#" !== e ? e.startsWith("#") ? e : "#" + e : "";
+        const router_joinPaths = paths => paths.join("/").replace(/\/\/+/g, "/"), normalizePathname = pathname => pathname.replace(/\/+$/, "").replace(/^\/*/, "/"), normalizeSearch = search => search && "?" !== search ? search.startsWith("?") ? search : "?" + search : "", normalizeHash = hash => hash && "#" !== hash ? hash.startsWith("#") ? hash : "#" + hash : "";
         Error;
-        function H(e) {
-            return null != e && "number" == typeof e.status && "string" == typeof e.statusText && "boolean" == typeof e.internal && "data" in e;
+        function isRouteErrorResponse(error) {
+            return null != error && "number" == typeof error.status && "string" == typeof error.statusText && "boolean" == typeof error.internal && "data" in error;
         }
-        const Q = [ "post", "put", "patch", "delete" ], W = (new Set(Q), [ "get", ...Q ]);
-        new Set(W), new Set([ 301, 302, 303, 307, 308 ]), new Set([ 307, 308 ]), "undefined" != typeof window && void 0 !== window.document && window.document.createElement;
+        const validMutationMethodsArr = [ "post", "put", "patch", "delete" ], validRequestMethodsArr = (new Set(validMutationMethodsArr), 
+        [ "get", ...validMutationMethodsArr ]);
+        new Set(validRequestMethodsArr), new Set([ 301, 302, 303, 307, 308 ]), new Set([ 307, 308 ]), 
+        "undefined" != typeof window && void 0 !== window.document && window.document.createElement;
         Symbol("deferred");
-        function G() {
-            return G = Object.assign ? Object.assign.bind() : function(e) {
-                for (var t = 1; t < arguments.length; t++) {
-                    var i = arguments[t];
-                    for (var a in i) Object.prototype.hasOwnProperty.call(i, a) && (e[a] = i[a]);
+        function dist_extends() {
+            return dist_extends = Object.assign ? Object.assign.bind() : function(target) {
+                for (var i = 1; i < arguments.length; i++) {
+                    var source = arguments[i];
+                    for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
                 }
-                return e;
-            }, G.apply(this, arguments);
+                return target;
+            }, dist_extends.apply(this, arguments);
         }
-        const J = h.createContext(null);
-        const K = h.createContext(null);
-        const $ = h.createContext(null);
-        const Z = h.createContext(null);
-        const X = h.createContext({
+        const DataRouterContext = react.createContext(null);
+        const DataRouterStateContext = react.createContext(null);
+        const NavigationContext = react.createContext(null);
+        const LocationContext = react.createContext(null);
+        const RouteContext = react.createContext({
             outlet: null,
             matches: [],
             isDataRoute: !1
         });
-        const Y = h.createContext(null);
-        function ee() {
-            return null != h.useContext(Z);
+        const RouteErrorContext = react.createContext(null);
+        function useInRouterContext() {
+            return null != react.useContext(LocationContext);
         }
-        function te() {
-            return ee() || g(!1), h.useContext(Z).location;
+        function dist_useLocation() {
+            return useInRouterContext() || invariant(!1), react.useContext(LocationContext).location;
         }
-        function ie(e) {
-            h.useContext($).static || h.useLayoutEffect(e);
+        function useIsomorphicLayoutEffect(cb) {
+            react.useContext(NavigationContext).static || react.useLayoutEffect(cb);
         }
-        function ae() {
-            let {isDataRoute: e} = h.useContext(X);
-            return e ? function() {
-                let {router: e} = me(he.UseNavigateStable), t = pe(de.UseNavigateStable), i = h.useRef(!1);
-                return ie((() => {
-                    i.current = !0;
-                })), h.useCallback((function(a, l) {
-                    void 0 === l && (l = {}), i.current && ("number" == typeof a ? e.navigate(a) : e.navigate(a, G({
-                        fromRouteId: t
-                    }, l)));
-                }), [ e, t ]);
+        function dist_useNavigate() {
+            let {isDataRoute: isDataRoute} = react.useContext(RouteContext);
+            return isDataRoute ? function() {
+                let {router: router} = useDataRouterContext(DataRouterHook.UseNavigateStable), id = useCurrentRouteId(DataRouterStateHook.UseNavigateStable), activeRef = react.useRef(!1);
+                return useIsomorphicLayoutEffect((() => {
+                    activeRef.current = !0;
+                })), react.useCallback((function(to, options) {
+                    void 0 === options && (options = {}), activeRef.current && ("number" == typeof to ? router.navigate(to) : router.navigate(to, dist_extends({
+                        fromRouteId: id
+                    }, options)));
+                }), [ router, id ]);
             }() : function() {
-                ee() || g(!1);
-                let {basename: e, navigator: t} = h.useContext($), {matches: i} = h.useContext(X), {pathname: a} = te(), l = JSON.stringify(V(i).map((e => e.pathnameBase))), s = h.useRef(!1);
-                return ie((() => {
-                    s.current = !0;
-                })), h.useCallback((function(i, n) {
-                    if (void 0 === n && (n = {}), !s.current) return;
-                    if ("number" == typeof i) return void t.go(i);
-                    let r = R(i, JSON.parse(l), a, "path" === n.relative);
-                    "/" !== e && (r.pathname = "/" === r.pathname ? e : F([ e, r.pathname ])), (n.replace ? t.replace : t.push)(r, n.state, n);
-                }), [ e, t, l, a ]);
+                useInRouterContext() || invariant(!1);
+                let {basename: basename, navigator: navigator} = react.useContext(NavigationContext), {matches: matches} = react.useContext(RouteContext), {pathname: locationPathname} = dist_useLocation(), routePathnamesJson = JSON.stringify(getPathContributingMatches(matches).map((match => match.pathnameBase))), activeRef = react.useRef(!1);
+                return useIsomorphicLayoutEffect((() => {
+                    activeRef.current = !0;
+                })), react.useCallback((function(to, options) {
+                    if (void 0 === options && (options = {}), !activeRef.current) return;
+                    if ("number" == typeof to) return void navigator.go(to);
+                    let path = router_resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, "path" === options.relative);
+                    "/" !== basename && (path.pathname = "/" === path.pathname ? basename : router_joinPaths([ basename, path.pathname ])), 
+                    (options.replace ? navigator.replace : navigator.push)(path, options.state, options);
+                }), [ basename, navigator, routePathnamesJson, locationPathname ]);
             }();
         }
-        function le(e, t) {
-            let {relative: i} = void 0 === t ? {} : t, {matches: a} = h.useContext(X), {pathname: l} = te(), s = JSON.stringify(V(a).map((e => e.pathnameBase)));
-            return h.useMemo((() => R(e, JSON.parse(s), l, "path" === i)), [ e, s, l, i ]);
+        function dist_useResolvedPath(to, _temp2) {
+            let {relative: relative} = void 0 === _temp2 ? {} : _temp2, {matches: matches} = react.useContext(RouteContext), {pathname: locationPathname} = dist_useLocation(), routePathnamesJson = JSON.stringify(getPathContributingMatches(matches).map((match => match.pathnameBase)));
+            return react.useMemo((() => router_resolveTo(to, JSON.parse(routePathnamesJson), locationPathname, "path" === relative)), [ to, routePathnamesJson, locationPathname, relative ]);
         }
-        function se(e, t, i) {
-            ee() || g(!1);
-            let {navigator: a} = h.useContext($), {matches: l} = h.useContext(X), s = l[l.length - 1], n = s ? s.params : {}, r = (s && s.pathname, 
-            s ? s.pathnameBase : "/");
-            s && s.route;
-            let c, u = te();
-            if (t) {
-                var d;
-                let e = "string" == typeof t ? _(t) : t;
-                "/" === r || (null == (d = e.pathname) ? void 0 : d.startsWith(r)) || g(!1), c = e;
-            } else c = u;
-            let m = c.pathname || "/", p = f(e, {
-                pathname: "/" === r ? m : m.slice(r.length) || "/"
+        function useRoutesImpl(routes, locationArg, dataRouterState) {
+            useInRouterContext() || invariant(!1);
+            let {navigator: navigator} = react.useContext(NavigationContext), {matches: parentMatches} = react.useContext(RouteContext), routeMatch = parentMatches[parentMatches.length - 1], parentParams = routeMatch ? routeMatch.params : {}, parentPathnameBase = (routeMatch && routeMatch.pathname, 
+            routeMatch ? routeMatch.pathnameBase : "/");
+            routeMatch && routeMatch.route;
+            let location, locationFromContext = dist_useLocation();
+            if (locationArg) {
+                var _parsedLocationArg$pa;
+                let parsedLocationArg = "string" == typeof locationArg ? parsePath(locationArg) : locationArg;
+                "/" === parentPathnameBase || (null == (_parsedLocationArg$pa = parsedLocationArg.pathname) ? void 0 : _parsedLocationArg$pa.startsWith(parentPathnameBase)) || invariant(!1), 
+                location = parsedLocationArg;
+            } else location = locationFromContext;
+            let pathname = location.pathname || "/", matches = matchRoutes(routes, {
+                pathname: "/" === parentPathnameBase ? pathname : pathname.slice(parentPathnameBase.length) || "/"
             });
-            let b = ue(p && p.map((e => Object.assign({}, e, {
-                params: Object.assign({}, n, e.params),
-                pathname: F([ r, a.encodeLocation ? a.encodeLocation(e.pathname).pathname : e.pathname ]),
-                pathnameBase: "/" === e.pathnameBase ? r : F([ r, a.encodeLocation ? a.encodeLocation(e.pathnameBase).pathname : e.pathnameBase ])
-            }))), l, i);
-            return t && b ? h.createElement(Z.Provider, {
+            let renderedMatches = _renderMatches(matches && matches.map((match => Object.assign({}, match, {
+                params: Object.assign({}, parentParams, match.params),
+                pathname: router_joinPaths([ parentPathnameBase, navigator.encodeLocation ? navigator.encodeLocation(match.pathname).pathname : match.pathname ]),
+                pathnameBase: "/" === match.pathnameBase ? parentPathnameBase : router_joinPaths([ parentPathnameBase, navigator.encodeLocation ? navigator.encodeLocation(match.pathnameBase).pathname : match.pathnameBase ])
+            }))), parentMatches, dataRouterState);
+            return locationArg && renderedMatches ? react.createElement(LocationContext.Provider, {
                 value: {
-                    location: G({
+                    location: dist_extends({
                         pathname: "/",
                         search: "",
                         hash: "",
                         state: null,
                         key: "default"
-                    }, c),
-                    navigationType: o.Pop
+                    }, location),
+                    navigationType: Action.Pop
                 }
-            }, b) : b;
+            }, renderedMatches) : renderedMatches;
         }
-        function ne() {
-            let e = function() {
-                var e;
-                let t = h.useContext(Y), i = ge(de.UseRouteError), a = pe(de.UseRouteError);
-                if (t) return t;
-                return null == (e = i.errors) ? void 0 : e[a];
-            }(), t = H(e) ? e.status + " " + e.statusText : e instanceof Error ? e.message : JSON.stringify(e), i = e instanceof Error ? e.stack : null, a = "rgba(200,200,200, 0.5)", l = {
+        function DefaultErrorComponent() {
+            let error = function() {
+                var _state$errors;
+                let error = react.useContext(RouteErrorContext), state = useDataRouterState(DataRouterStateHook.UseRouteError), routeId = useCurrentRouteId(DataRouterStateHook.UseRouteError);
+                if (error) return error;
+                return null == (_state$errors = state.errors) ? void 0 : _state$errors[routeId];
+            }(), message = isRouteErrorResponse(error) ? error.status + " " + error.statusText : error instanceof Error ? error.message : JSON.stringify(error), stack = error instanceof Error ? error.stack : null, preStyles = {
                 padding: "0.5rem",
-                backgroundColor: a
+                backgroundColor: "rgba(200,200,200, 0.5)"
             };
-            return h.createElement(h.Fragment, null, h.createElement("h2", null, "Unexpected Application Error!"), h.createElement("h3", {
+            return react.createElement(react.Fragment, null, react.createElement("h2", null, "Unexpected Application Error!"), react.createElement("h3", {
                 style: {
                     fontStyle: "italic"
                 }
-            }, t), i ? h.createElement("pre", {
-                style: l
-            }, i) : null, null);
+            }, message), stack ? react.createElement("pre", {
+                style: preStyles
+            }, stack) : null, null);
         }
-        const re = h.createElement(ne, null);
-        class ce extends h.Component {
-            constructor(e) {
-                super(e), this.state = {
-                    location: e.location,
-                    revalidation: e.revalidation,
-                    error: e.error
+        const defaultErrorElement = react.createElement(DefaultErrorComponent, null);
+        class RenderErrorBoundary extends react.Component {
+            constructor(props) {
+                super(props), this.state = {
+                    location: props.location,
+                    revalidation: props.revalidation,
+                    error: props.error
                 };
             }
-            static getDerivedStateFromError(e) {
+            static getDerivedStateFromError(error) {
                 return {
-                    error: e
+                    error: error
                 };
             }
-            static getDerivedStateFromProps(e, t) {
-                return t.location !== e.location || "idle" !== t.revalidation && "idle" === e.revalidation ? {
-                    error: e.error,
-                    location: e.location,
-                    revalidation: e.revalidation
+            static getDerivedStateFromProps(props, state) {
+                return state.location !== props.location || "idle" !== state.revalidation && "idle" === props.revalidation ? {
+                    error: props.error,
+                    location: props.location,
+                    revalidation: props.revalidation
                 } : {
-                    error: e.error || t.error,
-                    location: t.location,
-                    revalidation: e.revalidation || t.revalidation
+                    error: props.error || state.error,
+                    location: state.location,
+                    revalidation: props.revalidation || state.revalidation
                 };
             }
-            componentDidCatch(e, t) {
-                console.error("React Router caught the following error during render", e, t);
+            componentDidCatch(error, errorInfo) {
+                console.error("React Router caught the following error during render", error, errorInfo);
             }
             render() {
-                return this.state.error ? h.createElement(X.Provider, {
+                return this.state.error ? react.createElement(RouteContext.Provider, {
                     value: this.props.routeContext
-                }, h.createElement(Y.Provider, {
+                }, react.createElement(RouteErrorContext.Provider, {
                     value: this.state.error,
                     children: this.props.component
                 })) : this.props.children;
             }
         }
-        function oe(e) {
-            let {routeContext: t, match: i, children: a} = e, l = h.useContext(J);
-            return l && l.static && l.staticContext && (i.route.errorElement || i.route.ErrorBoundary) && (l.staticContext._deepestRenderedBoundaryId = i.route.id), 
-            h.createElement(X.Provider, {
-                value: t
-            }, a);
+        function RenderedRoute(_ref) {
+            let {routeContext: routeContext, match: match, children: children} = _ref, dataRouterContext = react.useContext(DataRouterContext);
+            return dataRouterContext && dataRouterContext.static && dataRouterContext.staticContext && (match.route.errorElement || match.route.ErrorBoundary) && (dataRouterContext.staticContext._deepestRenderedBoundaryId = match.route.id), 
+            react.createElement(RouteContext.Provider, {
+                value: routeContext
+            }, children);
         }
-        function ue(e, t, i) {
-            var a;
-            if (void 0 === t && (t = []), void 0 === i && (i = null), null == e) {
-                var l;
-                if (null == (l = i) || !l.errors) return null;
-                e = i.matches;
+        function _renderMatches(matches, parentMatches, dataRouterState) {
+            var _dataRouterState2;
+            if (void 0 === parentMatches && (parentMatches = []), void 0 === dataRouterState && (dataRouterState = null), 
+            null == matches) {
+                var _dataRouterState;
+                if (null == (_dataRouterState = dataRouterState) || !_dataRouterState.errors) return null;
+                matches = dataRouterState.matches;
             }
-            let s = e, n = null == (a = i) ? void 0 : a.errors;
-            if (null != n) {
-                let e = s.findIndex((e => e.route.id && (null == n ? void 0 : n[e.route.id])));
-                e >= 0 || g(!1), s = s.slice(0, Math.min(s.length, e + 1));
+            let renderedMatches = matches, errors = null == (_dataRouterState2 = dataRouterState) ? void 0 : _dataRouterState2.errors;
+            if (null != errors) {
+                let errorIndex = renderedMatches.findIndex((m => m.route.id && (null == errors ? void 0 : errors[m.route.id])));
+                errorIndex >= 0 || invariant(!1), renderedMatches = renderedMatches.slice(0, Math.min(renderedMatches.length, errorIndex + 1));
             }
-            return s.reduceRight(((e, a, l) => {
-                let r = a.route.id ? null == n ? void 0 : n[a.route.id] : null, c = null;
-                i && (c = a.route.errorElement || re);
-                let o = t.concat(s.slice(0, l + 1)), u = () => {
-                    let t;
-                    return t = r ? c : a.route.Component ? h.createElement(a.route.Component, null) : a.route.element ? a.route.element : e, 
-                    h.createElement(oe, {
-                        match: a,
+            return renderedMatches.reduceRight(((outlet, match, index) => {
+                let error = match.route.id ? null == errors ? void 0 : errors[match.route.id] : null, errorElement = null;
+                dataRouterState && (errorElement = match.route.errorElement || defaultErrorElement);
+                let matches = parentMatches.concat(renderedMatches.slice(0, index + 1)), getChildren = () => {
+                    let children;
+                    return children = error ? errorElement : match.route.Component ? react.createElement(match.route.Component, null) : match.route.element ? match.route.element : outlet, 
+                    react.createElement(RenderedRoute, {
+                        match: match,
                         routeContext: {
-                            outlet: e,
-                            matches: o,
-                            isDataRoute: null != i
+                            outlet: outlet,
+                            matches: matches,
+                            isDataRoute: null != dataRouterState
                         },
-                        children: t
+                        children: children
                     });
                 };
-                return i && (a.route.ErrorBoundary || a.route.errorElement || 0 === l) ? h.createElement(ce, {
-                    location: i.location,
-                    revalidation: i.revalidation,
-                    component: c,
-                    error: r,
-                    children: u(),
+                return dataRouterState && (match.route.ErrorBoundary || match.route.errorElement || 0 === index) ? react.createElement(RenderErrorBoundary, {
+                    location: dataRouterState.location,
+                    revalidation: dataRouterState.revalidation,
+                    component: errorElement,
+                    error: error,
+                    children: getChildren(),
                     routeContext: {
                         outlet: null,
-                        matches: o,
+                        matches: matches,
                         isDataRoute: !0
                     }
-                }) : u();
+                }) : getChildren();
             }), null);
         }
-        var he, de;
-        function me(e) {
-            let t = h.useContext(J);
-            return t || g(!1), t;
+        var DataRouterHook, DataRouterStateHook;
+        function useDataRouterContext(hookName) {
+            let ctx = react.useContext(DataRouterContext);
+            return ctx || invariant(!1), ctx;
         }
-        function ge(e) {
-            let t = h.useContext(K);
-            return t || g(!1), t;
+        function useDataRouterState(hookName) {
+            let state = react.useContext(DataRouterStateContext);
+            return state || invariant(!1), state;
         }
-        function pe(e) {
-            let t = function(e) {
-                let t = h.useContext(X);
-                return t || g(!1), t;
-            }(), i = t.matches[t.matches.length - 1];
-            return i.route.id || g(!1), i.route.id;
+        function useCurrentRouteId(hookName) {
+            let route = function(hookName) {
+                let route = react.useContext(RouteContext);
+                return route || invariant(!1), route;
+            }(), thisRoute = route.matches[route.matches.length - 1];
+            return thisRoute.route.id || invariant(!1), thisRoute.route.id;
         }
-        !function(e) {
-            e.UseBlocker = "useBlocker", e.UseRevalidator = "useRevalidator", e.UseNavigateStable = "useNavigate";
-        }(he || (he = {})), function(e) {
-            e.UseBlocker = "useBlocker", e.UseLoaderData = "useLoaderData", e.UseActionData = "useActionData", 
-            e.UseRouteError = "useRouteError", e.UseNavigation = "useNavigation", e.UseRouteLoaderData = "useRouteLoaderData", 
-            e.UseMatches = "useMatches", e.UseRevalidator = "useRevalidator", e.UseNavigateStable = "useNavigate", 
-            e.UseRouteId = "useRouteId";
-        }(de || (de = {}));
-        function be(e) {
-            g(!1);
+        !function(DataRouterHook) {
+            DataRouterHook.UseBlocker = "useBlocker", DataRouterHook.UseRevalidator = "useRevalidator", 
+            DataRouterHook.UseNavigateStable = "useNavigate";
+        }(DataRouterHook || (DataRouterHook = {})), function(DataRouterStateHook) {
+            DataRouterStateHook.UseBlocker = "useBlocker", DataRouterStateHook.UseLoaderData = "useLoaderData", 
+            DataRouterStateHook.UseActionData = "useActionData", DataRouterStateHook.UseRouteError = "useRouteError", 
+            DataRouterStateHook.UseNavigation = "useNavigation", DataRouterStateHook.UseRouteLoaderData = "useRouteLoaderData", 
+            DataRouterStateHook.UseMatches = "useMatches", DataRouterStateHook.UseRevalidator = "useRevalidator", 
+            DataRouterStateHook.UseNavigateStable = "useNavigate", DataRouterStateHook.UseRouteId = "useRouteId";
+        }(DataRouterStateHook || (DataRouterStateHook = {}));
+        function Route(_props) {
+            invariant(!1);
         }
-        function ve(e) {
-            let {basename: t = "/", children: i = null, location: a, navigationType: l = o.Pop, navigator: s, static: n = !1} = e;
-            ee() && g(!1);
-            let r = t.replace(/^\/*/, "/"), c = h.useMemo((() => ({
-                basename: r,
-                navigator: s,
-                static: n
-            })), [ r, s, n ]);
-            "string" == typeof a && (a = _(a));
-            let {pathname: u = "/", search: d = "", hash: m = "", state: p = null, key: b = "default"} = a, v = h.useMemo((() => {
-                let e = T(u, r);
-                return null == e ? null : {
+        function dist_Router(_ref5) {
+            let {basename: basenameProp = "/", children: children = null, location: locationProp, navigationType: navigationType = Action.Pop, navigator: navigator, static: staticProp = !1} = _ref5;
+            useInRouterContext() && invariant(!1);
+            let basename = basenameProp.replace(/^\/*/, "/"), navigationContext = react.useMemo((() => ({
+                basename: basename,
+                navigator: navigator,
+                static: staticProp
+            })), [ basename, navigator, staticProp ]);
+            "string" == typeof locationProp && (locationProp = parsePath(locationProp));
+            let {pathname: pathname = "/", search: search = "", hash: hash = "", state: state = null, key: key = "default"} = locationProp, locationContext = react.useMemo((() => {
+                let trailingPathname = router_stripBasename(pathname, basename);
+                return null == trailingPathname ? null : {
                     location: {
-                        pathname: e,
-                        search: d,
-                        hash: m,
-                        state: p,
-                        key: b
+                        pathname: trailingPathname,
+                        search: search,
+                        hash: hash,
+                        state: state,
+                        key: key
                     },
-                    navigationType: l
+                    navigationType: navigationType
                 };
-            }), [ r, u, d, m, p, b, l ]);
-            return null == v ? null : h.createElement($.Provider, {
-                value: c
-            }, h.createElement(Z.Provider, {
-                children: i,
-                value: v
+            }), [ basename, pathname, search, hash, state, key, navigationType ]);
+            return null == locationContext ? null : react.createElement(NavigationContext.Provider, {
+                value: navigationContext
+            }, react.createElement(LocationContext.Provider, {
+                children: children,
+                value: locationContext
             }));
         }
-        function we(e) {
-            let {children: t, location: i} = e;
-            return se(ye(t), i);
+        function Routes(_ref6) {
+            let {children: children, location: location} = _ref6;
+            return useRoutesImpl(createRoutesFromChildren(children), location);
         }
-        var _e;
-        !function(e) {
-            e[e.pending = 0] = "pending", e[e.success = 1] = "success", e[e.error = 2] = "error";
-        }(_e || (_e = {}));
+        var AwaitRenderStatus;
+        !function(AwaitRenderStatus) {
+            AwaitRenderStatus[AwaitRenderStatus.pending = 0] = "pending", AwaitRenderStatus[AwaitRenderStatus.success = 1] = "success", 
+            AwaitRenderStatus[AwaitRenderStatus.error = 2] = "error";
+        }(AwaitRenderStatus || (AwaitRenderStatus = {}));
         new Promise((() => {}));
-        h.Component;
-        function ye(e, t) {
-            void 0 === t && (t = []);
-            let i = [];
-            return h.Children.forEach(e, ((e, a) => {
-                if (!h.isValidElement(e)) return;
-                let l = [ ...t, a ];
-                if (e.type === h.Fragment) return void i.push.apply(i, ye(e.props.children, l));
-                e.type !== be && g(!1), e.props.index && e.props.children && g(!1);
-                let s = {
-                    id: e.props.id || l.join("-"),
-                    caseSensitive: e.props.caseSensitive,
-                    element: e.props.element,
-                    Component: e.props.Component,
-                    index: e.props.index,
-                    path: e.props.path,
-                    loader: e.props.loader,
-                    action: e.props.action,
-                    errorElement: e.props.errorElement,
-                    ErrorBoundary: e.props.ErrorBoundary,
-                    hasErrorBoundary: null != e.props.ErrorBoundary || null != e.props.errorElement,
-                    shouldRevalidate: e.props.shouldRevalidate,
-                    handle: e.props.handle,
-                    lazy: e.props.lazy
+        react.Component;
+        function createRoutesFromChildren(children, parentPath) {
+            void 0 === parentPath && (parentPath = []);
+            let routes = [];
+            return react.Children.forEach(children, ((element, index) => {
+                if (!react.isValidElement(element)) return;
+                let treePath = [ ...parentPath, index ];
+                if (element.type === react.Fragment) return void routes.push.apply(routes, createRoutesFromChildren(element.props.children, treePath));
+                element.type !== Route && invariant(!1), element.props.index && element.props.children && invariant(!1);
+                let route = {
+                    id: element.props.id || treePath.join("-"),
+                    caseSensitive: element.props.caseSensitive,
+                    element: element.props.element,
+                    Component: element.props.Component,
+                    index: element.props.index,
+                    path: element.props.path,
+                    loader: element.props.loader,
+                    action: element.props.action,
+                    errorElement: element.props.errorElement,
+                    ErrorBoundary: element.props.ErrorBoundary,
+                    hasErrorBoundary: null != element.props.ErrorBoundary || null != element.props.errorElement,
+                    shouldRevalidate: element.props.shouldRevalidate,
+                    handle: element.props.handle,
+                    lazy: element.props.lazy
                 };
-                e.props.children && (s.children = ye(e.props.children, l)), i.push(s);
-            })), i;
+                element.props.children && (route.children = createRoutesFromChildren(element.props.children, treePath)), 
+                routes.push(route);
+            })), routes;
         }
-        function je() {
-            return je = Object.assign ? Object.assign.bind() : function(e) {
-                for (var t = 1; t < arguments.length; t++) {
-                    var i = arguments[t];
-                    for (var a in i) Object.prototype.hasOwnProperty.call(i, a) && (e[a] = i[a]);
+        function react_router_dom_dist_extends() {
+            return react_router_dom_dist_extends = Object.assign ? Object.assign.bind() : function(target) {
+                for (var i = 1; i < arguments.length; i++) {
+                    var source = arguments[i];
+                    for (var key in source) Object.prototype.hasOwnProperty.call(source, key) && (target[key] = source[key]);
                 }
-                return e;
-            }, je.apply(this, arguments);
+                return target;
+            }, react_router_dom_dist_extends.apply(this, arguments);
         }
-        function fe(e, t) {
-            if (null == e) return {};
-            var i, a, l = {}, s = Object.keys(e);
-            for (a = 0; a < s.length; a++) i = s[a], t.indexOf(i) >= 0 || (l[i] = e[i]);
-            return l;
+        function _objectWithoutPropertiesLoose(source, excluded) {
+            if (null == source) return {};
+            var key, i, target = {}, sourceKeys = Object.keys(source);
+            for (i = 0; i < sourceKeys.length; i++) key = sourceKeys[i], excluded.indexOf(key) >= 0 || (target[key] = source[key]);
+            return target;
         }
-        const qe = [ "onClick", "relative", "reloadDocument", "replace", "state", "target", "to", "preventScrollReset" ], xe = [ "aria-current", "caseSensitive", "className", "end", "style", "to", "children" ];
-        function Pe(e) {
-            let {basename: t, children: i, window: a} = e, l = h.useRef();
-            var s;
-            null == l.current && (l.current = (void 0 === (s = {
-                window: a,
+        const _excluded = [ "onClick", "relative", "reloadDocument", "replace", "state", "target", "to", "preventScrollReset" ], _excluded2 = [ "aria-current", "caseSensitive", "className", "end", "style", "to", "children" ];
+        function HashRouter(_ref2) {
+            let {basename: basename, children: children, window: window} = _ref2, historyRef = react.useRef();
+            var options;
+            null == historyRef.current && (historyRef.current = (void 0 === (options = {
+                window: window,
                 v5Compat: !0
-            }) && (s = {}), y((function(e, t) {
-                let {pathname: i = "/", search: a = "", hash: l = ""} = _(e.location.hash.substr(1));
-                return v("", {
-                    pathname: i,
-                    search: a,
-                    hash: l
-                }, t.state && t.state.usr || null, t.state && t.state.key || "default");
-            }), (function(e, t) {
-                let i = e.document.querySelector("base"), a = "";
-                if (i && i.getAttribute("href")) {
-                    let t = e.location.href, i = t.indexOf("#");
-                    a = -1 === i ? t : t.slice(0, i);
+            }) && (options = {}), getUrlBasedHistory((function(window, globalHistory) {
+                let {pathname: pathname = "/", search: search = "", hash: hash = ""} = parsePath(window.location.hash.substr(1));
+                return createLocation("", {
+                    pathname: pathname,
+                    search: search,
+                    hash: hash
+                }, globalHistory.state && globalHistory.state.usr || null, globalHistory.state && globalHistory.state.key || "default");
+            }), (function(window, to) {
+                let base = window.document.querySelector("base"), href = "";
+                if (base && base.getAttribute("href")) {
+                    let url = window.location.href, hashIndex = url.indexOf("#");
+                    href = -1 === hashIndex ? url : url.slice(0, hashIndex);
                 }
-                return a + "#" + ("string" == typeof t ? t : w(t));
-            }), (function(e, t) {
-                p("/" === e.pathname.charAt(0), "relative pathnames are not supported in hash history.push(" + JSON.stringify(t) + ")");
-            }), s)));
-            let n = l.current, [r, c] = h.useState({
-                action: n.action,
-                location: n.location
+                return href + "#" + ("string" == typeof to ? to : router_createPath(to));
+            }), (function(location, to) {
+                warning("/" === location.pathname.charAt(0), "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
+            }), options)));
+            let history = historyRef.current, [state, setState] = react.useState({
+                action: history.action,
+                location: history.location
             });
-            return h.useLayoutEffect((() => n.listen(c)), [ n ]), h.createElement(ve, {
-                basename: t,
-                children: i,
-                location: r.location,
-                navigationType: r.action,
-                navigator: n
+            return react.useLayoutEffect((() => history.listen(setState)), [ history ]), react.createElement(dist_Router, {
+                basename: basename,
+                children: children,
+                location: state.location,
+                navigationType: state.action,
+                navigator: history
             });
         }
-        const ke = "undefined" != typeof window && void 0 !== window.document && void 0 !== window.document.createElement, Ee = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i, Ne = h.forwardRef((function(e, t) {
-            let i, {onClick: a, relative: l, reloadDocument: s, replace: n, state: r, target: c, to: o, preventScrollReset: u} = e, d = fe(e, qe), {basename: m} = h.useContext($), p = !1;
-            if ("string" == typeof o && Ee.test(o) && (i = o, ke)) try {
-                let e = new URL(window.location.href), t = o.startsWith("//") ? new URL(e.protocol + o) : new URL(o), i = T(t.pathname, m);
-                t.origin === e.origin && null != i ? o = i + t.search + t.hash : p = !0;
+        const dist_isBrowser = "undefined" != typeof window && void 0 !== window.document && void 0 !== window.document.createElement, dist_ABSOLUTE_URL_REGEX = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i, Link = react.forwardRef((function(_ref4, ref) {
+            let absoluteHref, {onClick: onClick, relative: relative, reloadDocument: reloadDocument, replace: replace, state: state, target: target, to: to, preventScrollReset: preventScrollReset} = _ref4, rest = _objectWithoutPropertiesLoose(_ref4, _excluded), {basename: basename} = react.useContext(NavigationContext), isExternal = !1;
+            if ("string" == typeof to && dist_ABSOLUTE_URL_REGEX.test(to) && (absoluteHref = to, 
+            dist_isBrowser)) try {
+                let currentUrl = new URL(window.location.href), targetUrl = to.startsWith("//") ? new URL(currentUrl.protocol + to) : new URL(to), path = router_stripBasename(targetUrl.pathname, basename);
+                targetUrl.origin === currentUrl.origin && null != path ? to = path + targetUrl.search + targetUrl.hash : isExternal = !0;
             } catch (e) {}
-            let b = function(e, t) {
-                let {relative: i} = void 0 === t ? {} : t;
-                ee() || g(!1);
-                let {basename: a, navigator: l} = h.useContext($), {hash: s, pathname: n, search: r} = le(e, {
-                    relative: i
-                }), c = n;
-                return "/" !== a && (c = "/" === n ? a : F([ a, n ])), l.createHref({
-                    pathname: c,
-                    search: r,
-                    hash: s
+            let href = function(to, _temp) {
+                let {relative: relative} = void 0 === _temp ? {} : _temp;
+                useInRouterContext() || invariant(!1);
+                let {basename: basename, navigator: navigator} = react.useContext(NavigationContext), {hash: hash, pathname: pathname, search: search} = dist_useResolvedPath(to, {
+                    relative: relative
+                }), joinedPathname = pathname;
+                return "/" !== basename && (joinedPathname = "/" === pathname ? basename : router_joinPaths([ basename, pathname ])), 
+                navigator.createHref({
+                    pathname: joinedPathname,
+                    search: search,
+                    hash: hash
                 });
-            }(o, {
-                relative: l
-            }), v = function(e, t) {
-                let {target: i, replace: a, state: l, preventScrollReset: s, relative: n} = void 0 === t ? {} : t, r = ae(), c = te(), o = le(e, {
-                    relative: n
+            }(to, {
+                relative: relative
+            }), internalOnClick = function(to, _temp) {
+                let {target: target, replace: replaceProp, state: state, preventScrollReset: preventScrollReset, relative: relative} = void 0 === _temp ? {} : _temp, navigate = dist_useNavigate(), location = dist_useLocation(), path = dist_useResolvedPath(to, {
+                    relative: relative
                 });
-                return h.useCallback((t => {
-                    if (function(e, t) {
-                        return !(0 !== e.button || t && "_self" !== t || function(e) {
-                            return !!(e.metaKey || e.altKey || e.ctrlKey || e.shiftKey);
-                        }(e));
-                    }(t, i)) {
-                        t.preventDefault();
-                        let i = void 0 !== a ? a : w(c) === w(o);
-                        r(e, {
-                            replace: i,
-                            state: l,
-                            preventScrollReset: s,
-                            relative: n
+                return react.useCallback((event => {
+                    if (function(event, target) {
+                        return !(0 !== event.button || target && "_self" !== target || function(event) {
+                            return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+                        }(event));
+                    }(event, target)) {
+                        event.preventDefault();
+                        let replace = void 0 !== replaceProp ? replaceProp : router_createPath(location) === router_createPath(path);
+                        navigate(to, {
+                            replace: replace,
+                            state: state,
+                            preventScrollReset: preventScrollReset,
+                            relative: relative
                         });
                     }
-                }), [ c, r, o, a, l, i, e, s, n ]);
-            }(o, {
-                replace: n,
-                state: r,
-                target: c,
-                preventScrollReset: u,
-                relative: l
+                }), [ location, navigate, path, replaceProp, state, target, to, preventScrollReset, relative ]);
+            }(to, {
+                replace: replace,
+                state: state,
+                target: target,
+                preventScrollReset: preventScrollReset,
+                relative: relative
             });
-            return h.createElement("a", je({}, d, {
-                href: i || b,
-                onClick: p || s ? a : function(e) {
-                    a && a(e), e.defaultPrevented || v(e);
+            return react.createElement("a", react_router_dom_dist_extends({}, rest, {
+                href: absoluteHref || href,
+                onClick: isExternal || reloadDocument ? onClick : function(event) {
+                    onClick && onClick(event), event.defaultPrevented || internalOnClick(event);
                 },
-                ref: t,
-                target: c
+                ref: ref,
+                target: target
             }));
         }));
-        const Se = h.forwardRef((function(e, t) {
-            let {"aria-current": i = "page", caseSensitive: a = !1, className: l = "", end: s = !1, style: n, to: r, children: c} = e, o = fe(e, xe), u = le(r, {
-                relative: o.relative
-            }), d = te(), m = h.useContext(K), {navigator: g} = h.useContext($), p = g.encodeLocation ? g.encodeLocation(u).pathname : u.pathname, b = d.pathname, v = m && m.navigation && m.navigation.location ? m.navigation.location.pathname : null;
-            a || (b = b.toLowerCase(), v = v ? v.toLowerCase() : null, p = p.toLowerCase());
-            let w, _ = b === p || !s && b.startsWith(p) && "/" === b.charAt(p.length), y = null != v && (v === p || !s && v.startsWith(p) && "/" === v.charAt(p.length)), j = _ ? i : void 0;
-            w = "function" == typeof l ? l({
-                isActive: _,
-                isPending: y
-            }) : [ l, _ ? "active" : null, y ? "pending" : null ].filter(Boolean).join(" ");
-            let f = "function" == typeof n ? n({
-                isActive: _,
-                isPending: y
-            }) : n;
-            return h.createElement(Ne, je({}, o, {
-                "aria-current": j,
-                className: w,
-                ref: t,
-                style: f,
-                to: r
-            }), "function" == typeof c ? c({
-                isActive: _,
-                isPending: y
-            }) : c);
+        const NavLink = react.forwardRef((function(_ref5, ref) {
+            let {"aria-current": ariaCurrentProp = "page", caseSensitive: caseSensitive = !1, className: classNameProp = "", end: end = !1, style: styleProp, to: to, children: children} = _ref5, rest = _objectWithoutPropertiesLoose(_ref5, _excluded2), path = dist_useResolvedPath(to, {
+                relative: rest.relative
+            }), location = dist_useLocation(), routerState = react.useContext(DataRouterStateContext), {navigator: navigator} = react.useContext(NavigationContext), toPathname = navigator.encodeLocation ? navigator.encodeLocation(path).pathname : path.pathname, locationPathname = location.pathname, nextLocationPathname = routerState && routerState.navigation && routerState.navigation.location ? routerState.navigation.location.pathname : null;
+            caseSensitive || (locationPathname = locationPathname.toLowerCase(), nextLocationPathname = nextLocationPathname ? nextLocationPathname.toLowerCase() : null, 
+            toPathname = toPathname.toLowerCase());
+            let className, isActive = locationPathname === toPathname || !end && locationPathname.startsWith(toPathname) && "/" === locationPathname.charAt(toPathname.length), isPending = null != nextLocationPathname && (nextLocationPathname === toPathname || !end && nextLocationPathname.startsWith(toPathname) && "/" === nextLocationPathname.charAt(toPathname.length)), ariaCurrent = isActive ? ariaCurrentProp : void 0;
+            className = "function" == typeof classNameProp ? classNameProp({
+                isActive: isActive,
+                isPending: isPending
+            }) : [ classNameProp, isActive ? "active" : null, isPending ? "pending" : null ].filter(Boolean).join(" ");
+            let style = "function" == typeof styleProp ? styleProp({
+                isActive: isActive,
+                isPending: isPending
+            }) : styleProp;
+            return react.createElement(Link, react_router_dom_dist_extends({}, rest, {
+                "aria-current": ariaCurrent,
+                className: className,
+                ref: ref,
+                style: style,
+                to: to
+            }), "function" == typeof children ? children({
+                isActive: isActive,
+                isPending: isPending
+            }) : children);
         }));
-        var Ce, Ie;
-        (function(e) {
-            e.UseScrollRestoration = "useScrollRestoration", e.UseSubmitImpl = "useSubmitImpl", 
-            e.UseFetcher = "useFetcher";
-        })(Ce || (Ce = {})), function(e) {
-            e.UseFetchers = "useFetchers", e.UseScrollRestoration = "useScrollRestoration";
-        }(Ie || (Ie = {}));
-        var Ae = i(3935), Ue = function() {
-            return Ue = Object.assign || function(e) {
-                for (var t, i = 1, a = arguments.length; i < a; i++) for (var l in t = arguments[i]) Object.prototype.hasOwnProperty.call(t, l) && (e[l] = t[l]);
-                return e;
-            }, Ue.apply(this, arguments);
+        var dist_DataRouterHook, dist_DataRouterStateHook;
+        (function(DataRouterHook) {
+            DataRouterHook.UseScrollRestoration = "useScrollRestoration", DataRouterHook.UseSubmitImpl = "useSubmitImpl", 
+            DataRouterHook.UseFetcher = "useFetcher";
+        })(dist_DataRouterHook || (dist_DataRouterHook = {})), function(DataRouterStateHook) {
+            DataRouterStateHook.UseFetchers = "useFetchers", DataRouterStateHook.UseScrollRestoration = "useScrollRestoration";
+        }(dist_DataRouterStateHook || (dist_DataRouterStateHook = {}));
+        var react_dom = __webpack_require__(3935), __assign = function() {
+            return __assign = Object.assign || function(t) {
+                for (var s, i = 1, n = arguments.length; i < n; i++) for (var p in s = arguments[i]) Object.prototype.hasOwnProperty.call(s, p) && (t[p] = s[p]);
+                return t;
+            }, __assign.apply(this, arguments);
         };
-        var Me = "", De = null, Te = null, Le = null;
-        function Ve() {
-            Me = "", null !== De && De.disconnect(), null !== Te && (window.clearTimeout(Te), 
-            Te = null);
+        var hashFragment = "", observer = null, asyncTimerId = null, scrollFunction = null;
+        function react_router_hash_link_esm_reset() {
+            hashFragment = "", null !== observer && observer.disconnect(), null !== asyncTimerId && (window.clearTimeout(asyncTimerId), 
+            asyncTimerId = null);
         }
-        function Re(e) {
-            return [ "BUTTON", "INPUT", "SELECT", "TEXTAREA" ].includes(e.tagName) && !e.hasAttribute("disabled") || [ "A", "AREA" ].includes(e.tagName) && e.hasAttribute("href");
+        function isInteractiveElement(element) {
+            return [ "BUTTON", "INPUT", "SELECT", "TEXTAREA" ].includes(element.tagName) && !element.hasAttribute("disabled") || [ "A", "AREA" ].includes(element.tagName) && element.hasAttribute("href");
         }
-        function Fe() {
-            var e = null;
-            if ("#" === Me) e = document.body; else {
-                var t = Me.replace("#", "");
-                null === (e = document.getElementById(t)) && "#top" === Me && (e = document.body);
+        function getElAndScroll() {
+            var element = null;
+            if ("#" === hashFragment) element = document.body; else {
+                var id = hashFragment.replace("#", "");
+                null === (element = document.getElementById(id)) && "#top" === hashFragment && (element = document.body);
             }
-            if (null !== e) {
-                Le(e);
-                var i = e.getAttribute("tabindex");
-                return null !== i || Re(e) || e.setAttribute("tabindex", -1), e.focus({
+            if (null !== element) {
+                scrollFunction(element);
+                var originalTabIndex = element.getAttribute("tabindex");
+                return null !== originalTabIndex || isInteractiveElement(element) || element.setAttribute("tabindex", -1), 
+                element.focus({
                     preventScroll: !0
-                }), null !== i || Re(e) || (e.blur(), e.removeAttribute("tabindex")), Ve(), !0;
+                }), null !== originalTabIndex || isInteractiveElement(element) || (element.blur(), 
+                element.removeAttribute("tabindex")), react_router_hash_link_esm_reset(), !0;
             }
             return !1;
         }
-        function Oe(e) {
-            return h.forwardRef((function(t, i) {
-                var a = "";
-                "string" == typeof t.to && t.to.includes("#") ? a = "#" + t.to.split("#").slice(1).join("#") : "object" == typeof t.to && "string" == typeof t.to.hash && (a = t.to.hash);
-                var l = {};
-                e === Se && (l.isActive = function(e, t) {
-                    return e && e.isExact && t.hash === a;
+        function genericHashLink(As) {
+            return react.forwardRef((function(props, ref) {
+                var linkHash = "";
+                "string" == typeof props.to && props.to.includes("#") ? linkHash = "#" + props.to.split("#").slice(1).join("#") : "object" == typeof props.to && "string" == typeof props.to.hash && (linkHash = props.to.hash);
+                var passDownProps = {};
+                As === NavLink && (passDownProps.isActive = function(match, location) {
+                    return match && match.isExact && location.hash === linkHash;
                 });
-                var s = function(e, t) {
-                    var i = {};
-                    for (var a in e) Object.prototype.hasOwnProperty.call(e, a) && t.indexOf(a) < 0 && (i[a] = e[a]);
-                    if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-                        var l = 0;
-                        for (a = Object.getOwnPropertySymbols(e); l < a.length; l++) t.indexOf(a[l]) < 0 && Object.prototype.propertyIsEnumerable.call(e, a[l]) && (i[a[l]] = e[a[l]]);
+                var filteredProps = function(s, e) {
+                    var t = {};
+                    for (var p in s) Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0 && (t[p] = s[p]);
+                    if (null != s && "function" == typeof Object.getOwnPropertySymbols) {
+                        var i = 0;
+                        for (p = Object.getOwnPropertySymbols(s); i < p.length; i++) e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]) && (t[p[i]] = s[p[i]]);
                     }
-                    return i;
-                }(t, [ "scroll", "smooth", "timeout", "elementId" ]);
-                return h.createElement(e, Ue({}, l, s, {
+                    return t;
+                }(props, [ "scroll", "smooth", "timeout", "elementId" ]);
+                return react.createElement(As, __assign({}, passDownProps, filteredProps, {
                     onClick: function(e) {
-                        var i;
-                        Ve(), Me = t.elementId ? "#" + t.elementId : a, t.onClick && t.onClick(e), "" === Me || e.defaultPrevented || 0 !== e.button || t.target && "_self" !== t.target || e.metaKey || e.altKey || e.ctrlKey || e.shiftKey || (Le = t.scroll || function(e) {
-                            return t.smooth ? e.scrollIntoView({
+                        var timeout;
+                        react_router_hash_link_esm_reset(), hashFragment = props.elementId ? "#" + props.elementId : linkHash, 
+                        props.onClick && props.onClick(e), "" === hashFragment || e.defaultPrevented || 0 !== e.button || props.target && "_self" !== props.target || e.metaKey || e.altKey || e.ctrlKey || e.shiftKey || (scrollFunction = props.scroll || function(el) {
+                            return props.smooth ? el.scrollIntoView({
                                 behavior: "smooth"
-                            }) : e.scrollIntoView();
-                        }, i = t.timeout, window.setTimeout((function() {
-                            !1 === Fe() && (null === De && (De = new MutationObserver(Fe)), De.observe(document, {
+                            }) : el.scrollIntoView();
+                        }, timeout = props.timeout, window.setTimeout((function() {
+                            !1 === getElAndScroll() && (null === observer && (observer = new MutationObserver(getElAndScroll)), 
+                            observer.observe(document, {
                                 attributes: !0,
                                 childList: !0,
                                 subtree: !0
-                            }), Te = window.setTimeout((function() {
-                                Ve();
-                            }), i || 1e4));
+                            }), asyncTimerId = window.setTimeout((function() {
+                                react_router_hash_link_esm_reset();
+                            }), timeout || 1e4));
                         }), 0));
                     },
-                    ref: i
-                }), t.children);
+                    ref: ref
+                }), props.children);
             }));
         }
-        var Be = Oe(Ne);
-        Oe(Se);
-        function ze() {
-            return (0, u.jsxs)("svg", {
+        var HashLink = genericHashLink(Link);
+        genericHashLink(NavLink);
+        function TitleIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 viewBox: "0 0 469 64",
                 width: "469",
                 height: "64",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "The Daily Broadcast"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "m16.7 56h-10.3v-41.7h-6.1v-9.9h22.5v9.9h-6.1zm19.6 0h-10.8v-51.5h10.8v12q0.8-2.5 2.6-3.7 1.8-1.2 4.1-1.2 4.6 0 6.7 2.9 2 2.9 2 7.7v33.8h-10.6v-33.1q0-1.5-0.6-2.4-0.6-0.9-1.9-0.9-1 0-1.7 1-0.6 0.9-0.6 2.2zm31.8 0.5q-4.6 0-7.4-1.8-2.8-1.8-4-5.1-1.2-3.3-1.2-7.9v-17.7q0-6.1 3.5-9.3 3.5-3.1 9.7-3.1 12.6 0 12.6 12.4v3.2q0 5.8-0.1 7.8h-15.2v8.5q0 1.2 0.1 2.3 0.2 1.1 0.7 1.8 0.5 0.8 1.6 0.8 1.7 0 2.1-1.4 0.4-1.5 0.4-3.8v-4.2h10.4v2.5q0 4.9-1.2 8.3-1.2 3.3-4.1 5-2.9 1.7-7.9 1.7zm-2.2-32.7v6h5v-6q0-2.3-0.6-3.3-0.6-1.1-1.8-1.1-1.2 0-1.9 1-0.7 1-0.7 3.4zm47.3 32.2h-13.8v-51.6h14.1q5.6 0 8.4 3.1 2.8 3.1 2.8 9.1v24.1q0 7.3-2.5 11.3-2.6 4-9 4zm-3.5-42.6v33.5h1.8q2.9 0 2.9-2.8v-26.6q0-2.6-0.7-3.3-0.7-0.8-2.8-0.8zm27 43.1q-3.6 0-5.6-1.7-1.9-1.7-2.6-4.7-0.7-3-0.7-6.7 0-4 0.8-6.6 0.8-2.6 2.7-4.2 1.9-1.6 5.3-2.8l6.5-2.2v-4.5q0-3.6-2.3-3.6-2.1 0-2.1 2.9v2.7h-10.2q0-0.3 0-0.6 0-0.4 0-0.9 0-6.5 3-9.3 3.1-2.7 9.9-2.7 3.5 0 6.3 1.2 2.7 1.3 4.3 3.7 1.7 2.4 1.7 6v33.5h-10.4v-5.2q-0.8 2.7-2.6 4.2-1.7 1.5-4 1.5zm4.2-8.2q1.2 0 1.7-1.1 0.5-1.1 0.5-2.3v-12.3q-2.2 0.9-3.4 2.3-1.2 1.3-1.2 3.9v5.6q0 3.9 2.4 3.9zm27.3-39h-10.5v-8.7h10.5zm0 46.7h-10.5v-44h10.5zm14.8 0h-10.7v-51.6h10.7zm15.2 7.4h-11.8v-6.7h5q1.1 0 1.1-0.8 0-0.4-0.1-0.8l-6.8-43h10l2.9 32.3 3.5-32.3h10.1l-8.1 46.2q-0.5 2.5-1.7 3.8-1.3 1.3-4.1 1.3zm44.9-7.4h-14v-51.5h14q5.6 0 8.1 2.7 2.6 2.8 2.6 9.1v2.2q0 3.7-1.3 5.9-1.3 2.3-3.9 3 3.4 0.8 4.6 4.1 1.2 3.2 1.2 7.9 0 5-0.9 8.7-1 3.8-3.4 5.9-2.5 2-7 2zm-3.9-43.5v11.4h2.1q1.4 0 1.8-1.1 0.4-1.1 0.4-2.7v-5.2q0-2.4-2.2-2.4zm1.1 34.5q4 0 4-3.8v-6.5q0-2.2-0.7-3.4-0.6-1.3-2.5-1.3h-1.9v14.9q0.7 0.1 1.1 0.1zm28.1 9h-10.7v-43.9h10.7v4.9q0.7-2.6 2.7-4 1.9-1.4 4.8-1.4v8.7q-1.3 0-3.1 0.3-1.7 0.3-3.1 0.8-1.3 0.5-1.3 1zm22.9 0.5q-13.1 0-13.1-13.6v-17.6q0-6.3 3.4-9.9 3.5-3.8 9.7-3.8 6.2 0 9.6 3.8 3.5 3.6 3.5 9.9v17.6q0 13.6-13.1 13.6zm0-8.1q1.3 0 1.9-0.9 0.5-1 0.5-2.4v-21.5q0-3.9-2.4-3.9-2.5 0-2.5 3.9v21.5q0 1.4 0.6 2.4 0.6 0.9 1.9 0.9zm25 8.1q-3.7 0-5.6-1.7-1.9-1.7-2.6-4.6-0.7-3-0.7-6.8 0-4 0.8-6.5 0.8-2.6 2.7-4.2 1.9-1.7 5.3-2.8l6.5-2.2v-4.6q0-3.5-2.3-3.5-2.1 0-2.1 2.9v2.6h-10.2q-0.1-0.2-0.1-0.6 0-0.4 0-0.8 0-6.6 3.1-9.3 3.1-2.8 9.8-2.8 3.5 0 6.3 1.3 2.8 1.2 4.4 3.7 1.7 2.4 1.7 6v33.4h-10.5v-5.2q-0.7 2.8-2.5 4.3-1.7 1.4-4 1.4zm4.1-8.1q1.3 0 1.8-1.1 0.5-1.1 0.5-2.4v-12.2q-2.2 0.9-3.4 2.2-1.2 1.3-1.2 3.9v5.7q0 3.9 2.3 3.9zm25.5 8.1q-3 0-4.8-1.1-1.8-1.1-2.7-3.1-0.8-1.9-1.1-4.6-0.3-2.6-0.3-5.6v-19.1q0-5.1 1.8-8.2 1.8-3.2 6.1-3.2 3.2 0 4.9 1.4 1.7 1.4 2.7 3.8v-12.3h10.6v51.5h-10.6v-4.6q-0.9 2.4-2.4 3.7-1.4 1.4-4.2 1.4zm4.1-8.2q1.5 0 1.9-1.2 0.6-1.2 0.6-4.3v-18.5q0-1.5-0.5-3-0.4-1.6-2-1.6-1.7 0-2.1 1.5-0.5 1.4-0.5 3.1v18.5q0 5.5 2.6 5.5zm30.4 8.2q-7.4 0-10.5-3.8-3.1-3.7-3.1-11.1v-13.5q0-5.5 1.2-9.2 1.2-3.6 4.1-5.5 2.9-1.8 8.1-1.8 3.7 0 6.6 1.3 2.9 1.3 4.5 3.8 1.7 2.5 1.7 6.1v6.7h-10.7v-6.1q0-1.6-0.4-2.6-0.5-1.1-1.9-1.1-2.6 0-2.6 3.7v21.3q0 1.4 0.6 2.5 0.6 1.1 1.9 1.1 1.4 0 1.9-1.1 0.6-1.1 0.6-2.6v-7.3h10.6v7.6q0 3.7-1.6 6.3-1.7 2.6-4.5 3.9-2.8 1.4-6.5 1.4zm24.3 0q-3.7 0-5.6-1.7-1.9-1.7-2.6-4.6-0.8-3-0.8-6.8 0-4 0.8-6.5 0.8-2.6 2.7-4.2 2-1.7 5.3-2.8l6.5-2.2v-4.6q0-3.5-2.3-3.5-2.1 0-2.1 2.9v2.6h-10.2q0-0.2 0-0.6 0-0.4 0-0.8 0-6.6 3.1-9.3 3.1-2.8 9.8-2.8 3.5 0 6.3 1.3 2.8 1.2 4.4 3.7 1.6 2.4 1.6 6v33.4h-10.4v-5.2q-0.8 2.8-2.5 4.3-1.8 1.4-4 1.4zm4.1-8.1q1.3 0 1.7-1.1 0.5-1.1 0.5-2.4v-12.2q-2.2 0.9-3.4 2.2-1.2 1.3-1.2 3.9v5.7q0 3.9 2.4 3.9zm28.9 8.1q-13 0-13-13.2v-3.5h10.5v5.2q0 1.5 0.6 2.3 0.6 0.9 1.9 0.9 2.3 0 2.3-3.4 0-2.9-1.2-4.3-1.2-1.4-2.9-2.8l-5.6-4.3q-2.7-2-4.1-4.3-1.3-2.3-1.3-6.4 0-3.7 1.8-6.2 1.8-2.5 4.7-3.7 3-1.2 6.5-1.2 12.8 0 12.8 12.8v0.8h-10.9v-1.7q0-1.3-0.5-2.5-0.4-1.3-1.7-1.3-2.2 0-2.2 2.4 0 2.4 1.8 3.7l6.5 4.8q3.1 2.2 5.1 5.2 2.1 3 2.1 8 0 6.2-3.5 9.5-3.5 3.2-9.7 3.2zm25.5 0q-4.3 0-5.8-1.8-1.4-1.8-1.4-5.5v-27.4h-3v-8h3v-9.3h10.1v9.3h3v8h-3v24.9q0 1.1 0.4 1.6 0.4 0.4 1.3 0.4 0.8 0 1.3-0.1v7.1q-0.3 0.1-2.2 0.5-1.8 0.3-3.7 0.3z"
                 }) ]
             });
         }
-        var He = i(9319), Qe = i.n(He);
-        function We() {
-            return (0, u.jsx)("header", {
-                className: Qe()["page-header"],
-                children: (0, u.jsx)(Ne, {
+        var header_module = __webpack_require__(9319), header_module_default = __webpack_require__.n(header_module);
+        function Header() {
+            return (0, jsx_runtime.jsx)("header", {
+                className: header_module_default()["page-header"],
+                children: (0, jsx_runtime.jsx)(Link, {
                     to: "/",
-                    className: Qe()["page-header-title"],
-                    children: (0, u.jsx)(ze, {})
+                    className: header_module_default()["page-header-title"],
+                    children: (0, jsx_runtime.jsx)(TitleIcon, {})
                 })
             });
         }
-        var Ge = i(4184), Je = i.n(Ge);
-        const Ke = {
+        var classnames = __webpack_require__(4184), classnames_default = __webpack_require__.n(classnames);
+        const login = {
             label: "Log In",
             href: "#",
             target: "internal"
-        }, $e = {
+        }, more = {
             label: "More",
             href: "#",
             target: "internal"
-        }, Ze = {
+        }, buttons_login = {
             label: "ログイン",
             href: "#",
             target: "internal"
-        }, Xe = {
+        }, buttons_more = {
             label: "もっと",
             href: "#",
             target: "internal"
-        }, Ye = {
+        }, ar_buttons_login = {
             label: "تسجيل الدخول",
             href: "#",
             target: "internal"
-        }, et = {
+        }, ar_buttons_more = {
             label: "أكثر",
             href: "#",
             target: "internal"
-        }, tt = {
+        }, social = {
             facebook: {
                 label: "Facebook",
                 href: "#",
@@ -1302,7 +1331,7 @@
                 href: "#",
                 target: "external"
             }
-        }, it = {
+        }, legal = {
             terms: {
                 label: "Terms of Use",
                 href: "#",
@@ -1323,11 +1352,11 @@
                 href: "#",
                 target: "external"
             }
-        }, at = {
+        }, a11y = {
             skip: {
                 label: "Skip to content"
             }
-        }, lt = {
+        }, links_social = {
             facebook: {
                 label: "Facebook",
                 href: "#",
@@ -1343,7 +1372,7 @@
                 href: "#",
                 target: "external"
             }
-        }, st = {
+        }, links_legal = {
             terms: {
                 label: "利用規約",
                 href: "#",
@@ -1364,11 +1393,11 @@
                 href: "#",
                 target: "external"
             }
-        }, nt = {
+        }, links_a11y = {
             skip: {
                 label: "コンテンツにスキップします"
             }
-        }, rt = {
+        }, ar_links_social = {
             facebook: {
                 label: "Facebook",
                 href: "#",
@@ -1384,7 +1413,7 @@
                 href: "#",
                 target: "external"
             }
-        }, ct = {
+        }, ar_links_legal = {
             terms: {
                 label: "شروط الاستخدام",
                 href: "#",
@@ -1405,11 +1434,11 @@
                 href: "#",
                 target: "external"
             }
-        }, ot = {
+        }, ar_links_a11y = {
             skip: {
                 label: "تخطى الى المحتوى"
             }
-        }, ut = {
+        }, dataSource = {
             en: {
                 content: {
                     home: {
@@ -6965,8 +6994,8 @@
                         label: "all rights reserved!"
                     }
                 },
-                buttons: a,
-                links: n
+                buttons: buttons_namespaceObject,
+                links: links_namespaceObject
             },
             jp: {
                 content: {
@@ -12523,8 +12552,8 @@
                         label: "全著作権所有！"
                     }
                 },
-                buttons: l,
-                links: r
+                buttons: jp_buttons_namespaceObject,
+                links: jp_links_namespaceObject
             },
             ar: {
                 content: {
@@ -18081,955 +18110,960 @@
                         label: "كل الحقوق محفوظة"
                     }
                 },
-                buttons: s,
-                links: c
+                buttons: ar_buttons_namespaceObject,
+                links: ar_links_namespaceObject
             }
-        }, ht = [ "ar", "he", "fa", "ps", "ur" ], dt = (0, h.createContext)(null), mt = e => {
-            let {children: t} = e;
-            var i;
-            const a = null === (i = new URLSearchParams(window.location.search).get("lang")) || void 0 === i ? void 0 : i.toLowerCase(), l = a && a in ut ? a : "en", s = l && ht.includes(l) ? "rtl" : "ltr";
-            document.documentElement.setAttribute("dir", s), document.documentElement.setAttribute("lang", l);
-            const n = {
-                lang: l,
-                dir: s,
-                ...ut[l]
+        }, RTL_LOCALES = [ "ar", "he", "fa", "ps", "ur" ], DataContext = (0, react.createContext)(null), DataContextProvider = param => {
+            let {children: children} = param;
+            var _urlParams_get;
+            const langFromUrl = null === (_urlParams_get = new URLSearchParams(window.location.search).get("lang")) || void 0 === _urlParams_get ? void 0 : _urlParams_get.toLowerCase(), lang = langFromUrl && langFromUrl in dataSource ? langFromUrl : "en", dir = lang && RTL_LOCALES.includes(lang) ? "rtl" : "ltr";
+            document.documentElement.setAttribute("dir", dir), document.documentElement.setAttribute("lang", lang);
+            const value = {
+                lang: lang,
+                dir: dir,
+                ...dataSource[lang]
             };
-            return (0, u.jsx)(dt.Provider, {
-                value: n,
-                children: t
+            return (0, jsx_runtime.jsx)(DataContext.Provider, {
+                value: value,
+                children: children
             });
-        }, gt = () => {
-            const e = (0, h.useContext)(dt);
-            if (!e) throw new Error("A DataProvider must be rendered before using useDataContext");
-            return e;
+        }, useDataContext = () => {
+            const dataContext = (0, react.useContext)(DataContext);
+            if (!dataContext) throw new Error("A DataProvider must be rendered before using useDataContext");
+            return dataContext;
         };
-        var pt = i(4660), bt = i.n(pt);
-        function vt(e) {
-            let {children: t, animatedIconClass: i} = e;
-            const [a, l] = (0, h.useState)(!1), {buttons: s} = gt();
-            return (0, u.jsxs)("div", {
-                className: bt().dropdown,
-                children: [ (0, u.jsx)("input", {
+        var dropdown_module = __webpack_require__(4660), dropdown_module_default = __webpack_require__.n(dropdown_module);
+        function Dropdown(param) {
+            let {children: children, animatedIconClass: animatedIconClass} = param;
+            const [isOpen, setIsOpen] = (0, react.useState)(!1), {buttons: buttons} = useDataContext();
+            return (0, jsx_runtime.jsxs)("div", {
+                className: dropdown_module_default().dropdown,
+                children: [ (0, jsx_runtime.jsx)("input", {
                     type: "checkbox",
                     id: "navbar-dropdown-toggle",
-                    className: bt()["dropdown-toggle"],
+                    className: dropdown_module_default()["dropdown-toggle"],
                     onChange: function(e) {
-                        l(e.target.checked);
+                        setIsOpen(e.target.checked);
                     },
-                    checked: a
-                }), (0, u.jsxs)("label", {
+                    checked: isOpen
+                }), (0, jsx_runtime.jsxs)("label", {
                     htmlFor: "navbar-dropdown-toggle",
-                    className: bt()["dropdown-label"],
-                    children: [ (0, u.jsx)("span", {
-                        className: bt()["dropdown-label-text"],
-                        children: s.more.label
-                    }), (0, u.jsx)("div", {
-                        className: Je()("animated-icon", "arrow-icon", "arrow", i),
-                        children: (0, u.jsxs)("span", {
+                    className: dropdown_module_default()["dropdown-label"],
+                    children: [ (0, jsx_runtime.jsx)("span", {
+                        className: dropdown_module_default()["dropdown-label-text"],
+                        children: buttons.more.label
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: classnames_default()("animated-icon", "arrow-icon", "arrow", animatedIconClass),
+                        children: (0, jsx_runtime.jsxs)("span", {
                             className: "animated-icon-inner",
                             title: "Arrow Icon",
-                            children: [ (0, u.jsx)("span", {}), (0, u.jsx)("span", {}) ]
+                            children: [ (0, jsx_runtime.jsx)("span", {}), (0, jsx_runtime.jsx)("span", {}) ]
                         })
                     }) ]
-                }), (0, u.jsx)("ul", {
-                    className: bt()["dropdown-content"],
+                }), (0, jsx_runtime.jsx)("ul", {
+                    className: dropdown_module_default()["dropdown-content"],
                     onClick: function() {
-                        l(!1);
+                        setIsOpen(!1);
                     },
-                    children: t
+                    children: children
                 }) ]
             });
         }
-        var wt = i(7648), _t = i.n(wt);
-        function yt(e) {
-            let {id: t, label: i, url: a, callback: l, itemClass: s} = e;
-            return (0, u.jsx)("li", {
-                className: Je()(_t()["navbar-item"], s),
-                onClick: l,
-                children: (0, u.jsx)(Se, {
-                    to: a,
-                    id: t,
-                    className: e => {
-                        let {isActive: t} = e;
-                        return Je()({
-                            [_t().active]: t
+        var navbar_module = __webpack_require__(7648), navbar_module_default = __webpack_require__.n(navbar_module);
+        function NavListItem(param) {
+            let {id: id, label: label, url: url, callback: callback, itemClass: itemClass} = param;
+            return (0, jsx_runtime.jsx)("li", {
+                className: classnames_default()(navbar_module_default()["navbar-item"], itemClass),
+                onClick: callback,
+                children: (0, jsx_runtime.jsx)(NavLink, {
+                    to: url,
+                    id: id,
+                    className: param => {
+                        let {isActive: isActive} = param;
+                        return classnames_default()({
+                            [navbar_module_default().active]: isActive
                         });
                     },
-                    children: i
+                    children: label
                 })
             });
         }
-        function jt(e) {
-            let {callback: t, id: i} = e;
-            const {content: a} = gt(), l = [], s = [];
-            return Object.keys(a).forEach((e => {
-                1 === a[e].priority ? l.push(e) : 2 === a[e].priority && s.push(e);
-            })), (0, u.jsxs)("ul", {
-                className: _t()["navbar-list"],
-                children: [ l.map((e => (0, u.jsx)(yt, {
-                    id: "".concat(i, "-").concat(e, "-link"),
-                    label: a[e].name,
-                    url: a[e].url,
-                    callback: t
-                }, e))), s.length > 0 ? (0, u.jsx)("li", {
-                    className: _t()["navbar-item"],
-                    children: (0, u.jsx)(vt, {
-                        animatedIconClass: _t()["navbar-label-icon"],
-                        children: s.map((e => (0, u.jsx)(yt, {
-                            id: "".concat(i, "-").concat(e, "-link"),
-                            label: a[e].name,
-                            url: a[e].url,
-                            callback: t,
-                            itemClass: _t()["navbar-dropdown-item"]
-                        }, e)))
+        function NavList(param) {
+            let {callback: callback, id: id} = param;
+            const {content: content} = useDataContext(), navItems = [], dropdownItems = [];
+            return Object.keys(content).forEach((key => {
+                1 === content[key].priority ? navItems.push(key) : 2 === content[key].priority && dropdownItems.push(key);
+            })), (0, jsx_runtime.jsxs)("ul", {
+                className: navbar_module_default()["navbar-list"],
+                children: [ navItems.map((key => (0, jsx_runtime.jsx)(NavListItem, {
+                    id: "".concat(id, "-").concat(key, "-link"),
+                    label: content[key].name,
+                    url: content[key].url,
+                    callback: callback
+                }, key))), dropdownItems.length > 0 ? (0, jsx_runtime.jsx)("li", {
+                    className: navbar_module_default()["navbar-item"],
+                    children: (0, jsx_runtime.jsx)(Dropdown, {
+                        animatedIconClass: navbar_module_default()["navbar-label-icon"],
+                        children: dropdownItems.map((key => (0, jsx_runtime.jsx)(NavListItem, {
+                            id: "".concat(id, "-").concat(key, "-link"),
+                            label: content[key].name,
+                            url: content[key].url,
+                            callback: callback,
+                            itemClass: navbar_module_default()["navbar-dropdown-item"]
+                        }, key)))
                     })
                 }) : null ]
             });
         }
-        function ft() {
-            return (0, u.jsxs)("svg", {
+        function LogoIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Logo Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M2 24h2.948c1-.923 2.004-2 3.55-2 1.547 0 2.55 1.077 3.55 2h2.948l-6.498-6-6.498 6zm20-8.042c0 3.269-5.858 3.387-9.787 1.79-6.835-2.779-9.629-9.79-7.817-15.17.84-2.496 1.852-3.84 6.333-.922 1.101.716 2.27 1.649 3.437 2.722l-1.72 1.152c-7.717-7.009-6.992-2.036-.983 4.55 5.858 6.417 11.668 8.615 5.767.717l1.199-1.745c1.223 1.634 3.571 4.873 3.571 6.906zm-1.026-12.437c-.004.829-.68 1.497-1.508 1.492-.225-.001-.436-.056-.628-.146l-3.829 5.646c-.784-.555-1.994-1.768-2.548-2.554l5.682-3.77c-.104-.207-.169-.437-.168-.684.005-.829.68-1.497 1.507-1.492.828.005 1.497.68 1.492 1.508z"
                 }) ]
             });
         }
-        function qt() {
-            return (0, u.jsxs)("svg", {
+        function FacebookIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Facebook Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
                 }) ]
             });
         }
-        function xt() {
-            return (0, u.jsxs)("svg", {
+        function InstagramIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Instagram Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M11.984 16.815c2.596 0 4.706-2.111 4.706-4.707 0-1.409-.623-2.674-1.606-3.538-.346-.303-.735-.556-1.158-.748-.593-.27-1.249-.421-1.941-.421s-1.349.151-1.941.421c-.424.194-.814.447-1.158.749-.985.864-1.608 2.129-1.608 3.538 0 2.595 2.112 4.706 4.706 4.706zm.016-8.184c1.921 0 3.479 1.557 3.479 3.478 0 1.921-1.558 3.479-3.479 3.479s-3.479-1.557-3.479-3.479c0-1.921 1.558-3.478 3.479-3.478zm5.223.369h6.777v10.278c0 2.608-2.114 4.722-4.722 4.722h-14.493c-2.608 0-4.785-2.114-4.785-4.722v-10.278h6.747c-.544.913-.872 1.969-.872 3.109 0 3.374 2.735 6.109 6.109 6.109s6.109-2.735 6.109-6.109c.001-1.14-.327-2.196-.87-3.109zm2.055-9h-12.278v5h-1v-5h-1v5h-1v-4.923c-.346.057-.682.143-1 .27v4.653h-1v-4.102c-1.202.857-2 2.246-2 3.824v3.278h7.473c1.167-1.282 2.798-2 4.511-2 1.722 0 3.351.725 4.511 2h7.505v-3.278c0-2.608-2.114-4.722-4.722-4.722zm2.722 5.265c0 .406-.333.735-.745.735h-2.511c-.411 0-.744-.329-.744-.735v-2.53c0-.406.333-.735.744-.735h2.511c.412 0 .745.329.745.735v2.53z"
                 }) ]
             });
         }
-        function Pt() {
-            return (0, u.jsxs)("svg", {
+        function TwitterIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Twitter Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
                 }) ]
             });
         }
-        var kt = i(3228), Et = i.n(kt);
-        function Nt(e) {
-            let {id: t} = e;
-            const {links: i} = gt();
-            return (0, u.jsx)("div", {
-                className: Et()["icons-group"],
-                children: (0, u.jsxs)("ul", {
-                    className: Et()["icons-group-list"],
-                    children: [ (0, u.jsx)("li", {
-                        className: Et()["icons-group-item"],
-                        children: (0, u.jsx)("a", {
-                            href: i.social.facebook.href,
-                            id: "".concat(t, "-facebook"),
-                            children: (0, u.jsx)("div", {
-                                className: Je()(Et()["group-icon"], Et()["group-icon-small"]),
-                                children: (0, u.jsx)(qt, {})
+        var icons_group_module = __webpack_require__(3228), icons_group_module_default = __webpack_require__.n(icons_group_module);
+        function SocialIcons(param) {
+            let {id: id} = param;
+            const {links: links} = useDataContext();
+            return (0, jsx_runtime.jsx)("div", {
+                className: icons_group_module_default()["icons-group"],
+                children: (0, jsx_runtime.jsxs)("ul", {
+                    className: icons_group_module_default()["icons-group-list"],
+                    children: [ (0, jsx_runtime.jsx)("li", {
+                        className: icons_group_module_default()["icons-group-item"],
+                        children: (0, jsx_runtime.jsx)("a", {
+                            href: links.social.facebook.href,
+                            id: "".concat(id, "-facebook"),
+                            children: (0, jsx_runtime.jsx)("div", {
+                                className: classnames_default()(icons_group_module_default()["group-icon"], icons_group_module_default()["group-icon-small"]),
+                                children: (0, jsx_runtime.jsx)(FacebookIcon, {})
                             })
                         })
-                    }), (0, u.jsx)("li", {
-                        className: Et()["icons-group-item"],
-                        children: (0, u.jsx)("a", {
-                            href: i.social.instagram.href,
-                            id: "".concat(t, "-instagram"),
-                            children: (0, u.jsx)("div", {
-                                className: Je()(Et()["group-icon"], Et()["group-icon-small"]),
-                                children: (0, u.jsx)(xt, {})
+                    }), (0, jsx_runtime.jsx)("li", {
+                        className: icons_group_module_default()["icons-group-item"],
+                        children: (0, jsx_runtime.jsx)("a", {
+                            href: links.social.instagram.href,
+                            id: "".concat(id, "-instagram"),
+                            children: (0, jsx_runtime.jsx)("div", {
+                                className: classnames_default()(icons_group_module_default()["group-icon"], icons_group_module_default()["group-icon-small"]),
+                                children: (0, jsx_runtime.jsx)(InstagramIcon, {})
                             })
                         })
-                    }), (0, u.jsx)("li", {
-                        className: Et()["icons-group-item"],
-                        children: (0, u.jsx)("a", {
-                            href: i.social.twitter.href,
-                            id: "".concat(t, "-twitter"),
-                            children: (0, u.jsx)("div", {
-                                className: Je()(Et()["group-icon"], Et()["group-icon-small"]),
-                                children: (0, u.jsx)(Pt, {})
+                    }), (0, jsx_runtime.jsx)("li", {
+                        className: icons_group_module_default()["icons-group-item"],
+                        children: (0, jsx_runtime.jsx)("a", {
+                            href: links.social.twitter.href,
+                            id: "".concat(id, "-twitter"),
+                            children: (0, jsx_runtime.jsx)("div", {
+                                className: classnames_default()(icons_group_module_default()["group-icon"], icons_group_module_default()["group-icon-small"]),
+                                children: (0, jsx_runtime.jsx)(TwitterIcon, {})
                             })
                         })
                     }) ]
                 })
             });
         }
-        var St = i(4195), Ct = i.n(St);
-        function It(e) {
-            let {callback: t} = e;
-            const i = te(), [a, l] = (0, h.useState)(!1);
-            function s() {
-                let e = .01 * window.innerHeight;
-                document.documentElement.style.setProperty("--vh", "".concat(e, "px"));
+        var nav_module = __webpack_require__(4195), nav_module_default = __webpack_require__.n(nav_module);
+        function Navbar(param) {
+            let {callback: callback} = param;
+            const location = dist_useLocation(), [isOpen, setIsOpen] = (0, react.useState)(!1);
+            function calculateViewportHeight() {
+                let vh = .01 * window.innerHeight;
+                document.documentElement.style.setProperty("--vh", "".concat(vh, "px"));
             }
-            return (0, h.useEffect)((() => (s(), window.addEventListener("resize", s), () => {
-                window.removeEventListener("resize", s);
-            })), []), (0, u.jsxs)("div", {
-                className: _t().navbar,
-                children: [ (0, u.jsx)("input", {
+            return (0, react.useEffect)((() => (calculateViewportHeight(), window.addEventListener("resize", calculateViewportHeight), 
+            () => {
+                window.removeEventListener("resize", calculateViewportHeight);
+            })), []), (0, jsx_runtime.jsxs)("div", {
+                className: navbar_module_default().navbar,
+                children: [ (0, jsx_runtime.jsx)("input", {
                     type: "checkbox",
-                    id: _t()["navbar-toggle"],
+                    id: navbar_module_default()["navbar-toggle"],
                     onChange: function(e) {
-                        l(e.target.checked);
+                        setIsOpen(e.target.checked);
                     },
-                    checked: a
-                }), (0, u.jsxs)("label", {
-                    htmlFor: _t()["navbar-toggle"],
-                    className: _t()["navbar-label"],
-                    children: [ (0, u.jsx)("span", {
+                    checked: isOpen
+                }), (0, jsx_runtime.jsxs)("label", {
+                    htmlFor: navbar_module_default()["navbar-toggle"],
+                    className: navbar_module_default()["navbar-label"],
+                    children: [ (0, jsx_runtime.jsx)("span", {
                         className: "visually-hidden",
                         children: "Navbar Toggle"
-                    }), (0, u.jsx)("div", {
-                        className: Je()(_t()["navbar-label-icon"], "animated-icon", "hamburger-icon"),
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: classnames_default()(navbar_module_default()["navbar-label-icon"], "animated-icon", "hamburger-icon"),
                         title: "Hamburger Icon",
-                        children: (0, u.jsxs)("span", {
+                        children: (0, jsx_runtime.jsxs)("span", {
                             className: "animated-icon-inner",
-                            children: [ (0, u.jsx)("span", {}), (0, u.jsx)("span", {}), (0, u.jsx)("span", {}) ]
+                            children: [ (0, jsx_runtime.jsx)("span", {}), (0, jsx_runtime.jsx)("span", {}), (0, 
+                            jsx_runtime.jsx)("span", {}) ]
                         })
                     }) ]
-                }), (0, u.jsx)("button", {
-                    className: Ct()["page-navigation-logo"],
+                }), (0, jsx_runtime.jsx)("button", {
+                    className: nav_module_default()["page-navigation-logo"],
                     id: "home-link",
-                    onClick: t,
-                    children: (0, u.jsx)(ft, {})
-                }), (0, u.jsx)("div", {
-                    className: _t()["navbar-active-path"],
-                    children: i.pathname.split("/")[1]
-                }), (0, u.jsxs)("div", {
-                    className: _t()["navbar-content"],
-                    children: [ (0, u.jsx)(jt, {
+                    onClick: callback,
+                    children: (0, jsx_runtime.jsx)(LogoIcon, {})
+                }), (0, jsx_runtime.jsx)("div", {
+                    className: navbar_module_default()["navbar-active-path"],
+                    children: location.pathname.split("/")[1]
+                }), (0, jsx_runtime.jsxs)("div", {
+                    className: navbar_module_default()["navbar-content"],
+                    children: [ (0, jsx_runtime.jsx)(NavList, {
                         id: "navbar-navlist",
                         callback: function() {
-                            l(!1);
+                            setIsOpen(!1);
                         }
-                    }), (0, u.jsx)("div", {
-                        className: _t()["navbar-icons"],
-                        children: (0, u.jsx)(Nt, {
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: navbar_module_default()["navbar-icons"],
+                        children: (0, jsx_runtime.jsx)(SocialIcons, {
                             id: "navbar-social-icons"
                         })
                     }) ]
                 }) ]
             });
         }
-        var At = i(2707), Ut = i.n(At);
-        function Mt() {
-            const e = ae(), {buttons: t} = gt();
-            return (0, u.jsx)(u.Fragment, {
-                children: (0, u.jsx)("nav", {
-                    className: Ct()["page-navigation"],
+        var button_module = __webpack_require__(2707), button_module_default = __webpack_require__.n(button_module);
+        function Navigation() {
+            const navigate = dist_useNavigate(), {buttons: buttons} = useDataContext();
+            return (0, jsx_runtime.jsx)(jsx_runtime.Fragment, {
+                children: (0, jsx_runtime.jsx)("nav", {
+                    className: nav_module_default()["page-navigation"],
                     "aria-label": "main menu",
-                    children: (0, u.jsxs)("div", {
-                        className: Ct()["page-navigation-row"],
-                        children: [ (0, u.jsx)("div", {
-                            className: Ct()["page-navigation-column-left"],
-                            children: (0, u.jsx)(It, {
+                    children: (0, jsx_runtime.jsxs)("div", {
+                        className: nav_module_default()["page-navigation-row"],
+                        children: [ (0, jsx_runtime.jsx)("div", {
+                            className: nav_module_default()["page-navigation-column-left"],
+                            children: (0, jsx_runtime.jsx)(Navbar, {
                                 callback: function() {
-                                    e("/");
+                                    navigate("/");
                                 }
                             })
-                        }), (0, u.jsx)("div", {
-                            className: Ct()["page-navigation-column-right"],
-                            children: (0, u.jsx)("button", {
+                        }), (0, jsx_runtime.jsx)("div", {
+                            className: nav_module_default()["page-navigation-column-right"],
+                            children: (0, jsx_runtime.jsx)("button", {
                                 id: "login-button",
-                                className: Je()(Ut().button, Ut()["secondary-button"], Ct()["nav-button"]),
+                                className: classnames_default()(button_module_default().button, button_module_default()["secondary-button"], nav_module_default()["nav-button"]),
                                 onClick: function() {
                                     console.log("logIn()");
                                 },
-                                children: t.login.label
+                                children: buttons.login.label
                             })
                         }) ]
                     })
                 })
             });
         }
-        var Dt = i(6427), Tt = i.n(Dt);
-        function Lt(e) {
-            let {children: t} = e;
-            return (0, u.jsx)("main", {
-                className: Tt()["page-main"],
+        var layout_module = __webpack_require__(6427), layout_module_default = __webpack_require__.n(layout_module);
+        function Main(param) {
+            let {children: children} = param;
+            return (0, jsx_runtime.jsx)("main", {
+                className: layout_module_default()["page-main"],
                 id: "content",
-                children: t
+                children: children
             });
         }
-        var Vt = i(4355), Rt = i.n(Vt);
-        function Ft(e) {
-            let {id: t, label: i, onChange: a, checked: l} = e;
-            const [s, n] = (0, h.useState)(!1);
-            return (0, h.useEffect)((() => {
-                n(l);
-            }), [ l ]), (0, u.jsxs)("div", {
-                className: Rt()["toggle-outer"],
-                children: [ (0, u.jsx)("div", {
-                    className: Rt()["toggle-description"],
-                    children: i
-                }), (0, u.jsx)("div", {
-                    className: Rt()["toggle-container"],
-                    children: (0, u.jsxs)("label", {
-                        className: Rt().label,
-                        htmlFor: "".concat(t, "-toggle"),
-                        children: [ (0, u.jsx)("input", {
+        var toggle_module = __webpack_require__(4355), toggle_module_default = __webpack_require__.n(toggle_module);
+        function Toggle(param) {
+            let {id: id, label: label, onChange: onChange, checked: checked} = param;
+            const [isSelected, setIsSelected] = (0, react.useState)(!1);
+            return (0, react.useEffect)((() => {
+                setIsSelected(checked);
+            }), [ checked ]), (0, jsx_runtime.jsxs)("div", {
+                className: toggle_module_default()["toggle-outer"],
+                children: [ (0, jsx_runtime.jsx)("div", {
+                    className: toggle_module_default()["toggle-description"],
+                    children: label
+                }), (0, jsx_runtime.jsx)("div", {
+                    className: toggle_module_default()["toggle-container"],
+                    children: (0, jsx_runtime.jsxs)("label", {
+                        className: toggle_module_default().label,
+                        htmlFor: "".concat(id, "-toggle"),
+                        children: [ (0, jsx_runtime.jsx)("input", {
                             type: "checkbox",
-                            id: "".concat(t, "-toggle"),
-                            checked: s,
+                            id: "".concat(id, "-toggle"),
+                            checked: isSelected,
                             onChange: function(e) {
-                                n(e.target.checked), a(e);
+                                setIsSelected(e.target.checked), onChange(e);
                             }
-                        }), (0, u.jsx)("span", {
-                            className: Rt().switch
-                        }), (0, u.jsxs)("div", {
+                        }), (0, jsx_runtime.jsx)("span", {
+                            className: toggle_module_default().switch
+                        }), (0, jsx_runtime.jsxs)("div", {
                             className: "visually-hidden",
-                            children: [ "selected: ", s ? "true" : "false" ]
+                            children: [ "selected: ", isSelected ? "true" : "false" ]
                         }) ]
                     })
                 }) ]
             });
         }
-        var Ot = i(3475), Bt = i.n(Ot);
-        function zt(e) {
-            let {onClose: t} = e;
-            const [i, a] = (0, h.useState)(!1), {settings: l} = gt();
-            return (0, h.useEffect)((() => {
-                a(document.documentElement.classList.contains("reduced-motion"));
-            }), []), (0, u.jsxs)("div", {
+        var dialog_module = __webpack_require__(3475), dialog_module_default = __webpack_require__.n(dialog_module);
+        function Dialog(param) {
+            let {onClose: onClose} = param;
+            const [reduceMotion, setReduceMotion] = (0, react.useState)(!1), {settings: settings} = useDataContext();
+            return (0, react.useEffect)((() => {
+                setReduceMotion(document.documentElement.classList.contains("reduced-motion"));
+            }), []), (0, jsx_runtime.jsxs)("div", {
                 id: "settings",
-                className: Je()(Bt().dialog, Bt().open),
-                children: [ (0, u.jsx)("button", {
+                className: classnames_default()(dialog_module_default().dialog, dialog_module_default().open),
+                children: [ (0, jsx_runtime.jsx)("button", {
                     id: "close-dialog-link",
-                    className: Bt()["dialog-close-button"],
-                    onClick: t,
+                    className: dialog_module_default()["dialog-close-button"],
+                    onClick: onClose,
                     title: "Close Button",
-                    children: (0, u.jsx)("div", {
-                        className: Je()(Bt()["dialog-close-button-icon"], "animated-icon", "close-icon", "hover"),
+                    children: (0, jsx_runtime.jsx)("div", {
+                        className: classnames_default()(dialog_module_default()["dialog-close-button-icon"], "animated-icon", "close-icon", "hover"),
                         title: "Close Icon",
-                        children: (0, u.jsxs)("span", {
+                        children: (0, jsx_runtime.jsxs)("span", {
                             className: "animated-icon-inner",
-                            children: [ (0, u.jsx)("span", {}), (0, u.jsx)("span", {}) ]
+                            children: [ (0, jsx_runtime.jsx)("span", {}), (0, jsx_runtime.jsx)("span", {}) ]
                         })
                     })
-                }), (0, u.jsx)("header", {
-                    className: Bt()["dialog-header"],
-                    children: (0, u.jsx)("h2", {
-                        children: l.header
+                }), (0, jsx_runtime.jsx)("header", {
+                    className: dialog_module_default()["dialog-header"],
+                    children: (0, jsx_runtime.jsx)("h2", {
+                        children: settings.header
                     })
-                }), (0, u.jsx)("section", {
-                    className: Bt()["dialog-body"],
-                    children: (0, u.jsx)("div", {
-                        className: Bt()["dialog-item"],
-                        children: (0, u.jsx)(Ft, {
+                }), (0, jsx_runtime.jsx)("section", {
+                    className: dialog_module_default()["dialog-body"],
+                    children: (0, jsx_runtime.jsx)("div", {
+                        className: dialog_module_default()["dialog-item"],
+                        children: (0, jsx_runtime.jsx)(Toggle, {
                             id: "motion",
-                            label: l.items.motion.label,
+                            label: settings.items.motion.label,
                             onChange: function(e) {
-                                a(e.target.checked), e.target.checked ? document.documentElement.classList.add("reduced-motion") : document.documentElement.classList.remove("reduced-motion");
+                                setReduceMotion(e.target.checked), e.target.checked ? document.documentElement.classList.add("reduced-motion") : document.documentElement.classList.remove("reduced-motion");
                             },
-                            checked: i
+                            checked: reduceMotion
                         })
                     })
                 }) ]
             });
         }
-        function Ht() {
-            return (0, u.jsxs)("svg", {
+        function A11yIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 clipRule: "evenodd",
                 fillRule: "evenodd",
                 strokeLinejoin: "round",
                 strokeMiterlimit: "2",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Accessibility Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "m12.002 2c5.518 0 9.998 4.48 9.998 9.998 0 5.517-4.48 9.997-9.998 9.997-5.517 0-9.997-4.48-9.997-9.997 0-5.518 4.48-9.998 9.997-9.998zm0 1.5c-4.69 0-8.497 3.808-8.497 8.498s3.807 8.497 8.497 8.497 8.498-3.807 8.498-8.497-3.808-8.498-8.498-8.498zm4.044 5.607c-.235 0-1.892.576-4.044.576-2.166 0-3.791-.576-4.044-.576-.379 0-.687.308-.687.687 0 .318.225.599.531.669.613.16 1.261.293 1.756.542.459.231.781.566.781 1.14 0 2.027-1.326 3.92-1.86 4.817 0 0 0 0-.001.001-.06.105-.092.224-.092.344 0 .379.308.687.688.687.183 0 .357-.072.488-.204.447-.449 1.333-1.784 1.738-2.429.201-.319.396-.621.706-.622.302.001.498.303.698.622.405.645 1.291 1.98 1.738 2.429.13.132.304.204.489.204.379 0 .687-.308.687-.687 0-.119-.031-.237-.098-.353 0-.001-.001-.001-.001-.002-.547-.919-1.854-2.778-1.854-4.807 0-.609.369-.956.851-1.186.519-.247 1.167-.362 1.682-.495.31-.071.536-.352.536-.67 0-.379-.309-.687-.688-.687zm-4.03-3.113c-.875 0-1.587.713-1.587 1.593 0 .879.712 1.592 1.587 1.592.876 0 1.586-.713 1.586-1.592 0-.88-.71-1.593-1.586-1.593z",
                     fillRule: "nonzero"
                 }) ]
             });
         }
-        function Qt(e) {
-            let {onClick: t, id: i} = e;
-            return (0, u.jsx)("div", {
-                className: Et()["icons-group"],
-                children: (0, u.jsx)("ul", {
-                    className: Et()["icons-group-list"],
-                    children: (0, u.jsx)("li", {
-                        className: Et()["icons-group-item"],
-                        children: (0, u.jsx)("button", {
-                            onClick: t,
-                            id: "".concat(i, "-a11y"),
-                            children: (0, u.jsx)("div", {
-                                className: Je()(Et()["group-icon"], Et()["group-icon-medium"]),
-                                children: (0, u.jsx)(Ht, {})
+        function SettingsIcons(param) {
+            let {onClick: onClick, id: id} = param;
+            return (0, jsx_runtime.jsx)("div", {
+                className: icons_group_module_default()["icons-group"],
+                children: (0, jsx_runtime.jsx)("ul", {
+                    className: icons_group_module_default()["icons-group-list"],
+                    children: (0, jsx_runtime.jsx)("li", {
+                        className: icons_group_module_default()["icons-group-item"],
+                        children: (0, jsx_runtime.jsx)("button", {
+                            onClick: onClick,
+                            id: "".concat(id, "-a11y"),
+                            children: (0, jsx_runtime.jsx)("div", {
+                                className: classnames_default()(icons_group_module_default()["group-icon"], icons_group_module_default()["group-icon-medium"]),
+                                children: (0, jsx_runtime.jsx)(A11yIcon, {})
                             })
                         })
                     })
                 })
             });
         }
-        var Wt = i(6915), Gt = i.n(Wt);
-        function Jt() {
-            const {content: e} = gt(), t = Object.keys(e).reduce(((e, t) => (e.push(t), e)), []);
-            return (0, u.jsx)("div", {
-                className: Gt().sitemap,
-                children: (0, u.jsx)("ul", {
-                    className: Gt()["sitemap-list"],
-                    children: t.map((t => (0, u.jsxs)("li", {
-                        className: Gt()["sitemap-item"],
-                        children: [ (0, u.jsx)(Se, {
-                            to: e[t].url,
-                            className: e => {
-                                let {isActive: t} = e;
-                                return Je()({
-                                    [Gt().active]: t
+        var sitemap_module = __webpack_require__(6915), sitemap_module_default = __webpack_require__.n(sitemap_module);
+        function Sitemap() {
+            const {content: content} = useDataContext(), navItems = Object.keys(content).reduce(((result, key) => (result.push(key), 
+            result)), []);
+            return (0, jsx_runtime.jsx)("div", {
+                className: sitemap_module_default().sitemap,
+                children: (0, jsx_runtime.jsx)("ul", {
+                    className: sitemap_module_default()["sitemap-list"],
+                    children: navItems.map((key => (0, jsx_runtime.jsxs)("li", {
+                        className: sitemap_module_default()["sitemap-item"],
+                        children: [ (0, jsx_runtime.jsx)(NavLink, {
+                            to: content[key].url,
+                            className: param => {
+                                let {isActive: isActive} = param;
+                                return classnames_default()({
+                                    [sitemap_module_default().active]: isActive
                                 });
                             },
-                            children: (0, u.jsx)("h4", {
-                                className: Gt()["sitemap-header"],
-                                children: e[t].name
+                            children: (0, jsx_runtime.jsx)("h4", {
+                                className: sitemap_module_default()["sitemap-header"],
+                                children: content[key].name
                             })
-                        }), (0, u.jsx)("ul", {
-                            className: Gt()["sitemap-sublist"],
-                            children: e[t].sections.map((i => (0, u.jsx)("li", {
-                                className: Gt()["sitemap-subitem"],
-                                children: (0, u.jsx)(Be, {
-                                    to: "".concat(e[t].url, "#").concat(i.id),
-                                    children: i.name
+                        }), (0, jsx_runtime.jsx)("ul", {
+                            className: sitemap_module_default()["sitemap-sublist"],
+                            children: content[key].sections.map((section => (0, jsx_runtime.jsx)("li", {
+                                className: sitemap_module_default()["sitemap-subitem"],
+                                children: (0, jsx_runtime.jsx)(HashLink, {
+                                    to: "".concat(content[key].url, "#").concat(section.id),
+                                    children: section.name
                                 })
-                            }, "sitemap-section".concat(i.id))))
+                            }, "sitemap-section".concat(section.id))))
                         }) ]
-                    }, "sitemap-page-".concat(e[t].name))))
+                    }, "sitemap-page-".concat(content[key].name))))
                 })
             });
         }
-        var Kt = i(3099), $t = i.n(Kt);
-        function Zt() {
-            const [e, t] = (0, h.useState)(!1), {footer: i, links: a} = gt();
-            return (0, u.jsxs)(u.Fragment, {
-                children: [ (0, u.jsxs)("footer", {
-                    className: $t()["page-footer"],
-                    children: [ (0, u.jsx)("div", {
-                        className: $t()["footer-row"],
-                        children: (0, u.jsx)("div", {
-                            className: $t()["footer-column-center"],
-                            children: (0, u.jsx)(Jt, {})
+        var footer_module = __webpack_require__(3099), footer_module_default = __webpack_require__.n(footer_module);
+        function Footer() {
+            const [showPortal, setShowPortal] = (0, react.useState)(!1), {footer: footer, links: links} = useDataContext();
+            return (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ (0, jsx_runtime.jsxs)("footer", {
+                    className: footer_module_default()["page-footer"],
+                    children: [ (0, jsx_runtime.jsx)("div", {
+                        className: footer_module_default()["footer-row"],
+                        children: (0, jsx_runtime.jsx)("div", {
+                            className: footer_module_default()["footer-column-center"],
+                            children: (0, jsx_runtime.jsx)(Sitemap, {})
                         })
-                    }), (0, u.jsx)("div", {
-                        className: $t()["footer-row"],
-                        children: (0, u.jsx)("div", {
-                            className: $t()["footer-column-center"],
-                            children: (0, u.jsx)("div", {
-                                className: $t()["footer-links"],
-                                children: (0, u.jsx)("ul", {
-                                    className: $t()["footer-links-list"],
-                                    children: Object.keys(a.legal).map((e => {
-                                        const t = a.legal[e];
-                                        return (0, u.jsx)("li", {
-                                            className: $t()["footer-links-item"],
-                                            children: (0, u.jsx)("a", {
-                                                href: t.href,
-                                                id: "footer-link-".concat(e),
-                                                className: $t()["footer-link"],
-                                                children: t.label
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: footer_module_default()["footer-row"],
+                        children: (0, jsx_runtime.jsx)("div", {
+                            className: footer_module_default()["footer-column-center"],
+                            children: (0, jsx_runtime.jsx)("div", {
+                                className: footer_module_default()["footer-links"],
+                                children: (0, jsx_runtime.jsx)("ul", {
+                                    className: footer_module_default()["footer-links-list"],
+                                    children: Object.keys(links.legal).map((key => {
+                                        const item = links.legal[key];
+                                        return (0, jsx_runtime.jsx)("li", {
+                                            className: footer_module_default()["footer-links-item"],
+                                            children: (0, jsx_runtime.jsx)("a", {
+                                                href: item.href,
+                                                id: "footer-link-".concat(key),
+                                                className: footer_module_default()["footer-link"],
+                                                children: item.label
                                             })
-                                        }, "footer-links-item-".concat(e));
+                                        }, "footer-links-item-".concat(key));
                                     }))
                                 })
                             })
                         })
-                    }), (0, u.jsxs)("div", {
-                        className: $t()["footer-row"],
-                        children: [ (0, u.jsx)("div", {
-                            className: $t()["footer-column-left"],
-                            children: (0, u.jsx)(Nt, {
+                    }), (0, jsx_runtime.jsxs)("div", {
+                        className: footer_module_default()["footer-row"],
+                        children: [ (0, jsx_runtime.jsx)("div", {
+                            className: footer_module_default()["footer-column-left"],
+                            children: (0, jsx_runtime.jsx)(SocialIcons, {
                                 id: "footer-social-icons"
                             })
-                        }), (0, u.jsxs)("div", {
-                            className: $t()["footer-column-center"],
-                            children: [ "© ", (new Date).getFullYear(), " ", i.copyright.label ]
-                        }), (0, u.jsx)("div", {
-                            className: $t()["footer-column-right"],
-                            children: (0, u.jsx)(Qt, {
+                        }), (0, jsx_runtime.jsxs)("div", {
+                            className: footer_module_default()["footer-column-center"],
+                            children: [ "© ", (new Date).getFullYear(), " ", footer.copyright.label ]
+                        }), (0, jsx_runtime.jsx)("div", {
+                            className: footer_module_default()["footer-column-right"],
+                            children: (0, jsx_runtime.jsx)(SettingsIcons, {
                                 onClick: function() {
-                                    t(!0);
+                                    setShowPortal(!0);
                                 },
                                 id: "footer-settings-icons"
                             })
                         }) ]
                     }) ]
-                }), e ? (0, Ae.createPortal)((0, u.jsx)(zt, {
+                }), showPortal ? (0, react_dom.createPortal)((0, jsx_runtime.jsx)(Dialog, {
                     onClose: function() {
-                        t(!1);
+                        setShowPortal(!1);
                     }
                 }), document.getElementById("settings-container")) : null ]
             });
         }
-        var Xt = i(8466), Yt = i.n(Xt);
-        function ei(e) {
-            let {message: t, onClose: i} = e;
-            if (!t) return null;
-            const {title: a, description: l} = t;
-            return (0, u.jsxs)("div", {
-                className: Je()(Yt().message, Yt().open),
-                children: [ (0, u.jsx)("button", {
+        var message_module = __webpack_require__(8466), message_module_default = __webpack_require__.n(message_module);
+        function Message(param) {
+            let {message: message, onClose: onClose} = param;
+            if (!message) return null;
+            const {title: title, description: description} = message;
+            return (0, jsx_runtime.jsxs)("div", {
+                className: classnames_default()(message_module_default().message, message_module_default().open),
+                children: [ (0, jsx_runtime.jsx)("button", {
                     id: "close-message-link",
-                    className: Yt()["message-close-button"],
-                    onClick: i,
+                    className: message_module_default()["message-close-button"],
+                    onClick: onClose,
                     title: "Close Button",
-                    children: (0, u.jsx)("div", {
-                        className: Je()(Yt()["message-close-button-icon"], "animated-icon", "close-icon", "hover"),
+                    children: (0, jsx_runtime.jsx)("div", {
+                        className: classnames_default()(message_module_default()["message-close-button-icon"], "animated-icon", "close-icon", "hover"),
                         title: "Close Icon",
-                        children: (0, u.jsxs)("span", {
+                        children: (0, jsx_runtime.jsxs)("span", {
                             className: "animated-icon-inner",
-                            children: [ (0, u.jsx)("span", {}), (0, u.jsx)("span", {}) ]
+                            children: [ (0, jsx_runtime.jsx)("span", {}), (0, jsx_runtime.jsx)("span", {}) ]
                         })
                     })
-                }), a ? (0, u.jsx)("header", {
-                    className: Yt()["message-header"],
-                    children: (0, u.jsx)("h2", {
-                        children: a
+                }), title ? (0, jsx_runtime.jsx)("header", {
+                    className: message_module_default()["message-header"],
+                    children: (0, jsx_runtime.jsx)("h2", {
+                        children: title
                     })
-                }) : null, (0, u.jsx)("section", {
-                    className: Yt()["message-body"],
-                    children: (0, u.jsx)("div", {
-                        className: Yt()["message-description"],
-                        children: l
+                }) : null, (0, jsx_runtime.jsx)("section", {
+                    className: message_module_default()["message-body"],
+                    children: (0, jsx_runtime.jsx)("div", {
+                        className: message_module_default()["message-description"],
+                        children: description
                     })
                 }) ]
             });
         }
-        function ti(e) {
-            let {children: t, id: i} = e;
-            const [a, l] = (0, h.useState)(!1), {content: s, links: n} = gt();
-            (0, h.useEffect)((() => {
-                l(s[i].message);
-            }), [ i ]);
-            const r = (0, h.useRef)(null), {pathname: c} = te();
-            return (0, h.useEffect)((() => {
-                var e;
-                null == r || null === (e = r.current) || void 0 === e || e.scrollTo({
+        function Layout(param) {
+            let {children: children, id: id} = param;
+            const [showMessage, setShowMessage] = (0, react.useState)(!1), {content: content, links: links} = useDataContext();
+            (0, react.useEffect)((() => {
+                setShowMessage(content[id].message);
+            }), [ id ]);
+            const pageRef = (0, react.useRef)(null), {pathname: pathname} = dist_useLocation();
+            return (0, react.useEffect)((() => {
+                var _pageRef_current;
+                null == pageRef || null === (_pageRef_current = pageRef.current) || void 0 === _pageRef_current || _pageRef_current.scrollTo({
                     top: 0,
                     left: 0,
                     behavior: "instant"
                 });
-            }), [ c ]), (0, u.jsxs)(u.Fragment, {
-                children: [ (0, u.jsx)(Be, {
-                    to: "".concat(c, "#content"),
+            }), [ pathname ]), (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ (0, jsx_runtime.jsx)(HashLink, {
+                    to: "".concat(pathname, "#content"),
                     className: "skip-link",
-                    children: n.a11y.skip.label
-                }), (0, u.jsxs)("div", {
-                    className: Tt().page,
-                    ref: r,
-                    children: [ (0, u.jsx)(We, {}), (0, u.jsx)(Mt, {}), a ? (0, u.jsx)(ei, {
-                        message: s[i].message,
+                    children: links.a11y.skip.label
+                }), (0, jsx_runtime.jsxs)("div", {
+                    className: layout_module_default().page,
+                    ref: pageRef,
+                    children: [ (0, jsx_runtime.jsx)(Header, {}), (0, jsx_runtime.jsx)(Navigation, {}), showMessage ? (0, 
+                    jsx_runtime.jsx)(Message, {
+                        message: content[id].message,
                         onClose: function() {
-                            l(!1);
+                            setShowMessage(!1);
                         }
-                    }) : null, (0, u.jsx)(Lt, {
-                        children: t
-                    }), (0, u.jsx)(Zt, {}) ]
+                    }) : null, (0, jsx_runtime.jsx)(Main, {
+                        children: children
+                    }), (0, jsx_runtime.jsx)(Footer, {}) ]
                 }) ]
             });
         }
-        function ii(e) {
-            let {text: t, headerClass: i, link: a} = e;
-            return t ? (0, u.jsx)("header", {
-                className: i,
-                children: a ? (0, u.jsx)("a", {
-                    href: a,
-                    children: (0, u.jsx)("h2", {
-                        children: t
+        function ArticleHeader(param) {
+            let {text: text, headerClass: headerClass, link: link} = param;
+            return text ? (0, jsx_runtime.jsx)("header", {
+                className: headerClass,
+                children: link ? (0, jsx_runtime.jsx)("a", {
+                    href: link,
+                    children: (0, jsx_runtime.jsx)("h2", {
+                        children: text
                     })
-                }) : (0, u.jsx)("h2", {
-                    children: t
+                }) : (0, jsx_runtime.jsx)("h2", {
+                    children: text
                 })
             }) : null;
         }
-        var ai = i(5675), li = i.n(ai);
-        function si(e) {
-            let {text: t, textClass: i, type: a = "p"} = e;
-            if (!t) return null;
-            const l = a;
-            return (0, u.jsx)(l, {
-                className: i,
-                children: t
+        var next_image = __webpack_require__(5675), image_default = __webpack_require__.n(next_image);
+        function ArticleText(param) {
+            let {text: text, textClass: textClass, type: type = "p"} = param;
+            if (!text) return null;
+            const Tag = type;
+            return (0, jsx_runtime.jsx)(Tag, {
+                className: textClass,
+                children: text
             });
         }
-        function ni() {
-            return (0, u.jsxs)("svg", {
+        function LightningIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Lightning Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M8 24l3-9h-9l14-15-3 9h9l-14 15z"
                 }) ]
             });
         }
-        function ri() {
-            return (0, u.jsxs)("svg", {
+        function PlayIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Play Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3 17v-10l9 5.146-9 4.854z"
                 }) ]
             });
         }
-        function ci() {
-            return (0, u.jsxs)("svg", {
+        function FireIcon() {
+            return (0, jsx_runtime.jsxs)("svg", {
                 width: "24",
                 height: "24",
                 viewBox: "0 0 24 24",
                 fillRule: "evenodd",
                 clipRule: "evenodd",
-                children: [ (0, u.jsx)("title", {
+                children: [ (0, jsx_runtime.jsx)("title", {
                     children: "Fire Icon"
-                }), (0, u.jsx)("path", {
+                }), (0, jsx_runtime.jsx)("path", {
                     d: "M8.625 0c.61 7.189-5.625 9.664-5.625 15.996 0 4.301 3.069 7.972 9 8.004 5.931.032 9-4.414 9-8.956 0-4.141-2.062-8.046-5.952-10.474.924 2.607-.306 4.988-1.501 5.808.07-3.337-1.125-8.289-4.922-10.378zm4.711 13c3.755 3.989 1.449 9-1.567 9-1.835 0-2.779-1.265-2.769-2.577.019-2.433 2.737-2.435 4.336-6.423z"
                 }) ]
             });
         }
-        var oi = i(9929), ui = i.n(oi);
-        function hi(e) {
-            let {tag: t} = e;
-            return t ? (0, u.jsxs)("div", {
-                className: Je()(ui()["article-image-tag"], ui()[t.type]),
-                children: [ "breaking" === t.type ? (0, u.jsx)(ni, {}) : null, "watch" === t.type ? (0, 
-                u.jsx)(ri, {}) : null, "new" === t.type ? (0, u.jsx)(ci, {}) : null, (0, u.jsx)(si, {
-                    text: t.label
+        var article_module = __webpack_require__(9929), article_module_default = __webpack_require__.n(article_module);
+        function ArticleTag(param) {
+            let {tag: tag} = param;
+            return tag ? (0, jsx_runtime.jsxs)("div", {
+                className: classnames_default()(article_module_default()["article-image-tag"], article_module_default()[tag.type]),
+                children: [ "breaking" === tag.type ? (0, jsx_runtime.jsx)(LightningIcon, {}) : null, "watch" === tag.type ? (0, 
+                jsx_runtime.jsx)(PlayIcon, {}) : null, "new" === tag.type ? (0, jsx_runtime.jsx)(FireIcon, {}) : null, (0, 
+                jsx_runtime.jsx)(ArticleText, {
+                    text: tag.label
                 }) ]
             }) : null;
         }
-        function di(e) {
-            let {image: t, imageClass: i, meta: a} = e;
-            return t ? (0, u.jsxs)(u.Fragment, {
-                children: [ (0, u.jsxs)("div", {
-                    className: i,
-                    children: [ (0, u.jsx)(li(), {
-                        className: ui()["article-image"],
-                        src: t.src,
-                        width: t.width,
-                        height: t.height,
-                        alt: t.alt
-                    }), (0, u.jsx)(hi, {
-                        tag: null == a ? void 0 : a.tag
+        function ArticleImage(param) {
+            let {image: image, imageClass: imageClass, meta: meta} = param;
+            return image ? (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ (0, jsx_runtime.jsxs)("div", {
+                    className: imageClass,
+                    children: [ (0, jsx_runtime.jsx)(image_default(), {
+                        className: article_module_default()["article-image"],
+                        src: image.src,
+                        width: image.width,
+                        height: image.height,
+                        alt: image.alt
+                    }), (0, jsx_runtime.jsx)(ArticleTag, {
+                        tag: null == meta ? void 0 : meta.tag
                     }) ]
-                }), (0, u.jsx)(si, {
-                    textClass: ui()["article-image-captions"],
-                    text: null == a ? void 0 : a.captions
+                }), (0, jsx_runtime.jsx)(ArticleText, {
+                    textClass: article_module_default()["article-image-captions"],
+                    text: null == meta ? void 0 : meta.captions
                 }) ]
             }) : null;
         }
-        var mi = {
+        var esm_browser_native = {
             randomUUID: "undefined" != typeof crypto && crypto.randomUUID && crypto.randomUUID.bind(crypto)
         };
-        let gi;
-        const pi = new Uint8Array(16);
-        function bi() {
-            if (!gi && (gi = "undefined" != typeof crypto && crypto.getRandomValues && crypto.getRandomValues.bind(crypto), 
-            !gi)) throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
-            return gi(pi);
+        let getRandomValues;
+        const rnds8 = new Uint8Array(16);
+        function rng() {
+            if (!getRandomValues && (getRandomValues = "undefined" != typeof crypto && crypto.getRandomValues && crypto.getRandomValues.bind(crypto), 
+            !getRandomValues)) throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+            return getRandomValues(rnds8);
         }
-        const vi = [];
-        for (let e = 0; e < 256; ++e) vi.push((e + 256).toString(16).slice(1));
-        function wi(e, t = 0) {
-            return (vi[e[t + 0]] + vi[e[t + 1]] + vi[e[t + 2]] + vi[e[t + 3]] + "-" + vi[e[t + 4]] + vi[e[t + 5]] + "-" + vi[e[t + 6]] + vi[e[t + 7]] + "-" + vi[e[t + 8]] + vi[e[t + 9]] + "-" + vi[e[t + 10]] + vi[e[t + 11]] + vi[e[t + 12]] + vi[e[t + 13]] + vi[e[t + 14]] + vi[e[t + 15]]).toLowerCase();
+        const byteToHex = [];
+        for (let i = 0; i < 256; ++i) byteToHex.push((i + 256).toString(16).slice(1));
+        function unsafeStringify(arr, offset = 0) {
+            return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
         }
-        var _i = function(e, t, i) {
-            if (mi.randomUUID && !t && !e) return mi.randomUUID();
-            const a = (e = e || {}).random || (e.rng || bi)();
-            if (a[6] = 15 & a[6] | 64, a[8] = 63 & a[8] | 128, t) {
-                i = i || 0;
-                for (let e = 0; e < 16; ++e) t[i + e] = a[e];
-                return t;
+        var esm_browser_v4 = function(options, buf, offset) {
+            if (esm_browser_native.randomUUID && !buf && !options) return esm_browser_native.randomUUID();
+            const rnds = (options = options || {}).random || (options.rng || rng)();
+            if (rnds[6] = 15 & rnds[6] | 64, rnds[8] = 63 & rnds[8] | 128, buf) {
+                offset = offset || 0;
+                for (let i = 0; i < 16; ++i) buf[offset + i] = rnds[i];
+                return buf;
             }
-            return wi(a);
+            return unsafeStringify(rnds);
         };
-        function yi(e) {
-            let {type: t, content: i, display: a} = e;
-            return "text" === t ? (0, u.jsx)("div", {
-                className: ui()["article-content"],
-                children: (0, u.jsx)(si, {
-                    text: i
+        function ArticleContent(param) {
+            let {type: type, content: content, display: display} = param;
+            return "text" === type ? (0, jsx_runtime.jsx)("div", {
+                className: article_module_default()["article-content"],
+                children: (0, jsx_runtime.jsx)(ArticleText, {
+                    text: content
                 })
-            }) : "list" === t ? (0, u.jsx)("div", {
-                className: ui()["article-content"],
-                children: (0, u.jsx)("ul", {
-                    className: Je()(ui()["article-list"], ui().vertical, {
-                        [ui()[a]]: a
+            }) : "list" === type ? (0, jsx_runtime.jsx)("div", {
+                className: article_module_default()["article-content"],
+                children: (0, jsx_runtime.jsx)("ul", {
+                    className: classnames_default()(article_module_default()["article-list"], article_module_default().vertical, {
+                        [article_module_default()[display]]: display
                     }),
-                    children: i.map((e => (0, u.jsx)("li", {
-                        className: ui()["article-list-item"],
-                        children: e.url && !e.title ? (0, u.jsx)("a", {
-                            href: e.url,
-                            children: (0, u.jsx)(si, {
-                                text: e.content
+                    children: content.map((item => (0, jsx_runtime.jsx)("li", {
+                        className: article_module_default()["article-list-item"],
+                        children: item.url && !item.title ? (0, jsx_runtime.jsx)("a", {
+                            href: item.url,
+                            children: (0, jsx_runtime.jsx)(ArticleText, {
+                                text: item.content
                             })
-                        }) : (0, u.jsx)(si, {
-                            text: e.content
+                        }) : (0, jsx_runtime.jsx)(ArticleText, {
+                            text: item.content
                         })
-                    }, _i())))
+                    }, esm_browser_v4())))
                 })
-            }) : "articles-list" === t ? (0, u.jsx)("div", {
-                className: ui()["article-list-content"],
-                children: (0, u.jsx)("ul", {
-                    className: Je()(ui()["article-list"], ui().vertical),
-                    children: i.map((e => (0, u.jsxs)("li", {
-                        className: ui()["article-list-item"],
-                        children: [ (0, u.jsx)(si, {
-                            textClass: Je()(ui()["article-title"], "truncate-multiline", "truncate-multiline-3"),
-                            text: e.title,
+            }) : "articles-list" === type ? (0, jsx_runtime.jsx)("div", {
+                className: article_module_default()["article-list-content"],
+                children: (0, jsx_runtime.jsx)("ul", {
+                    className: classnames_default()(article_module_default()["article-list"], article_module_default().vertical),
+                    children: content.map((item => (0, jsx_runtime.jsxs)("li", {
+                        className: article_module_default()["article-list-item"],
+                        children: [ (0, jsx_runtime.jsx)(ArticleText, {
+                            textClass: classnames_default()(article_module_default()["article-title"], "truncate-multiline", "truncate-multiline-3"),
+                            text: item.title,
                             type: "h3"
-                        }), e.url && !e.title ? (0, u.jsx)("a", {
-                            href: e.url,
-                            children: (0, u.jsx)(si, {
-                                text: e.content
+                        }), item.url && !item.title ? (0, jsx_runtime.jsx)("a", {
+                            href: item.url,
+                            children: (0, jsx_runtime.jsx)(ArticleText, {
+                                text: item.content
                             })
-                        }) : (0, u.jsx)(si, {
-                            text: e.content
+                        }) : (0, jsx_runtime.jsx)(ArticleText, {
+                            text: item.content
                         }) ]
-                    }, _i())))
+                    }, esm_browser_v4())))
                 })
-            }) : "excerpt" === t ? (0, u.jsx)("ul", {
-                className: Je()(ui()["article-list"], ui().horizontal),
-                children: i.map((e => (0, u.jsxs)("li", {
-                    className: ui()["article-list-item"],
-                    children: [ (0, u.jsx)(di, {
-                        imageClass: ui()["article-hero"],
-                        image: e.image
-                    }), (0, u.jsx)("div", {
-                        className: ui()["article-content"],
-                        children: (0, u.jsx)(si, {
+            }) : "excerpt" === type ? (0, jsx_runtime.jsx)("ul", {
+                className: classnames_default()(article_module_default()["article-list"], article_module_default().horizontal),
+                children: content.map((item => (0, jsx_runtime.jsxs)("li", {
+                    className: article_module_default()["article-list-item"],
+                    children: [ (0, jsx_runtime.jsx)(ArticleImage, {
+                        imageClass: article_module_default()["article-hero"],
+                        image: item.image
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: article_module_default()["article-content"],
+                        children: (0, jsx_runtime.jsx)(ArticleText, {
                             textClass: "truncate-multiline truncate-multiline-3",
-                            text: e.text,
+                            text: item.text,
                             type: "div"
                         })
                     }) ]
-                }, _i())))
-            }) : "grid" === t ? (0, u.jsx)("div", {
-                className: Je()(Tt()["grid-container"], {
-                    [Tt()[a]]: a
+                }, esm_browser_v4())))
+            }) : "grid" === type ? (0, jsx_runtime.jsx)("div", {
+                className: classnames_default()(layout_module_default()["grid-container"], {
+                    [layout_module_default()[display]]: display
                 }),
-                children: i.map((e => (0, u.jsxs)("div", {
-                    className: Tt()["grid-item"],
-                    children: [ (0, u.jsx)(di, {
-                        imageClass: ui()["article-image-container"],
-                        image: e.image,
-                        meta: e.meta
-                    }), e.url ? (0, u.jsx)("a", {
-                        href: e.url,
-                        children: (0, u.jsx)(si, {
-                            textClass: Je()(ui()["article-content"], "truncate-multiline", "truncate-multiline-3"),
-                            text: e.text,
+                children: content.map((item => (0, jsx_runtime.jsxs)("div", {
+                    className: layout_module_default()["grid-item"],
+                    children: [ (0, jsx_runtime.jsx)(ArticleImage, {
+                        imageClass: article_module_default()["article-image-container"],
+                        image: item.image,
+                        meta: item.meta
+                    }), item.url ? (0, jsx_runtime.jsx)("a", {
+                        href: item.url,
+                        children: (0, jsx_runtime.jsx)(ArticleText, {
+                            textClass: classnames_default()(article_module_default()["article-content"], "truncate-multiline", "truncate-multiline-3"),
+                            text: item.text,
                             type: "h3"
                         })
-                    }) : (0, u.jsx)(si, {
-                        textClass: Je()(ui()["article-content"], "truncate-multiline", "truncate-multiline-3"),
-                        text: e.text,
+                    }) : (0, jsx_runtime.jsx)(ArticleText, {
+                        textClass: classnames_default()(article_module_default()["article-content"], "truncate-multiline", "truncate-multiline-3"),
+                        text: item.text,
                         type: "h3"
                     }) ]
-                }, _i())))
-            }) : "preview" === t ? (0, u.jsx)("ul", {
-                className: Je()(ui()["article-list"], ui().vertical),
-                children: i.map((e => (0, u.jsxs)("li", {
-                    className: ui()["article-list-item"],
-                    children: [ (0, u.jsx)(di, {
-                        imageClass: ui()["article-image-container"],
-                        image: e.image
-                    }), (0, u.jsx)(si, {
-                        textClass: Je()(ui()["article-title"], "truncate-multiline", "truncate-multiline-3"),
-                        text: e.title,
+                }, esm_browser_v4())))
+            }) : "preview" === type ? (0, jsx_runtime.jsx)("ul", {
+                className: classnames_default()(article_module_default()["article-list"], article_module_default().vertical),
+                children: content.map((item => (0, jsx_runtime.jsxs)("li", {
+                    className: article_module_default()["article-list-item"],
+                    children: [ (0, jsx_runtime.jsx)(ArticleImage, {
+                        imageClass: article_module_default()["article-image-container"],
+                        image: item.image
+                    }), (0, jsx_runtime.jsx)(ArticleText, {
+                        textClass: classnames_default()(article_module_default()["article-title"], "truncate-multiline", "truncate-multiline-3"),
+                        text: item.title,
                         type: "h3"
                     }) ]
-                }, _i())))
+                }, esm_browser_v4())))
             }) : null;
         }
-        function ji(e) {
-            let {article: t} = e;
-            return (0, u.jsxs)("article", {
-                className: Je()(Tt().column, Tt()[t.class], ui().article),
-                children: [ (0, u.jsx)(ii, {
-                    headerClass: ui()["article-header"],
-                    text: t.header,
-                    link: t.url
-                }), (0, u.jsxs)("section", {
-                    className: ui()["article-body"],
-                    children: [ (0, u.jsx)(di, {
-                        imageClass: ui()["article-image-container"],
-                        image: t.image,
-                        meta: t.meta
-                    }), (0, u.jsx)(si, {
-                        textClass: Je()(ui()["article-title"], "truncate-singleline"),
-                        text: t.title,
+        function Article(param) {
+            let {article: article} = param;
+            return (0, jsx_runtime.jsxs)("article", {
+                className: classnames_default()(layout_module_default().column, layout_module_default()[article.class], article_module_default().article),
+                children: [ (0, jsx_runtime.jsx)(ArticleHeader, {
+                    headerClass: article_module_default()["article-header"],
+                    text: article.header,
+                    link: article.url
+                }), (0, jsx_runtime.jsxs)("section", {
+                    className: article_module_default()["article-body"],
+                    children: [ (0, jsx_runtime.jsx)(ArticleImage, {
+                        imageClass: article_module_default()["article-image-container"],
+                        image: article.image,
+                        meta: article.meta
+                    }), (0, jsx_runtime.jsx)(ArticleText, {
+                        textClass: classnames_default()(article_module_default()["article-title"], "truncate-singleline"),
+                        text: article.title,
                         type: "h3"
-                    }), (0, u.jsx)(yi, {
-                        type: t.type,
-                        content: t.content,
-                        display: t.display
+                    }), (0, jsx_runtime.jsx)(ArticleContent, {
+                        type: article.type,
+                        content: article.content,
+                        display: article.display
                     }) ]
                 }) ]
             });
         }
-        function fi(e) {
-            let {section: t} = e;
-            return (0, u.jsxs)(u.Fragment, {
-                children: [ t.name ? (0, u.jsx)("div", {
-                    id: t.id,
-                    className: Tt()["row-header"],
-                    children: (0, u.jsx)("h2", {
-                        children: t.name
+        function Section(param) {
+            let {section: section} = param;
+            return (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ section.name ? (0, jsx_runtime.jsx)("div", {
+                    id: section.id,
+                    className: layout_module_default()["row-header"],
+                    children: (0, jsx_runtime.jsx)("h2", {
+                        children: section.name
                     })
-                }) : null, (0, u.jsx)("section", {
-                    className: Tt().row,
-                    children: t.articles.map(((e, i) => (0, u.jsx)(ji, {
-                        article: e
-                    }, "".concat(t.id, "-").concat(i))))
+                }) : null, (0, jsx_runtime.jsx)("section", {
+                    className: layout_module_default().row,
+                    children: section.articles.map(((article, index) => (0, jsx_runtime.jsx)(Article, {
+                        article: article
+                    }, "".concat(section.id, "-").concat(index))))
                 }) ]
             });
         }
-        var qi = i(2824), xi = i.n(qi);
-        function Pi(e) {
-            let {onClose: t, notification: i, onAccept: a, onReject: l} = e;
-            const {title: s, description: n, actions: r} = i;
-            return (0, u.jsxs)("div", {
-                className: Je()(xi().toast, xi().open),
-                children: [ (0, u.jsx)("button", {
+        var toast_module = __webpack_require__(2824), toast_module_default = __webpack_require__.n(toast_module);
+        function Toast(param) {
+            let {onClose: onClose, notification: notification, onAccept: onAccept, onReject: onReject} = param;
+            const {title: title, description: description, actions: actions} = notification;
+            return (0, jsx_runtime.jsxs)("div", {
+                className: classnames_default()(toast_module_default().toast, toast_module_default().open),
+                children: [ (0, jsx_runtime.jsx)("button", {
                     id: "close-toast-link",
-                    className: xi()["toast-close-button"],
-                    onClick: t,
+                    className: toast_module_default()["toast-close-button"],
+                    onClick: onClose,
                     title: "Close Button",
-                    children: (0, u.jsx)("div", {
-                        className: Je()(xi()["toast-close-button-icon"], "animated-icon", "close-icon", "hover"),
+                    children: (0, jsx_runtime.jsx)("div", {
+                        className: classnames_default()(toast_module_default()["toast-close-button-icon"], "animated-icon", "close-icon", "hover"),
                         title: "Close Icon",
-                        children: (0, u.jsxs)("span", {
+                        children: (0, jsx_runtime.jsxs)("span", {
                             className: "animated-icon-inner",
-                            children: [ (0, u.jsx)("span", {}), (0, u.jsx)("span", {}) ]
+                            children: [ (0, jsx_runtime.jsx)("span", {}), (0, jsx_runtime.jsx)("span", {}) ]
                         })
                     })
-                }), s ? (0, u.jsx)("header", {
-                    className: xi()["toast-header"],
-                    children: (0, u.jsx)("h2", {
-                        children: s
+                }), title ? (0, jsx_runtime.jsx)("header", {
+                    className: toast_module_default()["toast-header"],
+                    children: (0, jsx_runtime.jsx)("h2", {
+                        children: title
                     })
-                }) : null, (0, u.jsxs)("section", {
-                    className: xi()["toast-body"],
-                    children: [ (0, u.jsx)("div", {
-                        className: xi()["toast-description"],
-                        children: n
-                    }), (0, u.jsx)("div", {
-                        className: xi()["toast-actions"],
-                        children: r.map((e => {
-                            const t = "toast-".concat(e.type, "-button");
-                            return (0, u.jsx)("button", {
-                                id: t,
-                                className: Je()(Ut().button, Ut()["".concat(e.priority, "-button")], xi()["toast-actions-button"]),
-                                onClick: "accept" === e.type ? a : l,
-                                children: e.name
-                            }, t);
+                }) : null, (0, jsx_runtime.jsxs)("section", {
+                    className: toast_module_default()["toast-body"],
+                    children: [ (0, jsx_runtime.jsx)("div", {
+                        className: toast_module_default()["toast-description"],
+                        children: description
+                    }), (0, jsx_runtime.jsx)("div", {
+                        className: toast_module_default()["toast-actions"],
+                        children: actions.map((action => {
+                            const id = "toast-".concat(action.type, "-button");
+                            return (0, jsx_runtime.jsx)("button", {
+                                id: id,
+                                className: classnames_default()(button_module_default().button, button_module_default()["".concat(action.priority, "-button")], toast_module_default()["toast-actions-button"]),
+                                onClick: "accept" === action.type ? onAccept : onReject,
+                                children: action.name
+                            }, id);
                         }))
                     }) ]
                 }) ]
             });
         }
-        function ki(e) {
-            let {id: t} = e;
-            const [i, a] = (0, h.useState)(!1), {content: l} = gt();
-            function s() {
-                a(!1);
+        function Page(param) {
+            let {id: id} = param;
+            const [showPortal, setShowPortal] = (0, react.useState)(!1), {content: content} = useDataContext();
+            function closePortal() {
+                setShowPortal(!1);
             }
-            function n() {
-                s();
+            function onReject() {
+                closePortal();
             }
-            return (0, h.useEffect)((() => {
-                a(l[t].notification);
-            }), [ t ]), (0, u.jsxs)(u.Fragment, {
-                children: [ (0, u.jsx)(ti, {
-                    id: t,
-                    children: l[t].sections.map((e => (0, u.jsx)(fi, {
-                        section: e
-                    }, e.id)))
-                }), i && l[t].notification ? (0, Ae.createPortal)((0, u.jsx)(Pi, {
-                    notification: l[t].notification,
+            return (0, react.useEffect)((() => {
+                setShowPortal(content[id].notification);
+            }), [ id ]), (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ (0, jsx_runtime.jsx)(Layout, {
+                    id: id,
+                    children: content[id].sections.map((section => (0, jsx_runtime.jsx)(Section, {
+                        section: section
+                    }, section.id)))
+                }), showPortal && content[id].notification ? (0, react_dom.createPortal)((0, jsx_runtime.jsx)(Toast, {
+                    notification: content[id].notification,
                     onAccept: function() {
-                        s();
+                        closePortal();
                     },
-                    onReject: n,
-                    onClose: n
+                    onReject: onReject,
+                    onClose: onReject
                 }), document.getElementById("notifications-container")) : null ]
             });
         }
-        var Ei = i(9008), Ni = i.n(Ei);
-        function Si() {
-            return (0, u.jsxs)(u.Fragment, {
-                children: [ (0, u.jsxs)(Ni(), {
-                    children: [ (0, u.jsx)("title", {
+        var head = __webpack_require__(9008), head_default = __webpack_require__.n(head);
+        function App() {
+            return (0, jsx_runtime.jsxs)(jsx_runtime.Fragment, {
+                children: [ (0, jsx_runtime.jsxs)(head_default(), {
+                    children: [ (0, jsx_runtime.jsx)("title", {
                         children: "The Daily Broadcast"
-                    }), (0, u.jsx)("meta", {
+                    }), (0, jsx_runtime.jsx)("meta", {
                         name: "description",
                         content: "A news site developed with Next.js."
                     }, "description") ]
-                }), (0, u.jsx)(mt, {
-                    children: (0, u.jsx)(Pe, {
-                        children: (0, u.jsxs)(we, {
-                            children: [ (0, u.jsx)(be, {
+                }), (0, jsx_runtime.jsx)(DataContextProvider, {
+                    children: (0, jsx_runtime.jsx)(HashRouter, {
+                        children: (0, jsx_runtime.jsxs)(Routes, {
+                            children: [ (0, jsx_runtime.jsx)(Route, {
                                 path: "/business",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "business"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/health",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "health"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/opinion",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "opinion"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/politics",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "politics"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/us",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "us"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/world",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "world"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/home",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "home"
                                 })
-                            }), (0, u.jsx)(be, {
+                            }), (0, jsx_runtime.jsx)(Route, {
                                 path: "/",
-                                element: (0, u.jsx)(ki, {
+                                element: (0, jsx_runtime.jsx)(Page, {
                                     id: "home"
                                 })
                             }) ]
@@ -19039,8 +19073,8 @@
             });
         }
     },
-    9929: function(e) {
-        e.exports = {
+    9929: function(module) {
+        module.exports = {
             "article-header": "article_article-header__iKGnZ",
             "article-body": "article_article-body__Jsm6v",
             "article-image-container": "article_article-image-container__FdNDH",
@@ -19060,16 +19094,16 @@
             "article-list-content": "article_article-list-content__y8h5x"
         };
     },
-    2707: function(e) {
-        e.exports = {
+    2707: function(module) {
+        module.exports = {
             button: "button_button__LR7aO",
             "primary-button": "button_primary-button__81_3Q",
             "secondary-button": "button_secondary-button___bpW4",
             dark: "button_dark__F9LCO"
         };
     },
-    3475: function(e) {
-        e.exports = {
+    3475: function(module) {
+        module.exports = {
             dialog: "dialog_dialog__fYDHi",
             open: "dialog_open__C9A0T",
             "dialog-close-button": "dialog_dialog-close-button__EyKLf",
@@ -19079,8 +19113,8 @@
             "dialog-item": "dialog_dialog-item__rQJrO"
         };
     },
-    4660: function(e) {
-        e.exports = {
+    4660: function(module) {
+        module.exports = {
             dropdown: "dropdown_dropdown__2BhAG",
             "dropdown-toggle": "dropdown_dropdown-toggle__MN_ey",
             "dropdown-label": "dropdown_dropdown-label__lE2Y2",
@@ -19088,8 +19122,8 @@
             "dropdown-content": "dropdown_dropdown-content__1BNem"
         };
     },
-    3099: function(e) {
-        e.exports = {
+    3099: function(module) {
+        module.exports = {
             "page-footer": "footer_page-footer__Ot2ge",
             "footer-row": "footer_footer-row__xD2XM",
             "footer-column-left": "footer_footer-column-left__W3Es1",
@@ -19100,14 +19134,14 @@
             "footer-links-item": "footer_footer-links-item__Wj_SM"
         };
     },
-    9319: function(e) {
-        e.exports = {
+    9319: function(module) {
+        module.exports = {
             "page-header": "header_page-header___GdXE",
             "page-header-title": "header_page-header-title__bBtgt"
         };
     },
-    3228: function(e) {
-        e.exports = {
+    3228: function(module) {
+        module.exports = {
             "icons-group": "icons-group_icons-group__ZNmhd",
             "icons-group-list": "icons-group_icons-group-list__r51Bf",
             "icons-group-item": "icons-group_icons-group-item__KVpdR",
@@ -19116,8 +19150,8 @@
             "group-icon-medium": "icons-group_group-icon-medium__2x_FF"
         };
     },
-    6427: function(e) {
-        e.exports = {
+    6427: function(module) {
+        module.exports = {
             preview: "layout_preview__L8buK",
             "no-scroll": "layout_no-scroll__z3d4x",
             page: "layout_page__DC5B8",
@@ -19137,8 +19171,8 @@
             "row-header": "layout_row-header__Lcn32"
         };
     },
-    8466: function(e) {
-        e.exports = {
+    8466: function(module) {
+        module.exports = {
             message: "message_message__3Q86F",
             open: "message_open__fZ1UY",
             "message-close-button": "message_message-close-button__FLqi6",
@@ -19148,8 +19182,8 @@
             "message-description": "message_message-description__KQ0Or"
         };
     },
-    4195: function(e) {
-        e.exports = {
+    4195: function(module) {
+        module.exports = {
             "page-navigation": "nav_page-navigation__qu_BM",
             "page-navigation-row": "nav_page-navigation-row___cGbR",
             "page-navigation-column-left": "nav_page-navigation-column-left__bZnpV",
@@ -19159,8 +19193,8 @@
             "nav-button": "nav_nav-button__u_TLH"
         };
     },
-    7648: function(e) {
-        e.exports = {
+    7648: function(module) {
+        module.exports = {
             navbar: "navbar_navbar__M__A1",
             "navbar-toggle": "navbar_navbar-toggle__MiV_Q",
             "navbar-label": "navbar_navbar-label___mMJo",
@@ -19174,8 +19208,8 @@
             "navbar-icons": "navbar_navbar-icons__98a76"
         };
     },
-    6915: function(e) {
-        e.exports = {
+    6915: function(module) {
+        module.exports = {
             sitemap: "sitemap_sitemap__n6kyt",
             active: "sitemap_active__fLjZF",
             "sitemap-list": "sitemap_sitemap-list__Nse5m",
@@ -19185,8 +19219,8 @@
             "sitemap-subitem": "sitemap_sitemap-subitem__KlmMR"
         };
     },
-    2824: function(e) {
-        e.exports = {
+    2824: function(module) {
+        module.exports = {
             toast: "toast_toast__WdmN8",
             open: "toast_open__FDXn_",
             "toast-close-button": "toast_toast-close-button__8R3TC",
@@ -19198,8 +19232,8 @@
             "toast-actions-button": "toast_toast-actions-button__btQw4"
         };
     },
-    4355: function(e) {
-        e.exports = {
+    4355: function(module) {
+        module.exports = {
             "toggle-outer": "toggle_toggle-outer__lVXBe",
             "toggle-description": "toggle_toggle-description__zpkRO",
             "toggle-container": "toggle_toggle-container__NtEG5",
@@ -19207,17 +19241,17 @@
             switch: "toggle_switch__ZL69U"
         };
     },
-    9008: function(e, t, i) {
-        e.exports = i(2636);
+    9008: function(module, __unused_webpack_exports, __webpack_require__) {
+        module.exports = __webpack_require__(2636);
     },
-    5675: function(e, t, i) {
-        e.exports = i(3740);
+    5675: function(module, __unused_webpack_exports, __webpack_require__) {
+        module.exports = __webpack_require__(3740);
     }
-}, function(e) {
-    e.O(0, [ 888 ], (function() {
-        return t = 5557, e(e.s = t);
-        var t;
+}, function(__webpack_require__) {
+    __webpack_require__.O(0, [ 888 ], (function() {
+        return moduleId = 5557, __webpack_require__(__webpack_require__.s = moduleId);
+        var moduleId;
     }));
-    var t = e.O();
-    _N_E = t;
+    var __webpack_exports__ = __webpack_require__.O();
+    _N_E = __webpack_exports__;
 } ]);

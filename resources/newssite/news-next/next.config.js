@@ -20,7 +20,8 @@ const nextConfig = {
             parallel: true,
             terserOptions: {
 
-              format: { beautify: true }
+              format: { beautify: true },
+              mangle: false
               // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
             },
           }),
