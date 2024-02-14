@@ -23867,7 +23867,7 @@ function TodoInput() {
           });
         },
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, { name: "todoText", placeholder: "What needs to be done?", sx: { flex: "auto" } }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TextField$1, { name: "todoText", placeholder: "What needs to be done?", autoComplete: "off", sx: { flex: "auto" } }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(IconButton$1, { "aria-label": "add", type: "submit", children: /* @__PURE__ */ jsxRuntimeExports.jsx(default_1$6, {}) })
         ]
       }
@@ -24218,4 +24218,4 @@ client.createRoot(document.getElementById("root")).render(
     /* @__PURE__ */ jsxRuntimeExports.jsx(App, {})
   ] }) })
 );
-//# sourceMappingURL=index-v3PjVZtA.js.map
+//# sourceMappingURL=index-eusZUb-c.js.map

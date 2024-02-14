@@ -35,7 +35,7 @@ export function TodoInput() {
                     });
                 }}
             >
-                <TextField name="todoText" placeholder="What needs to be done?" sx={{ flex: "auto" }} />
+                <TextField name="todoText" placeholder="What needs to be done?" autoComplete="off" sx={{ flex: "auto" }} />
                 <IconButton aria-label="add" type="submit">
                     <AddIcon />
                 </IconButton>
