@@ -2,10 +2,10 @@
 
 (self.webpackChunkangular = self.webpackChunkangular || []).push([ [ 429 ], {
     435: (__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
-        __webpack_require__(583);
+        var zone_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(583), zone_js__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(zone_js__WEBPACK_IMPORTED_MODULE_0__);
     },
     583: () => {
-        !function(global2) {
+        (function(global2) {
             const performance = global2.performance;
             function mark(name) {
                 performance && performance.mark && performance.mark(name);
@@ -18,9 +18,9 @@
             function __symbol__(name) {
                 return symbolPrefix + name;
             }
-            const checkDuplicate = !0 === global2[__symbol__("forceDuplicateZoneCheck")];
+            const checkDuplicate = global2[__symbol__("forceDuplicateZoneCheck")] === !0;
             if (global2.Zone) {
-                if (checkDuplicate || "function" != typeof global2.Zone.__symbol__) throw new Error("Zone already loaded.");
+                if (checkDuplicate || typeof global2.Zone.__symbol__ != "function") throw new Error("Zone already loaded.");
                 return global2.Zone;
             }
             let Zone2 = (() => {
@@ -74,7 +74,7 @@
                         return this._zoneDelegate.fork(this, zoneSpec);
                     }
                     wrap(callback, source) {
-                        if ("function" != typeof callback) throw new Error("Expecting function got: " + callback);
+                        if (typeof callback != "function") throw new Error("Expecting function got: " + callback);
                         const _callback = this._zoneDelegate.intercept(this, callback, source), zone = this;
                         return function() {
                             return zone.runGuarded(_callback, this, arguments, source);
@@ -172,7 +172,7 @@
                     }
                     _updateTaskCount(task, count) {
                         const zoneDelegates = task._zoneDelegates;
-                        -1 == count && (task._zoneDelegates = null);
+                        count == -1 && (task._zoneDelegates = null);
                         for (let i = 0; i < zoneDelegates.length; i++) zoneDelegates[i]._updateTaskCount(task.type, count);
                     }
                 }
@@ -214,8 +214,8 @@
                     this._cancelTaskCurrZone = zoneSpec && (zoneSpec.onCancelTask ? this.zone : parentDelegate._cancelTaskCurrZone), 
                     this._hasTaskZS = null, this._hasTaskDlgt = null, this._hasTaskDlgtOwner = null, 
                     this._hasTaskCurrZone = null;
-                    const zoneSpecHasTask = zoneSpec && zoneSpec.onHasTask;
-                    (zoneSpecHasTask || parentDelegate && parentDelegate._hasTaskZS) && (this._hasTaskZS = zoneSpecHasTask ? zoneSpec : DELEGATE_ZS, 
+                    const zoneSpecHasTask = zoneSpec && zoneSpec.onHasTask, parentHasTask = parentDelegate && parentDelegate._hasTaskZS;
+                    (zoneSpecHasTask || parentHasTask) && (this._hasTaskZS = zoneSpecHasTask ? zoneSpec : DELEGATE_ZS, 
                     this._hasTaskDlgt = parentDelegate, this._hasTaskDlgtOwner = this, this._hasTaskCurrZone = zone, 
                     zoneSpec.onScheduleTask || (this._scheduleTaskZS = DELEGATE_ZS, this._scheduleTaskDlgt = parentDelegate, 
                     this._scheduleTaskCurrZone = this.zone), zoneSpec.onInvokeTask || (this._invokeTaskZS = DELEGATE_ZS, 
@@ -232,16 +232,13 @@
                     return this._invokeZS ? this._invokeZS.onInvoke(this._invokeDlgt, this._invokeCurrZone, targetZone, callback, applyThis, applyArgs, source) : callback.apply(applyThis, applyArgs);
                 }
                 handleError(targetZone, error) {
-                    return !this._handleErrorZS || this._handleErrorZS.onHandleError(this._handleErrorDlgt, this._handleErrorCurrZone, targetZone, error);
+                    return this._handleErrorZS ? this._handleErrorZS.onHandleError(this._handleErrorDlgt, this._handleErrorCurrZone, targetZone, error) : !0;
                 }
                 scheduleTask(targetZone, task) {
                     let returnTask = task;
                     if (this._scheduleTaskZS) this._hasTaskZS && returnTask._zoneDelegates.push(this._hasTaskDlgtOwner), 
                     returnTask = this._scheduleTaskZS.onScheduleTask(this._scheduleTaskDlgt, this._scheduleTaskCurrZone, targetZone, task), 
-                    returnTask || (returnTask = task); else if (task.scheduleFn) task.scheduleFn(task); else {
-                        if (task.type != microTask) throw new Error("Task is missing scheduleFn.");
-                        scheduleMicroTask(task);
-                    }
+                    returnTask || (returnTask = task); else if (task.scheduleFn) task.scheduleFn(task); else if (task.type == microTask) scheduleMicroTask(task); else throw new Error("Task is missing scheduleFn.");
                     return returnTask;
                 }
                 invokeTask(targetZone, task, applyThis, applyArgs) {
@@ -265,12 +262,15 @@
                 _updateTaskCount(type, count) {
                     const counts = this._taskCounts, prev = counts[type], next = counts[type] = prev + count;
                     if (next < 0) throw new Error("More tasks executed then were scheduled.");
-                    0 != prev && 0 != next || this.hasTask(this.zone, {
-                        microTask: counts.microTask > 0,
-                        macroTask: counts.macroTask > 0,
-                        eventTask: counts.eventTask > 0,
-                        change: type
-                    });
+                    if (prev == 0 || next == 0) {
+                        const isEmpty = {
+                            microTask: counts.microTask > 0,
+                            macroTask: counts.macroTask > 0,
+                            eventTask: counts.eventTask > 0,
+                            change: type
+                        };
+                        this.hasTask(this.zone, isEmpty);
+                    }
                 }
             }
             class ZoneTask {
@@ -280,7 +280,7 @@
                     this.cancelFn = cancelFn, !callback) throw new Error("callback is not defined");
                     this.callback = callback;
                     const self2 = this;
-                    this.invoke = type === eventTask && options && options.useG ? ZoneTask.invokeTask : function() {
+                    type === eventTask && options && options.useG ? this.invoke = ZoneTask.invokeTask : this.invoke = function() {
                         return ZoneTask.invokeTask.call(global2, self2, this, arguments);
                     };
                 }
@@ -289,7 +289,7 @@
                     try {
                         return task.runCount++, task.zone.runTask(task, target, args);
                     } finally {
-                        1 == _numberOfNestedTaskFrames && drainMicroTaskQueue(), _numberOfNestedTaskFrames--;
+                        _numberOfNestedTaskFrames == 1 && drainMicroTaskQueue(), _numberOfNestedTaskFrames--;
                     }
                 }
                 get zone() {
@@ -302,8 +302,8 @@
                     this._transitionTo(notScheduled, scheduling);
                 }
                 _transitionTo(toState, fromState1, fromState2) {
-                    if (this._state !== fromState1 && this._state !== fromState2) throw new Error(`${this.type} '${this.source}': can not transition to '${toState}', expecting state '${fromState1}'${fromState2 ? " or '" + fromState2 + "'" : ""}, was '${this._state}'.`);
-                    this._state = toState, toState == notScheduled && (this._zoneDelegates = null);
+                    if (this._state === fromState1 || this._state === fromState2) this._state = toState, 
+                    toState == notScheduled && (this._zoneDelegates = null); else throw new Error(`${this.type} '${this.source}': can not transition to '${toState}', expecting state '${fromState1}'${fromState2 ? " or '" + fromState2 + "'" : ""}, was '${this._state}'.`);
                 }
                 toString() {
                     return this.data && typeof this.data.handleId < "u" ? this.data.handleId.toString() : Object.prototype.toString.call(this);
@@ -319,7 +319,7 @@
                 }
             }
             const symbolSetTimeout = __symbol__("setTimeout"), symbolPromise = __symbol__("Promise"), symbolThen = __symbol__("then");
-            let nativeMicroTaskQueuePromise, _microTaskQueue = [], _isDrainingMicrotaskQueue = !1;
+            let _microTaskQueue = [], _isDrainingMicrotaskQueue = !1, nativeMicroTaskQueuePromise;
             function nativeScheduleMicroTask(func) {
                 if (nativeMicroTaskQueuePromise || global2[symbolPromise] && (nativeMicroTaskQueuePromise = global2[symbolPromise].resolve(0)), 
                 nativeMicroTaskQueuePromise) {
@@ -328,7 +328,7 @@
                 } else global2[symbolSetTimeout](func, 0);
             }
             function scheduleMicroTask(task) {
-                0 === _numberOfNestedTaskFrames && 0 === _microTaskQueue.length && nativeScheduleMicroTask(drainMicroTaskQueue), 
+                _numberOfNestedTaskFrames === 0 && _microTaskQueue.length === 0 && nativeScheduleMicroTask(drainMicroTaskQueue), 
                 task && _microTaskQueue.push(task);
             }
             function drainMicroTaskQueue() {
@@ -383,34 +383,50 @@
                 zone: new Zone2(null, null)
             }, _currentTask = null, _numberOfNestedTaskFrames = 0;
             function noop() {}
-            performanceMeasure("Zone", "Zone"), global2.Zone = Zone2;
-        }(typeof window < "u" && window || typeof self < "u" && self || global);
-        const ObjectGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor, ObjectDefineProperty = Object.defineProperty, ObjectGetPrototypeOf = Object.getPrototypeOf, ObjectCreate = Object.create, ArraySlice = Array.prototype.slice, ZONE_SYMBOL_ADD_EVENT_LISTENER = Zone.__symbol__("addEventListener"), ZONE_SYMBOL_REMOVE_EVENT_LISTENER = Zone.__symbol__("removeEventListener"), ZONE_SYMBOL_PREFIX = Zone.__symbol__("");
+            return performanceMeasure("Zone", "Zone"), global2.Zone = Zone2;
+        })(typeof window < "u" && window || typeof self < "u" && self || global);
+        const ObjectGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor, ObjectDefineProperty = Object.defineProperty, ObjectGetPrototypeOf = Object.getPrototypeOf, ObjectCreate = Object.create, ArraySlice = Array.prototype.slice, ADD_EVENT_LISTENER_STR = "addEventListener", REMOVE_EVENT_LISTENER_STR = "removeEventListener", ZONE_SYMBOL_ADD_EVENT_LISTENER = Zone.__symbol__(ADD_EVENT_LISTENER_STR), ZONE_SYMBOL_REMOVE_EVENT_LISTENER = Zone.__symbol__(REMOVE_EVENT_LISTENER_STR), TRUE_STR = "true", FALSE_STR = "false", ZONE_SYMBOL_PREFIX = Zone.__symbol__("");
         function wrapWithCurrentZone(callback, source) {
             return Zone.current.wrap(callback, source);
         }
         function scheduleMacroTaskWithCurrentZone(source, callback, data, customSchedule, customCancel) {
             return Zone.current.scheduleMacroTask(source, callback, data, customSchedule, customCancel);
         }
-        const zoneSymbol = Zone.__symbol__, isWindowExists = typeof window < "u", internalWindow = isWindowExists ? window : void 0, _global = isWindowExists && internalWindow || "object" == typeof self && self || global;
+        const zoneSymbol = Zone.__symbol__, isWindowExists = typeof window < "u", internalWindow = isWindowExists ? window : void 0, _global = isWindowExists && internalWindow || typeof self == "object" && self || global, REMOVE_ATTRIBUTE = "removeAttribute";
         function bindArguments(args, source) {
-            for (let i = args.length - 1; i >= 0; i--) "function" == typeof args[i] && (args[i] = wrapWithCurrentZone(args[i], source + "_" + i));
+            for (let i = args.length - 1; i >= 0; i--) typeof args[i] == "function" && (args[i] = wrapWithCurrentZone(args[i], source + "_" + i));
             return args;
         }
-        function isPropertyWritable(propertyDesc) {
-            return !propertyDesc || !1 !== propertyDesc.writable && !("function" == typeof propertyDesc.get && typeof propertyDesc.set > "u");
+        function patchPrototype(prototype, fnNames) {
+            const source = prototype.constructor.name;
+            for (let i = 0; i < fnNames.length; i++) {
+                const name = fnNames[i], delegate = prototype[name];
+                if (delegate) {
+                    const prototypeDesc = ObjectGetOwnPropertyDescriptor(prototype, name);
+                    if (!isPropertyWritable(prototypeDesc)) continue;
+                    prototype[name] = (delegate2 => {
+                        const patched = function() {
+                            return delegate2.apply(this, bindArguments(arguments, source + "." + name));
+                        };
+                        return attachOriginToPatched(patched, delegate2), patched;
+                    })(delegate);
+                }
+            }
         }
-        const isWebWorker = typeof WorkerGlobalScope < "u" && self instanceof WorkerGlobalScope, isNode = !("nw" in _global) && typeof _global.process < "u" && "[object process]" === {}.toString.call(_global.process), isBrowser = !isNode && !isWebWorker && !(!isWindowExists || !internalWindow.HTMLElement), isMix = typeof _global.process < "u" && "[object process]" === {}.toString.call(_global.process) && !isWebWorker && !(!isWindowExists || !internalWindow.HTMLElement), zoneSymbolEventNames$1 = {}, wrapFn = function(event) {
-            if (!(event = event || _global.event)) return;
+        function isPropertyWritable(propertyDesc) {
+            return propertyDesc ? propertyDesc.writable === !1 ? !1 : !(typeof propertyDesc.get == "function" && typeof propertyDesc.set > "u") : !0;
+        }
+        const isWebWorker = typeof WorkerGlobalScope < "u" && self instanceof WorkerGlobalScope, isNode = !("nw" in _global) && typeof _global.process < "u" && {}.toString.call(_global.process) === "[object process]", isBrowser = !isNode && !isWebWorker && !!(isWindowExists && internalWindow.HTMLElement), isMix = typeof _global.process < "u" && {}.toString.call(_global.process) === "[object process]" && !isWebWorker && !!(isWindowExists && internalWindow.HTMLElement), zoneSymbolEventNames$1 = {}, wrapFn = function(event) {
+            if (event = event || _global.event, !event) return;
             let eventNameSymbol = zoneSymbolEventNames$1[event.type];
             eventNameSymbol || (eventNameSymbol = zoneSymbolEventNames$1[event.type] = zoneSymbol("ON_PROPERTY" + event.type));
             const target = this || event.target || _global, listener = target[eventNameSymbol];
             let result;
-            if (isBrowser && target === internalWindow && "error" === event.type) {
+            if (isBrowser && target === internalWindow && event.type === "error") {
                 const errorEvent = event;
                 result = listener && listener.call(this, errorEvent.message, errorEvent.filename, errorEvent.lineno, errorEvent.colno, errorEvent.error), 
-                !0 === result && event.preventDefault();
-            } else result = listener && listener.apply(this, arguments), null != result && !result && event.preventDefault();
+                result === !0 && event.preventDefault();
+            } else result = listener && listener.apply(this, arguments), result != null && !result && event.preventDefault();
             return result;
         };
         function patchProperty(obj, prop, prototype) {
@@ -427,9 +443,10 @@
             eventNameSymbol || (eventNameSymbol = zoneSymbolEventNames$1[eventName] = zoneSymbol("ON_PROPERTY" + eventName)), 
             desc.set = function(newValue) {
                 let target = this;
-                !target && obj === _global && (target = _global), target && ("function" == typeof target[eventNameSymbol] && target.removeEventListener(eventName, wrapFn), 
+                if (!target && obj === _global && (target = _global), !target) return;
+                typeof target[eventNameSymbol] == "function" && target.removeEventListener(eventName, wrapFn), 
                 originalDescSet && originalDescSet.call(target, null), target[eventNameSymbol] = newValue, 
-                "function" == typeof newValue && target.addEventListener(eventName, wrapFn, !1));
+                typeof newValue == "function" && target.addEventListener(eventName, wrapFn, !1);
             }, desc.get = function() {
                 let target = this;
                 if (!target && obj === _global && (target = _global), !target) return null;
@@ -437,7 +454,7 @@
                 if (listener) return listener;
                 if (originalDescGet) {
                     let value = originalDescGet.call(this);
-                    if (value) return desc.set.call(this, value), "function" == typeof target.removeAttribute && target.removeAttribute(prop), 
+                    if (value) return desc.set.call(this, value), typeof target[REMOVE_ATTRIBUTE] == "function" && target.removeAttribute(prop), 
                     value;
                 }
                 return null;
@@ -446,7 +463,7 @@
         function patchOnProperties(obj, properties, prototype) {
             if (properties) for (let i = 0; i < properties.length; i++) patchProperty(obj, "on" + properties[i], prototype); else {
                 const onProperties = [];
-                for (const prop in obj) "on" == prop.slice(0, 2) && onProperties.push(prop);
+                for (const prop in obj) prop.slice(0, 2) == "on" && onProperties.push(prop);
                 for (let j = 0; j < onProperties.length; j++) patchProperty(obj, onProperties[j], prototype);
             }
         }
@@ -483,12 +500,12 @@
             }, attachOriginToPatched(_global[className], OriginalClass);
             const instance = new OriginalClass(function() {});
             let prop;
-            for (prop in instance) "XMLHttpRequest" === className && "responseBlob" === prop || function(prop2) {
-                "function" == typeof instance[prop2] ? _global[className].prototype[prop2] = function() {
+            for (prop in instance) className === "XMLHttpRequest" && prop === "responseBlob" || function(prop2) {
+                typeof instance[prop2] == "function" ? _global[className].prototype[prop2] = function() {
                     return this[originalInstanceKey][prop2].apply(this[originalInstanceKey], arguments);
                 } : ObjectDefineProperty(_global[className].prototype, prop2, {
                     set: function(fn) {
-                        "function" == typeof fn ? (this[originalInstanceKey][prop2] = wrapWithCurrentZone(fn, className + "." + prop2), 
+                        typeof fn == "function" ? (this[originalInstanceKey][prop2] = wrapWithCurrentZone(fn, className + "." + prop2), 
                         attachOriginToPatched(this[originalInstanceKey][prop2], fn)) : this[originalInstanceKey][prop2] = fn;
                     },
                     get: function() {
@@ -496,7 +513,7 @@
                     }
                 });
             }(prop);
-            for (prop in OriginalClass) "prototype" !== prop && OriginalClass.hasOwnProperty(prop) && (_global[className][prop] = OriginalClass[prop]);
+            for (prop in OriginalClass) prop !== "prototype" && OriginalClass.hasOwnProperty(prop) && (_global[className][prop] = OriginalClass[prop]);
         }
         function patchMethod(target, name, patchFn) {
             let proto = target;
@@ -504,12 +521,15 @@
             !proto && target[name] && (proto = target);
             const delegateName = zoneSymbol(name);
             let delegate = null;
-            if (proto && (!(delegate = proto[delegateName]) || !proto.hasOwnProperty(delegateName)) && (delegate = proto[delegateName] = proto[name], 
-            isPropertyWritable(proto && ObjectGetOwnPropertyDescriptor(proto, name)))) {
-                const patchDelegate = patchFn(delegate, delegateName, name);
-                proto[name] = function() {
-                    return patchDelegate(this, arguments);
-                }, attachOriginToPatched(proto[name], delegate);
+            if (proto && (!(delegate = proto[delegateName]) || !proto.hasOwnProperty(delegateName))) {
+                delegate = proto[delegateName] = proto[name];
+                const desc = proto && ObjectGetOwnPropertyDescriptor(proto, name);
+                if (isPropertyWritable(desc)) {
+                    const patchDelegate = patchFn(delegate, delegateName, name);
+                    proto[name] = function() {
+                        return patchDelegate(this, arguments);
+                    }, attachOriginToPatched(proto[name], delegate);
+                }
             }
             return delegate;
         }
@@ -523,24 +543,39 @@
             }
             setNative = patchMethod(obj, funcName, delegate => function(self2, args) {
                 const meta = metaCreator(self2, args);
-                return meta.cbIdx >= 0 && "function" == typeof args[meta.cbIdx] ? scheduleMacroTaskWithCurrentZone(meta.name, args[meta.cbIdx], meta, scheduleTask) : delegate.apply(self2, args);
+                return meta.cbIdx >= 0 && typeof args[meta.cbIdx] == "function" ? scheduleMacroTaskWithCurrentZone(meta.name, args[meta.cbIdx], meta, scheduleTask) : delegate.apply(self2, args);
             });
         }
         function attachOriginToPatched(patched, original) {
             patched[zoneSymbol("OriginalDelegate")] = original;
         }
         let isDetectedIEOrEdge = !1, ieOrEdge = !1;
+        function isIE() {
+            try {
+                const ua = internalWindow.navigator.userAgent;
+                if (ua.indexOf("MSIE ") !== -1 || ua.indexOf("Trident/") !== -1) return !0;
+            } catch {}
+            return !1;
+        }
         function isIEOrEdge() {
             if (isDetectedIEOrEdge) return ieOrEdge;
             isDetectedIEOrEdge = !0;
             try {
                 const ua = internalWindow.navigator.userAgent;
-                (-1 !== ua.indexOf("MSIE ") || -1 !== ua.indexOf("Trident/") || -1 !== ua.indexOf("Edge/")) && (ieOrEdge = !0);
+                (ua.indexOf("MSIE ") !== -1 || ua.indexOf("Trident/") !== -1 || ua.indexOf("Edge/") !== -1) && (ieOrEdge = !0);
             } catch {}
             return ieOrEdge;
         }
         Zone.__load_patch("ZoneAwarePromise", (global2, Zone2, api) => {
-            const ObjectGetOwnPropertyDescriptor2 = Object.getOwnPropertyDescriptor, ObjectDefineProperty2 = Object.defineProperty, __symbol__ = api.symbol, _uncaughtPromiseErrors = [], isDisableWrappingUncaughtPromiseRejection = !0 === global2[__symbol__("DISABLE_WRAPPING_UNCAUGHT_PROMISE_REJECTION")], symbolPromise = __symbol__("Promise"), symbolThen = __symbol__("then");
+            const ObjectGetOwnPropertyDescriptor2 = Object.getOwnPropertyDescriptor, ObjectDefineProperty2 = Object.defineProperty;
+            function readableObjectToString(obj) {
+                if (obj && obj.toString === Object.prototype.toString) {
+                    const className = obj.constructor && obj.constructor.name;
+                    return (className || "") + ": " + JSON.stringify(obj);
+                }
+                return obj ? obj.toString() : Object.prototype.toString.call(obj);
+            }
+            const __symbol__ = api.symbol, _uncaughtPromiseErrors = [], isDisableWrappingUncaughtPromiseRejection = global2[__symbol__("DISABLE_WRAPPING_UNCAUGHT_PROMISE_REJECTION")] === !0, symbolPromise = __symbol__("Promise"), symbolThen = __symbol__("then"), creationTrace = "__creationTrace__";
             api.onUnhandledError = e => {
                 if (api.showUncaughtError()) {
                     const rejection = e && e.rejection;
@@ -563,7 +598,7 @@
                 api.onUnhandledError(e);
                 try {
                     const handler = Zone2[UNHANDLED_PROMISE_REJECTION_HANDLER_SYMBOL];
-                    "function" == typeof handler && handler.call(this, e);
+                    typeof handler == "function" && handler.call(this, e);
                 } catch {}
             }
             function isThenable(value) {
@@ -575,7 +610,7 @@
             function forwardRejection(rejection) {
                 return ZoneAwarePromise.reject(rejection);
             }
-            const symbolState = __symbol__("state"), symbolValue = __symbol__("value"), symbolFinally = __symbol__("finally"), symbolParentPromiseValue = __symbol__("parentPromiseValue"), symbolParentPromiseState = __symbol__("parentPromiseState");
+            const symbolState = __symbol__("state"), symbolValue = __symbol__("value"), symbolFinally = __symbol__("finally"), symbolParentPromiseValue = __symbol__("parentPromiseValue"), symbolParentPromiseState = __symbol__("parentPromiseState"), source = "Promise.then", UNRESOLVED = null, RESOLVED = !0, REJECTED = !1, REJECTED_NO_CATCH = 0;
             function makeResolver(promise, state) {
                 return v => {
                     try {
@@ -592,21 +627,21 @@
                         wasCalled || (wasCalled = !0, wrappedFunction.apply(null, arguments));
                     };
                 };
-            }, CURRENT_TASK_TRACE_SYMBOL = __symbol__("currentTaskTrace");
+            }, TYPE_ERROR = "Promise resolved with itself", CURRENT_TASK_TRACE_SYMBOL = __symbol__("currentTaskTrace");
             function resolvePromise(promise, state, value) {
                 const onceWrapper = once();
-                if (promise === value) throw new TypeError("Promise resolved with itself");
-                if (null === promise[symbolState]) {
+                if (promise === value) throw new TypeError(TYPE_ERROR);
+                if (promise[symbolState] === UNRESOLVED) {
                     let then = null;
                     try {
-                        ("object" == typeof value || "function" == typeof value) && (then = value && value.then);
+                        (typeof value == "object" || typeof value == "function") && (then = value && value.then);
                     } catch (err) {
                         return onceWrapper(() => {
                             resolvePromise(promise, !1, err);
                         })(), promise;
                     }
-                    if (!1 !== state && value instanceof ZoneAwarePromise && value.hasOwnProperty(symbolState) && value.hasOwnProperty(symbolValue) && null !== value[symbolState]) clearRejectedNoCatch(value), 
-                    resolvePromise(promise, value[symbolState], value[symbolValue]); else if (!1 !== state && "function" == typeof then) try {
+                    if (state !== REJECTED && value instanceof ZoneAwarePromise && value.hasOwnProperty(symbolState) && value.hasOwnProperty(symbolValue) && value[symbolState] !== UNRESOLVED) clearRejectedNoCatch(value), 
+                    resolvePromise(promise, value[symbolState], value[symbolValue]); else if (state !== REJECTED && typeof then == "function") try {
                         then.call(value, onceWrapper(makeResolver(promise, state)), onceWrapper(makeResolver(promise, !1)));
                     } catch (err) {
                         onceWrapper(() => {
@@ -615,9 +650,9 @@
                     } else {
                         promise[symbolState] = state;
                         const queue = promise[symbolValue];
-                        if (promise[symbolValue] = value, promise[symbolFinally] === symbolFinally && !0 === state && (promise[symbolState] = promise[symbolParentPromiseState], 
-                        promise[symbolValue] = promise[symbolParentPromiseValue]), !1 === state && value instanceof Error) {
-                            const trace = Zone2.currentTask && Zone2.currentTask.data && Zone2.currentTask.data.__creationTrace__;
+                        if (promise[symbolValue] = value, promise[symbolFinally] === symbolFinally && state === RESOLVED && (promise[symbolState] = promise[symbolParentPromiseState], 
+                        promise[symbolValue] = promise[symbolParentPromiseValue]), state === REJECTED && value instanceof Error) {
+                            const trace = Zone2.currentTask && Zone2.currentTask.data && Zone2.currentTask.data[creationTrace];
                             trace && ObjectDefineProperty2(value, CURRENT_TASK_TRACE_SYMBOL, {
                                 configurable: !0,
                                 enumerable: !1,
@@ -626,13 +661,11 @@
                             });
                         }
                         for (let i = 0; i < queue.length; ) scheduleResolveOrReject(promise, queue[i++], queue[i++], queue[i++], queue[i++]);
-                        if (0 == queue.length && 0 == state) {
-                            promise[symbolState] = 0;
+                        if (queue.length == 0 && state == REJECTED) {
+                            promise[symbolState] = REJECTED_NO_CATCH;
                             let uncaughtPromiseError = value;
                             try {
-                                throw new Error("Uncaught (in promise): " + function readableObjectToString(obj) {
-                                    return obj && obj.toString === Object.prototype.toString ? (obj.constructor && obj.constructor.name || "") + ": " + JSON.stringify(obj) : obj ? obj.toString() : Object.prototype.toString.call(obj);
-                                }(value) + (value && value.stack ? "\n" + value.stack : ""));
+                                throw new Error("Uncaught (in promise): " + readableObjectToString(value) + (value && value.stack ? `\n` + value.stack : ""));
                             } catch (err) {
                                 uncaughtPromiseError = err;
                             }
@@ -647,22 +680,22 @@
             }
             const REJECTION_HANDLED_HANDLER = __symbol__("rejectionHandledHandler");
             function clearRejectedNoCatch(promise) {
-                if (0 === promise[symbolState]) {
+                if (promise[symbolState] === REJECTED_NO_CATCH) {
                     try {
                         const handler = Zone2[REJECTION_HANDLED_HANDLER];
-                        handler && "function" == typeof handler && handler.call(this, {
+                        handler && typeof handler == "function" && handler.call(this, {
                             rejection: promise[symbolValue],
                             promise
                         });
                     } catch {}
-                    promise[symbolState] = !1;
+                    promise[symbolState] = REJECTED;
                     for (let i = 0; i < _uncaughtPromiseErrors.length; i++) promise === _uncaughtPromiseErrors[i].promise && _uncaughtPromiseErrors.splice(i, 1);
                 }
             }
             function scheduleResolveOrReject(promise, zone, chainPromise, onFulfilled, onRejected) {
                 clearRejectedNoCatch(promise);
-                const promiseState = promise[symbolState], delegate = promiseState ? "function" == typeof onFulfilled ? onFulfilled : forwardResolution : "function" == typeof onRejected ? onRejected : forwardRejection;
-                zone.scheduleMicroTask("Promise.then", () => {
+                const promiseState = promise[symbolState], delegate = promiseState ? typeof onFulfilled == "function" ? onFulfilled : forwardResolution : typeof onRejected == "function" ? onRejected : forwardRejection;
+                zone.scheduleMicroTask(source, () => {
                     try {
                         const parentPromiseValue = promise[symbolValue], isFinallyPromise = !!chainPromise && symbolFinally === chainPromise[symbolFinally];
                         isFinallyPromise && (chainPromise[symbolParentPromiseValue] = parentPromiseValue, 
@@ -674,19 +707,19 @@
                     }
                 }, chainPromise);
             }
-            const noop = function() {}, AggregateError = global2.AggregateError;
+            const ZONE_AWARE_PROMISE_TO_STRING = "function ZoneAwarePromise() { [native code] }", noop = function() {}, AggregateError = global2.AggregateError;
             class ZoneAwarePromise {
                 static toString() {
-                    return "function ZoneAwarePromise() { [native code] }";
+                    return ZONE_AWARE_PROMISE_TO_STRING;
                 }
                 static resolve(value) {
-                    return resolvePromise(new this(null), !0, value);
+                    return resolvePromise(new this(null), RESOLVED, value);
                 }
                 static reject(error) {
-                    return resolvePromise(new this(null), !1, error);
+                    return resolvePromise(new this(null), REJECTED, error);
                 }
                 static any(values) {
-                    if (!values || "function" != typeof values[Symbol.iterator]) return Promise.reject(new AggregateError([], "All promises were rejected"));
+                    if (!values || typeof values[Symbol.iterator] != "function") return Promise.reject(new AggregateError([], "All promises were rejected"));
                     const promises = [];
                     let count = 0;
                     try {
@@ -694,14 +727,14 @@
                     } catch {
                         return Promise.reject(new AggregateError([], "All promises were rejected"));
                     }
-                    if (0 === count) return Promise.reject(new AggregateError([], "All promises were rejected"));
+                    if (count === 0) return Promise.reject(new AggregateError([], "All promises were rejected"));
                     let finished = !1;
                     const errors = [];
                     return new ZoneAwarePromise((resolve, reject) => {
                         for (let i = 0; i < promises.length; i++) promises[i].then(v => {
                             finished || (finished = !0, resolve(v));
                         }, err => {
-                            errors.push(err), count--, 0 === count && (finished = !0, reject(new AggregateError(errors, "All promises were rejected")));
+                            errors.push(err), count--, count === 0 && (finished = !0, reject(new AggregateError(errors, "All promises were rejected")));
                         });
                     });
                 }
@@ -744,25 +777,25 @@
                         try {
                             value.then(value2 => {
                                 resolvedValues[curValueIndex] = callback ? callback.thenCallback(value2) : value2, 
-                                unresolvedCount--, 0 === unresolvedCount && resolve(resolvedValues);
+                                unresolvedCount--, unresolvedCount === 0 && resolve(resolvedValues);
                             }, err => {
                                 callback ? (resolvedValues[curValueIndex] = callback.errorCallback(err), unresolvedCount--, 
-                                0 === unresolvedCount && resolve(resolvedValues)) : reject(err);
+                                unresolvedCount === 0 && resolve(resolvedValues)) : reject(err);
                             });
                         } catch (thenErr) {
                             reject(thenErr);
                         }
                         unresolvedCount++, valueIndex++;
                     }
-                    return unresolvedCount -= 2, 0 === unresolvedCount && resolve(resolvedValues), promise;
+                    return unresolvedCount -= 2, unresolvedCount === 0 && resolve(resolvedValues), promise;
                 }
                 constructor(executor) {
                     const promise = this;
                     if (!(promise instanceof ZoneAwarePromise)) throw new Error("Must be an instanceof Promise.");
-                    promise[symbolState] = null, promise[symbolValue] = [];
+                    promise[symbolState] = UNRESOLVED, promise[symbolValue] = [];
                     try {
                         const onceWrapper = once();
-                        executor && executor(onceWrapper(makeResolver(promise, !0)), onceWrapper(makeResolver(promise, !1)));
+                        executor && executor(onceWrapper(makeResolver(promise, RESOLVED)), onceWrapper(makeResolver(promise, REJECTED)));
                     } catch (error) {
                         resolvePromise(promise, !1, error);
                     }
@@ -775,10 +808,10 @@
                 }
                 then(onFulfilled, onRejected) {
                     var _a;
-                    let C = null === (_a = this.constructor) || void 0 === _a ? void 0 : _a[Symbol.species];
-                    (!C || "function" != typeof C) && (C = this.constructor || ZoneAwarePromise);
+                    let C = (_a = this.constructor) === null || _a === void 0 ? void 0 : _a[Symbol.species];
+                    (!C || typeof C != "function") && (C = this.constructor || ZoneAwarePromise);
                     const chainPromise = new C(noop), zone = Zone2.current;
-                    return null == this[symbolState] ? this[symbolValue].push(zone, chainPromise, onFulfilled, onRejected) : scheduleResolveOrReject(this, zone, chainPromise, onFulfilled, onRejected), 
+                    return this[symbolState] == UNRESOLVED ? this[symbolValue].push(zone, chainPromise, onFulfilled, onRejected) : scheduleResolveOrReject(this, zone, chainPromise, onFulfilled, onRejected), 
                     chainPromise;
                 }
                 catch(onRejected) {
@@ -786,12 +819,12 @@
                 }
                 finally(onFinally) {
                     var _a;
-                    let C = null === (_a = this.constructor) || void 0 === _a ? void 0 : _a[Symbol.species];
-                    (!C || "function" != typeof C) && (C = ZoneAwarePromise);
+                    let C = (_a = this.constructor) === null || _a === void 0 ? void 0 : _a[Symbol.species];
+                    (!C || typeof C != "function") && (C = ZoneAwarePromise);
                     const chainPromise = new C(noop);
                     chainPromise[symbolFinally] = symbolFinally;
                     const zone = Zone2.current;
-                    return null == this[symbolState] ? this[symbolValue].push(zone, chainPromise, onFinally, onFinally) : scheduleResolveOrReject(this, zone, chainPromise, onFinally, onFinally), 
+                    return this[symbolState] == UNRESOLVED ? this[symbolValue].push(zone, chainPromise, onFinally, onFinally) : scheduleResolveOrReject(this, zone, chainPromise, onFinally, onFinally), 
                     chainPromise;
                 }
             }
@@ -802,7 +835,7 @@
             const symbolThenPatched = __symbol__("thenPatched");
             function patchThen(Ctor) {
                 const proto = Ctor.prototype, prop = ObjectGetOwnPropertyDescriptor2(proto, "then");
-                if (prop && (!1 === prop.writable || !prop.configurable)) return;
+                if (prop && (prop.writable === !1 || !prop.configurable)) return;
                 const originalThen = proto.then;
                 proto[symbolThen] = originalThen, Ctor.prototype.then = function(onResolve, onReject) {
                     return new ZoneAwarePromise((resolve, reject) => {
@@ -810,20 +843,23 @@
                     }).then(onResolve, onReject);
                 }, Ctor[symbolThenPatched] = !0;
             }
-            return api.patchThen = patchThen, NativePromise && (patchThen(NativePromise), patchMethod(global2, "fetch", delegate => function zoneify(fn) {
+            api.patchThen = patchThen;
+            function zoneify(fn) {
                 return function(self2, args) {
                     let resultPromise = fn.apply(self2, args);
                     if (resultPromise instanceof ZoneAwarePromise) return resultPromise;
                     let ctor = resultPromise.constructor;
                     return ctor[symbolThenPatched] || patchThen(ctor), resultPromise;
                 };
-            }(delegate))), Promise[Zone2.__symbol__("uncaughtPromiseErrors")] = _uncaughtPromiseErrors, 
-            ZoneAwarePromise;
-        }), Zone.__load_patch("toString", global2 => {
+            }
+            return NativePromise && (patchThen(NativePromise), patchMethod(global2, "fetch", delegate => zoneify(delegate))), 
+            Promise[Zone2.__symbol__("uncaughtPromiseErrors")] = _uncaughtPromiseErrors, ZoneAwarePromise;
+        });
+        Zone.__load_patch("toString", global2 => {
             const originalFunctionToString = Function.prototype.toString, ORIGINAL_DELEGATE_SYMBOL = zoneSymbol("OriginalDelegate"), PROMISE_SYMBOL = zoneSymbol("Promise"), ERROR_SYMBOL = zoneSymbol("Error"), newFunctionToString = function() {
-                if ("function" == typeof this) {
+                if (typeof this == "function") {
                     const originalDelegate = this[ORIGINAL_DELEGATE_SYMBOL];
-                    if (originalDelegate) return "function" == typeof originalDelegate ? originalFunctionToString.call(originalDelegate) : Object.prototype.toString.call(originalDelegate);
+                    if (originalDelegate) return typeof originalDelegate == "function" ? originalFunctionToString.call(originalDelegate) : Object.prototype.toString.call(originalDelegate);
                     if (this === Promise) {
                         const nativePromise = global2[PROMISE_SYMBOL];
                         if (nativePromise) return originalFunctionToString.call(nativePromise);
@@ -836,9 +872,9 @@
                 return originalFunctionToString.call(this);
             };
             newFunctionToString[ORIGINAL_DELEGATE_SYMBOL] = originalFunctionToString, Function.prototype.toString = newFunctionToString;
-            const originalObjectToString = Object.prototype.toString;
+            const originalObjectToString = Object.prototype.toString, PROMISE_OBJECT_TO_STRING = "[object Promise]";
             Object.prototype.toString = function() {
-                return "function" == typeof Promise && this instanceof Promise ? "[object Promise]" : originalObjectToString.call(this);
+                return typeof Promise == "function" && this instanceof Promise ? PROMISE_OBJECT_TO_STRING : originalObjectToString.call(this);
             };
         });
         let passiveSupported = !1;
@@ -856,42 +892,45 @@
             useG: !0
         }, zoneSymbolEventNames = {}, globalSources = {}, EVENT_NAME_SYMBOL_REGX = new RegExp("^" + ZONE_SYMBOL_PREFIX + "(\\w+)(true|false)$"), IMMEDIATE_PROPAGATION_SYMBOL = zoneSymbol("propagationStopped");
         function prepareEventNames(eventName, eventNameToString) {
-            const falseEventName = (eventNameToString ? eventNameToString(eventName) : eventName) + "false", trueEventName = (eventNameToString ? eventNameToString(eventName) : eventName) + "true", symbol = ZONE_SYMBOL_PREFIX + falseEventName, symbolCapture = ZONE_SYMBOL_PREFIX + trueEventName;
-            zoneSymbolEventNames[eventName] = {}, zoneSymbolEventNames[eventName].false = symbol, 
-            zoneSymbolEventNames[eventName].true = symbolCapture;
+            const falseEventName = (eventNameToString ? eventNameToString(eventName) : eventName) + FALSE_STR, trueEventName = (eventNameToString ? eventNameToString(eventName) : eventName) + TRUE_STR, symbol = ZONE_SYMBOL_PREFIX + falseEventName, symbolCapture = ZONE_SYMBOL_PREFIX + trueEventName;
+            zoneSymbolEventNames[eventName] = {}, zoneSymbolEventNames[eventName][FALSE_STR] = symbol, 
+            zoneSymbolEventNames[eventName][TRUE_STR] = symbolCapture;
         }
         function patchEventTarget(_global2, api, apis, patchOptions) {
-            const ADD_EVENT_LISTENER = patchOptions && patchOptions.add || "addEventListener", REMOVE_EVENT_LISTENER = patchOptions && patchOptions.rm || "removeEventListener", LISTENERS_EVENT_LISTENER = patchOptions && patchOptions.listeners || "eventListeners", REMOVE_ALL_LISTENERS_EVENT_LISTENER = patchOptions && patchOptions.rmAll || "removeAllListeners", zoneSymbolAddEventListener = zoneSymbol(ADD_EVENT_LISTENER), ADD_EVENT_LISTENER_SOURCE = "." + ADD_EVENT_LISTENER + ":", invokeTask = function(task, target, event) {
+            const ADD_EVENT_LISTENER = patchOptions && patchOptions.add || ADD_EVENT_LISTENER_STR, REMOVE_EVENT_LISTENER = patchOptions && patchOptions.rm || REMOVE_EVENT_LISTENER_STR, LISTENERS_EVENT_LISTENER = patchOptions && patchOptions.listeners || "eventListeners", REMOVE_ALL_LISTENERS_EVENT_LISTENER = patchOptions && patchOptions.rmAll || "removeAllListeners", zoneSymbolAddEventListener = zoneSymbol(ADD_EVENT_LISTENER), ADD_EVENT_LISTENER_SOURCE = "." + ADD_EVENT_LISTENER + ":", PREPEND_EVENT_LISTENER = "prependListener", PREPEND_EVENT_LISTENER_SOURCE = "." + PREPEND_EVENT_LISTENER + ":", invokeTask = function(task, target, event) {
                 if (task.isRemoved) return;
                 const delegate = task.callback;
-                let error;
-                "object" == typeof delegate && delegate.handleEvent && (task.callback = event2 => delegate.handleEvent(event2), 
+                typeof delegate == "object" && delegate.handleEvent && (task.callback = event2 => delegate.handleEvent(event2), 
                 task.originalDelegate = delegate);
+                let error;
                 try {
                     task.invoke(task, target, [ event ]);
                 } catch (err) {
                     error = err;
                 }
                 const options = task.options;
-                return options && "object" == typeof options && options.once && target[REMOVE_EVENT_LISTENER].call(target, event.type, task.originalDelegate ? task.originalDelegate : task.callback, options), 
-                error;
+                if (options && typeof options == "object" && options.once) {
+                    const delegate2 = task.originalDelegate ? task.originalDelegate : task.callback;
+                    target[REMOVE_EVENT_LISTENER].call(target, event.type, delegate2, options);
+                }
+                return error;
             };
             function globalCallback(context, event, isCapture) {
-                if (!(event = event || _global2.event)) return;
-                const target = context || event.target || _global2, tasks = target[zoneSymbolEventNames[event.type][isCapture ? "true" : "false"]];
+                if (event = event || _global2.event, !event) return;
+                const target = context || event.target || _global2, tasks = target[zoneSymbolEventNames[event.type][isCapture ? TRUE_STR : FALSE_STR]];
                 if (tasks) {
                     const errors = [];
-                    if (1 === tasks.length) {
+                    if (tasks.length === 1) {
                         const err = invokeTask(tasks[0], target, event);
                         err && errors.push(err);
                     } else {
                         const copyTasks = tasks.slice();
-                        for (let i = 0; i < copyTasks.length && (!event || !0 !== event[IMMEDIATE_PROPAGATION_SYMBOL]); i++) {
+                        for (let i = 0; i < copyTasks.length && !(event && event[IMMEDIATE_PROPAGATION_SYMBOL] === !0); i++) {
                             const err = invokeTask(copyTasks[i], target, event);
                             err && errors.push(err);
                         }
                     }
-                    if (1 === errors.length) throw errors[0];
+                    if (errors.length === 1) throw errors[0];
                     for (let i = 0; i < errors.length; i++) {
                         const err = errors[i];
                         api.nativeScheduleMicroTask(() => {
@@ -908,74 +947,83 @@
             function patchEventTargetMethods(obj, patchOptions2) {
                 if (!obj) return !1;
                 let useGlobalCallback = !0;
-                patchOptions2 && void 0 !== patchOptions2.useG && (useGlobalCallback = patchOptions2.useG);
+                patchOptions2 && patchOptions2.useG !== void 0 && (useGlobalCallback = patchOptions2.useG);
                 const validateHandler = patchOptions2 && patchOptions2.vh;
                 let checkDuplicate = !0;
-                patchOptions2 && void 0 !== patchOptions2.chkDup && (checkDuplicate = patchOptions2.chkDup);
+                patchOptions2 && patchOptions2.chkDup !== void 0 && (checkDuplicate = patchOptions2.chkDup);
                 let returnTarget = !1;
-                patchOptions2 && void 0 !== patchOptions2.rt && (returnTarget = patchOptions2.rt);
+                patchOptions2 && patchOptions2.rt !== void 0 && (returnTarget = patchOptions2.rt);
                 let proto = obj;
                 for (;proto && !proto.hasOwnProperty(ADD_EVENT_LISTENER); ) proto = ObjectGetPrototypeOf(proto);
                 if (!proto && obj[ADD_EVENT_LISTENER] && (proto = obj), !proto || proto[zoneSymbolAddEventListener]) return !1;
                 const eventNameToString = patchOptions2 && patchOptions2.eventNameToString, taskData = {}, nativeAddEventListener = proto[zoneSymbolAddEventListener] = proto[ADD_EVENT_LISTENER], nativeRemoveEventListener = proto[zoneSymbol(REMOVE_EVENT_LISTENER)] = proto[REMOVE_EVENT_LISTENER], nativeListeners = proto[zoneSymbol(LISTENERS_EVENT_LISTENER)] = proto[LISTENERS_EVENT_LISTENER], nativeRemoveAllListeners = proto[zoneSymbol(REMOVE_ALL_LISTENERS_EVENT_LISTENER)] = proto[REMOVE_ALL_LISTENERS_EVENT_LISTENER];
                 let nativePrependEventListener;
+                patchOptions2 && patchOptions2.prepend && (nativePrependEventListener = proto[zoneSymbol(patchOptions2.prepend)] = proto[patchOptions2.prepend]);
                 function buildEventListenerOptions(options, passive) {
-                    return !passiveSupported && "object" == typeof options && options ? !!options.capture : passiveSupported && passive ? "boolean" == typeof options ? {
+                    return !passiveSupported && typeof options == "object" && options ? !!options.capture : !passiveSupported || !passive ? options : typeof options == "boolean" ? {
                         capture: options,
                         passive: !0
-                    } : options ? "object" == typeof options && !1 !== options.passive ? Object.assign(Object.assign({}, options), {
+                    } : options ? typeof options == "object" && options.passive !== !1 ? Object.assign(Object.assign({}, options), {
                         passive: !0
                     }) : options : {
                         passive: !0
-                    } : options;
+                    };
                 }
-                patchOptions2 && patchOptions2.prepend && (nativePrependEventListener = proto[zoneSymbol(patchOptions2.prepend)] = proto[patchOptions2.prepend]);
-                const customSchedule = useGlobalCallback ? function(task) {
+                const customScheduleGlobal = function(task) {
                     if (!taskData.isExisting) return nativeAddEventListener.call(taskData.target, taskData.eventName, taskData.capture ? globalZoneAwareCaptureCallback : globalZoneAwareCallback, taskData.options);
-                } : function(task) {
-                    return nativeAddEventListener.call(taskData.target, taskData.eventName, task.invoke, taskData.options);
-                }, customCancel = useGlobalCallback ? function(task) {
+                }, customCancelGlobal = function(task) {
                     if (!task.isRemoved) {
                         const symbolEventNames = zoneSymbolEventNames[task.eventName];
                         let symbolEventName;
-                        symbolEventNames && (symbolEventName = symbolEventNames[task.capture ? "true" : "false"]);
+                        symbolEventNames && (symbolEventName = symbolEventNames[task.capture ? TRUE_STR : FALSE_STR]);
                         const existingTasks = symbolEventName && task.target[symbolEventName];
-                        if (existingTasks) for (let i = 0; i < existingTasks.length; i++) if (existingTasks[i] === task) {
-                            existingTasks.splice(i, 1), task.isRemoved = !0, 0 === existingTasks.length && (task.allRemoved = !0, 
-                            task.target[symbolEventName] = null);
-                            break;
+                        if (existingTasks) {
+                            for (let i = 0; i < existingTasks.length; i++) if (existingTasks[i] === task) {
+                                existingTasks.splice(i, 1), task.isRemoved = !0, existingTasks.length === 0 && (task.allRemoved = !0, 
+                                task.target[symbolEventName] = null);
+                                break;
+                            }
                         }
                     }
-                    if (task.allRemoved) return nativeRemoveEventListener.call(task.target, task.eventName, task.capture ? globalZoneAwareCaptureCallback : globalZoneAwareCallback, task.options);
-                } : function(task) {
+                    if (!!task.allRemoved) return nativeRemoveEventListener.call(task.target, task.eventName, task.capture ? globalZoneAwareCaptureCallback : globalZoneAwareCallback, task.options);
+                }, customScheduleNonGlobal = function(task) {
+                    return nativeAddEventListener.call(taskData.target, taskData.eventName, task.invoke, taskData.options);
+                }, customSchedulePrepend = function(task) {
+                    return nativePrependEventListener.call(taskData.target, taskData.eventName, task.invoke, taskData.options);
+                }, customCancelNonGlobal = function(task) {
                     return nativeRemoveEventListener.call(task.target, task.eventName, task.invoke, task.options);
-                }, compare = patchOptions2 && patchOptions2.diff ? patchOptions2.diff : function(task, delegate) {
+                }, customSchedule = useGlobalCallback ? customScheduleGlobal : customScheduleNonGlobal, customCancel = useGlobalCallback ? customCancelGlobal : customCancelNonGlobal, compareTaskCallbackVsDelegate = function(task, delegate) {
                     const typeOfDelegate = typeof delegate;
-                    return "function" === typeOfDelegate && task.callback === delegate || "object" === typeOfDelegate && task.originalDelegate === delegate;
-                }, unpatchedEvents = Zone[zoneSymbol("UNPATCHED_EVENTS")], passiveEvents = _global2[zoneSymbol("PASSIVE_EVENTS")], makeAddListener = function(nativeListener, addSource, customScheduleFn, customCancelFn, returnTarget2 = !1, prepend = !1) {
+                    return typeOfDelegate === "function" && task.callback === delegate || typeOfDelegate === "object" && task.originalDelegate === delegate;
+                }, compare = patchOptions2 && patchOptions2.diff ? patchOptions2.diff : compareTaskCallbackVsDelegate, unpatchedEvents = Zone[zoneSymbol("UNPATCHED_EVENTS")], passiveEvents = _global2[zoneSymbol("PASSIVE_EVENTS")], makeAddListener = function(nativeListener, addSource, customScheduleFn, customCancelFn, returnTarget2 = !1, prepend = !1) {
                     return function() {
                         const target = this || _global2;
                         let eventName = arguments[0];
                         patchOptions2 && patchOptions2.transferEventName && (eventName = patchOptions2.transferEventName(eventName));
                         let delegate = arguments[1];
                         if (!delegate) return nativeListener.apply(this, arguments);
-                        if (isNode && "uncaughtException" === eventName) return nativeListener.apply(this, arguments);
+                        if (isNode && eventName === "uncaughtException") return nativeListener.apply(this, arguments);
                         let isHandleEvent = !1;
-                        if ("function" != typeof delegate) {
+                        if (typeof delegate != "function") {
                             if (!delegate.handleEvent) return nativeListener.apply(this, arguments);
                             isHandleEvent = !0;
                         }
                         if (validateHandler && !validateHandler(nativeListener, delegate, target, arguments)) return;
-                        const passive = passiveSupported && !!passiveEvents && -1 !== passiveEvents.indexOf(eventName), options = buildEventListenerOptions(arguments[2], passive);
-                        if (unpatchedEvents) for (let i = 0; i < unpatchedEvents.length; i++) if (eventName === unpatchedEvents[i]) return passive ? nativeListener.call(target, eventName, delegate, options) : nativeListener.apply(this, arguments);
-                        const capture = !!options && ("boolean" == typeof options || options.capture), once = !(!options || "object" != typeof options) && options.once, zone = Zone.current;
+                        const passive = passiveSupported && !!passiveEvents && passiveEvents.indexOf(eventName) !== -1, options = buildEventListenerOptions(arguments[2], passive);
+                        if (unpatchedEvents) {
+                            for (let i = 0; i < unpatchedEvents.length; i++) if (eventName === unpatchedEvents[i]) return passive ? nativeListener.call(target, eventName, delegate, options) : nativeListener.apply(this, arguments);
+                        }
+                        const capture = options ? typeof options == "boolean" ? !0 : options.capture : !1, once = options && typeof options == "object" ? options.once : !1, zone = Zone.current;
                         let symbolEventNames = zoneSymbolEventNames[eventName];
                         symbolEventNames || (prepareEventNames(eventName, eventNameToString), symbolEventNames = zoneSymbolEventNames[eventName]);
-                        const symbolEventName = symbolEventNames[capture ? "true" : "false"];
-                        let source, existingTasks = target[symbolEventName], isExisting = !1;
+                        const symbolEventName = symbolEventNames[capture ? TRUE_STR : FALSE_STR];
+                        let existingTasks = target[symbolEventName], isExisting = !1;
                         if (existingTasks) {
-                            if (isExisting = !0, checkDuplicate) for (let i = 0; i < existingTasks.length; i++) if (compare(existingTasks[i], delegate)) return;
+                            if (isExisting = !0, checkDuplicate) {
+                                for (let i = 0; i < existingTasks.length; i++) if (compare(existingTasks[i], delegate)) return;
+                            }
                         } else existingTasks = target[symbolEventName] = [];
+                        let source;
                         const constructorName = target.constructor.name, targetSource = globalSources[constructorName];
                         targetSource && (source = targetSource[eventName]), source || (source = constructorName + addSource + (eventNameToString ? eventNameToString(eventName) : eventName)), 
                         taskData.options = options, once && (taskData.options.once = !1), taskData.target = target, 
@@ -983,32 +1031,35 @@
                         const data = useGlobalCallback ? OPTIMIZED_ZONE_EVENT_TASK_DATA : void 0;
                         data && (data.taskData = taskData);
                         const task = zone.scheduleEventTask(source, delegate, data, customScheduleFn, customCancelFn);
-                        return taskData.target = null, data && (data.taskData = null), once && (options.once = !0), 
-                        !passiveSupported && "boolean" == typeof task.options || (task.options = options), 
+                        if (taskData.target = null, data && (data.taskData = null), once && (options.once = !0), 
+                        !passiveSupported && typeof task.options == "boolean" || (task.options = options), 
                         task.target = target, task.capture = capture, task.eventName = eventName, isHandleEvent && (task.originalDelegate = delegate), 
-                        prepend ? existingTasks.unshift(task) : existingTasks.push(task), returnTarget2 ? target : void 0;
+                        prepend ? existingTasks.unshift(task) : existingTasks.push(task), returnTarget2) return target;
                     };
                 };
                 return proto[ADD_EVENT_LISTENER] = makeAddListener(nativeAddEventListener, ADD_EVENT_LISTENER_SOURCE, customSchedule, customCancel, returnTarget), 
-                nativePrependEventListener && (proto.prependListener = makeAddListener(nativePrependEventListener, ".prependListener:", function(task) {
-                    return nativePrependEventListener.call(taskData.target, taskData.eventName, task.invoke, taskData.options);
-                }, customCancel, returnTarget, !0)), proto[REMOVE_EVENT_LISTENER] = function() {
+                nativePrependEventListener && (proto[PREPEND_EVENT_LISTENER] = makeAddListener(nativePrependEventListener, PREPEND_EVENT_LISTENER_SOURCE, customSchedulePrepend, customCancel, returnTarget, !0)), 
+                proto[REMOVE_EVENT_LISTENER] = function() {
                     const target = this || _global2;
                     let eventName = arguments[0];
                     patchOptions2 && patchOptions2.transferEventName && (eventName = patchOptions2.transferEventName(eventName));
-                    const options = arguments[2], capture = !!options && ("boolean" == typeof options || options.capture), delegate = arguments[1];
+                    const options = arguments[2], capture = options ? typeof options == "boolean" ? !0 : options.capture : !1, delegate = arguments[1];
                     if (!delegate) return nativeRemoveEventListener.apply(this, arguments);
                     if (validateHandler && !validateHandler(nativeRemoveEventListener, delegate, target, arguments)) return;
                     const symbolEventNames = zoneSymbolEventNames[eventName];
                     let symbolEventName;
-                    symbolEventNames && (symbolEventName = symbolEventNames[capture ? "true" : "false"]);
+                    symbolEventNames && (symbolEventName = symbolEventNames[capture ? TRUE_STR : FALSE_STR]);
                     const existingTasks = symbolEventName && target[symbolEventName];
                     if (existingTasks) for (let i = 0; i < existingTasks.length; i++) {
                         const existingTask = existingTasks[i];
-                        if (compare(existingTask, delegate)) return existingTasks.splice(i, 1), existingTask.isRemoved = !0, 
-                        0 === existingTasks.length && (existingTask.allRemoved = !0, target[symbolEventName] = null, 
-                        "string" == typeof eventName) && (target[ZONE_SYMBOL_PREFIX + "ON_PROPERTY" + eventName] = null), 
-                        existingTask.zone.cancelTask(existingTask), returnTarget ? target : void 0;
+                        if (compare(existingTask, delegate)) {
+                            if (existingTasks.splice(i, 1), existingTask.isRemoved = !0, existingTasks.length === 0 && (existingTask.allRemoved = !0, 
+                            target[symbolEventName] = null, typeof eventName == "string")) {
+                                const onPropertySymbol = ZONE_SYMBOL_PREFIX + "ON_PROPERTY" + eventName;
+                                target[onPropertySymbol] = null;
+                            }
+                            return existingTask.zone.cancelTask(existingTask), returnTarget ? target : void 0;
+                        }
                     }
                     return nativeRemoveEventListener.apply(this, arguments);
                 }, proto[LISTENERS_EVENT_LISTENER] = function() {
@@ -1018,7 +1069,8 @@
                     const listeners = [], tasks = findEventTasks(target, eventNameToString ? eventNameToString(eventName) : eventName);
                     for (let i = 0; i < tasks.length; i++) {
                         const task = tasks[i];
-                        listeners.push(task.originalDelegate ? task.originalDelegate : task.callback);
+                        let delegate = task.originalDelegate ? task.originalDelegate : task.callback;
+                        listeners.push(delegate);
                     }
                     return listeners;
                 }, proto[REMOVE_ALL_LISTENERS_EVENT_LISTENER] = function() {
@@ -1028,28 +1080,30 @@
                         patchOptions2 && patchOptions2.transferEventName && (eventName = patchOptions2.transferEventName(eventName));
                         const symbolEventNames = zoneSymbolEventNames[eventName];
                         if (symbolEventNames) {
-                            const tasks = target[symbolEventNames.false], captureTasks = target[symbolEventNames.true];
+                            const symbolEventName = symbolEventNames[FALSE_STR], symbolCaptureEventName = symbolEventNames[TRUE_STR], tasks = target[symbolEventName], captureTasks = target[symbolCaptureEventName];
                             if (tasks) {
                                 const removeTasks = tasks.slice();
                                 for (let i = 0; i < removeTasks.length; i++) {
                                     const task = removeTasks[i];
-                                    this[REMOVE_EVENT_LISTENER].call(this, eventName, task.originalDelegate ? task.originalDelegate : task.callback, task.options);
+                                    let delegate = task.originalDelegate ? task.originalDelegate : task.callback;
+                                    this[REMOVE_EVENT_LISTENER].call(this, eventName, delegate, task.options);
                                 }
                             }
                             if (captureTasks) {
                                 const removeTasks = captureTasks.slice();
                                 for (let i = 0; i < removeTasks.length; i++) {
                                     const task = removeTasks[i];
-                                    this[REMOVE_EVENT_LISTENER].call(this, eventName, task.originalDelegate ? task.originalDelegate : task.callback, task.options);
+                                    let delegate = task.originalDelegate ? task.originalDelegate : task.callback;
+                                    this[REMOVE_EVENT_LISTENER].call(this, eventName, delegate, task.options);
                                 }
                             }
                         }
                     } else {
                         const keys = Object.keys(target);
                         for (let i = 0; i < keys.length; i++) {
-                            const match = EVENT_NAME_SYMBOL_REGX.exec(keys[i]);
+                            const prop = keys[i], match = EVENT_NAME_SYMBOL_REGX.exec(prop);
                             let evtName = match && match[1];
-                            evtName && "removeListener" !== evtName && this[REMOVE_ALL_LISTENERS_EVENT_LISTENER].call(this, evtName);
+                            evtName && evtName !== "removeListener" && this[REMOVE_ALL_LISTENERS_EVENT_LISTENER].call(this, evtName);
                         }
                         this[REMOVE_ALL_LISTENERS_EVENT_LISTENER].call(this, "removeListener");
                     }
@@ -1078,7 +1132,7 @@
             }
             let symbolEventName = zoneSymbolEventNames[eventName];
             symbolEventName || (prepareEventNames(eventName), symbolEventName = zoneSymbolEventNames[eventName]);
-            const captureFalseTasks = target[symbolEventName.false], captureTrueTasks = target[symbolEventName.true];
+            const captureFalseTasks = target[symbolEventName[FALSE_STR]], captureTrueTasks = target[symbolEventName[TRUE_STR]];
             return captureFalseTasks ? captureTrueTasks ? captureFalseTasks.concat(captureTrueTasks) : captureFalseTasks.slice() : captureTrueTasks ? captureTrueTasks.slice() : [];
         }
         function patchEventPrototype(global2, api) {
@@ -1105,17 +1159,38 @@
             }, api.attachOriginToPatched(target[method], nativeDelegate);
         }
         function filterProperties(target, onProperties, ignoreProperties) {
-            if (!ignoreProperties || 0 === ignoreProperties.length) return onProperties;
+            if (!ignoreProperties || ignoreProperties.length === 0) return onProperties;
             const tip = ignoreProperties.filter(ip => ip.target === target);
-            if (!tip || 0 === tip.length) return onProperties;
+            if (!tip || tip.length === 0) return onProperties;
             const targetIgnoreProperties = tip[0].ignoreProperties;
-            return onProperties.filter(op => -1 === targetIgnoreProperties.indexOf(op));
+            return onProperties.filter(op => targetIgnoreProperties.indexOf(op) === -1);
         }
         function patchFilteredProperties(target, onProperties, ignoreProperties, prototype) {
-            target && patchOnProperties(target, filterProperties(target, onProperties, ignoreProperties), prototype);
+            if (!target) return;
+            const filteredProperties = filterProperties(target, onProperties, ignoreProperties);
+            patchOnProperties(target, filteredProperties, prototype);
         }
         function getOnEventNames(target) {
             return Object.getOwnPropertyNames(target).filter(name => name.startsWith("on") && name.length > 2).map(name => name.substring(2));
+        }
+        function propertyDescriptorPatch(api, _global2) {
+            if (isNode && !isMix || Zone[api.symbol("patchEvents")]) return;
+            const ignoreProperties = _global2.__Zone_ignore_on_properties;
+            let patchTargets = [];
+            if (isBrowser) {
+                const internalWindow2 = window;
+                patchTargets = patchTargets.concat([ "Document", "SVGElement", "Element", "HTMLElement", "HTMLBodyElement", "HTMLMediaElement", "HTMLFrameSetElement", "HTMLFrameElement", "HTMLIFrameElement", "HTMLMarqueeElement", "Worker" ]);
+                const ignoreErrorProperties = isIE() ? [ {
+                    target: internalWindow2,
+                    ignoreProperties: [ "error" ]
+                } ] : [];
+                patchFilteredProperties(internalWindow2, getOnEventNames(internalWindow2), ignoreProperties && ignoreProperties.concat(ignoreErrorProperties), ObjectGetPrototypeOf(internalWindow2));
+            }
+            patchTargets = patchTargets.concat([ "XMLHttpRequest", "XMLHttpRequestEventTarget", "IDBIndex", "IDBRequest", "IDBOpenDBRequest", "IDBDatabase", "IDBTransaction", "IDBCursor", "WebSocket" ]);
+            for (let i = 0; i < patchTargets.length; i++) {
+                const target = _global2[patchTargets[i]];
+                target && target.prototype && patchFilteredProperties(target.prototype, getOnEventNames(target.prototype), ignoreProperties);
+            }
         }
         Zone.__load_patch("util", (global2, Zone2, api) => {
             const eventNames = getOnEventNames(global2);
@@ -1136,17 +1211,17 @@
                 isBrowser,
                 isMix,
                 isNode,
-                TRUE_STR: "true",
-                FALSE_STR: "false",
+                TRUE_STR,
+                FALSE_STR,
                 ZONE_SYMBOL_PREFIX,
-                ADD_EVENT_LISTENER_STR: "addEventListener",
-                REMOVE_EVENT_LISTENER_STR: "removeEventListener"
+                ADD_EVENT_LISTENER_STR,
+                REMOVE_EVENT_LISTENER_STR
             });
         });
         const taskSymbol = zoneSymbol("zoneTask");
         function patchTimer(window2, setName, cancelName, nameSuffix) {
             let setNative = null, clearNative = null;
-            cancelName += nameSuffix;
+            setName += nameSuffix, cancelName += nameSuffix;
             const tasksByHandleId = {};
             function scheduleTask(task) {
                 const data = task.data;
@@ -1157,35 +1232,55 @@
             function clearTask(task) {
                 return clearNative.call(window2, task.data.handleId);
             }
-            setNative = patchMethod(window2, setName += nameSuffix, delegate => function(self2, args) {
-                if ("function" == typeof args[0]) {
+            setNative = patchMethod(window2, setName, delegate => function(self2, args) {
+                if (typeof args[0] == "function") {
                     const options = {
-                        isPeriodic: "Interval" === nameSuffix,
-                        delay: "Timeout" === nameSuffix || "Interval" === nameSuffix ? args[1] || 0 : void 0,
+                        isPeriodic: nameSuffix === "Interval",
+                        delay: nameSuffix === "Timeout" || nameSuffix === "Interval" ? args[1] || 0 : void 0,
                         args
                     }, callback = args[0];
                     args[0] = function() {
                         try {
                             return callback.apply(this, arguments);
                         } finally {
-                            options.isPeriodic || ("number" == typeof options.handleId ? delete tasksByHandleId[options.handleId] : options.handleId && (options.handleId[taskSymbol] = null));
+                            options.isPeriodic || (typeof options.handleId == "number" ? delete tasksByHandleId[options.handleId] : options.handleId && (options.handleId[taskSymbol] = null));
                         }
                     };
                     const task = scheduleMacroTaskWithCurrentZone(setName, args[0], options, scheduleTask, clearTask);
                     if (!task) return task;
                     const handle = task.data.handleId;
-                    return "number" == typeof handle ? tasksByHandleId[handle] = task : handle && (handle[taskSymbol] = task), 
-                    handle && handle.ref && handle.unref && "function" == typeof handle.ref && "function" == typeof handle.unref && (task.ref = handle.ref.bind(handle), 
-                    task.unref = handle.unref.bind(handle)), "number" == typeof handle || handle ? handle : task;
-                }
-                return delegate.apply(window2, args);
+                    return typeof handle == "number" ? tasksByHandleId[handle] = task : handle && (handle[taskSymbol] = task), 
+                    handle && handle.ref && handle.unref && typeof handle.ref == "function" && typeof handle.unref == "function" && (task.ref = handle.ref.bind(handle), 
+                    task.unref = handle.unref.bind(handle)), typeof handle == "number" || handle ? handle : task;
+                } else return delegate.apply(window2, args);
             }), clearNative = patchMethod(window2, cancelName, delegate => function(self2, args) {
                 const id = args[0];
                 let task;
-                "number" == typeof id ? task = tasksByHandleId[id] : (task = id && id[taskSymbol], 
-                task || (task = id)), task && "string" == typeof task.type ? "notScheduled" !== task.state && (task.cancelFn && task.data.isPeriodic || 0 === task.runCount) && ("number" == typeof id ? delete tasksByHandleId[id] : id && (id[taskSymbol] = null), 
+                typeof id == "number" ? task = tasksByHandleId[id] : (task = id && id[taskSymbol], 
+                task || (task = id)), task && typeof task.type == "string" ? task.state !== "notScheduled" && (task.cancelFn && task.data.isPeriodic || task.runCount === 0) && (typeof id == "number" ? delete tasksByHandleId[id] : id && (id[taskSymbol] = null), 
                 task.zone.cancelTask(task)) : delegate.apply(window2, args);
             });
+        }
+        function patchCustomElements(_global2, api) {
+            const {isBrowser: isBrowser2, isMix: isMix2} = api.getGlobalObjects();
+            if (!isBrowser2 && !isMix2 || !_global2.customElements || !("customElements" in _global2)) return;
+            const callbacks = [ "connectedCallback", "disconnectedCallback", "adoptedCallback", "attributeChangedCallback" ];
+            api.patchCallbacks(api, _global2.customElements, "customElements", "define", callbacks);
+        }
+        function eventTargetPatch(_global2, api) {
+            if (Zone[api.symbol("patchEventTarget")]) return;
+            const {eventNames, zoneSymbolEventNames: zoneSymbolEventNames2, TRUE_STR: TRUE_STR2, FALSE_STR: FALSE_STR2, ZONE_SYMBOL_PREFIX: ZONE_SYMBOL_PREFIX2} = api.getGlobalObjects();
+            for (let i = 0; i < eventNames.length; i++) {
+                const eventName = eventNames[i], falseEventName = eventName + FALSE_STR2, trueEventName = eventName + TRUE_STR2, symbol = ZONE_SYMBOL_PREFIX2 + falseEventName, symbolCapture = ZONE_SYMBOL_PREFIX2 + trueEventName;
+                zoneSymbolEventNames2[eventName] = {}, zoneSymbolEventNames2[eventName][FALSE_STR2] = symbol, 
+                zoneSymbolEventNames2[eventName][TRUE_STR2] = symbolCapture;
+            }
+            const EVENT_TARGET = _global2.EventTarget;
+            if (!(!EVENT_TARGET || !EVENT_TARGET.prototype)) return api.patchEventTarget(_global2, api, [ EVENT_TARGET && EVENT_TARGET.prototype ]), 
+            !0;
+        }
+        function patchEvent(global2, api) {
+            api.patchEventPrototype(global2, api);
         }
         Zone.__load_patch("legacy", global2 => {
             const legacyPatch = global2[Zone.__symbol__("legacyPatch")];
@@ -1195,30 +1290,22 @@
                 Zone2.current.scheduleMicroTask("queueMicrotask", args[0]);
             });
         }), Zone.__load_patch("timers", global2 => {
-            patchTimer(global2, "set", "clear", "Timeout"), patchTimer(global2, "set", "clear", "Interval"), 
-            patchTimer(global2, "set", "clear", "Immediate");
+            const set = "set", clear = "clear";
+            patchTimer(global2, set, clear, "Timeout"), patchTimer(global2, set, clear, "Interval"), 
+            patchTimer(global2, set, clear, "Immediate");
         }), Zone.__load_patch("requestAnimationFrame", global2 => {
             patchTimer(global2, "request", "cancel", "AnimationFrame"), patchTimer(global2, "mozRequest", "mozCancel", "AnimationFrame"), 
             patchTimer(global2, "webkitRequest", "webkitCancel", "AnimationFrame");
         }), Zone.__load_patch("blocking", (global2, Zone2) => {
             const blockingMethods = [ "alert", "prompt", "confirm" ];
-            for (let i = 0; i < blockingMethods.length; i++) patchMethod(global2, blockingMethods[i], (delegate, symbol, name2) => function(s, args) {
-                return Zone2.current.run(delegate, global2, args, name2);
-            });
+            for (let i = 0; i < blockingMethods.length; i++) {
+                const name = blockingMethods[i];
+                patchMethod(global2, name, (delegate, symbol, name2) => function(s, args) {
+                    return Zone2.current.run(delegate, global2, args, name2);
+                });
+            }
         }), Zone.__load_patch("EventTarget", (global2, Zone2, api) => {
-            (function patchEvent(global2, api) {
-                api.patchEventPrototype(global2, api);
-            })(global2, api), function eventTargetPatch(_global2, api) {
-                if (Zone[api.symbol("patchEventTarget")]) return;
-                const {eventNames, zoneSymbolEventNames: zoneSymbolEventNames2, TRUE_STR: TRUE_STR2, FALSE_STR: FALSE_STR2, ZONE_SYMBOL_PREFIX: ZONE_SYMBOL_PREFIX2} = api.getGlobalObjects();
-                for (let i = 0; i < eventNames.length; i++) {
-                    const eventName = eventNames[i], symbol = ZONE_SYMBOL_PREFIX2 + (eventName + FALSE_STR2), symbolCapture = ZONE_SYMBOL_PREFIX2 + (eventName + TRUE_STR2);
-                    zoneSymbolEventNames2[eventName] = {}, zoneSymbolEventNames2[eventName][FALSE_STR2] = symbol, 
-                    zoneSymbolEventNames2[eventName][TRUE_STR2] = symbolCapture;
-                }
-                const EVENT_TARGET = _global2.EventTarget;
-                EVENT_TARGET && EVENT_TARGET.prototype && api.patchEventTarget(_global2, api, [ EVENT_TARGET && EVENT_TARGET.prototype ]);
-            }(global2, api);
+            patchEvent(global2, api), eventTargetPatch(global2, api);
             const XMLHttpRequestEventTarget = global2.XMLHttpRequestEventTarget;
             XMLHttpRequestEventTarget && XMLHttpRequestEventTarget.prototype && api.patchEventTarget(global2, api, [ XMLHttpRequestEventTarget.prototype ]);
         }), Zone.__load_patch("MutationObserver", (global2, Zone2, api) => {
@@ -1228,41 +1315,19 @@
         }), Zone.__load_patch("FileReader", (global2, Zone2, api) => {
             patchClass("FileReader");
         }), Zone.__load_patch("on_property", (global2, Zone2, api) => {
-            !function propertyDescriptorPatch(api, _global2) {
-                if (isNode && !isMix || Zone[api.symbol("patchEvents")]) return;
-                const ignoreProperties = _global2.__Zone_ignore_on_properties;
-                let patchTargets = [];
-                if (isBrowser) {
-                    const internalWindow2 = window;
-                    patchTargets = patchTargets.concat([ "Document", "SVGElement", "Element", "HTMLElement", "HTMLBodyElement", "HTMLMediaElement", "HTMLFrameSetElement", "HTMLFrameElement", "HTMLIFrameElement", "HTMLMarqueeElement", "Worker" ]);
-                    const ignoreErrorProperties = function isIE() {
-                        try {
-                            const ua = internalWindow.navigator.userAgent;
-                            if (-1 !== ua.indexOf("MSIE ") || -1 !== ua.indexOf("Trident/")) return !0;
-                        } catch {}
-                        return !1;
-                    }() ? [ {
-                        target: internalWindow2,
-                        ignoreProperties: [ "error" ]
-                    } ] : [];
-                    patchFilteredProperties(internalWindow2, getOnEventNames(internalWindow2), ignoreProperties && ignoreProperties.concat(ignoreErrorProperties), ObjectGetPrototypeOf(internalWindow2));
-                }
-                patchTargets = patchTargets.concat([ "XMLHttpRequest", "XMLHttpRequestEventTarget", "IDBIndex", "IDBRequest", "IDBOpenDBRequest", "IDBDatabase", "IDBTransaction", "IDBCursor", "WebSocket" ]);
-                for (let i = 0; i < patchTargets.length; i++) {
-                    const target = _global2[patchTargets[i]];
-                    target && target.prototype && patchFilteredProperties(target.prototype, getOnEventNames(target.prototype), ignoreProperties);
-                }
-            }(api, global2);
+            propertyDescriptorPatch(api, global2);
         }), Zone.__load_patch("customElements", (global2, Zone2, api) => {
-            !function patchCustomElements(_global2, api) {
-                const {isBrowser: isBrowser2, isMix: isMix2} = api.getGlobalObjects();
-                (isBrowser2 || isMix2) && _global2.customElements && "customElements" in _global2 && api.patchCallbacks(api, _global2.customElements, "customElements", "define", [ "connectedCallback", "disconnectedCallback", "adoptedCallback", "attributeChangedCallback" ]);
-            }(global2, api);
+            patchCustomElements(global2, api);
         }), Zone.__load_patch("XHR", (global2, Zone2) => {
-            !function patchXHR(window2) {
+            patchXHR(global2);
+            const XHR_TASK = zoneSymbol("xhrTask"), XHR_SYNC = zoneSymbol("xhrSync"), XHR_LISTENER = zoneSymbol("xhrListener"), XHR_SCHEDULED = zoneSymbol("xhrScheduled"), XHR_URL = zoneSymbol("xhrURL"), XHR_ERROR_BEFORE_SCHEDULED = zoneSymbol("xhrErrorBeforeScheduled");
+            function patchXHR(window2) {
                 const XMLHttpRequest = window2.XMLHttpRequest;
                 if (!XMLHttpRequest) return;
                 const XMLHttpRequestPrototype = XMLHttpRequest.prototype;
+                function findPendingTask(target) {
+                    return target[XHR_TASK];
+                }
                 let oriAddListener = XMLHttpRequestPrototype[ZONE_SYMBOL_ADD_EVENT_LISTENER], oriRemoveListener = XMLHttpRequestPrototype[ZONE_SYMBOL_REMOVE_EVENT_LISTENER];
                 if (!oriAddListener) {
                     const XMLHttpRequestEventTarget = window2.XMLHttpRequestEventTarget;
@@ -1272,26 +1337,27 @@
                         oriRemoveListener = XMLHttpRequestEventTargetPrototype[ZONE_SYMBOL_REMOVE_EVENT_LISTENER];
                     }
                 }
+                const READY_STATE_CHANGE = "readystatechange", SCHEDULED = "scheduled";
                 function scheduleTask(task) {
                     const data = task.data, target = data.target;
                     target[XHR_SCHEDULED] = !1, target[XHR_ERROR_BEFORE_SCHEDULED] = !1;
                     const listener = target[XHR_LISTENER];
                     oriAddListener || (oriAddListener = target[ZONE_SYMBOL_ADD_EVENT_LISTENER], oriRemoveListener = target[ZONE_SYMBOL_REMOVE_EVENT_LISTENER]), 
-                    listener && oriRemoveListener.call(target, "readystatechange", listener);
+                    listener && oriRemoveListener.call(target, READY_STATE_CHANGE, listener);
                     const newListener = target[XHR_LISTENER] = () => {
-                        if (target.readyState === target.DONE) if (!data.aborted && target[XHR_SCHEDULED] && "scheduled" === task.state) {
+                        if (target.readyState === target.DONE) if (!data.aborted && target[XHR_SCHEDULED] && task.state === SCHEDULED) {
                             const loadTasks = target[Zone2.__symbol__("loadfalse")];
-                            if (0 !== target.status && loadTasks && loadTasks.length > 0) {
+                            if (target.status !== 0 && loadTasks && loadTasks.length > 0) {
                                 const oriInvoke = task.invoke;
                                 task.invoke = function() {
                                     const loadTasks2 = target[Zone2.__symbol__("loadfalse")];
                                     for (let i = 0; i < loadTasks2.length; i++) loadTasks2[i] === task && loadTasks2.splice(i, 1);
-                                    !data.aborted && "scheduled" === task.state && oriInvoke.call(task);
+                                    !data.aborted && task.state === SCHEDULED && oriInvoke.call(task);
                                 }, loadTasks.push(task);
                             } else task.invoke();
-                        } else !data.aborted && !1 === target[XHR_SCHEDULED] && (target[XHR_ERROR_BEFORE_SCHEDULED] = !0);
+                        } else !data.aborted && target[XHR_SCHEDULED] === !1 && (target[XHR_ERROR_BEFORE_SCHEDULED] = !0);
                     };
-                    return oriAddListener.call(target, "readystatechange", newListener), target[XHR_TASK] || (target[XHR_TASK] = task), 
+                    return oriAddListener.call(target, READY_STATE_CHANGE, newListener), target[XHR_TASK] || (target[XHR_TASK] = task), 
                     sendNative.apply(target, data.args), target[XHR_SCHEDULED] = !0, task;
                 }
                 function placeholderCallback() {}
@@ -1300,9 +1366,9 @@
                     return data.aborted = !0, abortNative.apply(data.target, data.args);
                 }
                 const openNative = patchMethod(XMLHttpRequestPrototype, "open", () => function(self2, args) {
-                    return self2[XHR_SYNC] = 0 == args[2], self2[XHR_URL] = args[1], openNative.apply(self2, args);
-                }), fetchTaskAborting = zoneSymbol("fetchTaskAborting"), fetchTaskScheduling = zoneSymbol("fetchTaskScheduling"), sendNative = patchMethod(XMLHttpRequestPrototype, "send", () => function(self2, args) {
-                    if (!0 === Zone2.current[fetchTaskScheduling] || self2[XHR_SYNC]) return sendNative.apply(self2, args);
+                    return self2[XHR_SYNC] = args[2] == !1, self2[XHR_URL] = args[1], openNative.apply(self2, args);
+                }), XMLHTTPREQUEST_SOURCE = "XMLHttpRequest.send", fetchTaskAborting = zoneSymbol("fetchTaskAborting"), fetchTaskScheduling = zoneSymbol("fetchTaskScheduling"), sendNative = patchMethod(XMLHttpRequestPrototype, "send", () => function(self2, args) {
+                    if (Zone2.current[fetchTaskScheduling] === !0 || self2[XHR_SYNC]) return sendNative.apply(self2, args);
                     {
                         const options = {
                             target: self2,
@@ -1310,36 +1376,19 @@
                             isPeriodic: !1,
                             args,
                             aborted: !1
-                        }, task = scheduleMacroTaskWithCurrentZone("XMLHttpRequest.send", placeholderCallback, options, scheduleTask, clearTask);
-                        self2 && !0 === self2[XHR_ERROR_BEFORE_SCHEDULED] && !options.aborted && "scheduled" === task.state && task.invoke();
+                        }, task = scheduleMacroTaskWithCurrentZone(XMLHTTPREQUEST_SOURCE, placeholderCallback, options, scheduleTask, clearTask);
+                        self2 && self2[XHR_ERROR_BEFORE_SCHEDULED] === !0 && !options.aborted && task.state === SCHEDULED && task.invoke();
                     }
                 }), abortNative = patchMethod(XMLHttpRequestPrototype, "abort", () => function(self2, args) {
-                    const task = function findPendingTask(target) {
-                        return target[XHR_TASK];
-                    }(self2);
-                    if (task && "string" == typeof task.type) {
-                        if (null == task.cancelFn || task.data && task.data.aborted) return;
+                    const task = findPendingTask(self2);
+                    if (task && typeof task.type == "string") {
+                        if (task.cancelFn == null || task.data && task.data.aborted) return;
                         task.zone.cancelTask(task);
-                    } else if (!0 === Zone2.current[fetchTaskAborting]) return abortNative.apply(self2, args);
+                    } else if (Zone2.current[fetchTaskAborting] === !0) return abortNative.apply(self2, args);
                 });
-            }(global2);
-            const XHR_TASK = zoneSymbol("xhrTask"), XHR_SYNC = zoneSymbol("xhrSync"), XHR_LISTENER = zoneSymbol("xhrListener"), XHR_SCHEDULED = zoneSymbol("xhrScheduled"), XHR_URL = zoneSymbol("xhrURL"), XHR_ERROR_BEFORE_SCHEDULED = zoneSymbol("xhrErrorBeforeScheduled");
+            }
         }), Zone.__load_patch("geolocation", global2 => {
-            global2.navigator && global2.navigator.geolocation && function patchPrototype(prototype, fnNames) {
-                const source = prototype.constructor.name;
-                for (let i = 0; i < fnNames.length; i++) {
-                    const name = fnNames[i], delegate = prototype[name];
-                    if (delegate) {
-                        if (!isPropertyWritable(ObjectGetOwnPropertyDescriptor(prototype, name))) continue;
-                        prototype[name] = (delegate2 => {
-                            const patched = function() {
-                                return delegate2.apply(this, bindArguments(arguments, source + "." + name));
-                            };
-                            return attachOriginToPatched(patched, delegate2), patched;
-                        })(delegate);
-                    }
-                }
-            }(global2.navigator.geolocation, [ "getCurrentPosition", "watchPosition" ]);
+            global2.navigator && global2.navigator.geolocation && patchPrototype(global2.navigator.geolocation, [ "getCurrentPosition", "watchPosition" ]);
         }), Zone.__load_patch("PromiseRejectionEvent", (global2, Zone2) => {
             function findPromiseRejectionHandler(evtName) {
                 return function(e) {
@@ -1360,5 +1409,5 @@
         });
     }
 }, __webpack_require__ => {
-    __webpack_require__(__webpack_require__.s = 435);
+    var __webpack_exec__ = moduleId => __webpack_require__(__webpack_require__.s = moduleId), __webpack_exports__ = __webpack_exec__(435);
 } ]);

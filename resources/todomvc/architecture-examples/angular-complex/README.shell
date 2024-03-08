@@ -1,0 +1,3 @@
+Build with `npm run build`
+then copy over the scripts from the non-complex dom variant
+and edit dist/index.html to point to those scripts
