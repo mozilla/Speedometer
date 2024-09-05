@@ -88,6 +88,27 @@ Suites.push({
 });
 
 Suites.push({
+    name: "ECMASpec",
+    url: "experimental/ecmaspec/index.html",
+    tags: ["experimental"],
+    disabled: true,
+    async prepare(page) {
+
+    },
+    tests: [
+        new BenchmarkTestStep(`Expanding menu`, (page) => {
+            page.querySelector("#menu-toggle").click();
+        }),
+        new BenchmarkTestStep(`Clicking overview`, (page) => {
+            page.querySelector("a[href='#sec-overview']").click();
+        }),
+        new BenchmarkTestStep(`Clicking memory model`, (page) => {
+            page.querySelector("a[href='#sec-memory-model']").click();
+        }),
+    ],
+});
+
+Suites.push({
     name: "TodoMVC-Emoji",
     url: "resources/todomvc/vanilla-examples/javascript-web-components/dist/index.html",
     tags: ["todomvc", "experimental"],
