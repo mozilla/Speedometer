@@ -7,6 +7,7 @@ export class Params {
     developerMode = false;
     startAutomatically = false;
     iterationCount = 10;
+    remoteManifests = [];
     suites = [];
     // A list of tags to filter suites
     tags = [];
@@ -48,13 +49,14 @@ export class Params {
         this.iterationCount = this._parseIntParam(searchParams, "iterationCount", 1);
         this.suites = this._parseSuites(searchParams);
         this.tags = this._parseTags(searchParams);
+        this.remoteManifests = this._parseRemoteManifests(searchParams);
         this.developerMode = this._parseBooleanParam(searchParams, "developerMode");
         this.useWarmupSuite = this._parseBooleanParam(searchParams, "useWarmupSuite");
         this.waitBeforeSync = this._parseIntParam(searchParams, "waitBeforeSync", 0);
         this.warmupBeforeSync = this._parseIntParam(searchParams, "warmupBeforeSync", 0);
         this.measurementMethod = this._parseMeasurementMethod(searchParams);
         this.shuffleSeed = this._parseShuffleSeed(searchParams);
-
+        console.log(this.remoteManifests)
         const unused = Array.from(searchParams.keys());
         if (unused.length > 0)
             console.error("Got unused search params", unused);
@@ -116,6 +118,23 @@ export class Params {
         const tags = searchParams.get("tags").split(",");
         searchParams.delete("tags");
         return tags;
+    }
+
+    _parseRemoteManifests(searchParams) {
+        if (!searchParams.has("remoteManifests"))
+            return defaultParams.remoteManifests;
+        const remoteManifests = searchParams.get("remoteManifests").split(",");
+        // validate they are urls
+        for (const url of remoteManifests) {
+            try {
+                new URL(url);
+            }
+            catch (e) {
+                throw new Error(`Invalid remoteManifest URL: '${url}'`);
+            }
+        }
+        searchParams.delete("remoteManifests");
+        return remoteManifests;
     }
 
     _parseMeasurementMethod(searchParams) {

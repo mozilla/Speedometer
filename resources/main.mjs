@@ -28,8 +28,10 @@ class MainBenchmarkClient {
     start() {
         if (this._isStepping())
             this._clearStepping();
-        else if (this._startBenchmark())
+        else if (!this._isRunning) {
+            this._startBenchmark()
             this._showSection("#running");
+        }
     }
 
     step() {
@@ -61,18 +63,37 @@ class MainBenchmarkClient {
         return this._steppingResolver !== null;
     }
 
-    _startBenchmark() {
-        if (this._isRunning)
-            return false;
+    async _startBenchmark() {
+        let suites = Suites.slice();
+        if (params.remoteManifests.length > 0) {
+            let manifestContent = await Promise.all(params.remoteManifests.map((url) => fetch(url).then((response) => response.json())));
+            manifestContent = manifestContent.flat();
+            console.log("Loading remote manifest", manifestContent);
+            suites.forEach(suite => {
+                suite.disabled = true;
+            });
 
-        if (Suites.every((suite) => suite.disabled)) {
+            for (let test of manifestContent) {
+                suites.push({
+                    name: test.name,
+                    url: test.url,
+                    tags: [],
+                    async prepare() {},
+                    type: "remote",
+                });
+            }
+            console.log(suites);
+        }
+        
+        const enabledSuites = suites.filter((suite) => !suite.disabled);
+        if (enabledSuites.length === 0) {
             const message = `No suites selected - "${params.suites}" does not exist.`;
             alert(message);
             console.error(
                 message,
                 params.suites,
                 "\nValid values:",
-                Suites.map((each) => each.name)
+                suites.map((each) => each.name)
             );
 
             return false;
@@ -92,12 +113,10 @@ class MainBenchmarkClient {
         this._metrics = Object.create(null);
         this._isRunning = true;
 
-        const enabledSuites = Suites.filter((suite) => !suite.disabled);
-        const totalSuitesCount = enabledSuites.length;
-        this.stepCount = params.iterationCount * totalSuitesCount;
-        this._progressCompleted.max = this.stepCount;
         this.suitesCount = enabledSuites.length;
-        const runner = new BenchmarkRunner(Suites, this);
+        this.stepCount = params.iterationCount * this.suitesCount;
+        this._progressCompleted.max = this.stepCount;
+        const runner = new BenchmarkRunner(enabledSuites, this);
         runner.runMultipleIterations(params.iterationCount);
         return true;
     }
