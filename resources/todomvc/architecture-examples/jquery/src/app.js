@@ -71,33 +71,57 @@ jQuery(function ($) {
             var $list = $('<ul>');
 
             todos.forEach(function (item, index) {
-                var $li = $('<li>')
-                    .attr('data-id', item.id)
-                    .attr('data-priority', util.computeTaskPriority(index));
-
-                if (item.completed) {
-                    $li.addClass('completed');
-                }
-
-                var $view = $('<div>').addClass('view');
-                var $checkbox = $('<input>')
-                    .addClass('toggle')
-                    .attr('type', 'checkbox')
-                    .prop('checked', item.completed);
-                var $label = $('<label>').text(item.title);
-                var $destroyBtn = $('<button>').addClass('destroy');
-
-                $view.append($checkbox, $label, $destroyBtn);
-
-                var $editInput = $('<input>')
-                    .addClass('edit')
-                    .val(item.title);
-
-                $li.append($view, $editInput);
-                $list.append($li);
-            });
+                $list.append(this.createTodoElement(item, index));
+            }.bind(this));
 
             return $list.html();
+        },
+        createTodoElement: function (item, index) {
+            var $li = $('<li>')
+                .attr('data-id', item.id)
+                .attr('data-priority', util.computeTaskPriority(index));
+
+            if (item.completed) {
+                $li.addClass('completed');
+            }
+
+            var $view = $('<div>').addClass('view');
+            var $checkbox = $('<input>')
+                .addClass('toggle')
+                .attr('type', 'checkbox')
+                .prop('checked', item.completed);
+            var $label = $('<label>').text(item.title);
+            var $destroyBtn = $('<button>').addClass('destroy');
+
+            $view.append($checkbox, $label, $destroyBtn);
+
+            var $editInput = $('<input>')
+                .addClass('edit')
+                .val(item.title);
+
+            $li.append($view, $editInput);
+            return $li;
+        },
+        updateFooterCount: function () {
+            var activeTodoCount = this.getActiveTodos().length;
+            var activeTodoWord = util.pluralize(activeTodoCount, 'item');
+
+            $('#todo-count')
+                .html($('<strong>').text(activeTodoCount))
+                .append(' ' + activeTodoWord + ' left');
+
+            var completedTodos = this.todos.length - activeTodoCount;
+            var $clearBtn = $('#footer .clear-completed');
+
+            if (completedTodos > 0) {
+                if ($clearBtn.length === 0) {
+                    $('#footer').append($('<button>')
+                        .addClass('clear-completed')
+                        .text('Clear completed'));
+                }
+            } else {
+                $clearBtn.remove();
+            }
         },
         renderFooter: function () {
             var todoCount = this.todos.length;
@@ -153,7 +177,14 @@ jQuery(function ($) {
                 todo.completed = isChecked;
             });
 
-            this.render();
+            $('#todo-list li').each(function () {
+                var $li = $(this);
+                $li.toggleClass('completed', isChecked);
+                $li.find('.toggle').prop('checked', isChecked);
+            });
+
+            this.updateFooterCount();
+            util.store('todos-jquery', this.todos);
         },
         getActiveTodos: function () {
             return this.todos.filter(function (todo) {
@@ -202,20 +233,39 @@ jQuery(function ($) {
                 return;
             }
 
-            this.todos.push({
+            var newTodo = {
                 id: util.uuid(),
                 title: val,
                 completed: false
-            });
+            };
 
+            this.todos.push(newTodo);
             $input.val('');
 
-            this.render();
+            // Only add to DOM if it matches the current filter
+            if (this.filter === 'all' || this.filter === 'active') {
+                var index = this.todos.length - 1;
+                $('#todo-list').append(this.createTodoElement(newTodo, index));
+            }
+
+            $('#main').show();
+            $('#toggle-all').prop('checked', false);
+            this.updateFooterCount();
+            $('#footer').show();
+            util.store('todos-jquery', this.todos);
         },
         toggle: function (e) {
             var i = this.indexFromEl(e.target);
             this.todos[i].completed = !this.todos[i].completed;
-            this.render();
+
+            var $li = $(e.target).closest('li');
+            $li.toggleClass('completed');
+
+            var allCompleted = this.getActiveTodos().length === 0;
+            $('#toggle-all').prop('checked', allCompleted);
+
+            this.updateFooterCount();
+            util.store('todos-jquery', this.todos);
         },
         edit: function (e) {
             var $input = $(e.target).closest('li').addClass('editing').find('.edit');
@@ -240,17 +290,34 @@ jQuery(function ($) {
                 return;
             }
 
+            var $li = $el.closest('li');
+
             if ($el.data('abort')) {
                 $el.data('abort', false);
+                var i = this.indexFromEl(el);
+                $el.val(this.todos[i].title);
             } else {
-                this.todos[this.indexFromEl(el)].title = val;
+                var i = this.indexFromEl(el);
+                this.todos[i].title = val;
+                $li.find('label').text(val);
+                util.store('todos-jquery', this.todos);
             }
 
-            this.render();
+            $li.removeClass('editing');
         },
         destroy: function (e) {
+            var $li = $(e.target).closest('li');
             this.todos.splice(this.indexFromEl(e.target), 1);
-            this.render();
+            $li.remove();
+
+            $('#main').toggle(this.todos.length > 0);
+            $('#footer').toggle(this.todos.length > 0);
+
+            var allCompleted = this.getActiveTodos().length === 0;
+            $('#toggle-all').prop('checked', allCompleted);
+
+            this.updateFooterCount();
+            util.store('todos-jquery', this.todos);
         }
     };
 
