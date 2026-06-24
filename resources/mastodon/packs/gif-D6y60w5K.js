@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-runtime-sLPvdpSW.js";import{t}from"./initial_state-DnZ5UeDQ.js";import{N as n}from"./poll-DloEZj-6.js";var r=e(),i=({src:e,staticSrc:i,className:a,animate:o=t})=>{let{hovering:s,handleMouseEnter:c,handleMouseLeave:l}=n(o);return(0,r.jsx)(`img`,{className:a,src:s||o?e:i,alt:``,role:`presentation`,onMouseEnter:c,onMouseLeave:l})};export{i as t};
+//# sourceMappingURL=gif-D6y60w5K.js.map

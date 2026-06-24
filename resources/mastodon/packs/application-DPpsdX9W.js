@@ -1,0 +1,2 @@
+import{r as e}from"./locales-BMswpQqC.js";import{t}from"./main-C8Ei5OKE.js";import{n}from"./polyfills-C7KHHkLs.js";n().then(e).then(t).catch(e=>{console.error(e)});
+//# sourceMappingURL=application-DPpsdX9W.js.map

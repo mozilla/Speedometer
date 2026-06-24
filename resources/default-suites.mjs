@@ -940,4 +940,32 @@ export const DefaultSuites = freezeSuites([
             }),
         ],
     },
+    {
+        // Mastodon web UI (React + Redux + Immutable) running on synthetic data
+        // with a mocked backend. See the mastodon repo's bench/ directory and
+        // bench/build-speedometer.mjs, which builds + deploys resources/mastodon/.
+        name: "Mastodon-Timeline",
+        url: "resources/mastodon/index.html?statuses=500",
+        tags: ["mastodon"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".status__wrapper");
+        },
+        tests: [
+            // Scroll the home timeline: virtualized list reconciliation plus
+            // timeline pagination (max_id + Link headers) loading more statuses.
+            new BenchmarkTestStep("ScrollTimeline", async (page) => {
+                await page._frame.contentWindow.__bench.scrollDown(20);
+            }),
+            // Favourite the first 10 rendered statuses: optimistic Redux update
+            // and action-bar re-render per status.
+            new BenchmarkTestStep("FavouriteVisible", async (page) => {
+                await page._frame.contentWindow.__bench.favourite(10);
+            }),
+            // Scroll back to the top, re-rendering recycled list items.
+            new BenchmarkTestStep("ScrollBackUp", async (page) => {
+                await page._frame.contentWindow.__bench.scrollToTop();
+            }),
+        ],
+    },
 ]);

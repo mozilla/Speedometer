@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-runtime-sLPvdpSW.js";var t=e(),n=({width:e,height:n})=>(0,t.jsx)(`span`,{className:`skeleton`,style:{width:e,height:n},children:`‌`});export{n as t};
+//# sourceMappingURL=skeleton-CE7ldenj.js.map

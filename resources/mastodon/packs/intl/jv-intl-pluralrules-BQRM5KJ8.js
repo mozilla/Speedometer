@@ -1,0 +1,2 @@
+Intl.PluralRules&&typeof Intl.PluralRules.__addLocaleData==`function`?Intl.PluralRules.__addLocaleData({data:{categories:{cardinal:[`other`],ordinal:[`other`]},fn:function(e,t,n=0){return`other`}},locale:`jv`}):(globalThis.__FORMATJS_PLURALRULES_DATA__=globalThis.__FORMATJS_PLURALRULES_DATA__||[]).push({data:{categories:{cardinal:[`other`],ordinal:[`other`]},fn:function(e,t,n=0){return`other`}},locale:`jv`});
+//# sourceMappingURL=jv-intl-pluralrules-BQRM5KJ8.js.map

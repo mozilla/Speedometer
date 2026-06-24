@@ -1,0 +1,2 @@
+import{r as e}from"./locales-cKM8uR27.js";import{t}from"./main-BNyP1sf3.js";import{n}from"./polyfills-C7KHHkLs.js";n().then(e).then(t).catch(e=>{console.error(e)});
+//# sourceMappingURL=application-DOaMug_y.js.map

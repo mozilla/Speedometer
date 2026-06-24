@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./jsx-runtime-sLPvdpSW.js";import{t as n}from"./classnames-CYxIelk8.js";var r=e(n()),i=t(),a=({children:e,compact:t=!1,avatarHeight:n})=>(0,i.jsx)(`div`,{className:(0,r.default)(`avatar-group`,{"avatar-group--compact":t}),style:n?{"--avatar-height":`${n}px`}:void 0,children:e});export{a as t};
+//# sourceMappingURL=avatar_group-Bmi2WU2J.js.map

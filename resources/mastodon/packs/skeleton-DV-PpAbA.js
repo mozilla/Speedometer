@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-dev-runtime-DL_RBkZa.js";var t=e(),n=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/components/skeleton.tsx`,r=({width:e,height:r})=>(0,t.jsxDEV)(`span`,{className:`skeleton`,style:{width:e,height:r},children:`‌`},void 0,!1,{fileName:n,lineNumber:8,columnNumber:7},void 0);export{r as t};
+//# sourceMappingURL=skeleton-DV-PpAbA.js.map

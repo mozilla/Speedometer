@@ -1,0 +1,1 @@
+.carousel{touch-action:pan-y;gap:16px;overflow:hidden}.carousel__header{padding:8px 16px}.carousel__pagination{justify-content:center;align-items:center;gap:4px;display:flex}.carousel__slides{flex-wrap:nowrap;align-items:start;display:flex}.carousel__slide{flex:0 0 100%;width:100%;overflow:hidden}

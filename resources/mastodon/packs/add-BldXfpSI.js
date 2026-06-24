@@ -1,0 +1,2 @@
+import"./chunk-CMxvf4Kt.js";import{t as e}from"./react-CiG4YQQ8.js";import{t}from"./jsx-runtime-sLPvdpSW.js";e();var n=t(),r=e=>(0,n.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,height:24,viewBox:`0 -960 960 960`,width:24,...e,children:(0,n.jsx)(`path`,{d:`M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z`})});export{r as t};
+//# sourceMappingURL=add-BldXfpSI.js.map

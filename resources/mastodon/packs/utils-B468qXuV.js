@@ -1,0 +1,2 @@
+var e=e=>`/collections/${e}`,t=e=>[`automatic`,`manual`].includes(e.feature_approval.current_user),n=e=>e.feature_approval.automatic.includes(`followers`)||e.feature_approval.manual.includes(`followers`);export{n,e as r,t};
+//# sourceMappingURL=utils-B468qXuV.js.map

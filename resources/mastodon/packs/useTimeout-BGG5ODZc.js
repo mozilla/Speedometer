@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./react-CiG4YQQ8.js";var n=e(t()),r=()=>{let e=(0,n.useRef)(),t=(0,n.useRef)(),r=(0,n.useCallback)((n,r)=>{e.current&&clearTimeout(e.current),t.current=n,e.current=setTimeout(n,r)},[]),i=(0,n.useCallback)(n=>{e.current&&clearTimeout(e.current),t.current&&(e.current=setTimeout(t.current,n))},[]),a=(0,n.useCallback)(()=>{e.current&&(clearTimeout(e.current),e.current=void 0,t.current=void 0)},[]);return(0,n.useEffect)(()=>()=>{a()},[a]),[r,a,i]};export{r as t};
+//# sourceMappingURL=useTimeout-BGG5ODZc.js.map

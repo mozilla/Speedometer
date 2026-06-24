@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./react-CiG4YQQ8.js";import{c as n,s as r}from"./react-router-DOn4akpZ.js";var i=e(t());function a(){let{search:e}=n();return(0,i.useMemo)(()=>new URLSearchParams(e),[e])}function o(e,t){let n=a(),o=r();return[n.get(e)??t,(0,i.useCallback)(t=>{t===null?n.delete(e):n.set(e,t),o.push({search:n.toString()})},[o,e,n])]}export{o as t};
+//# sourceMappingURL=useSearchParam-ppBb4wVj.js.map

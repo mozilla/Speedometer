@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-dev-runtime-DL_RBkZa.js";import{it as t}from"./poll-CQLFjNdi.js";var n=e(),r=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/components/a11y_live_region/index.tsx`,i=t(({role:e=`status`,as:t=`div`,children:i,...a},o)=>(0,n.jsxDEV)(t,{role:e,"aria-live":e===`alert`?`assertive`:`polite`,ref:o,...a,children:i},void 0,!1,{fileName:r,lineNumber:21,columnNumber:10},void 0));export{i as t};
+//# sourceMappingURL=a11y_live_region-CKkUWsQE.js.map

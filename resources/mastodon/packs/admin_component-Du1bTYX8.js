@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./react-BvyaA8V8.js";import{t as n}from"./jsx-dev-runtime-DL_RBkZa.js";import{n as r}from"./locales-BMswpQqC.js";var i=e(t()),a=n(),o=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/containers/admin_component.jsx`,s=class extends i.PureComponent{render(){let{children:e}=this.props;return(0,a.jsxDEV)(r,{children:e},void 0,!1,{fileName:o,lineNumber:9,columnNumber:12},this)}};export{s as default};
+//# sourceMappingURL=admin_component-Du1bTYX8.js.map

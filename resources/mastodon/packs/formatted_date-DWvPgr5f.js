@@ -1,0 +1,2 @@
+import{t as e}from"./react-intl-CSyYSWYq.js";import{t}from"./jsx-dev-runtime-DL_RBkZa.js";var n=t(),r=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/components/formatted_date.tsx`,i=t=>(0,n.jsxDEV)(e,{...t,children:e=>(0,n.jsxDEV)(`time`,{dateTime:a(t.value),className:t.className,children:e},void 0,!1,{fileName:r,lineNumber:6,columnNumber:14},void 0)},void 0,!1,{fileName:r,lineNumber:5,columnNumber:7},void 0),a=e=>{if(!e)return``;try{return new Date(e).toISOString()}catch{return e.toString()}};export{i as t};
+//# sourceMappingURL=formatted_date-DWvPgr5f.js.map

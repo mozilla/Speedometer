@@ -1,0 +1,2 @@
+import"./chunk-CMxvf4Kt.js";import{t as e}from"./react-CiG4YQQ8.js";import{t}from"./jsx-runtime-sLPvdpSW.js";e();var n=t(),r=e=>(0,n.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,height:24,viewBox:`0 -960 960 960`,width:24,...e,children:(0,n.jsx)(`path`,{d:`m40-120 440-760 440 760H40Zm138-80h604L480-720 178-200Zm330.5-51.5Q520-263 520-280t-11.5-28.5Q497-320 480-320t-28.5 11.5Q440-297 440-280t11.5 28.5Q463-240 480-240t28.5-11.5ZM440-360h80v-200h-80v200Zm40-100Z`})});export{r as t};
+//# sourceMappingURL=warning-B3akFASa.js.map

@@ -1,0 +1,2 @@
+function e(e){return new Promise((t,n)=>{function r(){let r;try{r=e()}catch(e){n(e);return}typeof r?.then==`function`?r.then(t).catch(n):t()}[`interactive`,`complete`].includes(document.readyState)?r():document.addEventListener(`DOMContentLoaded`,r)})}export{e as t};
+//# sourceMappingURL=ready-B3bZnx13.js.map

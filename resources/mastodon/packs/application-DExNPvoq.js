@@ -1,0 +1,2 @@
+import{r as e}from"./locales-cKM8uR27.js";import{t}from"./main-DPH_L4CR.js";import{n}from"./polyfills-C7KHHkLs.js";n().then(e).then(t).catch(e=>{console.error(e)});
+//# sourceMappingURL=application-DExNPvoq.js.map

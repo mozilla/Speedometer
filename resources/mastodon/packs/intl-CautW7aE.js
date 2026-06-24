@@ -1,0 +1,2 @@
+import{c as e}from"./react-intl-CSyYSWYq.js";import{t}from"./jsx-dev-runtime-DL_RBkZa.js";var n=t(),r=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/components/intl.tsx`,i=({component:t,props:i})=>{let a=e();return(0,n.jsxDEV)(t,{...i,intl:a},void 0,!1,{fileName:r,lineNumber:12,columnNumber:10},void 0)},a=e=>{let t=t=>(0,n.jsxDEV)(i,{component:e,props:t},void 0,!1,{fileName:r,lineNumber:15,columnNumber:61},void 0);return t.displayName=`injectIntl(${(e.displayName??e.name)||`Component`})`,t};export{a as t};
+//# sourceMappingURL=intl-CautW7aE.js.map

@@ -1,0 +1,582 @@
+{
+  "fonts/inter/inter-variable-font-slnt-wght.woff2": {
+    "file": "assets/inter-variable-font-slnt-wght-1DkMk9sQ.woff2",
+    "integrity": "sha384-kJY+HkB6dshlfX9DvcGsgxqmvFjEnrQSZQ4Sy8Qx7PRlBM80VDpd+FJ7zQwIByAj"
+  },
+  "fonts/roboto/roboto-bold-webfont.svg": {
+    "file": "assets/roboto-bold-webfont-BUIhI8GA.svg",
+    "integrity": "sha384-lIZu8RRhgOdF+cKt9qiNVUXC8dGQdiQR/r+k3kaO4UNQFQVn1aZpOMCVmSH+URif"
+  },
+  "fonts/roboto/roboto-bold-webfont.ttf": {
+    "file": "assets/roboto-bold-webfont-BTn1uZPM.ttf",
+    "integrity": "sha384-BYj9f6HlHMuqzJfLES/mck+lrtTdV0VgEjhIStWIlPD6RJCdoIIpjvaF7IZw2dND"
+  },
+  "fonts/roboto/roboto-bold-webfont.woff": {
+    "file": "assets/roboto-bold-webfont-DD3pbrNe.woff",
+    "integrity": "sha384-5d3YM++DnHuyavLpaqZYM2L88ncxeG/BASaOkUicdQ63Qb9kYAObMQg6xSL2f7RA"
+  },
+  "fonts/roboto/roboto-bold-webfont.woff2": {
+    "file": "assets/roboto-bold-webfont-DbQmqDJH.woff2",
+    "integrity": "sha384-g/3vW49xysZOS4pTPTitDRuWMIG/S3uz3CGhCDGVrLVREEp8VQ48R/kKeqvcA5fg"
+  },
+  "fonts/roboto/roboto-italic-webfont.svg": {
+    "file": "assets/roboto-italic-webfont-BM8NvIub.svg",
+    "integrity": "sha384-zjEZ1yYwvs5QzlmxpzB4gTC7VC7ded/1guDFxEbNvqjMkPcA2LCPtQi4t7jkc4ZK"
+  },
+  "fonts/roboto/roboto-italic-webfont.ttf": {
+    "file": "assets/roboto-italic-webfont-CsrFDl-N.ttf",
+    "integrity": "sha384-N0s+3QRIininuczwFjqQ5jCL/a7EfvuV1JMN9DNFQVksoLmBPcz3Bqysl0PbB6sX"
+  },
+  "fonts/roboto/roboto-italic-webfont.woff": {
+    "file": "assets/roboto-italic-webfont-BEzjxJr1.woff",
+    "integrity": "sha384-8jWpJIb6SuVqAxl6vqVx5xQLZLTsMIAsnYQUWBdV3D8QH6mfCxZcA+b8XlCJrK3G"
+  },
+  "fonts/roboto/roboto-italic-webfont.woff2": {
+    "file": "assets/roboto-italic-webfont-70o79EsZ.woff2",
+    "integrity": "sha384-snEvhC1NGA61yFRqcua8NuUQdYuEZHdBTqBbt5oUY8cOsSblo6pHr9mX6RDfcF2v"
+  },
+  "fonts/roboto/roboto-medium-webfont.svg": {
+    "file": "assets/roboto-medium-webfont-BFDl58Xo.svg",
+    "integrity": "sha384-JruR0oYUbCLYrV4tgbycxsNK8j/rfU8Ye4dI32z8ss3MPTBAEZJKxFVypX+yuCor"
+  },
+  "fonts/roboto/roboto-medium-webfont.ttf": {
+    "file": "assets/roboto-medium-webfont-D20z2hlG.ttf",
+    "integrity": "sha384-IX5LZsSpOfZJx+TXj3z5NgJxsbPk0k2LK5Mq26IT/+GjqmFCe+BCoWwDXkB/3RTa"
+  },
+  "fonts/roboto/roboto-medium-webfont.woff": {
+    "file": "assets/roboto-medium-webfont-BXIYY-1-.woff",
+    "integrity": "sha384-zgzIT41trJvhEunV50ZCiGfqNKj/9z/Nxim1hB6GOvDOac68dbArt/+vs4H0IKGX"
+  },
+  "fonts/roboto/roboto-medium-webfont.woff2": {
+    "file": "assets/roboto-medium-webfont-BrZc3cua.woff2",
+    "integrity": "sha384-GizANHJgUEtOpeY3TCFA4asEavuJQv2lPM8owSxjbIHJ+v3DxlS6kVO6bgW0J94o"
+  },
+  "fonts/roboto/roboto-regular-webfont.svg": {
+    "file": "assets/roboto-regular-webfont-IvmaNTIq.svg",
+    "integrity": "sha384-nMPAGfpSmsdZ6Xo07QcmFq0iXhAvipkcbfDrSfOlysBLqgQ9NuXnpDuW+ZtzwrLf"
+  },
+  "fonts/roboto/roboto-regular-webfont.ttf": {
+    "file": "assets/roboto-regular-webfont-BCB7oXd3.ttf",
+    "integrity": "sha384-TW25UPlWwooli9Nk2dM3g7xuiZN8/F0CFpi52Yh9QVPYbzbR07dTBMljiV9aGpzv"
+  },
+  "fonts/roboto/roboto-regular-webfont.woff": {
+    "file": "assets/roboto-regular-webfont-D8DMRyTh.woff",
+    "integrity": "sha384-Nz7BV5iL8m0QTWIdm27Wz/OchpNwv+y28IsJ6+ntXy+xqsIWXJF+7OelZI91HijT"
+  },
+  "fonts/roboto/roboto-regular-webfont.woff2": {
+    "file": "assets/roboto-regular-webfont-DjumA6RA.woff2",
+    "integrity": "sha384-0AT5l9g+HwINs+jMeCAZbDTEOINVuII8w03wGg4Xs6v4rEOmcXgXvs+y0tc3RZws"
+  },
+  "fonts/silkscreen-wrapstodon/OFL.txt": {
+    "file": "assets/OFL-DuMbR29C.txt",
+    "integrity": "sha384-17hWAxvWP/6T301VHGolSN0athGrVimtoY8znGc7X8SWmaUlrdDR35uooMqb3lIy"
+  },
+  "fonts/silkscreen-wrapstodon/silkscreen-regular.woff2": {
+    "file": "assets/silkscreen-regular-CK1HCVv6.woff2",
+    "integrity": "sha384-eEO1m2akkhGgaXie1jvISSBMEDbZ/RDd4VBU+12eSCrDmBeSWjUSDSsh4nry9NQ/"
+  },
+  "fonts/roboto-mono/robotomono-regular-webfont.svg": {
+    "file": "assets/robotomono-regular-webfont-i1qsiyKD.svg",
+    "integrity": "sha384-uuUzY4BQipx8Md2T9DVyv7RLLsfeeuxY1tVaQ+BksS0SByP/da8hbm+pzj0vdUkr"
+  },
+  "fonts/roboto-mono/robotomono-regular-webfont.ttf": {
+    "file": "assets/robotomono-regular-webfont-BL5LgyfS.ttf",
+    "integrity": "sha384-CFV2rYiZz6OL2bKB4JTt/ad3y2y3HwLrnuY7rKt4WkAmxNpXRGI+nGT6p4B79Oo9"
+  },
+  "fonts/roboto-mono/robotomono-regular-webfont.woff": {
+    "file": "assets/robotomono-regular-webfont-Wzw4m2TO.woff",
+    "integrity": "sha384-311vz/qCNoHWR5I6IO3f+94q8yKmlaqNSwhfYIyhmcIaLxi4u25MA6+zYjv8WEoW"
+  },
+  "fonts/roboto-mono/robotomono-regular-webfont.woff2": {
+    "file": "assets/robotomono-regular-webfont-CC8Z26Gq.woff2",
+    "integrity": "sha384-0uHEBUgTcWuuHL/vpupPvmlBeTPZ4gw8seEbbIabVx/zf0zty9y9YZS4yonEJyPi"
+  },
+  "icons/android-chrome-144x144.png": {
+    "file": "assets/android-chrome-144x144-D-ewI-KZ.png",
+    "integrity": "sha384-VLqr6v+MEMCjXwsCALCKK/6JQFRuas874BVNmUSzVS5N7sJfdQYJa/zpAOyqUS0P"
+  },
+  "icons/android-chrome-192x192.png": {
+    "file": "assets/android-chrome-192x192-jYKJbpas.png",
+    "integrity": "sha384-X/fzMuW281cQjI92dCoKB21kp54QFrgefFLKqu+UBWx4soMY/RjRWACX0/IiXJJa"
+  },
+  "icons/android-chrome-256x256.png": {
+    "file": "assets/android-chrome-256x256-DXt2vsq7.png",
+    "integrity": "sha384-IdpfuUSoMhAz+ltfSkTIfxrGvumEA9cBzRjR/KRSw/ZDvihQW783l6HNbB0FY/pA"
+  },
+  "icons/android-chrome-36x36.png": {
+    "file": "assets/android-chrome-36x36-DLiBQg3N.png",
+    "integrity": "sha384-yvvLtKwSL66JQrJPKLT92lkIzRWW6pM827IaP/NmtbrIDkGq1AeVaElriH4lBTrZ"
+  },
+  "icons/android-chrome-384x384.png": {
+    "file": "assets/android-chrome-384x384-CbK7cG33.png",
+    "integrity": "sha384-PGCAkKrk225FuqG3ChTH98lKoQz5k2YfIVzYNTkrb7yxMlcXn7kdx6nME9OlbCLd"
+  },
+  "icons/android-chrome-48x48.png": {
+    "file": "assets/android-chrome-48x48-C7lKWFwX.png",
+    "integrity": "sha384-QjbStz0pu6XAj+vZFHkGJZjeLWjUOHgrp4Upim5VPDJ89qk3B9zh9GEVPWi7+ogq"
+  },
+  "icons/android-chrome-512x512.png": {
+    "file": "assets/android-chrome-512x512-Dz2ThkhV.png",
+    "integrity": "sha384-lAGkbPnj3p0ycIlNJzNGtZfguceSNo6XrPTY92pMZBy0t5uonp1jjkNN9UTtOgME"
+  },
+  "icons/android-chrome-72x72.png": {
+    "file": "assets/android-chrome-72x72-9LRpA3QN.png",
+    "integrity": "sha384-+cs5jVZ6n8XEy1Tcv1/DECKfURvdVmdfqVr6e8yBBZabw3QjqoeRgafJeiZMGj3h"
+  },
+  "icons/android-chrome-96x96.png": {
+    "file": "assets/android-chrome-96x96-BKKwkkY-.png",
+    "integrity": "sha384-98Ihlj99q8xrBBrzA2m3sDWmL2hkC5m/srOPRCW9He7TX43yrJzbvW5ZHGgA0F2G"
+  },
+  "icons/apple-touch-icon-1024x1024.png": {
+    "file": "assets/apple-touch-icon-1024x1024-B3Tu3EqI.png",
+    "integrity": "sha384-aF4D7Koe64ZGZAeK8Oa4AyI1KEOxaigxKD5p2tXQKFVj9j7l5hFglx/q7DLbT4Le"
+  },
+  "icons/apple-touch-icon-114x114.png": {
+    "file": "assets/apple-touch-icon-114x114-Ch7jwTNh.png",
+    "integrity": "sha384-iRNaoveiE7JtpC+Zo7L47Z2KSETh+AkRi/RsC5qI8yzVr0KVl216sdokrz0/hwIc"
+  },
+  "icons/apple-touch-icon-120x120.png": {
+    "file": "assets/apple-touch-icon-120x120-W9xwzzUZ.png",
+    "integrity": "sha384-60/OoyDeyuJG4BUKtfUBuB5SvF0SUu10qXZQF30o1ThhvQvRz55xOIP+FPtffzWO"
+  },
+  "icons/apple-touch-icon-144x144.png": {
+    "file": "assets/android-chrome-144x144-D-ewI-KZ.png",
+    "integrity": "sha384-VLqr6v+MEMCjXwsCALCKK/6JQFRuas874BVNmUSzVS5N7sJfdQYJa/zpAOyqUS0P"
+  },
+  "icons/apple-touch-icon-152x152.png": {
+    "file": "assets/apple-touch-icon-152x152-s3oy-zRw.png",
+    "integrity": "sha384-2wz2O1HkMZnqDHkcyD+RhZz8/Moagr2bj4xyhDEEPWTfqN3JuR9N4iPPSDYxN98L"
+  },
+  "icons/apple-touch-icon-167x167.png": {
+    "file": "assets/apple-touch-icon-167x167-DdVi4pJj.png",
+    "integrity": "sha384-J+4HAGAOG0rogr5r9tCEoq3B8KLRNz8devcdTGtJRWWrPJq3wdYK/3zPhHuU2JKu"
+  },
+  "icons/apple-touch-icon-180x180.png": {
+    "file": "assets/apple-touch-icon-180x180-DSCV_HvQ.png",
+    "integrity": "sha384-xqgvHdh99C0nbCvzzFexSEeg9azWCwv5nJ8UsIq0gaNf3nM9/Or39Fo/Lb9wTZ1h"
+  },
+  "icons/apple-touch-icon-57x57.png": {
+    "file": "assets/apple-touch-icon-57x57-BsPGHSez.png",
+    "integrity": "sha384-myu583FsHdzbuTIHAqxvcIr6PFKF0LlGdd15yNknEyOmLx3UCm62voEeHPIvCNaE"
+  },
+  "icons/apple-touch-icon-60x60.png": {
+    "file": "assets/apple-touch-icon-60x60-CQE7yLDO.png",
+    "integrity": "sha384-Kz3kObYvv4El7DnTJMiN+KzbbGnWwLuHc9liLsljF/0PRifqp29NzkIUe7dsDJiB"
+  },
+  "icons/apple-touch-icon-72x72.png": {
+    "file": "assets/android-chrome-72x72-9LRpA3QN.png",
+    "integrity": "sha384-+cs5jVZ6n8XEy1Tcv1/DECKfURvdVmdfqVr6e8yBBZabw3QjqoeRgafJeiZMGj3h"
+  },
+  "icons/apple-touch-icon-76x76.png": {
+    "file": "assets/apple-touch-icon-76x76-BPRp9FS0.png",
+    "integrity": "sha384-gPGX9Iw9oRHUgsvK0F0fyKEFHskydqHR4erYkcCUrnItAEyE7wheb4K2hboPO1xs"
+  },
+  "icons/favicon-16x16.png": {
+    "file": "assets/favicon-16x16-74JBPGmr.png",
+    "integrity": "sha384-to0NpwlJ8SmKbBA3gT6hIE93AcIRKcYOMY80L4431LltBhgNc0ily9MwquOiolWv"
+  },
+  "icons/favicon-32x32.png": {
+    "file": "assets/favicon-32x32-CiQz7Niw.png",
+    "integrity": "sha384-J18fN/lCTHuN2mHJ6ix4hYa/1mgPkfVH+4MjVawuOWSfisk9ZQ8IksRHnXxrlXo7"
+  },
+  "icons/favicon-48x48.png": {
+    "file": "assets/favicon-48x48-DMnduFKh.png",
+    "integrity": "sha384-CTb2L4hVGD3r7+NlUrqqJ0i8LXhFrENmBfMc+1RoCeA+Oli79pBKFVsjBf1AUpsu"
+  },
+  "images/anniversary.svg": {
+    "file": "assets/anniversary-BUUjReJI.svg",
+    "integrity": "sha384-6R+ePe2W/UmFOPpj9HI93ddg8uAcY3d8PGDC4pB8ThJgLHTg8pk0dI+NZfwpv+Ck"
+  },
+  "images/app-icon.svg": {
+    "file": "assets/app-icon-EPF7bu15.svg",
+    "integrity": "sha384-7U1t9bIE60LgTFDJYHPGorCfT5chf0wpyPtHoliMTokzPPcoNVAl0nmKk2TmGQyA"
+  },
+  "images/check.svg": {
+    "file": "assets/check-Bs7-I-Ox.svg",
+    "integrity": "sha384-M+cd7wFXYK1ZegnvzTIi4O2H9DL6kra40xYS+v2hX7uJvJTkq2N1xevbtIObcdAK"
+  },
+  "images/elephant_ui.svg": {
+    "file": "assets/elephant_ui-BdkoEoYV.svg",
+    "integrity": "sha384-TIhU3aAKDcH5cXJlMkX8PsspMsZ5Fw0REzX3wYrlwv0gpV+zmM7ooQu/4b43spHF"
+  },
+  "images/elephant_ui_conversation.svg": {
+    "file": "assets/elephant_ui_conversation-CQTqhwcL.svg",
+    "integrity": "sha384-8pft0oo12bNwbvNlhsQHM+nllRWxorpg5X87lLa0OiNR1Fy/+y/K9Mc+adr3DGb/"
+  },
+  "images/elephant_ui_disappointed.svg": {
+    "file": "assets/elephant_ui_disappointed-BpLb0o_g.svg",
+    "integrity": "sha384-1GZJ8224qH25fCrv/mxHtQYJ0up0bCCcnivvoYk9aIaqfIAb8lmH9zFSjAAhg+rD"
+  },
+  "images/elephant_ui_greeting.svg": {
+    "file": "assets/elephant_ui_greeting-DaW6UAZG.svg",
+    "integrity": "sha384-bt1a4xBWgkRfOmYW87VvMafpantOEwnsQC31YUZZhEd6Kpve50atlMeptVAQmJe4"
+  },
+  "images/elephant_ui_plane.svg": {
+    "file": "assets/elephant_ui_plane-Cfmrathl.svg",
+    "integrity": "sha384-i7gdLQbo1UauJfl7ircrQe7J2WNMU08bVZizEPcCJWb9CDkH/NKY5vrnD7opnK/3"
+  },
+  "images/elephant_ui_working.svg": {
+    "file": "assets/elephant_ui_working-gIGD-GWW.svg",
+    "integrity": "sha384-q6hzpNBNXdaV1wVTSlGz3fmLstRteqiFUDkUZtlfWdD+gUf3J+4UOfdu4ighE0Yy"
+  },
+  "images/filter-stripes.svg": {
+    "file": "assets/filter-stripes-lTwKubHX.svg",
+    "integrity": "sha384-LGgyrbKGvLuqGsVywZ9RGAJfG3JyZsZDYXIAkG1nWewCPJn1sUeWEfpOO4xIeMUH"
+  },
+  "images/friends-cropped.png": {
+    "file": "assets/friends-cropped-OCVw-a84.png",
+    "integrity": "sha384-f6axQc2PIv8GgGCWUaxWFd+7fXBaCGhgfjwvMHAPb/y2hUqHnJVNEHM+OqXjx7EN"
+  },
+  "images/logo-symbol-icon.svg": {
+    "file": "assets/logo-symbol-icon-BQIzGafT.svg",
+    "integrity": "sha384-qKsJfvv1SWUdYlzHEoP2abmGlxvJ0w6gmROt7uXUvaVPEZH9b3rQLP7C/94NPAzA"
+  },
+  "images/logo-symbol-wordmark.svg": {
+    "file": "assets/logo-symbol-wordmark-B1fN1CEd.svg",
+    "integrity": "sha384-gkyiN6BcGiFpu2uCuCv0/bCq1uMNhV/+K9KXg3s/Qp7C7b+bX7AtjMAUyA+I9P1H"
+  },
+  "images/logo.svg": {
+    "file": "assets/logo-DXQkHAe5.svg",
+    "integrity": "sha384-HIbW51UZC2QRNjVMhoaEBRH89zBN+b8HYrzoVuDz79y9T6pFAKcrED/vAzyhu8dO"
+  },
+  "images/preview.png": {
+    "file": "assets/preview-vSUsFXid.png",
+    "integrity": "sha384-L33S3XzZPQUt3qExqJn4flbiRNFfoYzLsv04bJ67pB7DbevTFmlGXlcUmWA1UnU/"
+  },
+  "images/quote.svg": {
+    "file": "assets/quote-CRVJlZ6f.svg",
+    "integrity": "sha384-Ol13c/rZ2giYIzLo8Tt1Ezivn1B2HqiNzgeUp03eLZjSLLrXyrqDvYUE2lam2dgv"
+  },
+  "images/void.png": {
+    "file": "assets/void-Dqz1vGU-.png",
+    "integrity": "sha384-c01WmE6G2m1/X14pSOT3Vut17BKUkh+brfzPH/cnE7reuJ5j41NPzV2Im0jGyyq1"
+  },
+  "images/warning-stripes.svg": {
+    "file": "assets/warning-stripes-C2UqEgc5.svg",
+    "integrity": "sha384-nVlC842ubTdmSzOFLo6o/w5l6j5ZNr/AvCLp2InbqM/C2je2wQoYrd39mDWGLaQH"
+  },
+  "images/archetypes/booster.png": {
+    "file": "assets/booster-D4MlHOpG.png",
+    "integrity": "sha384-6MS3TTrEfogN+iucDUfKNJUlbvhncHD2bRAIYygkcXC6Gp8enCiHWAV53of8I85x"
+  },
+  "images/archetypes/lurker.png": {
+    "file": "assets/lurker-B6QPjXAC.png",
+    "integrity": "sha384-3h6+cTcHXWUDdOy4pgVVThezl7BJZ43JejuDdDymiK7BnhyqUw/0scrxKUQd5pyJ"
+  },
+  "images/archetypes/oracle.png": {
+    "file": "assets/oracle-FU_DivV9.png",
+    "integrity": "sha384-bY+2CJ14emljl9+3I37YeJxwFTHErz6su+yDmC2p/pLORe+QWA6/fmUSupHQK5U8"
+  },
+  "images/archetypes/pollster.png": {
+    "file": "assets/pollster-DcMg7jZv.png",
+    "integrity": "sha384-ZqxQWPNU8Z+icdMane33YpZHmTkgzYEE6LprOsRxSa99lWmOyeF6gS+iZTF6OM2H"
+  },
+  "images/archetypes/replier.png": {
+    "file": "assets/replier-DRa-Lscp.png",
+    "integrity": "sha384-F46KW5M9F/bCyvMS7/VVcBw1Hl2SVLWAjPnJNOkwfGd6ntUSLmH44gvKb7lexJka"
+  },
+  "images/archetypes/space_elements.png": {
+    "file": "assets/space_elements-CmM0G5RW.png",
+    "integrity": "sha384-3mm6rJT4bBuI/S+9jGS4dYj+1Z2tNryXkxq1PnDoXuMxXO11b7CcWXJAndzO2Zo+"
+  },
+  "images/icons/icon_admin.svg": {
+    "file": "assets/icon_admin-BxGX038F.svg",
+    "integrity": "sha384-l0AWzZJegcgm6cT2YzFeZ+N2yRaZyPfuUNBiYcAU/Mv2w5wCL9CAV2JARHrv3x+S"
+  },
+  "images/icons/icon_cached.svg": {
+    "file": "assets/icon_cached-BG7vVbn-.svg",
+    "integrity": "sha384-/uI3SzjsMjVkMgszoo+bSLe5NWRi9H03t9tjD2SzPmIz3b/GMaZBZBrKaoA87PCN"
+  },
+  "images/icons/icon_clock.svg": {
+    "file": "assets/icon_clock-DTtIc-KF.svg",
+    "integrity": "sha384-lzAYXWcjbA4FfT5Hjxer1Vvm3ySUzpaWgFUmvgH5Y1Q7HyrR9wUAiObzWi1cNIeL"
+  },
+  "images/icons/icon_done.svg": {
+    "file": "assets/icon_done-C1RUyRtx.svg",
+    "integrity": "sha384-Co/BF7540YLrnGCvVUcYflpCEe+j3tEHTHB7ze21kZVCMOZl/8zJRMd2ThExWnP5"
+  },
+  "images/icons/icon_email.svg": {
+    "file": "assets/icon_email-DQ-Jvkvz.svg",
+    "integrity": "sha384-8XTZjLNdtBmQC8KfaPa+09rzDY/umDagHzCbXVaKIjkR5YdKzH4gD5ja0QXiiR4y"
+  },
+  "images/icons/icon_file_download.svg": {
+    "file": "assets/icon_file_download-DbxQLxgp.svg",
+    "integrity": "sha384-5+UA1xvEHht/F+f0yjkmynKU7aVbtWOY/GmV9ZsKjlwi26nGsLlHL39fr2sVtNOW"
+  },
+  "images/icons/icon_flag.svg": {
+    "file": "assets/icon_flag-C6ZrWGFz.svg",
+    "integrity": "sha384-pa4lVQor1839vGmFfBNU/VvDu0a3t3fBR0YwC9LYUkGeVGtVBY/0a6fjvhKOmBxF"
+  },
+  "images/icons/icon_follower.svg": {
+    "file": "assets/icon_follower-HaqnjA5F.svg",
+    "integrity": "sha384-eH/QfBsDDPY2tp1ILXfOo6V4NIKahToPFeAfphH9vJVC27/r8WpZOIPrvgfXQPiO"
+  },
+  "images/icons/icon_grade.svg": {
+    "file": "assets/icon_grade-DzXJ7tuK.svg",
+    "integrity": "sha384-vCuXg6wNK89IwVinptQOIyJZGIPCVl3OkKZLZQ+TleFlIIry0uo/A43jZ8jCk/Jo"
+  },
+  "images/icons/icon_lock_open.svg": {
+    "file": "assets/icon_lock_open-C0eTTHzz.svg",
+    "integrity": "sha384-uetoJo04F12jnNc1bT4F7atdNwJ+6pl4TooaUjGOaTN17thBgQiEy7+h59DVKddW"
+  },
+  "images/icons/icon_person_add.svg": {
+    "file": "assets/icon_person_add-DJFd3yHX.svg",
+    "integrity": "sha384-aHsyZjZiIF0JXbzcWRhoRhsooyQ5PlMG+oPWKSB09gJAddVmRrk/K7SE1EyJ7AsF"
+  },
+  "images/icons/icon_pinned.svg": {
+    "file": "assets/icon_pinned-hnv8W2Nd.svg",
+    "integrity": "sha384-JOzeArnZBNqA2V/hqapA5IJCfHXP7NYsVUIokv1gxbAhc9GO1vIq24WTrII/RO+n"
+  },
+  "images/icons/icon_planet.svg": {
+    "file": "assets/icon_planet-BfxojNwi.svg",
+    "integrity": "sha384-q+FjomRT7pwqfD4bb4O5C+UlYtaEpD+NwlKR6m7P6R0Km0I6iyLzEkWN8CRZCZGx"
+  },
+  "images/icons/icon_reply.svg": {
+    "file": "assets/icon_reply-DFXxL7vA.svg",
+    "integrity": "sha384-SV7yW+VOg8yaWQ5FvZC08GzMK5nUFhAFbMgD/A5Pz6QQ+qE/BO2MLwy/ilJrhhLz"
+  },
+  "images/icons/icon_verified.svg": {
+    "file": "assets/icon_verified-BRj9vn1A.svg",
+    "integrity": "sha384-8ieu4uhx+Y/ZzeXtc+rzF+pmMwjs/jXHVryHJ9t6u36IW1ENUUVSfZ+VPrJ/ctf4"
+  },
+  "images/mailer/icon_cached.png": {
+    "file": "assets/icon_cached-D5tjmZuv.png",
+    "integrity": "sha384-nDgEkWzQia1ohr5cXwk5wrLGVVryaq5OTEMgVi9A3IzTCsbpKYn9ij0IcLwhwUIG"
+  },
+  "images/mailer/icon_done.png": {
+    "file": "assets/icon_done-9lfKJzmi.png",
+    "integrity": "sha384-ATuumGS7IHtM+/QTuYEjUS2cn4KvNrVkpYyvMji9ISHxavSSqBCvS9j0U/AsgIz3"
+  },
+  "images/mailer/icon_email.png": {
+    "file": "assets/icon_email-Cfb2QSke.png",
+    "integrity": "sha384-xq7gmIZfrVUdLisMgVvldn5Xra8o4Giw/IHWmS+82TX0ypykaN7OsQ7qelvhoL2G"
+  },
+  "images/mailer/icon_file_download.png": {
+    "file": "assets/icon_file_download-Dl1l104a.png",
+    "integrity": "sha384-btujKpcU1gYzsDHB30firrernJRNRoN6h+E+X9TDTYSxz4Vc5TcOAxT1ynl81ztr"
+  },
+  "images/mailer/icon_flag.png": {
+    "file": "assets/icon_flag-BYC3I8Sc.png",
+    "integrity": "sha384-2dqa568Et/xCVQrJK6smLm8mNv50WI/94RxFGn+nVPJoU/nu6xyJSP+oW1CpVq9V"
+  },
+  "images/mailer/icon_grade.png": {
+    "file": "assets/icon_grade-DzP6EULz.png",
+    "integrity": "sha384-LVjSuoCzrcMLs34bAg4MjQsd6aYN8mFq1bNQTzVPaOl9gQL2rq0Anz35xwJmMcdE"
+  },
+  "images/mailer/icon_lock_open.png": {
+    "file": "assets/icon_lock_open-C2KTbAeX.png",
+    "integrity": "sha384-2T0YwmYbpYRnqkhvxa5AVhWFb2rraC4PanWmcAHhhLEss/IhXBgP2dTRqeb1OQHl"
+  },
+  "images/mailer/icon_person_add.png": {
+    "file": "assets/icon_person_add-CY4GB1v3.png",
+    "integrity": "sha384-iqdi1c4tS9mSOkOLHQwDEo8SP0Q5m2sPEIZWdxK2LpUXSV7lqxDtcpAOaijbjY7D"
+  },
+  "images/mailer/icon_reply.png": {
+    "file": "assets/icon_reply-CICw7hWg.png",
+    "integrity": "sha384-PrN4A38HxkDqSygiOxNG8itj7isAYW0/39LNajf+syHdexAZsGjC6UCUgYzr5AOv"
+  },
+  "images/mailer/logo.png": {
+    "file": "assets/logo-DAajuyB9.png",
+    "integrity": "sha384-Lo+ZILeBZ+ZYTfPUDK7kJ0Ihep3K/ISept3asiyxc5k818EMvLmxMkL7EWjL0eT9"
+  },
+  "images/mailer/wordmark.png": {
+    "file": "assets/wordmark-BG5GhKmY.png",
+    "integrity": "sha384-0brBpItqMP+gdR6DWTVWchfUrKjtnPt9StOkVmovuz4i/zfuDWFk8KwQf79uNzWw"
+  },
+  "images/archetypes/previews/booster.jpg": {
+    "file": "assets/booster-DJPiC4Uj.jpg",
+    "integrity": "sha384-yipGXRTLhUNjUTtfkloQjkjl5oazyNyIcqh1DlhlJVN59N9frIo69lPMh+sO2gGQ"
+  },
+  "images/archetypes/previews/lurker.jpg": {
+    "file": "assets/lurker-CbdBgcDu.jpg",
+    "integrity": "sha384-/de0aiHCre1n05hYbV1LVw26DpzoQ4O1SsAHrh83hfnD3lHlZ7C9yIJBDPaKYMwq"
+  },
+  "images/archetypes/previews/oracle.jpg": {
+    "file": "assets/oracle-BqbxI-Pw.jpg",
+    "integrity": "sha384-z5S+SNJp9j1GsU410M24Urf9VhgSrdgSMNdS/w6kvP+cQqac0wMORBc24RqY1yE6"
+  },
+  "images/archetypes/previews/pollster.jpg": {
+    "file": "assets/pollster-QngB6B5E.jpg",
+    "integrity": "sha384-KkFt7dgCvXSrSEaL7G8uF8XtjKAGRnbRauJO3w5Dbd34SzFkc0QH5vVihgUbmYwh"
+  },
+  "images/archetypes/previews/replier.jpg": {
+    "file": "assets/replier-oBtn70FA.jpg",
+    "integrity": "sha384-KuqnGFFVHHVrnxIhvpwh/SxYQwniW6q4TsRSd2YMWYbc1YVDtW7rEzXDyiD+/xrV"
+  },
+  "images/mailer-new/common/header-bg-end.png": {
+    "file": "assets/header-bg-end-D7-R2JuD.png",
+    "integrity": "sha384-kx1RaedrWRhS7wS8//6TLDSc/ExQQ7QJucjR6eEEuAGORkaeDTrV7FZ0+6P2to4V"
+  },
+  "images/mailer-new/common/header-bg-start.png": {
+    "file": "assets/header-bg-start-C2I-MXx8.png",
+    "integrity": "sha384-h0nkae1s9ont7Il86/j/x1z+++PtkTWCt9q5jASuGLiD5ZC79sodaa5MpuqKKTqC"
+  },
+  "images/mailer-new/common/logo-footer.png": {
+    "file": "assets/logo-footer-z3i7dNiM.png",
+    "integrity": "sha384-eMDUyxsLMJ53k0xZJc/nNodxup5h6NvZEfqNsEIGAkzugwMxd5tHIhTbGjfpLH3R"
+  },
+  "images/mailer-new/common/logo-header.png": {
+    "file": "assets/logo-header-C6iSBoiE.png",
+    "integrity": "sha384-gnbr3b+ScgZ8YP2rz52sBqG1Avp+9+7O0QJR4wFeqPWC1RI+Ya0xuoesGT44GOqP"
+  },
+  "images/mailer-new/store-icons/btn-app-store.png": {
+    "file": "assets/btn-app-store-_iMtB6Ou.png",
+    "integrity": "sha384-DTUHq0bOFML85YMFIpAX0STd/2t+euZvhFMymPIEen/NNXduhlnC+KFS19dK9Hl6"
+  },
+  "images/mailer-new/store-icons/btn-google-play.png": {
+    "file": "assets/btn-google-play-KPgm6idR.png",
+    "integrity": "sha384-5zcIL1Jny06caohWQ+SVfS8MI82W0Nonrm7TUmuTlYo2ZESjTqe82BLU6NDzVjpX"
+  },
+  "images/mailer-new/welcome-icons/apps_step-off.png": {
+    "file": "assets/apps_step-off-C1fpTVjb.png",
+    "integrity": "sha384-Elwg1/pPb16mr3pK8G1ChFzTlnXxSYfEO5JCl1tHq+EOm7VhID1FiW7nwCMev08A"
+  },
+  "images/mailer-new/welcome-icons/apps_step-on.png": {
+    "file": "assets/apps_step-on-C8Q6GzHA.png",
+    "integrity": "sha384-YqEWq3h8HJnJMahDRsgkynsrtgoJRqjA0MRHKPi/8C9azRDIC718AqV9OJd71YGF"
+  },
+  "images/mailer-new/welcome-icons/edit_profile_step-off.png": {
+    "file": "assets/edit_profile_step-off-J-syfXgX.png",
+    "integrity": "sha384-21UoBhyEa/iC2G2zI1jG3ckVueGnYKF76h9tJNCCjeOj4F29wgh73WwfmPwnE0oX"
+  },
+  "images/mailer-new/welcome-icons/edit_profile_step-on.png": {
+    "file": "assets/edit_profile_step-on-rMr1qWKa.png",
+    "integrity": "sha384-Q9nXt3wi94DdKfYRVCadZTJBA1YbL/tcxWyjF6nm/gqtau8pQzMxQhO5aG93l7Kv"
+  },
+  "images/mailer-new/welcome-icons/follow_step-off.png": {
+    "file": "assets/follow_step-off-Bgct0CPj.png",
+    "integrity": "sha384-lc27cobiqibfl4xtbl/1GDnJvG3OEpW9sYSnilw0Qrq/XqHkeXgV2bHSgR7xh5g3"
+  },
+  "images/mailer-new/welcome-icons/follow_step-on.png": {
+    "file": "assets/follow_step-on-BS4YCoE0.png",
+    "integrity": "sha384-XrAfjnhyqeOaKXdZx7DN+bLDESoBWQV/FV67M4JBftJkEfo+4Z7jMcHcvro7jEkE"
+  },
+  "images/mailer-new/welcome-icons/post_step-off.png": {
+    "file": "assets/post_step-off-BaCGvAtj.png",
+    "integrity": "sha384-nhtsqUYxvDVgix+iOktZy0pI1wwAC3FZPj2ZhY9hrTnRoOy8QlLYHgYlM6fTma+/"
+  },
+  "images/mailer-new/welcome-icons/post_step-on.png": {
+    "file": "assets/post_step-on-CTcSvCfQ.png",
+    "integrity": "sha384-amqjV1qX9DesuPZB//ZjzTL6KoRlS3m5NyzxzXS6nCsZpPvFFArX3BnnGpq0Tigm"
+  },
+  "images/mailer-new/welcome-icons/share_step-off.png": {
+    "file": "assets/share_step-off-Ci2w3ZCh.png",
+    "integrity": "sha384-7DRJYJ6mM7RfGNIMV6hkLojdqq0Ew+eAX/UTx8wT9waM+Dj2qfJvTuEvU73DcTuB"
+  },
+  "images/mailer-new/welcome-icons/share_step-on.png": {
+    "file": "assets/share_step-on-Dn9O-acd.png",
+    "integrity": "sha384-WvjNVhB0BG4B9RIs5k/GA85M2VJsBEfBoKMy1K4xGmzoMIse/BEJKSEEegnM637I"
+  },
+  "images/mailer-new/welcome/checkbox-off.png": {
+    "file": "assets/checkbox-off-Cd-7gDwE.png",
+    "integrity": "sha384-qFl9V8o5xhxRvoiQcqf4q78+HxT/S48INtqGVba5SJ8SOAApHjJsKVZbBZT6gTYx"
+  },
+  "images/mailer-new/welcome/checkbox-on.png": {
+    "file": "assets/checkbox-on-B8jNoRz-.png",
+    "integrity": "sha384-aElHlzaU2JGCYs65S++gP4y9Es3Rl0+KoA0ZG/c4kkAK9tZX/bFW1hgv50Ah5cfy"
+  },
+  "images/mailer-new/welcome/feature_audience.png": {
+    "file": "assets/feature_audience-3tiEoWa8.png",
+    "integrity": "sha384-XFbdBDp6T/KYlM6ElilSnhYDFMXWScDmBng0BZ1PbfFMwt7MuTYIYQFSpEmY3SDi"
+  },
+  "images/mailer-new/welcome/feature_control.png": {
+    "file": "assets/feature_control-Bcj4eL5Q.png",
+    "integrity": "sha384-LXBRRzZ3rM/Wrgwf+ppMrVt8enU1eKeDf3sxwVkuIKCNFxKLPgE2rhdYEeVrZiVd"
+  },
+  "images/mailer-new/welcome/feature_creativity.png": {
+    "file": "assets/feature_creativity-BKwTa43v.png",
+    "integrity": "sha384-FcCdACJ77BONPdzTRtxcYdq0d9RPKaDNAG+iYmWV9p4gGvr1i4nGMC2DSlmoPxsH"
+  },
+  "images/mailer-new/welcome/feature_moderation.png": {
+    "file": "assets/feature_moderation-Dj403es6.png",
+    "integrity": "sha384-7LS1pLTWuPz435pTjvHvWZ2B7A/okE13n8FcAlBqLA2tqlFSo1vxOLQrBF4CrhkD"
+  },
+  "images/mailer-new/welcome/purple-extra-soft-spacer.png": {
+    "file": "assets/purple-extra-soft-spacer-BWyVCADs.png",
+    "integrity": "sha384-fqE2OEiERZSR0of4EpAjOJW2KjYW1VS3TQhZq8HW/TlgUVm5FyZABFdDzJ2P1Zl9"
+  },
+  "images/mailer-new/welcome/purple-extra-soft-wave.png": {
+    "file": "assets/purple-extra-soft-wave-D1OFL0Zf.png",
+    "integrity": "sha384-MH0hf/KlCwrRCNzbP+ei+O/Si/hi0sEH5cP8Tfl4vKrz4Uxg+mSesrpfKdpp8KZi"
+  },
+  "images/mailer-new/heading/2fa-disabled.png": {
+    "file": "assets/2fa-disabled-CvM4ngE6.png",
+    "integrity": "sha384-cxAY6+U9QEq8qhjXkQ+OSXvFIMu3zHM0ObVv5yXfQoNzEuiAdhOol8CKHZUrT5Fe"
+  },
+  "images/mailer-new/heading/2fa-enabled.png": {
+    "file": "assets/2fa-enabled-D14SC3aG.png",
+    "integrity": "sha384-XTW9qxqKoPcB9OHbFYZqnO6VeNQ3eRl7GWhfKFknu+Cjf4dQBHC2DvzXpGVX8im2"
+  },
+  "images/mailer-new/heading/2fa-recovery.png": {
+    "file": "assets/2fa-recovery-OKTCL6Wk.png",
+    "integrity": "sha384-v3ffumGhmKFgRtcqpiSkdeCr3F8xlhgLEFDwxXRzsbKPhYib1Lr5+YLa7ezxZsHW"
+  },
+  "images/mailer-new/heading/appeal-approved.png": {
+    "file": "assets/appeal-approved-DJg8PnxV.png",
+    "integrity": "sha384-+CWVHTTrbqAfcU0tkavHMFIcu9KuSdaC5wUgEoZ5B6SC/ts8ZM5EKvLVz4uVlzl8"
+  },
+  "images/mailer-new/heading/appeal-rejected.png": {
+    "file": "assets/appeal-rejected-BBQlrYJE.png",
+    "integrity": "sha384-cIPTuiYzwVnt6Q6DPEERUvJRtBt9KsaxGWU0As2WjKY+suLdf/As9GwfEn8oeXMF"
+  },
+  "images/mailer-new/heading/archive.png": {
+    "file": "assets/archive--i1h0WZd.png",
+    "integrity": "sha384-wK2XwxyuZjRm62csCfSudeACyDtqcAo9YYvbTXEtGZF4KzqtyyDk9eWoYasNmS1g"
+  },
+  "images/mailer-new/heading/boost.png": {
+    "file": "assets/boost-B6pCZy8n.png",
+    "integrity": "sha384-nsvm3e6L7xP1zvGbXftoS6XE0EHN+3/uoSJ3NKW410EHA+saPoOU2SiNqEe4qY+b"
+  },
+  "images/mailer-new/heading/email.png": {
+    "file": "assets/email-6B27NX69.png",
+    "integrity": "sha384-DsVozFvXjaShg30DCSqfo3d8Dy/lu94+7XYvBjakJzUBN64ND4owqps9eWOdt2AC"
+  },
+  "images/mailer-new/heading/favorite.png": {
+    "file": "assets/favorite-DkBG0AoY.png",
+    "integrity": "sha384-rrDPvRh4HKggRpwa4Z94PdLZPJ+Py67P/7QviSl70xLjXc795v8mlWe/tZPwwSNS"
+  },
+  "images/mailer-new/heading/follow.png": {
+    "file": "assets/follow-oTaX1H0a.png",
+    "integrity": "sha384-35493TTcwD4hHb2zxOke+zJHhj5jd14wqF5DYzBReFu9pQ05ynKmltRjYlKdt5wB"
+  },
+  "images/mailer-new/heading/key-added.png": {
+    "file": "assets/key-added-b9MiUtmN.png",
+    "integrity": "sha384-Qy96IhsTqujBGZly1LXQDdJX6d+xkHctbNq6U8yFFljQDhFTQBHbm8aXti/E6jpM"
+  },
+  "images/mailer-new/heading/key-deleted.png": {
+    "file": "assets/key-deleted-uyKZfTdq.png",
+    "integrity": "sha384-BNulK5ioriIYCQORkeqLTBHcD5Uz6oSQW0Ts/Mn5hMfCx871s5NDz/1nPd7AbxJk"
+  },
+  "images/mailer-new/heading/key-disabled.png": {
+    "file": "assets/key-disabled-CMVJ4l9f.png",
+    "integrity": "sha384-TnEdzuszj72goe7s+Wx/Ny6+ldhFqZVMTZd803zBVwdDzw15x6E/W6GEwVivQBTN"
+  },
+  "images/mailer-new/heading/key-enabled.png": {
+    "file": "assets/appeal-approved-DJg8PnxV.png",
+    "integrity": "sha384-+CWVHTTrbqAfcU0tkavHMFIcu9KuSdaC5wUgEoZ5B6SC/ts8ZM5EKvLVz4uVlzl8"
+  },
+  "images/mailer-new/heading/login.png": {
+    "file": "assets/login-DzOCy6s1.png",
+    "integrity": "sha384-vIe98+6jmjmy6Rt7ZgHZzx5fUPFc1OEI1Q1TXsSqZOTkoY+isDxUJbmUC4MurucT"
+  },
+  "images/mailer-new/heading/mention.png": {
+    "file": "assets/mention-CIxg1MrO.png",
+    "integrity": "sha384-YUrNbXqgwGC5LmCCnyoa2amFQuqYAgQonvYgCOqLo/YuaNniHvdsYRYHB3YDdHcp"
+  },
+  "images/mailer-new/heading/password.png": {
+    "file": "assets/password-ByJdIm8f.png",
+    "integrity": "sha384-nL9i6jesT9QGiwvRxwh8uKnKs3Py0gn8lRJGeWBwOgFWKzBEPp9rJCiYUeSuqeRO"
+  },
+  "images/mailer-new/heading/quote.png": {
+    "file": "assets/quote-glNZmBQx.png",
+    "integrity": "sha384-86FCGVG+VlY9csgHKEjs/qAsl+VTzijvZnt3Wb+GSWZYV3qWeYXNP069dY40GpE4"
+  },
+  "images/mailer-new/heading/user.png": {
+    "file": "assets/user-UmWREURQ.png",
+    "integrity": "sha384-2xrn/Kj9V3We5QZd9QKreak+WoLFNaXvogIah0TGfRRRje3/goE1YrmXZbVpL5EU"
+  },
+  "images/mailer-new/heading/warning.png": {
+    "file": "assets/warning-BFIitQ4E.png",
+    "integrity": "sha384-3hz9RCxNBoCRRRu2yCa2wMGi3Dosuf7KjmsoErPPfIJXctAEisGmybsczi08fZih"
+  }
+}

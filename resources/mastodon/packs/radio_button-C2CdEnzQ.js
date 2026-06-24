@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./jsx-runtime-sLPvdpSW.js";import{t as n}from"./classnames-CYxIelk8.js";var r=e(n()),i=t(),a=({name:e,value:t,checked:n,onChange:a,label:o})=>(0,i.jsxs)(`label`,{className:`radio-button`,children:[(0,i.jsx)(`input`,{name:e,type:`radio`,value:t,checked:n,onChange:a}),(0,i.jsx)(`span`,{className:(0,r.default)(`radio-button__input`,{checked:n})}),(0,i.jsx)(`span`,{children:o})]});export{a as t};
+//# sourceMappingURL=radio_button-C2CdEnzQ.js.map

@@ -1,0 +1,2 @@
+var e={name:`sameWidth`,enabled:!0,phase:`beforeWrite`,requires:[`computeStyles`],fn:({state:e})=>{e.styles.popper&&(e.styles.popper.width=`${e.rects.reference.width}px`)},effect:({state:e})=>{let t=e.elements.reference;e.elements.popper.style.width=`${t.offsetWidth}px`}};export{e as t};
+//# sourceMappingURL=utils-B_8WHCxX.js.map

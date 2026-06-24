@@ -1,0 +1,1 @@
+import{n as e,r as t,t as n}from"./database-BbHzOW0P.js";export{n as importCustomEmojiData,e as importEmojiData,t as importLegacyShortcodes};

@@ -1,0 +1,2 @@
+import{o as e}from"./chunk-CMxvf4Kt.js";import{t}from"./react-BvyaA8V8.js";var n=e(t());function r(e){let t=(0,n.useRef)(null);return t.current??=new ResizeObserver(e),(0,n.useEffect)(()=>{let e=t.current;return()=>{e?.disconnect()}},[]),t.current}function i(e){let t=(0,n.useRef)(null);return t.current??=new MutationObserver(e),(0,n.useEffect)(()=>{let e=t.current;return()=>{e?.disconnect()}},[]),t.current}export{r as n,i as t};
+//# sourceMappingURL=useObserver-BRe7HqIg.js.map

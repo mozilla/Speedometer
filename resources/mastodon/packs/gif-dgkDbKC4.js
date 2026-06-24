@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-dev-runtime-DL_RBkZa.js";import{t}from"./initial_state-DnZ5UeDQ.js";import{N as n}from"./poll-CQLFjNdi.js";var r=e(),i=`/Users/jrmuizel/src/mastodon/app/javascript/mastodon/components/gif.tsx`,a=({src:e,staticSrc:a,className:o,animate:s=t})=>{let{hovering:c,handleMouseEnter:l,handleMouseLeave:u}=n(s);return(0,r.jsxDEV)(`img`,{className:o,src:c||s?e:a,alt:``,role:`presentation`,onMouseEnter:l,onMouseLeave:u},void 0,!1,{fileName:i,lineNumber:19,columnNumber:10},void 0)};export{a as t};
+//# sourceMappingURL=gif-dgkDbKC4.js.map

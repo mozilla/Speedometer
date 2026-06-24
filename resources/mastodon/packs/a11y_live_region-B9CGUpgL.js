@@ -1,0 +1,2 @@
+import{t as e}from"./jsx-runtime-sLPvdpSW.js";import{it as t}from"./poll-DloEZj-6.js";var n=e(),r=t(({role:e=`status`,as:t=`div`,children:r,...i},a)=>(0,n.jsx)(t,{role:e,"aria-live":e===`alert`?`assertive`:`polite`,ref:a,...i,children:r}));export{r as t};
+//# sourceMappingURL=a11y_live_region-B9CGUpgL.js.map

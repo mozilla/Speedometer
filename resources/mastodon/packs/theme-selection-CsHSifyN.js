@@ -1,0 +1,2 @@
+(function(e){let{colorScheme:t,contrast:n}=e.dataset,r=window.matchMedia(`(prefers-color-scheme: dark)`),i=window.matchMedia(`(prefers-contrast: more)`),a=()=>{let n=t===`auto`?r.matches:t===`dark`;e.dataset.colorScheme=n?`dark`:`light`},o=()=>{let t=n===`high`||i.matches;e.dataset.contrast=t?`high`:`default`};r.addEventListener(`change`,a),i.addEventListener(`change`,o),a(),o()})(document.documentElement);
+//# sourceMappingURL=theme-selection-CsHSifyN.js.map
