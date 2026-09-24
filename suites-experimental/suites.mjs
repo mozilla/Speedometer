@@ -205,7 +205,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
-        tags: ["responsive-design", "webcomponents", "experimental"],
+        tags: ["sp4", "responsive-design", "webcomponents", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("cooking-app");
@@ -314,7 +314,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Terminal-Xterm",
         url: "suites-experimental/terminal-xterm/dist/index.html",
-        tags: ["terminal", "xterm", "experimental"],
+        tags: ["sp4", "terminal", "xterm", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#terminal-container");
@@ -353,7 +353,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Scrollytelling-Scrollama",
         url: "suites-experimental/scrollytelling/dist/index.html?engine=scrollama",
-        tags: ["experimental", "scrollytelling"],
+        tags: ["sp4", "experimental", "scrollytelling"],
         async prepare(page) {
             await page.waitForElement(".scrolly-container");
             page.call("serviceRAF");
@@ -399,7 +399,7 @@ export const ExperimentalSuites = freezeSuites([
    {
         name: "Media-Conferencing",
         url: "suites-experimental/media-performance/conferencing.html",
-        tags: ["experimental", "media"],
+        tags: ["sp4", "experimental", "media"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#video-benchmark");
@@ -418,7 +418,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Timeline-Mithril",
         url: "suites-experimental/timeline/dist/index.html",
-        tags: ["experimental", "timeline", "mithril"],
+        tags: ["sp4", "experimental", "timeline", "mithril"],
         async prepare(page) {
             await page.waitForElement("#app-container");
         },
@@ -500,7 +500,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "ChatRoom-React",
         url: "suites-experimental/chat-room/dist/index.html",
         resources: "suites-experimental/chat-room/dist/resources.txt",
-        tags: ["chat-room", "experimental"],
+        tags: ["sp4", "chat-room", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".room-list-item");
@@ -569,7 +569,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Media-Streaming",
         url: "suites-experimental/media-performance/streaming.html",
-        tags: ["experimental", "media"],
+        tags: ["sp4", "experimental", "media"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#initial-playback");
