@@ -399,7 +399,7 @@ export const ExperimentalSuites = freezeSuites([
    {
         name: "Media-Conferencing",
         url: "suites-experimental/media-performance/conferencing.html",
-        tags: ["sp4", "experimental", "media"],
+        tags: ["experimental", "media"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#video-benchmark");
@@ -569,7 +569,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Media-Streaming",
         url: "suites-experimental/media-performance/streaming.html",
-        tags: ["sp4", "experimental", "media"],
+        tags: ["experimental", "media"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#initial-playback");
