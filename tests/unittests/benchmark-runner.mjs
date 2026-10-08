@@ -83,6 +83,14 @@ describe("BenchmarkRunner", () => {
                 expect(position).to.be("absolute");
             });
 
+            it("should lay out at a suite's own viewport, scaled to fit into the frame", async () => {
+                const frame = await runner._appendFrame({ viewport: { width: DEFAULT_WIDTH * 2, height: DEFAULT_HEIGHT } });
+                const { width, height } = getComputedStyle(frame);
+                expect(parseInt(width)).to.equal(DEFAULT_WIDTH * 2);
+                expect(parseInt(height)).to.equal(DEFAULT_HEIGHT);
+                expect(frame.style.transform).to.be("translate(-50%, -50%) scale(0.5)");
+            });
+
             it("should disable scrolling in the frame", async () => {
                 const { scrolling } = await runner._appendFrame();
                 expect(scrolling).to.be("no");

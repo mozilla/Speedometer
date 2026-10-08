@@ -429,11 +429,15 @@ export class BenchmarkRunner {
         }
     }
 
-    async _appendFrame() {
+    // A suite can set `viewport` to lay out at another size than the benchmark
+    // frame. A larger viewport is scaled down to fit into the frame.
+    async _appendFrame(suite) {
         const frame = document.createElement("iframe");
         const style = frame.style;
-        style.width = `${params.viewport.width}px`;
-        style.height = `${params.viewport.height}px`;
+        const viewport = suite?.viewport ?? params.viewport;
+        const scale = Math.min(1, params.viewport.width / viewport.width, params.viewport.height / viewport.height);
+        style.width = `${viewport.width}px`;
+        style.height = `${viewport.height}px`;
         style.border = "0px none";
         style.position = "absolute";
         frame.setAttribute("scrolling", "no");
@@ -443,6 +447,8 @@ export class BenchmarkRunner {
         style.transform = "translate(-50%, -50%)";
 
         await this._client?.willAddTestFrame?.(frame);
+        if (scale < 1)
+            style.transform += ` scale(${scale})`;
 
         document.body.insertBefore(frame, document.body.firstChild);
         this._frame = frame;
@@ -485,7 +491,7 @@ export class BenchmarkRunner {
                 if (!suite.enabled)
                     continue;
                 try {
-                    await this._appendFrame();
+                    await this._appendFrame(suite);
                     this._page = new Page(this._frame);
                     await this.runSuite(suite);
                 } finally {
