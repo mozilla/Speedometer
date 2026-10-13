@@ -2452,3 +2452,4 @@ Xt("ytl-ghost-comments",Q(function(a){var b=M(function(){var c=Number(O(a.number
 3);window.ytlWorkload={whenIdle:sm,nextEvent:Jx,resetResponses:to,app:b};window.dispatchEvent(new CustomEvent("ytl-ready"));c.jumpToEnd()})})();
 }catch(e){_._DumpException(e)}
 }).call(this,this.default_ytl);
+//# sourceMappingURL=app.js.map

@@ -1,5 +1,6 @@
 app.css
 app.js
+app.js.map
 assets/avatars/0.webp
 assets/avatars/1.webp
 assets/avatars/10.webp
@@ -89,6 +90,7 @@ assets/thumbs/7.webp
 assets/thumbs/8.webp
 assets/thumbs/9.webp
 custom-elements-es5-adapter.js
+custom-elements-es5-adapter.js.map
 data/channel-home.json
 data/channel-player.json
 data/channel-videos.json
@@ -126,4 +128,5 @@ speedometer.mjs
 steps.mjs
 theme.css
 webcomponents-sd.js
+webcomponents-sd.js.map
 workload-test.mjs
