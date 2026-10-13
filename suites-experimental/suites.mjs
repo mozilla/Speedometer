@@ -22,6 +22,14 @@ function yieldTask() {
     });
 }
 
+function reportRecipeCarouselResizeEvents(stepName, resizeEvents) {
+    const count = resizeEvents.stop();
+    if (count)
+        console.warn(`${stepName}: recipe-carousel ResizeObserver reported ${count} width change(s).`);
+    else
+        console.warn(`${stepName}: recipe-carousel ResizeObserver reported 0 width changes; expected width changes during iframe resize.`);
+}
+
 export const ExperimentalSuites = freezeSuites([
     {
         name: "TodoMVC-LocalStorage",
@@ -233,6 +241,7 @@ export const ExperimentalSuites = freezeSuites([
             new BenchmarkTestStep("ReduceWidthIn5Steps", async (page) => {
                 const widths = [768, 704, 640, 560, 480];
                 const MATCH_MEDIA_QUERY_BREAKPOINT = 640;
+                const carouselResizeEvents = await page.querySelector(".carousel", ["cooking-app", "main-content", "recipe-carousel"]).observeResizeEvents();
 
                 // The matchMedia query is "(max-width: 640px)"
                 // Starting from a width > 640px, we'll only get 1 event when crossing to <= 640px
@@ -249,6 +258,7 @@ export const ExperimentalSuites = freezeSuites([
                 }
 
                 await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                reportRecipeCarouselResizeEvents("ReduceWidthIn5Steps", carouselResizeEvents);
             }),
             new BenchmarkTestStep("ScrollToChatAndSendMessages", async (page) => {
                 const cvWorkComplete = new Promise((resolve) => {
@@ -292,6 +302,7 @@ export const ExperimentalSuites = freezeSuites([
             new BenchmarkTestStep("IncreaseWidthIn5Steps", async (page) => {
                 const widths = [560, 640, 704, 768, 800];
                 const MATCH_MEDIA_QUERY_BREAKPOINT = 704;
+                const carouselResizeEvents = await page.querySelector(".carousel", ["cooking-app", "main-content", "recipe-carousel"]).observeResizeEvents();
 
                 // The matchMedia query is "(max-width: 640px)"
                 // Starting from a width <= 640px, we'll get 1 event when crossing back to > 640px.
@@ -308,6 +319,7 @@ export const ExperimentalSuites = freezeSuites([
                 }
 
                 await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                reportRecipeCarouselResizeEvents("IncreaseWidthIn5Steps", carouselResizeEvents);
             }),
         ],
     },
