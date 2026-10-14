@@ -19,6 +19,9 @@ html {
   --ytl-spec-brand-icon-active: #f00;
   --ytl-spec-10-percent-layer: rgba(0, 0, 0, 0.1);
   --ytl-spec-touch-response: #000;
+  --ytl-spec-touch-response-inverse: #fff;
+  --ytl-spec-protect-background: rgba(255, 255, 255, 0.7);
+  --ytl-spec-cinematic-background: #333;
   --ytl-masthead-height: 56px;
   --ytl-guide-width: 240px;
   --ytl-mini-guide-width: 72px;
@@ -54,6 +57,8 @@ html[dark] {
   --ytl-spec-icon-inactive: #717171;
   --ytl-spec-badge-chip-background: rgba(255, 255, 255, 0.1);
   --ytl-spec-touch-response: #fff;
+  --ytl-spec-touch-response-inverse: #000;
+  --ytl-spec-protect-background: rgba(0, 0, 0, 0.8);
 }
 body {
   margin: 0;
@@ -807,8 +812,14 @@ ytl-item-section-renderer {
 #action-button.ytl-section-list-renderer:not(.show-scroll-button) {
   display: none;
 }
-#contents.ytl-item-section-renderer > * {
+#contents.ytl-item-section-renderer > :not(.lockup) {
   margin-top: var(--ytl-comp-h-space-16px);
+}
+.lockup.ytl-item-section-renderer {
+  margin-top: var(--ytl-item-section-item-margin, 16px);
+}
+ytl-item-section-renderer[first-lockup-no-top-margin]:not([is-grid-view-enabled]) .lockup.ytl-item-section-renderer:first-child {
+  margin-top: 0;
 }
 ytl-video-renderer {
   display: block;
@@ -1593,20 +1604,6 @@ ytl-thumbnail-view-model {
   margin-left: auto;
   flex: none;
 }
-.ytlLockupViewModelHost {
-  display: flex;
-  gap: var(--ytl-comp-h-space-16px);
-}
-.ytlLockupViewModelContentImage {
-  flex: none;
-  width: var(--ytl-search-thumbnail-width);
-  position: relative;
-  z-index: 0;
-}
-.ytlLockupViewModelMetadata {
-  flex: 1;
-  min-width: 0;
-}
 .ytlCollectionsStackHost {
   display: block;
   position: absolute;
@@ -1619,16 +1616,6 @@ ytl-thumbnail-view-model {
   border-radius: var(--ytl-comp-h-radius-8px) var(--ytl-comp-h-radius-8px) 0 0;
   background: var(--ytl-spec-outline);
   margin: 0 var(--ytl-comp-h-space-8px);
-}
-.ytlLockupMetadataViewModelHost {
-  display: flex;
-  gap: 12px;
-}
-.ytlLockupMetadataViewModelHeadingReset {
-  margin: 0;
-  font-size: var(--ytl-comp-h-font-size-1p8rem);
-  line-height: var(--ytl-comp-h-line-height-2p6rem);
-  font-weight: var(--ytl-comp-h-weight-400);
 }
 .ytlContentMetadataViewModelHost {
   font-size: var(--ytl-comp-h-font-size-1p2rem);
@@ -1733,6 +1720,223 @@ ytl-thumbnail-view-model {
 .ytlSpecAvatarShapeImage {
   font-size: 0;
 }
+
+/* 35-lockups.css */
+/* The lockup, lockup metadata, content metadata, thumbnail and touch-feedback
+   rules of YouTube's stylesheet (watch page, 2026-10-13; extracted with
+   ../../yt-ref/css/lockup-rules-2026-10-13.css), with class prefixes and
+   theme variables renamed. They replace hand-written approximations that
+   gave related lockups a visible avatar column, a menu button column and
+   unclamped titles (recreation-problems.md entry 83). */
+.ytlThumbnailBottomOverlayViewModelHost { display: flex; position: absolute; bottom: 0px; left: 0px; right: 0px; align-items: flex-end; justify-content: flex-end; }
+.ytlThumbnailBottomOverlayViewModelHostBackground { flex: 1 1 1e-09px; display: flex; flex-direction: row; justify-content: flex-end; height: 68px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); }
+.ytlThumbnailBottomOverlayViewModelBadgeContainer { display: flex; flex-direction: row; }
+.ytlThumbnailBottomOverlayViewModelBadgeContainerSmall { padding: 0px 2px 2px 0px; }
+.ytlThumbnailBottomOverlayViewModelBadgeContainerSmallLegacy { padding: 0px 2px 4px 0px; }
+.ytlThumbnailBottomOverlayViewModelBadgeContainerMedium { padding: 0px 4px 4px 0px; }
+.ytlThumbnailBottomOverlayViewModelBadgeContainerLarge { padding: 0px 8px 8px 0px; }
+.ytlThumbnailBottomOverlayViewModelBadgeContainerClip { margin-right: 4px; }
+.ytlThumbnailBottomOverlayViewModelBadge { margin-left: 4px; }
+.ytlLockupViewModelHost { display: flex; flex: 1 1 0%; position: relative; cursor: pointer; min-width: 0px; -webkit-tap-highlight-color: transparent; }
+.ytlLockupViewModelFlexNone { flex: 0 0 auto; }
+.ytlLockupViewModelWrapper { display: flex; flex-direction: column; }
+.ytlLockupViewModelEndorsement { position: absolute; top: -20px; color: var(--ytl-spec-text-secondary); }
+.ytlLockupViewModelMetadata { position: relative; display: flex; min-width: 0px; flex-direction: column; }
+.ytlLockupViewModelCentered .ytlLockupViewModelMetadata { justify-content: center; }
+.ytlLockupViewModelAddMargins { margin-right: 12px; margin-left: 12px; }
+.ytlLockupViewModelFullbleed .ytlLockupViewModelMetadata { margin-left: 12px; margin-right: 12px; }
+.ytlLockupViewModelContentImage { display: flex; flex-direction: inherit; }
+.ytlLockupViewModelCinematic { border-radius: 12px; overflow: hidden; }
+.ytlLockupViewModelVertical { flex-direction: column; }
+.ytlLockupViewModelVertical .ytlLockupViewModelContentImage { padding-bottom: 8px; align-items: center; }
+.ytlLockupViewModelVertical.ytlLockupViewModelRichGridLegacyMargin .ytlLockupViewModelContentImage { padding-bottom: 12px; }
+.ytlLockupViewModelHorizontal { flex-direction: row; height: inherit; }
+.ytlLockupViewModelHorizontal .ytlLockupViewModelContentImage { display: flex; flex: 0 0 auto; padding-right: 16px; justify-content: center; max-width: 500px; }
+.ytlLockupViewModelHorizontal .ytlLockupViewModelMetadata { flex: 1 1 0%; }
+.ytlLockupViewModelHorizontal.ytlLockupViewModelCollectionStack1 { position: relative; margin-top: 6px; }
+.ytlLockupViewModelHorizontal.ytlLockupViewModelCollectionStack2 { position: relative; margin-top: 10px; }
+.ytlLockupViewModelHorizontal.ytlLockupViewModelCompact .ytlLockupViewModelContentImage { padding-right: 8px; }
+.ytlLockupViewModelHorizontal.ytlLockupViewModelCompact.ytlLockupViewModelUpdatedCompactPadding .ytlLockupViewModelContentImage { padding-right: 12px; }
+.ytlLockupViewModelEnableCollectionStackMargin.ytlLockupViewModelCollectionStack1 { position: relative; margin-top: 6px; }
+.ytlLockupViewModelEnableCollectionStackMargin.ytlLockupViewModelCollectionStack2 { position: relative; margin-top: 10px; }
+.ytlLockupViewModelMetadataOnThumbnail { flex-direction: column; position: relative; }
+.ytlLockupViewModelMetadataOnThumbnail .ytlLockupViewModelMetadata { justify-content: flex-end; position: absolute; inset: 50% 0px 0px; padding: 8px; background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0px, rgba(0, 0, 0, 0) 100%); }
+.ytlLockupViewModelMetadataOnThumbnail.ytlLockupViewModelCinematic .ytlLockupViewModelContentImage { height: 55%; }
+.ytlLockupViewModelMetadataOnThumbnail.ytlLockupViewModelCinematic .ytlLockupViewModelMetadata { height: 75%; background: linear-gradient(to bottom,transparent 0,var(--ytl-spec-cinematic-background) 50%); top: auto; }
+.ytlLockupViewModelCard { border-radius: 12px; overflow: hidden; background-color: var(--ytl-spec-additive-background); }
+.ytlLockupViewModelProtectBackground { background-color: var(--ytl-spec-protect-background); }
+.ytlContentMetadataViewModelHost { display: block; }
+.ytlContentMetadataViewModelMetadataRow { display: flex; align-items: center; margin-top: 2px; overflow: hidden; min-width: 0px; max-width: 100%; }
+.ytlContentMetadataViewModelMetadataRow:focus-visible { outline: currentcolor solid 2px; outline-offset: 2px; border-radius: 4px; }
+.ytlContentMetadataViewModelAvatarStack { min-width: 0px; max-width: 100%; }
+.ytlContentMetadataViewModelMetadataRowMetadataRowInline { display: inline-flex; }
+.ytlContentMetadataViewModelMetadataRowMetadataRowPadding { padding: 8px 0px; }
+.ytlContentMetadataViewModelMetadataRowMetadataRowWrap { flex-wrap: wrap; }
+.ytlContentMetadataViewModelMetadataRowMetadataRowMaxLines .ytlContentMetadataViewModelAvatarStack, .ytlContentMetadataViewModelMetadataRowMetadataRowMaxLines .ytlContentMetadataViewModelBadge, .ytlContentMetadataViewModelMetadataRowMetadataRowMaxLines .ytlContentMetadataViewModelIcon, .ytlContentMetadataViewModelMetadataRowMetadataRowMaxLines .ytlContentMetadataViewModelLeadingIcon { display: inline-flex; vertical-align: middle; }
+.ytlContentMetadataViewModelBadge { margin-right: 4px; }
+.ytlContentMetadataViewModelIcon { margin-left: 4px; flex: 0 0 auto; }
+.ytlContentMetadataViewModelLeadingIcon { margin-right: 4px; flex: 0 0 auto; }
+.ytlContentMetadataViewModelSpacer { height: 6px; }
+.ytlContentMetadataViewModelMetadataText { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; white-space: nowrap; text-overflow: ellipsis; }
+.ytlContentMetadataViewModelMetadataTextLastPart { overflow: hidden; min-width: 0px; }
+.ytlContentMetadataViewModelMetadataTextMaxLines0 { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; }
+.ytlContentMetadataViewModelMetadataTextMaxLines1 { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; overflow: hidden; max-height: 1.8rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMetadataTextMaxLines1 { -webkit-line-clamp: 1; max-height: none; } }
+.ytlContentMetadataViewModelMetadataTextMaxLines2 { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; overflow: hidden; max-height: 3.6rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMetadataTextMaxLines2 { -webkit-line-clamp: 2; max-height: none; } }
+.ytlContentMetadataViewModelMetadataTextMaxLines3 { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; overflow: hidden; max-height: 5.4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMetadataTextMaxLines3 { -webkit-line-clamp: 3; max-height: none; } }
+.ytlContentMetadataViewModelMetadataTextMaxLines4 { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; overflow: hidden; max-height: 7.2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMetadataTextMaxLines4 { -webkit-line-clamp: 4; max-height: none; } }
+.ytlContentMetadataViewModelDelimiter { margin: 0px 4px; vertical-align: middle; font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 400; line-height: 1.8rem; }
+.ytlContentMetadataViewModelDelimiterStandalone { display: inline-block; margin-top: 2px; }
+.ytlContentMetadataViewModelInline { white-space: normal; }
+.ytlContentMetadataViewModelInline .ytlContentMetadataViewModelMetadataRow { vertical-align: middle; }
+.ytlContentMetadataViewModelTappable { cursor: pointer; }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataText { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; white-space: nowrap; text-overflow: ellipsis; }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelDelimiter, .ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines0 { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines1 { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; overflow: hidden; max-height: 2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines1 { -webkit-line-clamp: 1; max-height: none; } }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines2 { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; overflow: hidden; max-height: 4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines2 { -webkit-line-clamp: 2; max-height: none; } }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines3 { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; overflow: hidden; max-height: 6rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines3 { -webkit-line-clamp: 3; max-height: none; } }
+.ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines4 { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 400; line-height: 2rem; overflow: hidden; max-height: 8rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlContentMetadataViewModelMediumText .ytlContentMetadataViewModelMetadataTextMaxLines4 { -webkit-line-clamp: 4; max-height: none; } }
+.ytlContentMetadataViewModelCenter { display: flex; flex-direction: column; align-items: center; }
+.ytlThumbnailViewModelHost { display: block; position: relative; width: 100%; overflow: hidden; height: 0px; }
+.ytlThumbnailViewModelCinematic { background-color: rgb(0, 0, 0); }
+.ytlThumbnailViewModelAspectRatio16By9 { padding-top: 56.25%; }
+.ytlThumbnailViewModelAspectRatio2By3 { padding-top: 150%; }
+.ytlThumbnailViewModelShortsAspectRatio9By16 { padding-top: 178%; }
+.ytlThumbnailViewModelAspectRatio1By1 { padding-top: 100%; }
+.ytlThumbnailViewModelSmall { border-radius: 4px; }
+.ytlThumbnailViewModelMedium { border-radius: 8px; }
+.ytlThumbnailViewModelLarge { border-radius: 12px; }
+.ytlThumbnailViewModelImage { position: absolute; transform: translateY(-50%); top: 50%; left: 0px; width: 100%; height: 100%; }
+.ytlThumbnailViewModelBlurredImage { position: absolute; inset: 0px; height: 200%; filter: blur(30px); transform: translateY(-25%); }
+.ytlThumbnailViewModelHighlightEffect { box-shadow: 0 0 7px 2px var(--ytl-spec-text-primary); outline: rgb(255, 255, 255) solid 1px; }
+.ytlThumbnailViewModelHostAdDisclosureBannerContainer { position: absolute; top: 8px; left: 8px; z-index: 1; }
+.ytlDecoratedAvatarViewModelHost { display: block; }
+.ytlTouchFeedbackShapeHost { display: inline-block; border-radius: inherit; position: absolute; inset: 0px; }
+.ytlTouchFeedbackShapeTriggerEvents { pointer-events: none; }
+.ytlTouchFeedbackShapeHoverEffect { transition: opacity 0.3s cubic-bezier(0.05, 0, 0, 1), transform; background-color: var(--ytl-spec-outline); opacity: 0; transform: scale(0.9); will-change: opacity, transform; border-radius: inherit; position: absolute; inset: 0px; }
+.ytlTouchFeedbackShapeHovered .ytlTouchFeedbackShapeHoverEffect { opacity: 1; transform: scale(1); }
+.ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeStroke { will-change: opacity; opacity: 0; border-radius: inherit; position: absolute; inset: 0px; }
+.ytlTouchFeedbackShapeDown .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeFocused .ytlTouchFeedbackShapeFill { opacity: 0.1; }
+.ytlTouchFeedbackShapeThumbnailSizeSmall { margin: -4px; }
+.ytlTouchFeedbackShapeThumbnailSizeSmall .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeThumbnailSizeSmall .ytlTouchFeedbackShapeHoverEffect, .ytlTouchFeedbackShapeThumbnailSizeSmall .ytlTouchFeedbackShapeStroke { border-radius: 4px; }
+.ytlTouchFeedbackShapeThumbnailSizeMedium { margin: -8px; }
+.ytlTouchFeedbackShapeThumbnailSizeMedium .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeThumbnailSizeMedium .ytlTouchFeedbackShapeHoverEffect, .ytlTouchFeedbackShapeThumbnailSizeMedium .ytlTouchFeedbackShapeStroke { border-radius: 8px; }
+.ytlTouchFeedbackShapeThumbnailSizeLarge { margin: -12px; }
+.ytlTouchFeedbackShapeThumbnailSizeLarge .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeThumbnailSizeLarge .ytlTouchFeedbackShapeHoverEffect, .ytlTouchFeedbackShapeThumbnailSizeLarge .ytlTouchFeedbackShapeStroke { border-radius: 16px; }
+.ytlTouchFeedbackShapeCircular .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeCircular .ytlTouchFeedbackShapeHoverEffect, .ytlTouchFeedbackShapeCircular .ytlTouchFeedbackShapeStroke { border-radius: 50%; }
+.ytlTouchFeedbackShapeTouchResponse .ytlTouchFeedbackShapeFill { background-color: var(--ytl-spec-touch-response); }
+.ytlTouchFeedbackShapeTouchResponse .ytlTouchFeedbackShapeStroke { border: 1px solid var(--ytl-spec-touch-response); }
+.ytlTouchFeedbackShapeTouchResponseInverse .ytlTouchFeedbackShapeFill { background-color: var(--ytl-spec-touch-response-inverse); }
+.ytlTouchFeedbackShapeTouchResponseInverse .ytlTouchFeedbackShapeStroke { border: 1px solid var(--ytl-spec-touch-response-inverse); }
+.ytlTouchFeedbackShapeTouchResponseInverse.ytlTouchFeedbackShapeDown .ytlTouchFeedbackShapeFill, .ytlTouchFeedbackShapeTouchResponseInverse.ytlTouchFeedbackShapeFocused .ytlTouchFeedbackShapeFill { opacity: 0.2; }
+.ytlTouchFeedbackShapeOverlayTouchResponse .ytlTouchFeedbackShapeFill { background-color: rgb(255, 255, 255); }
+.ytlTouchFeedbackShapeOverlayTouchResponse .ytlTouchFeedbackShapeStroke { border: 1px solid rgb(255, 255, 255); }
+.ytlTouchFeedbackShapeOverlayTouchResponseInverse .ytlTouchFeedbackShapeFill { background-color: rgb(0, 0, 0); }
+.ytlTouchFeedbackShapeOverlayTouchResponseInverse .ytlTouchFeedbackShapeStroke { border: 1px solid rgb(0, 0, 0); }
+.ytlLockupMetadataViewModelHost { display: flex; position: relative; flex-direction: row; min-width: 0px; --ytl-attributed-string-link-hover-color: var(--ytl-spec-text-primary); }
+.ytlLockupMetadataViewModelHost.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight { position: static; }
+.ytlLockupMetadataViewModelHeadingReset { margin: 0px; padding: 0px; border: 0px; max-height: unset; }
+.ytlLockupMetadataViewModelTextContainer { display: flex; flex-direction: column; min-width: 0px; }
+.ytlLockupMetadataViewModelAvatar { margin-right: 8px; display: none; }
+.ytlLockupMetadataViewModelTitle { text-decoration: none; word-break: break-word; color: var(--ytl-spec-text-primary); }
+.ytlLockupMetadataViewModelHasMenuButton .ytlLockupMetadataViewModelTitle { padding-right: 24px; }
+.ytlLockupMetadataViewModelMetadata { color: var(--ytl-spec-text-secondary); }
+.ytlLockupMetadataViewModelMenuButton { position: absolute; top: -6px; right: -10px; }
+.ytlLockupMetadataViewModelAttribution { margin-top: 2px; color: var(--ytl-spec-text-secondary); }
+.ytlLockupMetadataViewModelStandard .ytlLockupMetadataViewModelAvatar { display: block; }
+.ytlLockupMetadataViewModelMenuButton.ytlLockupMetadataViewModelBottomRight { top: unset; right: 0px; bottom: 0px; transform: none; opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { .ytlLockupMetadataViewModelMenuButton.ytlLockupMetadataViewModelBottomRight { transition: opacity 0.2s; } }
+.ytlLockupMetadataViewModelMenuButton.ytlLockupMetadataViewModelShowMenuButtonOnHover { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) { .ytlLockupMetadataViewModelMenuButton.ytlLockupMetadataViewModelShowMenuButtonOnHover { transition: opacity 0.2s; } }
+.ytlLockupMetadataViewModelMenuButton.ytlLockupMetadataViewModelVisible { opacity: 1; }
+.ytlLockupMetadataViewModelMenuButton:focus-within { opacity: 1; }
+.ytlLockupMetadataViewModelCard { margin: 4px 0px; }
+.ytlLockupMetadataViewModelEnvelope { display: flex; flex: 1 1 0%; flex-direction: column; min-width: 0px; }
+.ytlLockupMetadataViewModelEnvelopeTextContainer { flex: 1 1 0%; }
+.ytlLockupMetadataViewModelEnvelopeMetadata { display: flex; flex-direction: row; align-items: center; }
+.ytlLockupMetadataViewModelEnvelopeMenuButton { display: flex; }
+.ytlLockupMetadataViewModelActionBar { display: flex; flex-direction: row; }
+.ytlLockupMetadataViewModelActionButton { margin-right: 2px; }
+.ytlLockupMetadataViewModelVertical.ytlLockupMetadataViewModelCentered { justify-content: center; }
+.ytlLockupMetadataViewModelVertical.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelTitle { padding-right: 0px; }
+.ytlLockupMetadataViewModelVertical.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelTextContainer { align-items: center; }
+.ytlLockupMetadataViewModelVertical.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelAttribution { margin-top: 12px; }
+.ytlLockupMetadataViewModelVertical.ytlLockupMetadataViewModelCard { margin: 0px 8px 8px; }
+.ytlLockupMetadataViewModelOverlay { --ytl-attributed-string-link-hover-color: #fff; }
+.ytlLockupMetadataViewModelOverlay .ytlLockupMetadataViewModelMetadata, .ytlLockupMetadataViewModelOverlay .ytlLockupMetadataViewModelTitle { color: rgb(255, 255, 255); }
+.ytlLockupMetadataViewModelThumbnailOverlay { align-items: center; }
+.ytlLockupMetadataViewModelThumbnailOverlay.ytlLockupMetadataViewModelCard { margin: 4px; }
+.ytlLockupMetadataViewModelThumbnailOverlay .ytlLockupMetadataViewModelAvatar { margin-right: 8px; }
+.ytlLockupMetadataViewModelThumbnailOverlay .ytlLockupMetadataViewModelMetadata, .ytlLockupMetadataViewModelThumbnailOverlay .ytlLockupMetadataViewModelTitle { padding-right: 8px; }
+.ytlLockupMetadataViewModelThumbnailOverlay .ytlLockupMetadataViewModelTextContainer { flex-grow: 1; }
+.ytlLockupMetadataViewModelThumbnailOverlay .ytlLockupMetadataViewModelMenuButton { position: unset; }
+.ytlLockupMetadataViewModelHorizontal .ytlLockupMetadataViewModelAvatar { display: none; }
+.ytlLockupMetadataViewModelHorizontal.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelTextContainer { justify-content: center; padding-right: 28px; }
+.ytlLockupMetadataViewModelHorizontal.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelTitle { padding-right: 0px; }
+.ytlLockupMetadataViewModelHorizontal.ytlLockupMetadataViewModelCentered .ytlLockupMetadataViewModelMenuButton { top: 50%; transform: translateY(-50%); }
+.ytlLockupMetadataViewModelStandard .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 4.4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelStandard .ytlLockupMetadataViewModelTitle { max-height: 4.4rem; }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem; overflow: hidden; max-height: 5.2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { max-height: 5.2rem; }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelLegacyTypography .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.8rem; font-weight: 400; line-height: 2.6rem; overflow: hidden; max-height: 5.2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelLegacyTypography .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelLegacyTypography .ytlLockupMetadataViewModelTitle { max-height: 5.2rem; }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 4.4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { max-height: 4.4rem; }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines1 .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 2.2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines1 .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 1; max-height: none; } }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines1 .ytlLockupMetadataViewModelTitle { max-height: 2.2rem; }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 6.6rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 3; max-height: none; } }
+.ytlLockupMetadataViewModelStandard.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { max-height: 6.6rem; }
+.ytlLockupMetadataViewModelCompact .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 500; line-height: 2rem; overflow: hidden; max-height: 4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelCompact .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelCompact .ytlLockupMetadataViewModelTitle { max-height: 4rem; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 4.4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTypographyBump .ytlLockupMetadataViewModelTitle { max-height: 4.4rem; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; overflow: hidden; max-height: 4.4rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelRichGridLegacyTypography .ytlLockupMetadataViewModelTitle { max-height: 4.4rem; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 500; line-height: 2rem; overflow: hidden; max-height: 6rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 3; max-height: none; } }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleMaxLines3 .ytlLockupMetadataViewModelTitle { max-height: 6rem; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleScaleS .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 500; line-height: 1.8rem; max-height: none; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleScaleL .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.6rem; font-weight: 500; line-height: 2.2rem; max-height: none; }
+.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleScaleXl .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.8rem; font-weight: 500; line-height: 2.6rem; max-height: none; }
+.ytlLockupMetadataViewModelTiny .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.2rem; font-weight: 500; line-height: 1.8rem; overflow: hidden; max-height: 3.6rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelTiny .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 2; max-height: none; } }
+.ytlLockupMetadataViewModelTiny .ytlLockupMetadataViewModelTitle { max-height: 3.6rem; }
+.ytlLockupMetadataViewModelCenteredColumn { flex-direction: column; align-items: center; flex: 1 1 0%; }
+.ytlLockupMetadataViewModelCenteredColumn .ytlLockupMetadataViewModelAvatar { margin-right: 0px; display: block; }
+.ytlLockupMetadataViewModelCenteredColumn .ytlLockupMetadataViewModelMetadata, .ytlLockupMetadataViewModelCenteredColumn .ytlLockupMetadataViewModelTitle { padding-right: 0px; }
+.ytlLockupMetadataViewModelCenteredColumn .ytlLockupMetadataViewModelTextContainer { flex-grow: 1; justify-content: center; align-items: center; }
+.ytlLockupMetadataViewModelCenteredColumn .ytlLockupMetadataViewModelMetadata { align-items: center; }
+.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelTextContainer, .ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelTitle { padding-right: 0px; }
+.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelMenuButton { z-index: 1; border-radius: 50%; }
+.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelMenuButton::after, .ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelMenuButton::before { content: ""; position: absolute; inset: -15%; border-radius: 50%; }
+.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelMenuButton::before { background: radial-gradient(circle,var(--ytl-spec-base-background) 60%,transparent 100%); z-index: -2; }
+.ytlLockupMetadataViewModelMoveLockupOverflowMenuToBottomRight .ytlLockupMetadataViewModelMenuButton::after { background: radial-gradient(circle,var(--ytl-lockup-metadata-themed-menu-button-additive-background,transparent) 60%,transparent 100%); z-index: -1; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp .ytlLockupMetadataViewModelTextContainer { flex: 1 1 0%; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleMaxLines1 .ytlLockupMetadataViewModelTitle { font-family: Roboto, Arial, sans-serif; font-size: 1.4rem; font-weight: 500; line-height: 2rem; overflow: hidden; max-height: 2rem; display: -webkit-box; -webkit-box-orient: vertical; text-overflow: ellipsis; white-space: normal; }
+@supports (-webkit-line-clamp:1) { .ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelCompact.ytlLockupMetadataViewModelTitleMaxLines1 .ytlLockupMetadataViewModelTitle { -webkit-line-clamp: 1; max-height: none; } }
+.ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelReducedTypography .ytlLockupMetadataViewModelAvatar { display: block; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp .ytlLockupMetadataViewModelBylineRow { display: flex; align-items: center; min-width: 0px; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp .ytlLockupMetadataViewModelBylineRow .ytlLockupMetadataViewModelMetadata { flex: 1 1 0%; min-width: 0px; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelHasMiniAvatarByline .ytlLockupMetadataViewModelBylineRow .ytlLockupMetadataViewModelAvatar { display: flex; flex: 0 0 auto; margin-right: 6px; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelHasMiniOverflowByline .ytlLockupMetadataViewModelBylineRow .ytlLockupMetadataViewModelMenuButton { position: static; flex: 0 0 auto; margin-left: 4px; }
+.ytlLockupMetadataViewModelMwebHomeTuningExp.ytlLockupMetadataViewModelHasMiniOverflowByline .ytlLockupMetadataViewModelTitle { padding-right: 0px; }
+.ytlThumbnailBadgeViewModelHost { display: block; }
 
 /* 40-watch.css */
 ytl-app[page-subtype="watch"] ytl-page-manager {
@@ -2323,16 +2527,14 @@ ytl-content-loading-renderer {
 ytl-watch-next-secondary-results-renderer {
   display: block;
 }
-ytl-watch-next-secondary-results-renderer .ytlLockupViewModelHost {
-  gap: var(--ytl-comp-h-space-8px);
+ytl-item-section-renderer.ytl-watch-next-secondary-results-renderer {
+  --ytl-item-section-item-margin: 8px;
 }
-ytl-watch-next-secondary-results-renderer .ytlLockupViewModelContentImage {
-  flex: none;
-  width: var(--ytl-watch-compact-thumbnail-width);
+ytl-item-section-renderer.ytl-watch-next-secondary-results-renderer[use-bigger-gutter] {
+  --ytl-item-section-item-margin: 16px;
 }
-ytl-watch-next-secondary-results-renderer ytl-lockup-view-model {
-  display: block;
-  margin-bottom: var(--ytl-comp-h-space-8px);
+ytl-watch-next-secondary-results-renderer[watch-feed-big-thumbs-on-lockup] ytl-item-section-renderer.ytl-watch-next-secondary-results-renderer {
+  --ytl-item-section-item-margin: 24px;
 }
 ytl-watch-next-secondary-results-renderer[limit-results] #contents.ytl-item-section-renderer {
   display: grid;
@@ -2351,11 +2553,6 @@ ytl-watch-next-secondary-results-renderer[limit-results] .ytlLockupViewModelHost
 }
 ytl-watch-next-secondary-results-renderer[limit-results] .ytlLockupViewModelContentImage {
   width: var(--ytl-comp-h-size-100);
-}
-ytl-watch-next-secondary-results-renderer .ytlLockupMetadataViewModelHeadingReset {
-  font-size: var(--ytl-comp-h-font-size-1p4rem);
-  line-height: var(--ytl-comp-h-line-height-2rem);
-  font-weight: var(--ytl-comp-h-weight-500);
 }
 ytl-player-legacy-desktop-watch-ads-renderer:empty {
   display: none;

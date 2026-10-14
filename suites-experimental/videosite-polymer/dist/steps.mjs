@@ -25,7 +25,25 @@ export default [
     video.querySelector("#meta").click();
   } },
   { name: "LoadComments", event: "ytl-reload-applied", targetIds: ["comments-section"], act: () => document.querySelector("ytl-watch-flexy:not([hidden]) ytl-comments#comments").scrollIntoView() },
-  { name: "LoadMoreComments", event: "ytl-continuation-applied", targetIds: () => document.querySelector("ytl-watch-flexy:not([hidden])").hasAttribute("is-two-columns_") ? ["comments-section", "watch-next-feed"] : ["comments-section"], act: () => window.scrollTo(0, document.documentElement.scrollHeight) },
+  // The two columns end at different heights, so a jump to the page end can
+  // leave one list's continuation item above the viewport. In two columns the
+  // step scrolls each item into view instead, top-most first, with a rendering
+  // update in between so that its intersection observer sees it.
+  { name: "LoadMoreComments", event: "ytl-continuation-applied", targetIds: () => document.querySelector("ytl-watch-flexy:not([hidden])").hasAttribute("is-two-columns_") ? ["comments-section", "watch-next-feed"] : ["comments-section"], act: async () => {
+    const flexy = document.querySelector("ytl-watch-flexy:not([hidden])");
+    if (flexy.hasAttribute("is-two-columns_")) {
+      const items = [
+        flexy.querySelector("ytl-comments#comments > #sections > #contents > ytl-continuation-item-renderer"),
+        flexy.querySelector("#related ytl-item-section-renderer > #contents > ytl-continuation-item-renderer"),
+      ].filter(Boolean).sort((a, b) => a.getBoundingClientRect().bottom - b.getBoundingClientRect().bottom);
+      for (const [i, item] of items.entries()) {
+        if (i) await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        item.scrollIntoView({ block: "end" });
+      }
+    } else {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    }
+  } },
   { name: "NavigateToRelatedVideo", event: "ytl-navigate-finish", act: () => {
     window.scrollTo(0, 0);
     document.querySelector("ytl-watch-flexy:not([hidden]) #related ytl-lockup-view-model a[href^='/watch']").click();
