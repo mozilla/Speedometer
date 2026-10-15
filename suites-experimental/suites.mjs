@@ -22,6 +22,21 @@ function yieldTask() {
     });
 }
 
+// Drags a horizontal Material-UI Slider from one value to another, one step at a
+// time. The slider tracks the drag through mousemove and mouseup listeners on
+// the document, which the events reach by bubbling from the slider.
+function dragSlider(page, slider, from, to, steps) {
+    const width = slider.clientWidth;
+    const y = slider.clientHeight / 2;
+    slider.dispatchMouseEvent("mousedown", from * width, y);
+    page.layout();
+    for (let i = 1; i <= steps; i++) {
+        slider.dispatchMouseEvent("mousemove", (from + ((to - from) * i) / steps) * width, y);
+        page.layout();
+    }
+    slider.dispatchMouseEvent("mouseup", to * width, y);
+}
+
 export const ExperimentalSuites = freezeSuites([
     {
         name: "TodoMVC-LocalStorage",
@@ -563,6 +578,29 @@ export const ExperimentalSuites = freezeSuites([
                     await yieldTask();
                     page.layout();
                 }
+            }),
+        ],
+    },
+    {
+        name: "AssociationsBubbles-React",
+        url: "suites-experimental/associations-bubbles/dist/index.html",
+        resources: "suites-experimental/associations-bubbles/dist/resources.txt",
+        tags: ["experimental", "react", "svg", "d3"],
+        async prepare(page) {
+            await page.waitForElement(".MuiSlider-root");
+            // The bubbles are only drawn once react-measure reports the plot's size.
+            await page.waitForElement("#EFO_ROOT");
+        },
+        tests: [
+            // Raising the minimum score drops associations, so every move
+            // re-packs a smaller layout and unmounts bubbles.
+            new BenchmarkTestStep("DragMinScoreUp", (page) => {
+                dragSlider(page, page.querySelector(".MuiSlider-root"), 0.1, 1, 90);
+            }),
+            // Lowering it back to 0 brings every association back, mounting
+            // bubbles on each move.
+            new BenchmarkTestStep("DragMinScoreDown", (page) => {
+                dragSlider(page, page.querySelector(".MuiSlider-root"), 1, 0, 100);
             }),
         ],
     },
