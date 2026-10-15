@@ -38,7 +38,25 @@ export default [
     document.querySelector(`${visible("search")} [data-renderer=videoRenderer] a[data-title-link]`).click();
   } },
   { name: "LoadComments", event: "ytr-reload-applied", targetIds: ["comments-section"], act: () => document.querySelector(`${visible("watch")} #comments`).scrollIntoView() },
-  { name: "LoadMoreComments", event: "ytr-continuation-applied", targetIds: () => document.querySelector(visible("watch")).hasAttribute("data-two-columns") ? ["comments-section", "watch-next-feed"] : ["comments-section"], act: () => window.scrollTo(0, document.documentElement.scrollHeight) },
+  // The two columns end at different heights, so a jump to the page end can
+  // leave one list's continuation item above the viewport. In two columns the
+  // step scrolls each item into view instead, top-most first, with a rendering
+  // update in between so that its intersection observer sees it.
+  { name: "LoadMoreComments", event: "ytr-continuation-applied", targetIds: () => document.querySelector(visible("watch")).hasAttribute("data-two-columns") ? ["comments-section", "watch-next-feed"] : ["comments-section"], act: async () => {
+    const page = document.querySelector(visible("watch"));
+    if (page.hasAttribute("data-two-columns")) {
+      const items = [
+        page.querySelector("#comments [data-renderer=continuationItemRenderer]"),
+        page.querySelector("#related [data-renderer=continuationItemRenderer]"),
+      ].filter(Boolean).sort((a, b) => a.getBoundingClientRect().bottom - b.getBoundingClientRect().bottom);
+      for (const [i, item] of items.entries()) {
+        if (i) await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        item.scrollIntoView({ block: "end" });
+      }
+    } else {
+      window.scrollTo(0, document.documentElement.scrollHeight);
+    }
+  } },
   { name: "NavigateToRelatedVideo", event: "ytr-navigate-finish", act: () => {
     window.scrollTo(0, 0);
     document.querySelector(`${visible("watch")} #related [data-renderer=lockupViewModel] a[href*='/watch?v=']`).click();
