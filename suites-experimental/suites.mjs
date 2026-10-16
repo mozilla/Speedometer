@@ -37,6 +37,20 @@ function dragSlider(page, slider, from, to, steps) {
     slider.dispatchMouseEvent("mouseup", to * width, y);
 }
 
+// Drags a native range input from one value to another, one step at a time,
+// firing an input event per step like a real drag. Svelte batches state updates
+// into a microtask, so yield after each event to have the DOM updated before
+// forcing layout.
+async function dragRangeInput(page, slider, from, to, steps) {
+    for (let i = 0; i <= steps; i++) {
+        slider.setValue(from + ((to - from) * i) / steps);
+        slider.dispatchEvent("input");
+        await Promise.resolve();
+        page.layout();
+    }
+    slider.dispatchEvent("change");
+}
+
 export const ExperimentalSuites = freezeSuites([
     {
         name: "TodoMVC-LocalStorage",
@@ -601,6 +615,29 @@ export const ExperimentalSuites = freezeSuites([
             // bubbles on each move.
             new BenchmarkTestStep("DragMinScoreDown", (page) => {
                 dragSlider(page, page.querySelector(".MuiSlider-root"), 0.05, 0, 5);
+            }),
+        ],
+    },
+    {
+        name: "AssociationsBubbles-Svelte",
+        url: "suites-experimental/associations-bubbles-svelte/dist/index.html",
+        resources: "suites-experimental/associations-bubbles-svelte/dist/resources.txt",
+        tags: ["experimental", "svelte", "svg", "d3"],
+        async prepare(page) {
+            await page.waitForElement("input.slider");
+            // The bubbles are only drawn once the plot has been measured.
+            await page.waitForElement("#EFO_ROOT");
+        },
+        tests: [
+            // Raising the minimum score drops associations, so every move
+            // re-packs a smaller layout and unmounts bubbles.
+            new BenchmarkTestStep("DragMinScoreUp", async (page) => {
+                await dragRangeInput(page, page.querySelector("input.slider"), 0.1, 1, 90);
+            }),
+            // Lowering it back to 0 brings every association back, mounting
+            // bubbles on each move.
+            new BenchmarkTestStep("DragMinScoreDown", async (page) => {
+                await dragRangeInput(page, page.querySelector("input.slider"), 1, 0, 100);
             }),
         ],
     },

@@ -1,0 +1,28 @@
+# associations-bubbles-svelte
+
+Svelte 5 port of `associations-bubbles` (the Open Targets associations bubbles
+page for ADORA3, 688 associations), with no server dependency. The data layer
+(`api.js`, `src/data/*`), `constants.js`, `dataSources.js`, `dataTypes.js` and
+the facet tree helpers are identical to the React version; components are
+`.svelte` files using runes, and the Material-UI widgets are replaced by plain
+markup + CSS (the score slider is a native `<input type="range">`).
+
+    npm install
+    npm run dev                      # development Svelte
+    npm run build && npm run preview # production Svelte
+
+Append `?latency=<ms>` to delay the fake API responses (default 0, always async).
+
+## Speedometer workload
+
+Run in the harness as `AssociationsBubbles-Svelte`
+(`/?developerMode&suites=AssociationsBubbles-Svelte`). Both steps move the
+"Minimum Score" slider one 0.01 step at a time, setting its value and firing an
+`input` event per step. Each step re-filters the associations, re-runs
+`d3.pack` and re-renders the SVG (Svelte flushes in a microtask, which the step
+awaits before forcing layout):
+
+- `DragMinScoreUp` goes from the initial 0.1 up to 1, removing bubbles.
+- `DragMinScoreDown` goes from 1 down to 0, adding every association back.
+
+`npm run build` regenerates the committed `dist/` and its `resources.txt`.

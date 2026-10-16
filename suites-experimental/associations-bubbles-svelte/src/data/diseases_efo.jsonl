@@ -1,0 +1,1698 @@
+{"id":"MONDO_0005277","name":"migraine disorder","parentIds":["MONDO_0017181","MONDO_0005560","MONDO_0043218"]}
+{"id":"MONDO_0004979","name":"asthma","parentIds":["HP_0010978","MONDO_0001358","HP_0002086"]}
+{"id":"EFO_0009493","name":"paroxysmal tachycardia","parentIds":["EFO_0004269"]}
+{"id":"HP_0002104","name":"Apnea","parentIds":["HP_0002793"]}
+{"id":"MONDO_0008685","name":"Wolff-Parkinson-White syndrome","parentIds":["MONDO_0800484","MONDO_0000992"]}
+{"id":"HP_0012531","name":"Pain","parentIds":["HP_0025142"]}
+{"id":"HP_0006536","name":"Airway obstruction","parentIds":["HP_0002086"]}
+{"id":"HP_0002315","name":"Headache","parentIds":["HP_0012638"]}
+{"id":"MONDO_0005002","name":"chronic obstructive pulmonary disease","parentIds":["MONDO_0002567","MONDO_0005275"]}
+{"id":"MONDO_0005607","name":"chronic bronchitis","parentIds":["MONDO_0003781","MONDO_0005002"]}
+{"id":"HP_0004763","name":"Paroxysmal supraventricular tachycardia","parentIds":["HP_0004755"]}
+{"id":"MONDO_0004995","name":"cardiovascular disorder","parentIds":[]}
+{"id":"HP_0012735","name":"Cough","parentIds":["HP_0002086"]}
+{"id":"MONDO_0007743","name":"attention deficit-hyperactivity disorder","parentIds":["MONDO_0000592"]}
+{"id":"MONDO_0005469","name":"orthostatic hypotension","parentIds":["MONDO_0005468"]}
+{"id":"MONDO_0005303","name":"drug dependence","parentIds":["MONDO_0004938"]}
+{"id":"HP_0003419","name":"Low back pain","parentIds":["HP_0003418"]}
+{"id":"MONDO_0005068","name":"myocardial infarction","parentIds":["MONDO_0024643"]}
+{"id":"MONDO_0019091","name":"bronchopulmonary dysplasia","parentIds":["MONDO_0005087"]}
+{"id":"MONDO_0004981","name":"atrial fibrillation","parentIds":["EFO_0004269"]}
+{"id":"MONDO_0005083","name":"psoriasis","parentIds":["MONDO_0005046","MONDO_0002406","MONDO_0100118"]}
+{"id":"MONDO_0005180","name":"Parkinson disease","parentIds":["MONDO_0100545","MONDO_0021095"]}
+{"id":"MONDO_0007256","name":"hepatocellular carcinoma","parentIds":["MONDO_0004970","MONDO_0018531"]}
+{"id":"MONDO_0008383","name":"rheumatoid arthritis","parentIds":["MONDO_0005554","MONDO_0000589","MONDO_0005578"]}
+{"id":"MONDO_0011122","name":"obesity disorder","parentIds":["MONDO_0003916","HP_0004324"]}
+{"id":"MONDO_0006733","name":"dry eye syndrome","parentIds":["MONDO_0003799","MONDO_0004768","MONDO_0003085","MONDO_0001854"]}
+{"id":"MONDO_0006663","name":"perinatal asphyxia","parentIds":["HP_0002643","MONDO_0005087"]}
+{"id":"MONDO_0004975","name":"Alzheimer disease","parentIds":["MONDO_0001627","MONDO_0005574"]}
+{"id":"HP_0004755","name":"Supraventricular tachycardia","parentIds":["EFO_0004269","HP_0001649"]}
+{"id":"HP_0001643","name":"Patent ductus arteriosus","parentIds":["HP_0030680","HP_0002597"]}
+{"id":"EFO_1001494","name":"psoriasis vulgaris","parentIds":["MONDO_0005083"]}
+{"id":"MONDO_0005295","name":"intermittent vascular claudication","parentIds":["MONDO_0005294","EFO_0009086"]}
+{"id":"MONDO_0005709","name":"common cold","parentIds":["MONDO_0024352","MONDO_0001040"]}
+{"id":"HP_0030833","name":"Neck pain","parentIds":["HP_0012531"]}
+{"id":"EFO_0000551","name":"intracranial hemorrhage","parentIds":["MONDO_0011057"]}
+{"id":"MONDO_0005767","name":"gas gangrene","parentIds":["MONDO_0006617","MONDO_0005229","MONDO_0023149","MONDO_0024295","MONDO_0000315"]}
+{"id":"MONDO_0006497","name":"cerebral palsy","parentIds":["MONDO_0006496","MONDO_0044996"]}
+{"id":"MONDO_0005386","name":"peripheral arterial disease","parentIds":["MONDO_0005294","MONDO_0000473"]}
+{"id":"MONDO_0015131","name":"combined immunodeficiency","parentIds":["MONDO_0003778","MONDO_0021094"]}
+{"id":"MONDO_0005559","name":"neurodegenerative disease","parentIds":["MONDO_0002602"]}
+{"id":"MONDO_0005488","name":"adolescent idiopathic scoliosis","parentIds":["MONDO_0000726"]}
+{"id":"MONDO_0005186","name":"cocaine dependence","parentIds":["MONDO_0005303"]}
+{"id":"EFO_0004318","name":"smoking behavior","parentIds":["GO_0007610"]}
+{"id":"EFO_0004335","name":"short-term memory","parentIds":["EFO_0004323"]}
+{"id":"MONDO_0008575","name":"nicotine dependence","parentIds":["MONDO_0005303"]}
+{"id":"MONDO_0007186","name":"gastroesophageal reflux disease","parentIds":["MONDO_0003847","MONDO_0003749","MONDO_0004298"]}
+{"id":"HP_0002098","name":"Respiratory distress","parentIds":["HP_0002094"]}
+{"id":"MONDO_0004846","name":"placental abruption","parentIds":["MONDO_0005917"]}
+{"id":"MONDO_0024647","name":"urolithiasis","parentIds":["MONDO_0002118"]}
+{"id":"EFO_0004329","name":"alcohol drinking","parentIds":["EFO_0004315"]}
+{"id":"MONDO_0019992","name":"pseudohypoparathyroidism","parentIds":["MONDO_0015962","MONDO_0016165","MONDO_0015327","MONDO_0004689"]}
+{"id":"MONDO_0004948","name":"B-cell chronic lymphocytic leukemia","parentIds":["MONDO_0004949","MONDO_0017594","MONDO_0004967","MONDO_0001014"]}
+{"id":"EFO_1001248","name":"non-alcoholic fatty liver","parentIds":["MONDO_0004790"]}
+{"id":"MONDO_0007027","name":"metabolic dysfunction-associated steatohepatitis","parentIds":["EFO_1001248"]}
+{"id":"MONDO_0043510","name":"brain injury","parentIds":["MONDO_0005560","MONDO_0044745"]}
+{"id":"MONDO_0019018","name":"Tako-tsubo cardiomyopathy","parentIds":["MONDO_0004994"]}
+{"id":"HP_0000458","name":"Anosmia","parentIds":["HP_0004408"]}
+{"id":"MONDO_0005178","name":"osteoarthritis","parentIds":["MONDO_0005578"]}
+{"id":"MONDO_0006806","name":"intermediate uveitis","parentIds":["MONDO_0020283"]}
+{"id":"MONDO_0002492","name":"acute kidney injury","parentIds":["MONDO_0001106"]}
+{"id":"MONDO_0007254","name":"breast cancer","parentIds":["MONDO_0003274","MONDO_0021100"]}
+{"id":"MONDO_0005041","name":"glaucoma","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0005016","name":"diabetic kidney disease","parentIds":["MONDO_0005066","MONDO_0005300"]}
+{"id":"MONDO_0006502","name":"acute respiratory distress syndrome","parentIds":["MONDO_0001208"]}
+{"id":"EFO_0000556","name":"ischemia","parentIds":["HP_0001626"]}
+{"id":"MONDO_0006875","name":"ocular hypertension","parentIds":["MONDO_0005044","MONDO_0005328"]}
+{"id":"MONDO_0005252","name":"heart failure","parentIds":["MONDO_0005267"]}
+{"id":"MONDO_0011786","name":"allergic rhinitis","parentIds":["MONDO_0000771","MONDO_0003014"]}
+{"id":"MONDO_0100096","name":"COVID-19","parentIds":["MONDO_0020753"]}
+{"id":"MONDO_0005275","name":"lung disorder","parentIds":["MONDO_0000270"]}
+{"id":"MONDO_0006047","name":"pancreatic adenocarcinoma","parentIds":["MONDO_0004970","MONDO_0005192"]}
+{"id":"EFO_0005762","name":"neuropathic pain","parentIds":["HP_0012531"]}
+{"id":"MONDO_0005155","name":"cirrhosis of liver","parentIds":["MONDO_0005154","HP_0001392"]}
+{"id":"HP_0001662","name":"Bradycardia","parentIds":["EFO_0004269"]}
+{"id":"MONDO_0005494","name":"triple-negative breast carcinoma","parentIds":["MONDO_0006513","MONDO_0000616","MONDO_0000618"]}
+{"id":"HP_0004326","name":"Cachexia","parentIds":["HP_0001824"]}
+{"id":"MONDO_0004567","name":"ileus","parentIds":["MONDO_0004565"]}
+{"id":"HP_0012668","name":"Vasovagal syncope","parentIds":["HP_0001279"]}
+{"id":"MONDO_0006851","name":"meconium aspiration syndrome","parentIds":["MONDO_0024263"]}
+{"id":"MONDO_0015974","name":"severe combined immunodeficiency","parentIds":["MONDO_0015131"]}
+{"id":"HP_0011968","name":"Feeding difficulties","parentIds":["HP_0011458"]}
+{"id":"HP_0004322","name":"Short stature","parentIds":["HP_0000002","HP_0001510"]}
+{"id":"EFO_0009727","name":"shortness of breath","parentIds":["EFO_0003765"]}
+{"id":"EFO_0008572","name":"malnutrition","parentIds":["MONDO_0005137"]}
+{"id":"MONDO_0007078","name":"pseudohypoparathyroidism type 1A","parentIds":["MONDO_0019992","MONDO_0800466","MONDO_0019695"]}
+{"id":"EFO_0009444","name":"hypoxia","parentIds":["HP_0000118"]}
+{"id":"MONDO_0007147","name":"obstructive sleep apnea syndrome","parentIds":["MONDO_0005296"]}
+{"id":"EFO_1001412","name":"renal colic","parentIds":["HP_0012531"]}
+{"id":"EFO_0002546","name":"abnormal glucose tolerance","parentIds":["HP_0011014"]}
+{"id":"MONDO_0006918","name":"posterior uveitis","parentIds":["MONDO_0020283"]}
+{"id":"HP_0004757","name":"Paroxysmal atrial fibrillation","parentIds":["EFO_0004269"]}
+{"id":"MONDO_0010645","name":"oculocerebrorenal syndrome","parentIds":["MONDO_0005328","MONDO_0015962","MONDO_0019216"]}
+{"id":"MONDO_0005070","name":"neoplasm","parentIds":["MONDO_0023370"]}
+{"id":"MONDO_0005231","name":"hepatitis C virus infection","parentIds":["EFO_0007540"]}
+{"id":"MONDO_0005338","name":"open-angle glaucoma","parentIds":["MONDO_0005041"]}
+{"id":"MONDO_0005292","name":"colitis","parentIds":["MONDO_0005265","MONDO_0002269","MONDO_0003409"]}
+{"id":"MONDO_0015993","name":"cone-rod dystrophy","parentIds":["MONDO_0019118","Orphanet_98666"]}
+{"id":"MONDO_0018852","name":"achromatopsia","parentIds":["MONDO_0005283","MONDO_0001703"]}
+{"id":"MONDO_0005045","name":"hypertrophic cardiomyopathy","parentIds":["MONDO_0000591"]}
+{"id":"MONDO_0018998","name":"Leber congenital amaurosis","parentIds":["MONDO_0019118","MONDO_0002320"]}
+{"id":"MONDO_0019200","name":"retinitis pigmentosa","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0005101","name":"ulcerative colitis","parentIds":["MONDO_0005292"]}
+{"id":"Orphanet_99739","name":"Rare familial disorder with hypertrophic cardiomyopathy","parentIds":["Orphanet_98054"]}
+{"id":"MONDO_0016293","name":"congenital stationary night blindness","parentIds":["MONDO_0004588","MONDO_0100545"]}
+{"id":"MONDO_0019006","name":"familial idiopathic steroid-resistant nephrotic syndrome","parentIds":["MONDO_0018170","MONDO_0044765","MONDO_0002350"]}
+{"id":"MONDO_0017842","name":"Senior-Loken syndrome","parentIds":["MONDO_0015962","MONDO_0005308","MONDO_0006025"]}
+{"id":"MONDO_0043797","name":"spinal cord injury","parentIds":["MONDO_0044745","MONDO_0037747","MONDO_0002545"]}
+{"id":"MONDO_1060198","name":"ischemic stroke","parentIds":["HP_0002060","MONDO_0005299","MONDO_0005098"]}
+{"id":"MONDO_0021107","name":"narcolepsy","parentIds":["MONDO_0003406"]}
+{"id":"MONDO_0001020","name":"amblyopia","parentIds":["HP_0007663","MONDO_0021084"]}
+{"id":"MONDO_0021094","name":"immunodeficiency disease","parentIds":["MONDO_0003847","HP_0010978","MONDO_0005046"]}
+{"id":"EFO_0009868","name":"sedation","parentIds":["EFO_0002571"]}
+{"id":"MONDO_0004992","name":"cancer","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0010563","name":"blue cone monochromacy","parentIds":["MONDO_0018852","MONDO_0001703","MONDO_0020605","MONDO_0021155"]}
+{"id":"MONDO_0009303","name":"anti-glomerular basement membrane disease","parentIds":["MONDO_0007179"]}
+{"id":"EFO_1001985","name":"congenital fibrosis of the extraocular muscles","parentIds":["MONDO_0004746","MONDO_0001584","MONDO_0016106"]}
+{"id":"MONDO_0007119","name":"isolated aniridia","parentIds":["MONDO_0019172","MONDO_0003847"]}
+{"id":"MONDO_0020364","name":"posterior polymorphous corneal dystrophy","parentIds":["MONDO_0000766","MONDO_0020214","MONDO_0003847"]}
+{"id":"MONDO_0019005","name":"nephronophthisis","parentIds":["MONDO_0015962","HP_0012210","MONDO_0006025"]}
+{"id":"MONDO_0009807","name":"osteosarcoma","parentIds":["MONDO_0005089"]}
+{"id":"MONDO_0019312","name":"Hermansky-Pudlak syndrome","parentIds":["MONDO_0017305","MONDO_0017739","MONDO_0021181"]}
+{"id":"MONDO_0005342","name":"IgA glomerulonephritis","parentIds":["MONDO_0002462","MONDO_0005334"]}
+{"id":"MONDO_0007989","name":"congenital microcoria","parentIds":["MONDO_0011119","HP_0000616"]}
+{"id":"MONDO_0100313","name":"focal segmental glomerulosclerosis","parentIds":["MONDO_0000490","MONDO_0700328"]}
+{"id":"MONDO_0010371","name":"Aland island eye disease","parentIds":["MONDO_0000425","Orphanet_98657","MONDO_0700243"]}
+{"id":"MONDO_0010725","name":"X-linked retinoschisis","parentIds":["MONDO_0020248","MONDO_0019118","MONDO_0000425","MONDO_0004579"]}
+{"id":"MONDO_0018899","name":"posterior cortical atrophy","parentIds":["MONDO_0024237","MONDO_0015547"]}
+{"id":"MONDO_0008777","name":"gelatinous drop-like corneal dystrophy","parentIds":["MONDO_0000763","MONDO_0003847","MONDO_0020212","MONDO_0004686"]}
+{"id":"MONDO_0009515","name":"Norum disease","parentIds":["MONDO_0018999","MONDO_0001822","Orphanet_182043"]}
+{"id":"MONDO_0018999","name":"LCAT deficiency","parentIds":["MONDO_0017773"]}
+{"id":"MONDO_0008865","name":"Bietti crystalline corneoretinal dystrophy","parentIds":["Orphanet_98657","MONDO_0016420"]}
+{"id":"MONDO_0975805","name":"foveal hypoplasia 3","parentIds":["MONDO_0044203"]}
+{"id":"MONDO_0018106","name":"hereditary xanthinuria","parentIds":["MONDO_0000721","MONDO_0019236"]}
+{"id":"MONDO_0007671","name":"fibronectin glomerulopathy","parentIds":["MONDO_0100191","MONDO_0019722"]}
+{"id":"MONDO_0018013","name":"complement 3 glomerulopathy","parentIds":["MONDO_0018904"]}
+{"id":"MONDO_0000455","name":"cone dystrophy","parentIds":["MONDO_0019118","MONDO_0020242","Orphanet_98657"]}
+{"id":"MONDO_0007352","name":"renal coloboma syndrome","parentIds":["MONDO_0000426"]}
+{"id":"HP_0100806","name":"Sepsis","parentIds":["HP_0010978"]}
+{"id":"MONDO_0009548","name":"renal hypomagnesemia 5 with ocular involvement","parentIds":["MONDO_0017624","MONDO_0020242"]}
+{"id":"MONDO_0019353","name":"Stargardt disease","parentIds":["MONDO_0003004","MONDO_0016420"]}
+{"id":"MONDO_0020726","name":"tubulointerstitial kidney disease, autosomal dominant, 2","parentIds":["MONDO_0008264","MONDO_0000608"]}
+{"id":"MONDO_0007473","name":"Duane retraction syndrome","parentIds":["MONDO_0015083","MONDO_0100545"]}
+{"id":"MONDO_0008315","name":"prostate cancer","parentIds":["MONDO_0021259","MONDO_0005836"]}
+{"id":"MONDO_0019631","name":"persistent hyperplastic primary vitreous","parentIds":["MONDO_0020247","HP_0004327","MONDO_0004860"]}
+{"id":"MONDO_0019516","name":"exudative vitreoretinopathy","parentIds":["MONDO_0002311","MONDO_0020248","Orphanet_71859","Orphanet_98657"]}
+{"id":"MONDO_0018904","name":"primary membranoproliferative glomerulonephritis","parentIds":["MONDO_0002462"]}
+{"id":"MONDO_0002474","name":"primary hyperoxaluria","parentIds":["MONDO_0019214"]}
+{"id":"MONDO_0009824","name":"primary hyperoxaluria type 2","parentIds":["MONDO_0002474"]}
+{"id":"MONDO_0007740","name":"Wagner disease","parentIds":["MONDO_0020248"]}
+{"id":"MONDO_0011756","name":"Senior-Loken syndrome 4","parentIds":["MONDO_0017842"]}
+{"id":"MONDO_0009732","name":"congenital nephrotic syndrome, Finnish type","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0006486","name":"uveal melanoma","parentIds":["HP_0012372","MONDO_0006325","MONDO_0002659"]}
+{"id":"MONDO_0019101","name":"retinal capillary malformation","parentIds":["MONDO_0020247","MONDO_0024296","MONDO_0021231"]}
+{"id":"MONDO_0011987","name":"cone-rod dystrophy 13","parentIds":["MONDO_0015993"]}
+{"id":"MONDO_0007640","name":"Sorsby fundus dystrophy","parentIds":["Orphanet_98666","MONDO_0019118"]}
+{"id":"MONDO_0013043","name":"atypical hemolytic-uremic syndrome with C3 anomaly","parentIds":["MONDO_0035290"]}
+{"id":"MONDO_0012456","name":"congenital primary aphakia","parentIds":["MONDO_0019503","HP_0000517","MONDO_0001176"]}
+{"id":"MONDO_0005091","name":"severe acute respiratory syndrome","parentIds":["MONDO_0005087","MONDO_0020753"]}
+{"id":"MONDO_0018772","name":"Joubert syndrome","parentIds":["MONDO_0005308"]}
+{"id":"MONDO_0009480","name":"Joubert syndrome with oculorenal defect","parentIds":["MONDO_0024458","MONDO_0015369","MONDO_0020022"]}
+{"id":"MONDO_0019783","name":"neovascular glaucoma","parentIds":["MONDO_0001744"]}
+{"id":"MONDO_0009066","name":"juvenile nephropathic cystinosis","parentIds":["MONDO_0100151","MONDO_0019216"]}
+{"id":"MONDO_0008922","name":"Sengers syndrome","parentIds":["Orphanet_352312","MONDO_0016801","MONDO_0018117","Orphanet_183530","MONDO_0018158","MONDO_0019243","MONDO_0100547","Orphanet_217587","Orphanet_98647"]}
+{"id":"MONDO_0009962","name":"Senior-Loken syndrome 1","parentIds":["MONDO_0017842"]}
+{"id":"MONDO_0015612","name":"Dent disease","parentIds":["MONDO_0015962","MONDO_0006510"]}
+{"id":"MONDO_0010225","name":"Dent disease type 1","parentIds":["MONDO_0015612"]}
+{"id":"MONDO_0014005","name":"immunoglobulin-mediated membranoproliferative glomerulonephritis","parentIds":["MONDO_0002350","MONDO_0018904","MONDO_0005334"]}
+{"id":"MONDO_0018159","name":"atypical hemolytic-uremic syndrome with DGKE deficiency","parentIds":["MONDO_0016244"]}
+{"id":"MONDO_0012799","name":"hypertrophic cardiomyopathy 11","parentIds":["MONDO_0024573"]}
+{"id":"EFO_1000968","name":"hydrophthalmos","parentIds":["MONDO_0018174","Orphanet_156005"]}
+{"id":"MONDO_0013869","name":"adenine phosphoribosyltransferase deficiency","parentIds":["MONDO_0019236","MONDO_0004736"]}
+{"id":"MONDO_0013044","name":"atypical hemolytic-uremic syndrome with thrombomodulin anomaly","parentIds":["MONDO_0035290"]}
+{"id":"MONDO_0013040","name":"atypical hemolytic-uremic syndrome with MCP/CD46 anomaly","parentIds":["MONDO_0035290"]}
+{"id":"MONDO_0013041","name":"atypical hemolytic-uremic syndrome with I factor anomaly","parentIds":["MONDO_0035290"]}
+{"id":"MONDO_0011838","name":"Bothnia retinal dystrophy","parentIds":["MONDO_0100444"]}
+{"id":"MONDO_0013446","name":"Leber congenital amaurosis 6","parentIds":["MONDO_0018998"]}
+{"id":"EFO_0008618","name":"Medullary Cystic Kidney Disease Type II","parentIds":["MONDO_0019236","MONDO_0002473","MONDO_0005240","MONDO_0008264","Orphanet_98056","MONDO_0000608"]}
+{"id":"MONDO_0008504","name":"supravalvular aortic stenosis","parentIds":["MONDO_0100547","HP_0031652","EFO_0000266"]}
+{"id":"MONDO_0013195","name":"hypertrophic cardiomyopathy 13","parentIds":["MONDO_0024573"]}
+{"id":"MONDO_0021019","name":"X-linked recessive ocular albinism","parentIds":["MONDO_0020605","MONDO_0700230","MONDO_0017304","MONDO_0043209"]}
+{"id":"MONDO_0010168","name":"Usher syndrome type 1","parentIds":["MONDO_0019501"]}
+{"id":"MONDO_0011382","name":"sickle cell disease","parentIds":["MONDO_0019050","MONDO_0006025"]}
+{"id":"MONDO_0007600","name":"primary Fanconi syndrome","parentIds":["MONDO_0100238"]}
+{"id":"MONDO_0859175","name":"nephronophthisis-like nephropathy 2","parentIds":["MONDO_0019005"]}
+{"id":"MONDO_0019152","name":"Oguchi disease","parentIds":["MONDO_0016293","MONDO_0019118"]}
+{"id":"MONDO_0013560","name":"Hermansky-Pudlak syndrome 8","parentIds":["MONDO_0019312"]}
+{"id":"MONDO_0100288","name":"enhanced S-cone syndrome","parentIds":["MONDO_0020248"]}
+{"id":"MONDO_0013042","name":"atypical hemolytic-uremic syndrome with B factor anomaly","parentIds":["MONDO_0035290"]}
+{"id":"MONDO_0020367","name":"juvenile open angle glaucoma","parentIds":["Orphanet_156005","MONDO_0018174","MONDO_0005338"]}
+{"id":"MONDO_0007086","name":"autosomal dominant Alport syndrome","parentIds":["MONDO_0018965","MONDO_0000426"]}
+{"id":"MONDO_0008762","name":"autosomal recessive Alport syndrome","parentIds":["MONDO_0018965","MONDO_0006025"]}
+{"id":"MONDO_0011979","name":"adult-onset foveomacular vitelliform dystrophy","parentIds":["MONDO_0000390"]}
+{"id":"MONDO_0011755","name":"senior-loken syndrome 3","parentIds":["MONDO_0017842"]}
+{"id":"MONDO_0013474","name":"hypertrophic cardiomyopathy 17","parentIds":["MONDO_0024573"]}
+{"id":"MONDO_0013621","name":"LAMB2-related infantile-onset nephrotic syndrome","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0017258","name":"idiopathic panuveitis","parentIds":["MONDO_0017255"]}
+{"id":"MONDO_0005299","name":"brain ischemia","parentIds":["MONDO_0005053","HP_0002597","HP_0011025","EFO_0000556","MONDO_0011057"]}
+{"id":"MONDO_0033262","name":"nephrotic syndrome 15","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0007380","name":"lattice corneal dystrophy type I","parentIds":["MONDO_0000764","MONDO_0004686"]}
+{"id":"MONDO_0010335","name":"X-linked cone-rod dystrophy 3","parentIds":["MONDO_0700243","MONDO_0021155"]}
+{"id":"MONDO_0009875","name":"achromatopsia 3","parentIds":["MONDO_0100446","MONDO_0018852"]}
+{"id":"MONDO_0009003","name":"achromatopsia 2","parentIds":["MONDO_0800102","MONDO_0018852"]}
+{"id":"MONDO_0015229","name":"Bardet-Biedl syndrome","parentIds":["MONDO_0006025","MONDO_0005308"]}
+{"id":"MONDO_0017735","name":"congenital aortic valve stenosis","parentIds":["EFO_0000266"]}
+{"id":"MONDO_0011599","name":"birdshot chorioretinopathy","parentIds":["MONDO_0006918"]}
+{"id":"MONDO_0005009","name":"congestive heart failure","parentIds":["HP_0011025","MONDO_0005252"]}
+{"id":"MONDO_0018874","name":"acute myeloid leukemia","parentIds":["MONDO_0010643","MONDO_0004643"]}
+{"id":"MONDO_0008071","name":"autosomal dominant progressive nephropathy with hypertension","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0012398","name":"achromatopsia 6","parentIds":["MONDO_0100545","MONDO_0018852"]}
+{"id":"MONDO_0009978","name":"retinal degeneration-nanophthalmos-glaucoma syndrome","parentIds":["MONDO_0019118","Orphanet_98657","Orphanet_183557"]}
+{"id":"MONDO_0019501","name":"Usher syndrome","parentIds":["MONDO_0006025"]}
+{"id":"MONDO_0005233","name":"non-small cell lung carcinoma","parentIds":["MONDO_0005138"]}
+{"id":"MONDO_0018177","name":"glioblastoma","parentIds":["MONDO_0016680"]}
+{"id":"MONDO_0007266","name":"hypertrophic cardiomyopathy 2","parentIds":["MONDO_1010193","MONDO_0024573"]}
+{"id":"MONDO_0008327","name":"exfoliation syndrome","parentIds":["MONDO_0001554","MONDO_0018174","MONDO_0002289"]}
+{"id":"MONDO_0018690","name":"Holmes-Adie syndrome","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0011473","name":"Leber congenital amaurosis 5","parentIds":["MONDO_0100445","MONDO_0018998"]}
+{"id":"MONDO_0010227","name":"retinitis pigmentosa 3","parentIds":["MONDO_0019200","MONDO_0100437"]}
+{"id":"MONDO_0013898","name":"karyomegalic interstitial nephritis","parentIds":["MONDO_0001085","MONDO_0005334","MONDO_0021190"]}
+{"id":"MONDO_0005148","name":"type 2 diabetes mellitus","parentIds":["MONDO_0005015"]}
+{"id":"MONDO_0011579","name":"late-onset retinal degeneration","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0010723","name":"retinitis pigmentosa 2","parentIds":["MONDO_0019200","MONDO_0100442"]}
+{"id":"MONDO_0010557","name":"choroideremia","parentIds":["MONDO_0001898","MONDO_0019118","MONDO_0043218","MONDO_0000425"]}
+{"id":"MONDO_0012056","name":"Leber congenital amaurosis 9","parentIds":["MONDO_0800101","MONDO_0018998"]}
+{"id":"MONDO_0011143","name":"cone-rod dystrophy 6","parentIds":["MONDO_0015993","MONDO_0100454"]}
+{"id":"MONDO_0020751","name":"orthostatic hypotension 2","parentIds":["MONDO_0021272"]}
+{"id":"MONDO_0012475","name":"cone dystrophy with supernormal rod response","parentIds":["MONDO_1040063","MONDO_0000455"]}
+{"id":"MONDO_0007362","name":"cone-rod dystrophy 2","parentIds":["MONDO_1040064","MONDO_0019200","MONDO_0015993"]}
+{"id":"MONDO_0013128","name":"familial juvenile hyperuricemic nephropathy type 2","parentIds":["MONDO_0015962","MONDO_0000608"]}
+{"id":"HP_0003326","name":"Myalgia","parentIds":["HP_0012531"]}
+{"id":"HP_0001649","name":"Tachycardia","parentIds":["EFO_0004269"]}
+{"id":"MONDO_0004980","name":"atopic eczema","parentIds":["MONDO_0005271","MONDO_0002406"]}
+{"id":"MONDO_0009007","name":"Jalili syndrome","parentIds":["MONDO_0003847"]}
+{"id":"EFO_0006834","name":"septic shock","parentIds":["HP_0001626"]}
+{"id":"MONDO_0008982","name":"central areolar choroidal dystrophy","parentIds":["MONDO_0001898","MONDO_0003847"]}
+{"id":"MONDO_0010241","name":"congenital stationary night blindness 2A","parentIds":["MONDO_0044749","MONDO_0700243"]}
+{"id":"MONDO_0004691","name":"autosomal dominant polycystic kidney disease","parentIds":["MONDO_0020642","MONDO_0000426"]}
+{"id":"MONDO_0008264","name":"autosomal dominant medullary cystic kidney disease with or without hyperuricemia","parentIds":["MONDO_0000426","MONDO_0019741"]}
+{"id":"MONDO_0018877","name":"retinitis punctata albescens","parentIds":["MONDO_0007639"]}
+{"id":"MONDO_0975840","name":"retinitis pigmentosa 98","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0007381","name":"epithelial recurrent erosion dystrophy","parentIds":["MONDO_0003847","MONDO_0020212"]}
+{"id":"MONDO_0007626","name":"familial congenital palsy of trochlear nerve","parentIds":["MONDO_0700463","MONDO_0002320","MONDO_0100545","MONDO_0015083"]}
+{"id":"MONDO_0019198","name":"sympathetic ophthalmia","parentIds":["MONDO_0017255","MONDO_0017634"]}
+{"id":"MONDO_0007666","name":"glaucoma-sleep apnea syndrome","parentIds":["Orphanet_98638","MONDO_0005328","Orphanet_108987"]}
+{"id":"MONDO_0010818","name":"retinitis pigmentosa 12","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0020437","name":"atrial septal defect, ostium primum type","parentIds":["MONDO_0006664"]}
+{"id":"MONDO_0009549","name":"severe early-childhood-onset retinal dystrophy","parentIds":["MONDO_0800406","MONDO_0019353"]}
+{"id":"MONDO_0013231","name":"Leber congenital amaurosis 14","parentIds":["MONDO_0018998"]}
+{"id":"MONDO_0005150","name":"age-related macular degeneration","parentIds":["MONDO_0019118","MONDO_0002175"]}
+{"id":"MONDO_0011190","name":"nephronophthisis 2","parentIds":["Orphanet_98056","MONDO_0005240","MONDO_0019005"]}
+{"id":"MONDO_0005136","name":"malaria","parentIds":["MONDO_0044347","MONDO_0002428","MONDO_0100120"]}
+{"id":"MONDO_0016205","name":"IRVAN syndrome","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0016502","name":"Hermansky-Pudlak syndrome without pulmonary fibrosis","parentIds":["MONDO_0019312"]}
+{"id":"MONDO_0013555","name":"Hermansky-Pudlak syndrome 3","parentIds":["MONDO_0016502"]}
+{"id":"MONDO_0010649","name":"isolated congenital megalocornea","parentIds":["MONDO_0009576"]}
+{"id":"MONDO_0009576","name":"megalocornea","parentIds":["MONDO_0003847","MONDO_0000942","HP_0000481"]}
+{"id":"MONDO_0014687","name":"retinitis pigmentosa 73","parentIds":["MONDO_0019200","MONDO_1040040"]}
+{"id":"MONDO_0010209","name":"xanthinuria type I","parentIds":["MONDO_0018106"]}
+{"id":"MONDO_0009071","name":"hereditary renal hypouricemia","parentIds":["MONDO_0015962"]}
+{"id":"MONDO_0010588","name":"exudative vitreoretinopathy 2, X-linked","parentIds":["MONDO_0700377","MONDO_0000425","MONDO_0019516"]}
+{"id":"MONDO_0012802","name":"oculoauricular syndrome","parentIds":["MONDO_0016073","Orphanet_183557"]}
+{"id":"MONDO_0010566","name":"X-linked cone-rod dystrophy 1","parentIds":["MONDO_0100437","MONDO_0021155"]}
+{"id":"MONDO_0008377","name":"retinitis pigmentosa 1","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0009097","name":"persistent hyperplastic primary vitreous, autosomal recessive","parentIds":["MONDO_0006025","MONDO_0019631"]}
+{"id":"MONDO_0011303","name":"focal segmental glomerulosclerosis 1","parentIds":["MONDO_0005363","MONDO_0019006"]}
+{"id":"MONDO_0010320","name":"retinitis pigmentosa 23","parentIds":["MONDO_0019200","MONDO_0022410","MONDO_1040039"]}
+{"id":"MONDO_0015912","name":"macrothrombocytopenia and granulocyte inclusions with or without nephritis or sensorineural hearing loss","parentIds":["MONDO_0018795","Orphanet_183586","Orphanet_220452","MONDO_0000009"]}
+{"id":"MONDO_0013417","name":"complement component 3 deficiency","parentIds":["MONDO_0000015"]}
+{"id":"MONDO_0018965","name":"Alport syndrome","parentIds":["MONDO_0005334"]}
+{"id":"MONDO_0957240","name":"cone-rod dystrophy 24","parentIds":["MONDO_0015993"]}
+{"id":"MONDO_0005629","name":"Acanthamoeba keratitis","parentIds":["MONDO_0002428","MONDO_0023865","MONDO_0024315","MONDO_0021747"]}
+{"id":"MONDO_0010641","name":"X-linked diffuse leiomyomatosis-Alport syndrome","parentIds":["Orphanet_98159","MONDO_0005240","MONDO_0017007","Orphanet_93550"]}
+{"id":"MONDO_0014850","name":"retinitis pigmentosa and erythrocytic microcytosis","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0005657","name":"aspergillosis","parentIds":["MONDO_0002312"]}
+{"id":"MONDO_0010364","name":"X-linked intellectual disability-retinitis pigmentosa syndrome","parentIds":["MONDO_0020119","MONDO_0017004"]}
+{"id":"MONDO_0008610","name":"blue color blindness","parentIds":["MONDO_0001703","MONDO_0003847"]}
+{"id":"MONDO_0014257","name":"nephrotic syndrome, type 9","parentIds":["MONDO_0019006"]}
+{"id":"MONDO_0005377","name":"nephrotic syndrome","parentIds":["MONDO_0002331"]}
+{"id":"MONDO_0007946","name":"jaw-winking syndrome","parentIds":["Orphanet_98577","MONDO_0024458","MONDO_0003569"]}
+{"id":"MONDO_0009724","name":"nail-patella-like renal disease","parentIds":["MONDO_0100191"]}
+{"id":"MONDO_0016484","name":"Usher syndrome type 2","parentIds":["MONDO_0019501"]}
+{"id":"MONDO_0012594","name":"complement factor I deficiency","parentIds":["MONDO_0003832"]}
+{"id":"MONDO_0009550","name":"renal hypomagnesemia 3","parentIds":["MONDO_0017624","MONDO_0001567","MONDO_0006510"]}
+{"id":"MONDO_0007937","name":"renal hypomagnesemia 2","parentIds":["MONDO_0015962","MONDO_0017625"]}
+{"id":"MONDO_0859210","name":"chromosome 16q12 duplication syndrome","parentIds":["MONDO_0019040"]}
+{"id":"MONDO_0007471","name":"Doyne honeycomb retinal dystrophy","parentIds":["MONDO_0006949","Orphanet_98657","MONDO_0016420"]}
+{"id":"MONDO_0014515","name":"macular dystrophy with central cone involvement","parentIds":["MONDO_0005150"]}
+{"id":"MONDO_0010446","name":"X-linked cone dysfunction syndrome with myopia","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0010788","name":"Leber hereditary optic neuropathy","parentIds":["MONDO_0043878","MONDO_0016387","MONDO_0020249","MONDO_0016333"]}
+{"id":"MONDO_0030895","name":"nephrotic syndrome, type 22","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0011395","name":"cone-rod dystrophy 3","parentIds":["MONDO_0800406","MONDO_0015993"]}
+{"id":"MONDO_0010299","name":"hypoxanthine guanine phosphoribosyltransferase partial deficiency","parentIds":["MONDO_0016088"]}
+{"id":"MONDO_0008764","name":"Leber congenital amaurosis 1","parentIds":["MONDO_0100453","MONDO_0018998"]}
+{"id":"MONDO_0010693","name":"nystagmus 1, congenital, X-linked","parentIds":["MONDO_0005712"]}
+{"id":"MONDO_0010974","name":"nephrotic syndrome, type 2","parentIds":["MONDO_0019006"]}
+{"id":"MONDO_0010520","name":"X-linked Alport syndrome","parentIds":["MONDO_0018965","MONDO_0000425"]}
+{"id":"MONDO_0004849","name":"pulmonary emphysema","parentIds":["MONDO_0005002"]}
+{"id":"MONDO_0005989","name":"toxoplasmosis","parentIds":["MONDO_0005707"]}
+{"id":"MONDO_0002771","name":"pulmonary fibrosis","parentIds":["MONDO_0015925"]}
+{"id":"MONDO_0009796","name":"ornithine aminotransferase deficiency","parentIds":["Orphanet_98712","MONDO_0017356","MONDO_0019118","HP_0012025","MONDO_0020127","Orphanet_98713","Orphanet_207018","Orphanet_98662","MONDO_0001898","MONDO_0043218"]}
+{"id":"MONDO_0979574","name":"retinitis pigmentosa 100","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0019172","name":"aniridia","parentIds":["MONDO_0019503","MONDO_0002289"]}
+{"id":"MONDO_0008210","name":"patterned macular dystrophy 1","parentIds":["MONDO_1040055","MONDO_0020381"]}
+{"id":"Orphanet_99001","name":"Butterfly-shaped pigment dystrophy","parentIds":["Orphanet_98657"]}
+{"id":"MONDO_0030440","name":"cone-rod dystrophy 22","parentIds":["MONDO_0015993"]}
+{"id":"MONDO_0009067","name":"cystinuria","parentIds":["MONDO_0015962","MONDO_0019216"]}
+{"id":"Orphanet_1454","name":"Joubert syndrome with hepatic defect","parentIds":["MONDO_0015369","Orphanet_330197","Orphanet_269567"]}
+{"id":"MONDO_0018988","name":"iridocorneal endothelial syndrome","parentIds":["MONDO_0024458","OTAR_0000018"]}
+{"id":"MONDO_0016979","name":"MRCS syndrome","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0008662","name":"autosomal dominant vitreoretinochoroidopathy","parentIds":["MONDO_0700240"]}
+{"id":"MONDO_0014451","name":"focal segmental glomerulosclerosis 7","parentIds":["MONDO_0005363"]}
+{"id":"MONDO_0011239","name":"colobomatous macrophthalmia-microcornea syndrome","parentIds":["MONDO_0024458"]}
+{"id":"MONDO_0013286","name":"immunodeficiency, common variable, 6","parentIds":["MONDO_0015517"]}
+{"id":"MONDO_0015517","name":"common variable immunodeficiency","parentIds":["MONDO_0016463"]}
+{"id":"MONDO_0024527","name":"glomerulopathy with fibronectin deposits 1","parentIds":["MONDO_0007671"]}
+{"id":"MONDO_0011456","name":"nephronophthisis 3","parentIds":["MONDO_0019005"]}
+{"id":"MONDO_0012625","name":"retinitis pigmentosa 37","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0010243","name":"X-linked immunoneurologic disorder","parentIds":["MONDO_0100545","MONDO_0003778","MONDO_0000425"]}
+{"id":"MONDO_0010122","name":"congenital thrombotic thrombocytopenic purpura","parentIds":["MONDO_0009332","MONDO_0018896","MONDO_0021181","MONDO_0000009","MONDO_0100241"]}
+{"id":"MONDO_0012983","name":"cone-rod dystrophy 12","parentIds":["MONDO_0015993","MONDO_1040056"]}
+{"id":"MONDO_0013302","name":"nephronophthisis 11","parentIds":["MONDO_0019394","MONDO_0019005"]}
+{"id":"MONDO_0019394","name":"Senior-Boichis syndrome","parentIds":["MONDO_0015962"]}
+{"id":"MONDO_0020496","name":"familial porencephaly","parentIds":["MONDO_0011057","MONDO_0017410","MONDO_0100545"]}
+{"id":"MONDO_0017410","name":"porencephaly","parentIds":["MONDO_0017103","HP_0002060"]}
+{"id":"MONDO_0008289","name":"brain small vessel disease 1 with or without ocular anomalies","parentIds":["MONDO_0800461","MONDO_0020496"]}
+{"id":"MONDO_0005081","name":"preeclampsia","parentIds":["MONDO_0045048","MONDO_0003847"]}
+{"id":"MONDO_0018695","name":"avian influenza","parentIds":["EFO_0007411"]}
+{"id":"MONDO_0975809","name":"microphthalmia/coloboma 13","parentIds":["MONDO_0000170"]}
+{"id":"MONDO_0013008","name":"combined immunodeficiency due to STIM1 deficiency","parentIds":["MONDO_0015695"]}
+{"id":"MONDO_0008134","name":"autosomal dominant optic atrophy, classic form","parentIds":["MONDO_0016387","MONDO_0020250","Orphanet_254822","MONDO_0043878"]}
+{"id":"MONDO_0012507","name":"retinal cone dystrophy 4","parentIds":["MONDO_0015993","MONDO_0000455","MONDO_0700244"]}
+{"id":"MONDO_0013327","name":"primary hyperoxaluria type 3","parentIds":["MONDO_0002474"]}
+{"id":"MONDO_0006952","name":"retinopathy of prematurity","parentIds":["MONDO_1040041"]}
+{"id":"MONDO_0975807","name":"cholestasis, progressive familial intrahepatic, 13","parentIds":["MONDO_0015762"]}
+{"id":"MONDO_0019980","name":"renal hypoplasia, bilateral","parentIds":["MONDO_0019637","Orphanet_357506"]}
+{"id":"MONDO_0007848","name":"autosomal dominant keratitis","parentIds":["MONDO_0003085","MONDO_0000426","MONDO_0018102"]}
+{"id":"MONDO_0014872","name":"congenital stationary night blindness 1H","parentIds":["MONDO_0016293"]}
+{"id":"MONDO_0019640","name":"posterior urethral valve","parentIds":["MONDO_0018559"]}
+{"id":"MONDO_0009020","name":"macular corneal dystrophy","parentIds":["MONDO_0020242","MONDO_0020213"]}
+{"id":"MONDO_0011414","name":"Peters anomaly","parentIds":["MONDO_0000942","MONDO_0019503"]}
+{"id":"MONDO_0019338","name":"sarcoidosis","parentIds":["MONDO_0019751"]}
+{"id":"MONDO_0011346","name":"xanthinuria type II","parentIds":["MONDO_0018106"]}
+{"id":"MONDO_0013613","name":"Leber congenital amaurosis 16","parentIds":["MONDO_0018998"]}
+{"id":"MONDO_0005159","name":"prostate carcinoma","parentIds":["MONDO_0008315","MONDO_0004993"]}
+{"id":"MONDO_0012849","name":"Joubert syndrome 9","parentIds":["MONDO_0009480","MONDO_0018772"]}
+{"id":"HP_0100704","name":"Cerebral visual impairment","parentIds":["HP_0000505"]}
+{"id":"MONDO_0019638","name":"renal dysplasia","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0013458","name":"hyperuricemia-pulmonary hypertension-renal failure-alkalosis syndrome","parentIds":["MONDO_0005149","MONDO_0016387","MONDO_0015962"]}
+{"id":"MONDO_0012546","name":"nephrotic syndrome, type 3","parentIds":["MONDO_0019006"]}
+{"id":"MONDO_0016239","name":"cystinosis","parentIds":["MONDO_0019246"]}
+{"id":"MONDO_0012796","name":"retinitis pigmentosa 41","parentIds":["MONDO_1040052","MONDO_0019200"]}
+{"id":"MONDO_0008765","name":"Leber congenital amaurosis 2","parentIds":["MONDO_0100368","MONDO_0018998"]}
+{"id":"MONDO_0030797","name":"retinitis pigmentosa 93","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0014345","name":"retinitis pigmentosa 69","parentIds":["MONDO_0019200","MONDO_0700232"]}
+{"id":"MONDO_0009376","name":"carbamoyl phosphate synthetase I deficiency disease","parentIds":["MONDO_0800153"]}
+{"id":"MONDO_0014099","name":"nephrotic syndrome, type 8","parentIds":["MONDO_0019006"]}
+{"id":"MONDO_0011839","name":"Newfoundland cone-rod dystrophy","parentIds":["MONDO_0015993","MONDO_0100444"]}
+{"id":"MONDO_0012432","name":"Joubert syndrome 5","parentIds":["MONDO_0100451","MONDO_0018772","MONDO_0009480"]}
+{"id":"MONDO_0030311","name":"combined oxidative phosphorylation deficiency 52","parentIds":["MONDO_0000732"]}
+{"id":"MONDO_0011458","name":"Leber congenital amaurosis 4","parentIds":["MONDO_0018998","MONDO_0100438","MONDO_0015993"]}
+{"id":"MONDO_0011165","name":"glomerulopathy with fibronectin deposits 2","parentIds":["MONDO_0007671"]}
+{"id":"MONDO_0015534","name":"juvenile xanthogranuloma","parentIds":["MONDO_0015531"]}
+{"id":"MONDO_0012216","name":"foveal hypoplasia - optic nerve decussation defect - anterior segment dysgenesis syndrome","parentIds":["MONDO_0020249","Orphanet_98657","MONDO_0044203","MONDO_0019216"]}
+{"id":"MONDO_0032655","name":"visual impairment and progressive phthisis bulbi","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0013316","name":"occult macular dystrophy","parentIds":["MONDO_0020242","MONDO_0003004"]}
+{"id":"MONDO_0958239","name":"microphthalmia/coloboma 11","parentIds":["MONDO_0000170"]}
+{"id":"MONDO_0012726","name":"autosomal dominant familial hematuria-retinal arteriolar tortuosity-contractures syndrome","parentIds":["MONDO_0800461","Orphanet_71859","MONDO_0004995","Orphanet_93550"]}
+{"id":"MONDO_0011137","name":"retinitis pigmentosa 19","parentIds":["MONDO_0019200","MONDO_0800406"]}
+{"id":"MONDO_0009823","name":"primary hyperoxaluria type 1","parentIds":["MONDO_0100278","MONDO_0002474"]}
+{"id":"MONDO_0007377","name":"granular corneal dystrophy type I","parentIds":["MONDO_0000764","MONDO_0020213"]}
+{"id":"MONDO_0011601","name":"neonatal intrahepatic cholestasis due to citrin deficiency","parentIds":["MONDO_0016602"]}
+{"id":"MONDO_0013449","name":"Leber congenital amaurosis 7","parentIds":["MONDO_0018998","MONDO_1040064"]}
+{"id":"MONDO_0013348","name":"cone-rod dystrophy 15","parentIds":["MONDO_0700375","MONDO_0019200","MONDO_0015993"]}
+{"id":"MONDO_0958190","name":"prolonged electroretinal response suppression 2","parentIds":["MONDO_0012033"]}
+{"id":"MONDO_0018675","name":"IgG4-related ophthalmic disorder","parentIds":["MONDO_0017287","MONDO_0005328"]}
+{"id":"MONDO_0005825","name":"leptospirosis","parentIds":["MONDO_0021839","MONDO_0000314"]}
+{"id":"MONDO_0013131","name":"polycystic kidney disease 2","parentIds":["MONDO_0004691"]}
+{"id":"MONDO_0024561","name":"vitelliform macular dystrophy 3","parentIds":["MONDO_1040055","MONDO_0011979"]}
+{"id":"MONDO_0015924","name":"pulmonary arterial hypertension","parentIds":["MONDO_0005149"]}
+{"id":"MONDO_0013444","name":"nephronophthisis 9","parentIds":["MONDO_0019005"]}
+{"id":"MONDO_0700087","name":"Usher syndrome type 1B","parentIds":["MONDO_0010168"]}
+{"id":"MONDO_0011272","name":"retinitis pigmentosa 25","parentIds":["MONDO_0019200","MONDO_0800391"]}
+{"id":"MONDO_0978291","name":"retinitis pigmentosa 99","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0007777","name":"hypotaurinemic retinal degeneration and cardiomyopathy","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0008745","name":"oculocutaneous albinism type 1A","parentIds":["MONDO_0040653","MONDO_0018135"]}
+{"id":"MONDO_0014070","name":"oculocutaneous albinism type 7","parentIds":["MONDO_0018910"]}
+{"id":"MONDO_0018264","name":"oculocutaneous albinism type 6","parentIds":["MONDO_0018910"]}
+{"id":"MONDO_0009288","name":"glycogen storage disease Ib","parentIds":["MONDO_0023258","MONDO_0002413","MONDO_0015134","Orphanet_331184"]}
+{"id":"MONDO_0014997","name":"nephronophthisis 20","parentIds":["MONDO_0019005"]}
+{"id":"Orphanet_2543","name":"Microphthalmia - cataract","parentIds":["Orphanet_98640","Orphanet_183557"]}
+{"id":"EFO_0007299","name":"hemorrhagic fever with renal syndrome","parentIds":["MONDO_0018087","MONDO_0004369","MONDO_0005780"]}
+{"id":"MONDO_0007355","name":"uveal coloboma-cleft lip and palate-intellectual disability","parentIds":["MONDO_0003847","MONDO_0015159","Orphanet_156237","Orphanet_183763"]}
+{"id":"MONDO_0100157","name":"Imerslund-Grasbeck syndrome type 2","parentIds":["MONDO_0006025","MONDO_0009853"]}
+{"id":"MONDO_0007378","name":"posterior polymorphous corneal dystrophy 1","parentIds":["MONDO_0020364"]}
+{"id":"MONDO_0007429","name":"optic atrophy with or without deafness, ophthalmoplegia, myopathy, ataxia, and neuropathy","parentIds":["MONDO_0014720"]}
+{"id":"MONDO_0012401","name":"congenital stromal corneal dystrophy","parentIds":["MONDO_0020213","MONDO_0003847"]}
+{"id":"MONDO_0011185","name":"Thiel-Behnke corneal dystrophy","parentIds":["MONDO_0000764","MONDO_0020212"]}
+{"id":"MONDO_0024525","name":"Fanconi renotubular syndrome 1","parentIds":["MONDO_0007600"]}
+{"id":"MONDO_0957811","name":"Alport syndrome 3b, autosomal recessive","parentIds":["MONDO_0018965"]}
+{"id":"MONDO_0010149","name":"transcobalamin II deficiency","parentIds":["MONDO_0019220","Orphanet_98396","MONDO_0005046","MONDO_0016624"]}
+{"id":"MONDO_0019633","name":"relapsing fever","parentIds":["MONDO_0000314","MONDO_0100120","MONDO_0006681"]}
+{"id":"MONDO_0008771","name":"amelogenesis imperfecta type 1G","parentIds":["Orphanet_164001","MONDO_0019507"]}
+{"id":"MONDO_0018896","name":"thrombotic thrombocytopenic purpura","parentIds":["MONDO_0043768","MONDO_0002305"]}
+{"id":"MONDO_0005129","name":"cataract","parentIds":["HP_0000517","MONDO_0003847","MONDO_0001176"]}
+{"id":"MONDO_0021548","name":"total early-onset cataract","parentIds":["MONDO_0011060"]}
+{"id":"MONDO_0012605","name":"isolated microphthalmia 5","parentIds":["MONDO_0016764","MONDO_0000062"]}
+{"id":"MONDO_0013437","name":"retinitis pigmentosa 43","parentIds":["MONDO_0700224","MONDO_0019200"]}
+{"id":"MONDO_0009728","name":"nephronophthisis 1","parentIds":["MONDO_0019005","MONDO_0005308","Orphanet_98056","MONDO_0005240"]}
+{"id":"MONDO_0005044","name":"hypertensive disorder","parentIds":["MONDO_0000473","HP_0032263"]}
+{"id":"MONDO_0012363","name":"retinitis pigmentosa 32","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0010356","name":"nephrogenic syndrome of inappropriate antidiuresis","parentIds":["MONDO_0015962"]}
+{"id":"MONDO_0014332","name":"hyperammonemic encephalopathy due to carbonic anhydrase VA deficiency","parentIds":["MONDO_0800153","MONDO_0019225"]}
+{"id":"MONDO_0012024","name":"retinitis pigmentosa 26","parentIds":["MONDO_0019200","MONDO_0800401"]}
+{"id":"MONDO_0033280","name":"nephrotic syndrome 16","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0015469","name":"craniosynostosis","parentIds":["MONDO_0003847","MONDO_0018234"]}
+{"id":"MONDO_0019112","name":"cancer-associated retinopathy","parentIds":["MONDO_0018215","MONDO_0005283"]}
+{"id":"MONDO_0030038","name":"hereditary glaucoma, primary closed-angle","parentIds":["MONDO_0018174","MONDO_0001868"]}
+{"id":"MONDO_0012184","name":"Pierson syndrome","parentIds":["MONDO_0006025","MONDO_0013621"]}
+{"id":"MONDO_0031008","name":"nephrotic syndrome, type 24","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0016764","name":"isolated anophthalmia-microphthalmia syndrome","parentIds":["MONDO_0005328","Orphanet_183557","EFO_0700119"]}
+{"id":"MONDO_0021129","name":"microphthalmia","parentIds":["MONDO_0100581"]}
+{"id":"MONDO_0008179","name":"paroxysmal extreme pain disorder","parentIds":["MONDO_0100545","MONDO_0700057"]}
+{"id":"MONDO_0014891","name":"hyperuricemic nephropathy, familial juvenile type 4","parentIds":["MONDO_0100337","MONDO_0000608"]}
+{"id":"MONDO_0010435","name":"nystagmus 6, congenital, X-linked","parentIds":["MONDO_0005712","MONDO_0700230"]}
+{"id":"MONDO_0032582","name":"nephrotic syndrome, type 19","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0032581","name":"nephrotic syndrome, type 18","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0026726","name":"nephrotic syndrome, type 20","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0030044","name":"pseudo-TORCH syndrome 3","parentIds":["MONDO_0009626"]}
+{"id":"MONDO_0031061","name":"nephrotic syndrome, IIa 26","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0019068","name":"congenital membranous nephropathy due to maternal anti-neutral endopeptidase alloimmunization","parentIds":["MONDO_0019722"]}
+{"id":"MONDO_0013453","name":"Leber congenital amaurosis 8","parentIds":["MONDO_0018998"]}
+{"id":"MONDO_0012433","name":"Senior-Loken syndrome 6","parentIds":["MONDO_0100451","MONDO_0017842"]}
+{"id":"MONDO_0957208","name":"pituitary hormone deficiency, combined or isolated, 8","parentIds":["MONDO_0013099"]}
+{"id":"MONDO_0009729","name":"nephropathy - deafness - hyperparathyroidism syndrome","parentIds":["MONDO_0003847","Orphanet_90642"]}
+{"id":"MONDO_0971009","name":"amyloidosis, hereditary systemic 5","parentIds":["EFO_0700065"]}
+{"id":"MONDO_0008630","name":"urinary bladder, atony of","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0016364","name":"Joubert syndrome with ocular defect","parentIds":["MONDO_0024458","MONDO_0015369","MONDO_0020022"]}
+{"id":"MONDO_0013175","name":"retinitis pigmentosa 50","parentIds":["MONDO_0019200"]}
+{"id":"MONDO_0012078","name":"Joubert syndrome 3","parentIds":["MONDO_0016364","MONDO_0018772"]}
+{"id":"MONDO_0010644","name":"proteinuria, low molecular weight, with hypercalciuria and nephrocalcinosis","parentIds":["MONDO_0100191"]}
+{"id":"MONDO_0009109","name":"lysinuric protein intolerance","parentIds":["MONDO_0019216"]}
+{"id":"MONDO_0008379","name":"retinitis pigmentosa 10","parentIds":["MONDO_0019200","MONDO_1040051"]}
+{"id":"MONDO_0008380","name":"retinoblastoma","parentIds":["MONDO_0004338"]}
+{"id":"MONDO_0014060","name":"progressive retinal dystrophy due to retinol transport defect","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0010015","name":"anterior segment dysgenesis 7","parentIds":["MONDO_0019629","Orphanet_98640","MONDO_0019503"]}
+{"id":"MONDO_0015300","name":"cataract - microcornea syndrome","parentIds":["Orphanet_183557","Orphanet_98640","OTAR_0000018"]}
+{"id":"MONDO_0011060","name":"early-onset non-syndromic cataract","parentIds":["MONDO_0005129"]}
+{"id":"MONDO_0011413","name":"cataract 9 multiple types","parentIds":["MONDO_0005129"]}
+{"id":"MONDO_0008046","name":"autosomal dominant myoglobinuria","parentIds":["MONDO_0019052","MONDO_0000426"]}
+{"id":"MONDO_0013176","name":"Weill-Marchesani 4 syndrome, recessive","parentIds":["Orphanet_139027","MONDO_0018096","Orphanet_281244"]}
+{"id":"MONDO_0007350","name":"coloboma, ocular, autosomal dominant","parentIds":["MONDO_0001476","MONDO_0003847"]}
+{"id":"EFO_0007670","name":"helix rolling","parentIds":["EFO_0007664"]}
+{"id":"Orphanet_1331","name":"Familial prostate cancer","parentIds":["Orphanet_271844","MONDO_0006295","MONDO_0005159"]}
+{"id":"MONDO_0000463","name":"Ochoa syndrome","parentIds":["MONDO_0006025"]}
+{"id":"MONDO_0014049","name":"urofacial syndrome 2","parentIds":["MONDO_0000463"]}
+{"id":"MONDO_0012173","name":"long chain 3-hydroxyacyl-CoA dehydrogenase deficiency","parentIds":["MONDO_0024573","MONDO_0017713","MONDO_0020127"]}
+{"id":"MONDO_0957935","name":"optic atrophy 15","parentIds":["MONDO_0043878"]}
+{"id":"MONDO_0008766","name":"amaurosis-hypertrichosis syndrome","parentIds":["Orphanet_98657","MONDO_0019118"]}
+{"id":"MONDO_0013892","name":"C3 glomerulonephritis","parentIds":["MONDO_0005334","MONDO_0018013"]}
+{"id":"MONDO_0005851","name":"Miller Fisher syndrome","parentIds":["MONDO_0002427","MONDO_0000568"]}
+{"id":"MONDO_0005321","name":"Fuchs' endothelial dystrophy","parentIds":["MONDO_0000766","MONDO_0000942","MONDO_0020214","Orphanet_101435","MONDO_0003847"]}
+{"id":"MONDO_0018588","name":"ALECT2 amyloidosis","parentIds":["MONDO_0019065"]}
+{"id":"MONDO_0011855","name":"granular corneal dystrophy type II","parentIds":["MONDO_0000764","MONDO_0020213"]}
+{"id":"MONDO_0030962","name":"nephrotic syndrome, type 23","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0017776","name":"nocardiosis","parentIds":["MONDO_0000316"]}
+{"id":"MONDO_0009935","name":"pulmonary hypertension, primary, 5","parentIds":["MONDO_0017148"]}
+{"id":"MONDO_0007765","name":"hyperostosis cranialis interna","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0009889","name":"autosomal recessive polycystic kidney disease","parentIds":["MONDO_0020642","MONDO_0006025"]}
+{"id":"MONDO_0013836","name":"familial steroid-resistant nephrotic syndrome with sensorineural deafness","parentIds":["MONDO_0018151","MONDO_0019006"]}
+{"id":"MONDO_0008368","name":"autosomal dominant distal renal tubular acidosis","parentIds":["MONDO_1060161","MONDO_0000426"]}
+{"id":"MONDO_0033549","name":"optic atrophy 12","parentIds":["MONDO_0700372","MONDO_0043878"]}
+{"id":"MONDO_0014880","name":"Duane retraction syndrome 3 with or without deafness","parentIds":["MONDO_0007473"]}
+{"id":"MONDO_0100450","name":"CAPN5-related vitreoretinopathy","parentIds":["MONDO_0700115","MONDO_0020248"]}
+{"id":"MONDO_0010932","name":"progressive bifocal chorioretinal atrophy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0016244","name":"atypical hemolytic-uremic syndrome","parentIds":["MONDO_0957097","MONDO_0003832","MONDO_0019737"]}
+{"id":"MONDO_0011422","name":"autosomal recessive proximal renal tubular acidosis","parentIds":["MONDO_0006025","MONDO_0008369","MONDO_0019052","MONDO_0015962"]}
+{"id":"MONDO_0100244","name":"paroxysmal nocturnal hemoglobinuria","parentIds":["MONDO_0015909","MONDO_0024321","MONDO_0004139","MONDO_0003656","MONDO_0006504"]}
+{"id":"MONDO_0009733","name":"nephrotic syndrome, type 4","parentIds":["MONDO_0002350"]}
+{"id":"MONDO_0014444","name":"Bardet-Biedl syndrome 16","parentIds":["MONDO_0700379","MONDO_0015229"]}
+{"id":"MONDO_0012733","name":"autosomal recessive bestrophinopathy","parentIds":["MONDO_0003004","MONDO_0700239"]}
+{"id":"MONDO_0018229","name":"Stevens-Johnson syndrome","parentIds":["MONDO_0019810"]}
+{"id":"MONDO_0014508","name":"vitelliform macular dystrophy 4","parentIds":["MONDO_0011979","MONDO_1040037"]}
+{"id":"MONDO_0016485","name":"Usher syndrome type 3","parentIds":["MONDO_0019501"]}
+{"id":"MONDO_0005112","name":"malignant pleural mesothelioma","parentIds":["MONDO_0003308","MONDO_0006292","MONDO_0006294"]}
+{"id":"EFO_0000266","name":"aortic stenosis","parentIds":["MONDO_0003803","HP_0031652"]}
+{"id":"MONDO_0019087","name":"cholangiocarcinoma","parentIds":["MONDO_0018536"]}
+{"id":"HP_0000855","name":"Insulin resistance","parentIds":["HP_0011014"]}
+{"id":"MONDO_0004989","name":"breast carcinoma","parentIds":["MONDO_0007254","MONDO_0004993"]}
+{"id":"MONDO_0002032","name":"colon carcinoma","parentIds":["MONDO_0021063","MONDO_0024331","MONDO_0024479"]}
+{"id":"MONDO_0001134","name":"essential hypertension","parentIds":["MONDO_0005044"]}
+{"id":"MONDO_0100533","name":"hemorrhage, intracerebral, susceptibility to","parentIds":["MONDO_1010150"]}
+{"id":"MONDO_0006626","name":"diabetic neuropathy","parentIds":["EFO_0004149"]}
+{"id":"MONDO_0002009","name":"major depressive disorder","parentIds":["MONDO_0002050"]}
+{"id":"MONDO_0005492","name":"urticaria","parentIds":["MONDO_0002406"]}
+{"id":"MONDO_0005005","name":"clear cell renal carcinoma","parentIds":["MONDO_0005549","MONDO_0005004","MONDO_0007763"]}
+{"id":"MONDO_0002050","name":"depressive disorder","parentIds":["MONDO_0005371"]}
+{"id":"HP_0006554","name":"Acute hepatic failure","parentIds":["MONDO_0100192"]}
+{"id":"MP_0001845","name":"inflammation","parentIds":["HP_0002715"]}
+{"id":"MONDO_0005249","name":"pneumonia","parentIds":["MONDO_0024355","MONDO_0043905","HP_0011947","HP_0012649"]}
+{"id":"HP_0100543","name":"Cognitive impairment","parentIds":["HP_0011446"]}
+{"id":"MONDO_0005311","name":"atherosclerosis","parentIds":["EFO_0009086"]}
+{"id":"MONDO_0005105","name":"melanoma","parentIds":["MONDO_0021143"]}
+{"id":"MONDO_0005240","name":"kidney disorder","parentIds":["MONDO_0002118"]}
+{"id":"MONDO_0005260","name":"autism","parentIds":["MONDO_0005258","HP_0000729"]}
+{"id":"EFO_0005422","name":"skin aging","parentIds":["EFO_0022597"]}
+{"id":"MONDO_0005267","name":"heart disorder","parentIds":["MONDO_0004995"]}
+{"id":"MONDO_0005059","name":"leukemia","parentIds":["MONDO_0044881"]}
+{"id":"HP_0000112","name":"Nephropathy","parentIds":["HP_0012211"]}
+{"id":"MONDO_0005138","name":"lung carcinoma","parentIds":["MONDO_0008903","MONDO_0004993"]}
+{"id":"MONDO_0011429","name":"juvenile idiopathic arthritis","parentIds":["MONDO_0005578","MONDO_0005554"]}
+{"id":"MONDO_0002691","name":"liver cancer","parentIds":["MONDO_0002516","MONDO_0021069","MONDO_0024477"]}
+{"id":"MONDO_0008903","name":"lung cancer","parentIds":["MONDO_0000376","MONDO_0003274","MONDO_0021117"]}
+{"id":"MONDO_0004986","name":"urinary bladder carcinoma","parentIds":["MONDO_0001187","MONDO_0004993"]}
+{"id":"EFO_0009463","name":"infarction","parentIds":["OBI_1110122"]}
+{"id":"MONDO_0001187","name":"urinary bladder cancer","parentIds":["MONDO_0006295","MONDO_0004987"]}
+{"id":"MONDO_0016471","name":"pachyonychia congenita","parentIds":["MONDO_0017672"]}
+{"id":"MONDO_0024644","name":"myocardial ischemia","parentIds":["MONDO_0024643","MONDO_0005053"]}
+{"id":"MONDO_0015075","name":"thyroid gland carcinoma","parentIds":["MONDO_0004993","MONDO_0002108"]}
+{"id":"MONDO_0001999","name":"idiopathic pulmonary arterial hypertension","parentIds":["MONDO_0015924","MONDO_0001493"]}
+{"id":"MONDO_0005015","name":"diabetes mellitus","parentIds":["EFO_0002546","HP_0000818","MONDO_0002908","MONDO_0001933"]}
+{"id":"MONDO_0019781","name":"astrocytoma (excluding glioblastoma)","parentIds":["MONDO_0021636"]}
+{"id":"MONDO_0005578","name":"arthritic joint disease","parentIds":["HP_0011842","MONDO_0002614","MONDO_0005554","MONDO_0006816"]}
+{"id":"MONDO_0002108","name":"thyroid cancer","parentIds":["MONDO_0021069","MONDO_0015074"]}
+{"id":"MONDO_0005099","name":"subarachnoid hemorrhage","parentIds":["EFO_0020921"]}
+{"id":"EFO_0010680","name":"hematoma","parentIds":["MP_0001914"]}
+{"id":"HP_0003124","name":"Hypercholesterolemia","parentIds":["HP_0003119"]}
+{"id":"MONDO_0005439","name":"familial hypercholesterolemia","parentIds":["MONDO_0037748","MONDO_0001336"]}
+{"id":"EFO_0004149","name":"neuropathy","parentIds":["MONDO_0019056","HP_0000707","MONDO_0005071","MONDO_0003620"]}
+{"id":"MONDO_0021042","name":"glioma","parentIds":["MONDO_0021193"]}
+{"id":"MONDO_0002714","name":"central nervous system cancer","parentIds":["MONDO_0005872","MONDO_0006130"]}
+{"id":"MONDO_0021063","name":"malignant colon neoplasm","parentIds":["MONDO_0005575","MONDO_0005401"]}
+{"id":"MONDO_0005401","name":"colonic neoplasm","parentIds":["MONDO_0003409","MONDO_0005335"]}
+{"id":"MONDO_0005611","name":"bladder transitional cell carcinoma","parentIds":["MONDO_0040679","MONDO_0004986"]}
+{"id":"MONDO_0000494","name":"renal fibrosis","parentIds":["MONDO_0000490"]}
+{"id":"MONDO_0005575","name":"colorectal cancer","parentIds":["MONDO_0005814","MONDO_0005335"]}
+{"id":"MONDO_0019458","name":"acute basophilic leukemia","parentIds":["MONDO_0015667"]}
+{"id":"HP_0012115","name":"Hepatitis","parentIds":["HP_0012649","HP_0001392"]}
+{"id":"MONDO_0004781","name":"acute myocardial infarction","parentIds":["MONDO_0005068"]}
+{"id":"MONDO_0006515","name":"acute pancreatitis","parentIds":["MONDO_0004982"]}
+{"id":"EFO_0001072","name":"memory impairment","parentIds":["HP_0000707"]}
+{"id":"MONDO_0011918","name":"anxiety","parentIds":["MONDO_0100545","MONDO_0005618","HP_0011446"]}
+{"id":"MONDO_0021117","name":"lung neoplasm","parentIds":["HP_0002088","MONDO_0021350","MONDO_0020641","MONDO_0005275"]}
+{"id":"MONDO_0005098","name":"stroke disorder","parentIds":["MONDO_0011057","HP_0100659"]}
+{"id":"MONDO_0005154","name":"liver disorder","parentIds":["MONDO_0002515","MONDO_0005151"]}
+{"id":"MONDO_0003079","name":"mastocytoma","parentIds":["MONDO_0002724"]}
+{"id":"MONDO_0021068","name":"ovarian neoplasm","parentIds":["MONDO_0021148","MONDO_0005558"]}
+{"id":"MONDO_0012883","name":"acute promyelocytic leukemia","parentIds":["MONDO_0017893"]}
+{"id":"MONDO_0019115","name":"obesity due to melanocortin 4 receptor deficiency","parentIds":["MONDO_0019182"]}
+{"id":"MONDO_0005062","name":"lymphoma","parentIds":["MONDO_0015757","MONDO_0005157"]}
+{"id":"HP_0002045","name":"Hypothermia","parentIds":["HP_0004370"]}
+{"id":"GO_0006954","name":"inflammatory response","parentIds":["GO_0006950"]}
+{"id":"MONDO_0005010","name":"coronary artery disorder","parentIds":["MONDO_0000473","MONDO_0005267"]}
+{"id":"MONDO_0031012","name":"autoimmune uveitis","parentIds":["MONDO_0020283","MONDO_0000587"]}
+{"id":"MONDO_0005195","name":"septic peritonitis","parentIds":["MONDO_0005113","MONDO_0004522"]}
+{"id":"MONDO_0001106","name":"kidney failure","parentIds":["MONDO_0005240","HP_0012211"]}
+{"id":"MONDO_0011849","name":"psoriatic arthritis","parentIds":["MONDO_0008383"]}
+{"id":"MONDO_0005445","name":"visceral leishmaniasis","parentIds":["MONDO_0011989","MONDO_0003847"]}
+{"id":"MONDO_0005265","name":"inflammatory bowel disease","parentIds":["MONDO_0005046","MONDO_0005020","MONDO_0003847"]}
+{"id":"HP_0031273","name":"Shock","parentIds":["HP_0011025"]}
+{"id":"MONDO_0005362","name":"erectile dysfunction","parentIds":["HP_0000078","MONDO_0002134","MONDO_0002036"]}
+{"id":"MONDO_0005082","name":"prostate adenocarcinoma","parentIds":["MONDO_0005159","MONDO_0004970"]}
+{"id":"MONDO_0005146","name":"post-traumatic stress disorder","parentIds":["MONDO_0005379"]}
+{"id":"MONDO_0021211","name":"brain neoplasm","parentIds":["MONDO_0005560","MONDO_0006130"]}
+{"id":"MONDO_0005075","name":"thyroid gland papillary carcinoma","parentIds":["MONDO_0002512","MONDO_0024622","MONDO_0015447"]}
+{"id":"EFO_0000195","name":"metabolic syndrome","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0010811","name":"benign prostatic hyperplasia","parentIds":["MONDO_0003105","MONDO_0005043"]}
+{"id":"MONDO_0004648","name":"vascular dementia","parentIds":["MONDO_0011057","MONDO_0001627"]}
+{"id":"MONDO_0024331","name":"colorectal carcinoma","parentIds":["MONDO_0006181","MONDO_0005575"]}
+{"id":"MONDO_0015278","name":"familial pancreatic carcinoma","parentIds":["MONDO_0005192","MONDO_0003847"]}
+{"id":"MONDO_0021040","name":"pancreatic neoplasm","parentIds":["MONDO_0021223","HP_0001732","MONDO_0002356"]}
+{"id":"MONDO_0005011","name":"Crohn disease","parentIds":["MONDO_0005265"]}
+{"id":"HP_0006000","name":"Ureteral obstruction","parentIds":["HP_0000069"]}
+{"id":"MONDO_0005134","name":"experimental autoimmune encephalomyelitis","parentIds":["MONDO_1011336"]}
+{"id":"MONDO_0005341","name":"skin basal cell carcinoma","parentIds":["MONDO_0020804","MONDO_0002656"]}
+{"id":"MONDO_0018908","name":"non-Hodgkin lymphoma","parentIds":["MONDO_0005062"]}
+{"id":"MONDO_0005683","name":"brucellosis","parentIds":["MONDO_0000314"]}
+{"id":"MONDO_0005140","name":"ovarian carcinoma","parentIds":["MONDO_0018364"]}
+{"id":"MONDO_0008170","name":"ovarian cancer","parentIds":["MONDO_0021068","MONDO_0001416"]}
+{"id":"MONDO_0005258","name":"autism spectrum disorder","parentIds":["MONDO_0000594"]}
+{"id":"MONDO_0006639","name":"adrenal cortex carcinoma","parentIds":["MONDO_0002814","EFO_0003967","MONDO_0005086","MONDO_0021312"]}
+{"id":"MONDO_0005090","name":"schizophrenia","parentIds":["MONDO_0005485"]}
+{"id":"MONDO_0005053","name":"ischemic disease","parentIds":["MONDO_0005385"]}
+{"id":"MONDO_0004952","name":"Hodgkins lymphoma","parentIds":["MONDO_0005062","MONDO_0017343"]}
+{"id":"MONDO_0005300","name":"chronic kidney disease","parentIds":["MONDO_0005240"]}
+{"id":"HP_0001873","name":"Thrombocytopenia","parentIds":["HP_0011875"]}
+{"id":"MONDO_0006509","name":"papillary carcinoma","parentIds":["MONDO_0004993","MONDO_0021096"]}
+{"id":"MONDO_0005086","name":"renal cell carcinoma","parentIds":["MONDO_0004970","MONDO_0005206"]}
+{"id":"MONDO_0007179","name":"autoimmune disease","parentIds":["HP_0010978","MONDO_0005046"]}
+{"id":"MONDO_0005371","name":"mood disorder","parentIds":["MONDO_0005084"]}
+{"id":"EFO_0000544","name":"infection","parentIds":["OBI_1110122"]}
+{"id":"MONDO_0005282","name":"cutaneous lupus erythematosus","parentIds":["MONDO_0004670"]}
+{"id":"MONDO_0017361","name":"congenital rubella syndrome","parentIds":["MONDO_0004656","MONDO_0016511"]}
+{"id":"MONDO_0009061","name":"cystic fibrosis","parentIds":["MONDO_0005087","MONDO_0006025"]}
+{"id":"MONDO_0001056","name":"gastric cancer","parentIds":["MONDO_0002516","MONDO_0021085"]}
+{"id":"HP_0012393","name":"Allergy","parentIds":["HP_0010978"]}
+{"id":"MONDO_0005271","name":"allergic disease","parentIds":["MONDO_0000605"]}
+{"id":"MONDO_0018076","name":"tuberculosis","parentIds":["EFO_0009429","MONDO_0000314"]}
+{"id":"MONDO_0018961","name":"familial melanoma","parentIds":["MONDO_0003847","MONDO_0005105"]}
+{"id":"HP_0200119","name":"Acute hepatitis","parentIds":["HP_0012115"]}
+{"id":"MONDO_0005132","name":"cytomegalovirus infection","parentIds":["MONDO_0005794"]}
+{"id":"MONDO_0018905","name":"diffuse large B-cell lymphoma","parentIds":["MONDO_0017595","MONDO_0004949"]}
+{"id":"MONDO_0002514","name":"hepatobiliary neoplasm","parentIds":["MONDO_0002515","MONDO_0021223"]}
+{"id":"HP_0033258","name":"Sudden unexpected death in epilepsy","parentIds":["HP_0001699"]}
+{"id":"MONDO_0001627","name":"dementia","parentIds":["MONDO_0002039","HP_0001268"]}
+{"id":"MONDO_0005084","name":"mental disorder","parentIds":["MONDO_0002025","MONDO_0005560"]}
+{"id":"MONDO_0015193","name":"hydrops fetalis","parentIds":["EFO_0009373","MONDO_0019755","HP_0034057"]}
+{"id":"MONDO_0007763","name":"nonpapillary renal cell carcinoma","parentIds":["MONDO_0005086"]}
+{"id":"EFO_0009870","name":"bone metastasis","parentIds":["EFO_0009708"]}
+{"id":"MONDO_0018666","name":"hepatoblastoma","parentIds":["MONDO_0005564","MONDO_0007256"]}
+{"id":"MONDO_0017989","name":"His bundle tachycardia","parentIds":["EFO_0004269"]}
+{"id":"MONDO_0006687","name":"burning mouth syndrome","parentIds":["MONDO_0006858"]}
+{"id":"MONDO_0002465","name":"bronchiolitis","parentIds":["HP_0010978","MONDO_0005275","HP_0011947"]}
+{"id":"EFO_0003917","name":"premature birth","parentIds":["EFO_0000651"]}
+{"id":"HP_0001824","name":"Weight loss","parentIds":["HP_0004325"]}
+{"id":"HP_0001279","name":"Syncope","parentIds":["HP_0011025","HP_0007185"]}
+{"id":"MONDO_0005203","name":"ischemia reperfusion injury","parentIds":["MONDO_0021178"]}
+{"id":"EFO_0003925","name":"cognition","parentIds":["EFO_0004323"]}
+{"id":"EFO_0009833","name":"kidney injury","parentIds":["MONDO_0021178"]}
+{"id":"MONDO_0008114","name":"obsessive-compulsive disorder","parentIds":["MONDO_0005618","MONDO_0100545","HP_0000708"]}
+{"id":"MONDO_0005147","name":"type 1 diabetes mellitus","parentIds":["MONDO_0005015","MONDO_0000569","MONDO_0000588"]}
+{"id":"EFO_0005414","name":"airway hyperresponsiveness","parentIds":["HP_0002086"]}
+{"id":"EFO_1001461","name":"endothelial dysfunction","parentIds":["MONDO_0005385"]}
+{"id":"MONDO_0005394","name":"brain infarction","parentIds":["MONDO_0011057"]}
+{"id":"EFO_0006890","name":"fibrosis","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0004972","name":"adenoma","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0010150","name":"head and neck squamous cell carcinoma","parentIds":["MONDO_0002038","MONDO_0005096"]}
+{"id":"MONDO_0015175","name":"autoimmune pancreatitis","parentIds":["MONDO_0000588","MONDO_0017287","MONDO_0000569","MONDO_0004982"]}
+{"id":"MONDO_0010298","name":"Lesch-Nyhan syndrome","parentIds":["MONDO_0016088"]}
+{"id":"MONDO_0021178","name":"injury","parentIds":["OTAR_0000009"]}
+{"id":"MONDO_0005021","name":"dilated cardiomyopathy","parentIds":["MONDO_0005453","MONDO_0000591"]}
+{"id":"MONDO_0005046","name":"immune system disorder","parentIds":[]}
+{"id":"EFO_0008527","name":"steatosis","parentIds":["EFO_0008513"]}
+{"id":"MONDO_0015140","name":"early-onset autosomal dominant Alzheimer disease","parentIds":["MONDO_0100087","MONDO_0000426"]}
+{"id":"EFO_0002503","name":"cardiac hypertrophy","parentIds":["EFO_0002460"]}
+{"id":"HP_0001395","name":"Hepatic fibrosis","parentIds":["HP_0001392"]}
+{"id":"MONDO_0005027","name":"epilepsy","parentIds":["MONDO_0005560"]}
+{"id":"EFO_0009910","name":"chronic lung disease","parentIds":["MONDO_0005275"]}
+{"id":"MONDO_0004976","name":"amyotrophic lateral sclerosis","parentIds":["MONDO_0003182","MONDO_0020128","HP_0007373"]}
+{"id":"OTAR_0000003","name":"cyst","parentIds":["MONDO_0045024"]}
+{"id":"MONDO_1010128","name":"peritonitis","parentIds":["EFO_0009541"]}
+{"id":"MONDO_0002280","name":"anemia","parentIds":["MONDO_0005570","HP_0001877"]}
+{"id":"MONDO_0005133","name":"endometriosis","parentIds":["MONDO_0000931"]}
+{"id":"MONDO_0004784","name":"allergic asthma","parentIds":["MONDO_0004979","MONDO_0000771"]}
+{"id":"MONDO_0002039","name":"cognitive disorder","parentIds":["MONDO_0002025","MONDO_0005084"]}
+{"id":"MONDO_0021100","name":"breast neoplasm","parentIds":["MONDO_0002657","MONDO_0021350"]}
+{"id":"MONDO_0019060","name":"bone neoplasm","parentIds":["MONDO_0005381","MONDO_0021581"]}
+{"id":"MONDO_0003014","name":"rhinitis","parentIds":["MONDO_0002232"]}
+{"id":"MONDO_0015447","name":"differentiated thyroid carcinoma","parentIds":["MONDO_0015075"]}
+{"id":"EFO_1001441","name":"Tuberculosis, Bovine","parentIds":["MONDO_0005583"]}
+{"id":"MONDO_0004993","name":"carcinoma","parentIds":["MONDO_0004992","MONDO_0005626"]}
+{"id":"MONDO_0005395","name":"movement disorder","parentIds":["HP_0012638","MONDO_0005071"]}
+{"id":"MONDO_0002129","name":"bone cancer","parentIds":["MONDO_0019060","MONDO_0000637"]}
+{"id":"MONDO_0005298","name":"osteoporosis","parentIds":["MONDO_0800486","MONDO_0000837","MONDO_0800064"]}
+{"id":"MONDO_0009685","name":"Miyoshi myopathy","parentIds":["MONDO_0018949"]}
+{"id":"EFO_0004272","name":"anemia (phenotype)","parentIds":["HP_0001877"]}
+{"id":"EFO_1001394","name":"Peritoneal Fibrosis","parentIds":["EFO_0006890","EFO_0009541","MONDO_0021223"]}
+{"id":"MONDO_0004982","name":"pancreatitis","parentIds":["HP_0001732","HP_0012649","MONDO_0002356"]}
+{"id":"MONDO_0004790","name":"fatty liver disease","parentIds":["MONDO_0005154","HP_0001939","HP_0001392"]}
+{"id":"MONDO_0017884","name":"papillary renal cell carcinoma","parentIds":["MONDO_0005549","MONDO_0002512"]}
+{"id":"EFO_0008504","name":"hepatitis C virus induced hepatocellular carcinoma","parentIds":["EFO_0008505"]}
+{"id":"MONDO_0005072","name":"neuroblastoma","parentIds":["MONDO_0006316"]}
+{"id":"MONDO_0000490","name":"glomerulosclerosis","parentIds":["MONDO_0019722","HP_0011035"]}
+{"id":"HP_0001882","name":"Decreased total leukocyte count","parentIds":["HP_0001881"]}
+{"id":"MONDO_0021187","name":"hyperlipidemia","parentIds":["HP_0003119","MONDO_0005066"]}
+{"id":"EFO_0003896","name":"left ventricular hypertrophy","parentIds":["EFO_0002503"]}
+{"id":"HP_0003074","name":"Hyperglycemia","parentIds":["HP_0011015"]}
+{"id":"EFO_0007834","name":"liver dysplastic nodule","parentIds":["EFO_1001513"]}
+{"id":"MONDO_0002679","name":"cerebral infarction","parentIds":["MONDO_0005394","MONDO_1060198"]}
+{"id":"EFO_0020921","name":"hemorrhagic stroke","parentIds":["MONDO_0005098"]}
+{"id":"HP_0000155","name":"Oral ulcer","parentIds":["HP_0000153"]}
+{"id":"MONDO_0006052","name":"pulmonary tuberculosis","parentIds":["MONDO_0005087","MONDO_0018076"]}
+{"id":"MONDO_0001300","name":"autonomic neuropathy","parentIds":["EFO_0004149","MONDO_0001292"]}
+{"id":"MONDO_0019154","name":"androgen insensitivity syndrome","parentIds":["MONDO_0020040","MONDO_0003847"]}
+{"id":"HP_0001714","name":"Ventricular hypertrophy","parentIds":["MONDO_0005453"]}
+{"id":"MONDO_0005627","name":"head and neck cancer","parentIds":["MONDO_0004992","MONDO_0005586"]}
+{"id":"EFO_1001904","name":"oral mucositis","parentIds":["MONDO_0044992","EFO_1001898"]}
+{"id":"MONDO_0005266","name":"diabetic retinopathy","parentIds":["MONDO_0002311","MONDO_0005066"]}
+{"id":"MONDO_0043905","name":"pneumonitis","parentIds":["MONDO_0005275"]}
+{"id":"MONDO_0016063","name":"Cowden disease","parentIds":["MONDO_0100118","MONDO_0000426"]}
+{"id":"EFO_0008496","name":"chronic hepatitis","parentIds":["HP_0012115"]}
+{"id":"MONDO_0000771","name":"allergic respiratory disease","parentIds":["MONDO_0005271","MONDO_0005087"]}
+{"id":"MONDO_0005184","name":"pancreatic ductal adenocarcinoma","parentIds":["MONDO_0005606","MONDO_0006047"]}
+{"id":"HP_0001268","name":"Mental deterioration","parentIds":["HP_0100543"]}
+{"id":"MONDO_0005385","name":"vascular disorder","parentIds":["MONDO_0004995"]}
+{"id":"MONDO_0008840","name":"ataxia telangiectasia","parentIds":["MONDO_0100310","Orphanet_98688","Orphanet_183422","Orphanet_98613","Orphanet_139027","MONDO_0015131","Orphanet_98097","MONDO_0019852","Orphanet_183478","Orphanet_169346"]}
+{"id":"EFO_0008503","name":"hepatitis B virus induced hepatocellular carcinoma","parentIds":["EFO_0008505"]}
+{"id":"MONDO_0006046","name":"ovarian serous cystadenocarcinoma","parentIds":["MONDO_0005211","MONDO_0024621","MONDO_0002702"]}
+{"id":"MONDO_0006456","name":"thymoma","parentIds":["MONDO_0018079"]}
+{"id":"MONDO_0017181","name":"hypnic headache","parentIds":["MONDO_0021146"]}
+{"id":"MONDO_0005560","name":"brain disorder","parentIds":["MONDO_0002602"]}
+{"id":"MONDO_0043218","name":"neurovascular disorder","parentIds":["MONDO_0005071","MONDO_0005385"]}
+{"id":"MONDO_0005071","name":"nervous system disorder","parentIds":[]}
+{"id":"HP_0010978","name":"Abnormality of immune system physiology","parentIds":["HP_0002715"]}
+{"id":"MONDO_0001358","name":"bronchial disorder","parentIds":["MONDO_0000270"]}
+{"id":"HP_0002086","name":"Abnormality of the respiratory system","parentIds":["HP_0000118"]}
+{"id":"EFO_0000651","name":"phenotype","parentIds":[]}
+{"id":"OTAR_0000010","name":"respiratory or thoracic disease","parentIds":[]}
+{"id":"EFO_0004269","name":"cardiac arrhythmia","parentIds":["HP_0030956","MONDO_0005267"]}
+{"id":"HP_0002793","name":"Abnormal pattern of respiration","parentIds":["HP_0002086"]}
+{"id":"MONDO_0800484","name":"PRKAG2-related cardiomyopathy","parentIds":["MONDO_0005217"]}
+{"id":"MONDO_0000992","name":"heart conduction disease","parentIds":["MONDO_0005267"]}
+{"id":"OTAR_0000018","name":"genetic, familial or congenital disease","parentIds":[]}
+{"id":"OTAR_0000006","name":"musculoskeletal or connective tissue disease","parentIds":[]}
+{"id":"HP_0025142","name":"Constitutional symptom","parentIds":["HP_0000118"]}
+{"id":"HP_0012638","name":"Abnormal nervous system physiology","parentIds":["HP_0000707"]}
+{"id":"MONDO_0002567","name":"tracheal disorder","parentIds":["MONDO_0004867","MONDO_0000270"]}
+{"id":"MONDO_0003781","name":"bronchitis","parentIds":["MONDO_0021925","MONDO_0001358"]}
+{"id":"MONDO_0000592","name":"specific developmental disorder","parentIds":["MONDO_0005503"]}
+{"id":"MONDO_0002025","name":"psychiatric disorder","parentIds":[]}
+{"id":"MONDO_0005468","name":"hypotensive disorder","parentIds":["MONDO_0000473","HP_0030972"]}
+{"id":"MONDO_0004938","name":"substance dependence","parentIds":["MONDO_0002494"]}
+{"id":"HP_0003418","name":"Back pain","parentIds":["HP_0000925","HP_0012531"]}
+{"id":"MONDO_0024643","name":"myocardial disorder","parentIds":["MONDO_0005267"]}
+{"id":"MONDO_0005087","name":"respiratory system disorder","parentIds":["OTAR_0000010"]}
+{"id":"MONDO_0002406","name":"dermatitis","parentIds":["MONDO_0005093","HP_0011122","HP_0012649"]}
+{"id":"MONDO_0100118","name":"hereditary skin disorder","parentIds":["MONDO_0005093","MONDO_0003847"]}
+{"id":"MONDO_0002051","name":"integumentary system disorder","parentIds":[]}
+{"id":"MONDO_0100545","name":"hereditary neurological disease","parentIds":["MONDO_0005071","MONDO_0003847"]}
+{"id":"MONDO_0021095","name":"parkinsonian disorder","parentIds":["MONDO_0003996"]}
+{"id":"MONDO_0004970","name":"adenocarcinoma","parentIds":["MONDO_0004993","MONDO_0024276"]}
+{"id":"MONDO_0018531","name":"carcinoma of liver and intrahepatic biliary tract","parentIds":["MONDO_0002691","MONDO_0006181"]}
+{"id":"EFO_0010282","name":"gastrointestinal disease","parentIds":[]}
+{"id":"MONDO_0005151","name":"endocrine system disorder","parentIds":[]}
+{"id":"MONDO_0002515","name":"hepatobiliary disorder","parentIds":[]}
+{"id":"MONDO_0045024","name":"cancer or benign tumor","parentIds":[]}
+{"id":"MONDO_0005554","name":"rheumatic disorder","parentIds":["MONDO_0003900"]}
+{"id":"MONDO_0000589","name":"autoimmune disorder of musculoskeletal system","parentIds":["MONDO_0007179","MONDO_0002081"]}
+{"id":"MONDO_0003916","name":"overnutrition","parentIds":["MONDO_0005137"]}
+{"id":"HP_0004324","name":"Increased body weight","parentIds":["HP_0004323"]}
+{"id":"MONDO_0003799","name":"conjunctivitis","parentIds":["HP_0002597","MONDO_0006170","HP_0012372","HP_0012649","HP_0000271"]}
+{"id":"MONDO_0004768","name":"keratoconjunctivitis","parentIds":["MONDO_0003085","MONDO_0003799"]}
+{"id":"MONDO_0003085","name":"keratitis","parentIds":["MONDO_0000942","HP_0012649","HP_0000481"]}
+{"id":"MONDO_0001854","name":"lacrimal apparatus disorder","parentIds":["MONDO_0000462","MONDO_0005328"]}
+{"id":"MONDO_0024458","name":"disorder of visual system","parentIds":[]}
+{"id":"HP_0002643","name":"Neonatal respiratory distress","parentIds":["HP_0002093"]}
+{"id":"MONDO_0005574","name":"tauopathy","parentIds":["MONDO_0005559"]}
+{"id":"HP_0030680","name":"Abnormal cardiovascular system morphology","parentIds":["HP_0001626"]}
+{"id":"HP_0002597","name":"Abnormality of the vasculature","parentIds":["HP_0001626"]}
+{"id":"MONDO_0005294","name":"peripheral vascular disease","parentIds":["MONDO_0005385"]}
+{"id":"EFO_0009086","name":"arteriosclerosis","parentIds":["MONDO_0000473","EFO_0009085"]}
+{"id":"MONDO_0024352","name":"viral respiratory tract infection","parentIds":["MONDO_0024355","MONDO_0005108"]}
+{"id":"MONDO_0001040","name":"nasopharyngitis","parentIds":["MONDO_0004821"]}
+{"id":"MONDO_0005550","name":"infectious disease","parentIds":[]}
+{"id":"MONDO_0011057","name":"cerebrovascular disorder","parentIds":["MONDO_0005560","MONDO_0043218"]}
+{"id":"MONDO_0006617","name":"vesiculobullous skin disease","parentIds":["MONDO_0005093"]}
+{"id":"MONDO_0005229","name":"bacterial infectious disease with sepsis","parentIds":["MONDO_0005113","MONDO_1040015"]}
+{"id":"MONDO_0023149","name":"infection due to clostridium perfringens","parentIds":["MONDO_0024388"]}
+{"id":"MONDO_0024295","name":"skin disease caused by bacterial infection","parentIds":["MONDO_0005113","MONDO_0024294"]}
+{"id":"MONDO_0000315","name":"commensal bacterial infectious disease","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0006496","name":"palsy","parentIds":["MONDO_0002602"]}
+{"id":"MONDO_0044996","name":"cerebral cortex disorder","parentIds":["MONDO_0005560"]}
+{"id":"MONDO_0000473","name":"arterial disorder","parentIds":["MONDO_0005385"]}
+{"id":"MONDO_0003778","name":"inborn error of immunity","parentIds":["MONDO_0005046"]}
+{"id":"MONDO_0002602","name":"central nervous system disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0000726","name":"idiopathic scoliosis","parentIds":["MONDO_0005392"]}
+{"id":"GO_0007610","name":"behavior","parentIds":["GO_0032501"]}
+{"id":"GO_0008150","name":"biological_process","parentIds":[]}
+{"id":"EFO_0004323","name":"mental process","parentIds":["GO_0008150"]}
+{"id":"MONDO_0003847","name":"hereditary disease","parentIds":["OTAR_0000018"]}
+{"id":"MONDO_0003749","name":"esophageal disorder","parentIds":["MONDO_0044991"]}
+{"id":"MONDO_0004298","name":"stomach disorder","parentIds":["MONDO_0004335"]}
+{"id":"HP_0002094","name":"Dyspnea","parentIds":["HP_0002793"]}
+{"id":"MONDO_0005917","name":"placenta disorder","parentIds":["MONDO_0024575","MONDO_0002654"]}
+{"id":"OTAR_0000014","name":"pregnancy or perinatal disease","parentIds":[]}
+{"id":"OTAR_0000017","name":"reproductive system or breast disease","parentIds":[]}
+{"id":"MONDO_0002118","name":"urinary system disorder","parentIds":[]}
+{"id":"EFO_0004315","name":"drinking behavior","parentIds":["GO_0007610"]}
+{"id":"MONDO_0015962","name":"inherited renal tubular disease","parentIds":["Orphanet_98056","MONDO_0100191","MONDO_0021568"]}
+{"id":"MONDO_0016165","name":"hereditary hypoparathyroidism","parentIds":["MONDO_0001220","MONDO_0003847"]}
+{"id":"MONDO_0015327","name":"developmental anomaly of metabolic origin","parentIds":["MONDO_0019755","MONDO_0005066"]}
+{"id":"MONDO_0004689","name":"inborn metal metabolism disorder","parentIds":["MONDO_0019052"]}
+{"id":"OTAR_0000020","name":"nutritional or metabolic disease","parentIds":[]}
+{"id":"MONDO_0004949","name":"neoplasm of mature B-cells","parentIds":["MONDO_0004095"]}
+{"id":"MONDO_0017594","name":"indolent B-cell non-Hodgkin lymphoma","parentIds":["MONDO_0015759"]}
+{"id":"MONDO_0004967","name":"acute lymphoblastic leukemia","parentIds":["MONDO_0005402","MONDO_0010643","MONDO_0003538","MONDO_0018908","MONDO_0005168"]}
+{"id":"MONDO_0001014","name":"chronic leukemia","parentIds":["MONDO_0005059"]}
+{"id":"MONDO_0005570","name":"hematologic disorder","parentIds":[]}
+{"id":"MONDO_0044745","name":"nervous system injury","parentIds":["MONDO_0021178","MONDO_0005071"]}
+{"id":"OTAR_0000009","name":"injury, poisoning or other complication","parentIds":[]}
+{"id":"MONDO_0004994","name":"cardiomyopathy","parentIds":["MONDO_0005267","MONDO_0003939"]}
+{"id":"HP_0004408","name":"Abnormality of the sense of smell","parentIds":["HP_0012638","HP_0000366"]}
+{"id":"MONDO_0020283","name":"uveitis","parentIds":["HP_0012649","HP_0012372","MONDO_0002661"]}
+{"id":"MONDO_0003274","name":"thoracic cancer","parentIds":["MONDO_0004992","MONDO_0021350"]}
+{"id":"MONDO_0005328","name":"eye disorder","parentIds":["MONDO_0024458"]}
+{"id":"MONDO_0005066","name":"metabolic disease","parentIds":["OTAR_0000020"]}
+{"id":"MONDO_0001208","name":"acute respiratory failure","parentIds":["MONDO_0021113"]}
+{"id":"HP_0001626","name":"Abnormality of the cardiovascular system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0020753","name":"Orthocoronavirinae infectious disease","parentIds":["MONDO_0005718"]}
+{"id":"MONDO_0000270","name":"lower respiratory tract disorder","parentIds":["MONDO_0005087"]}
+{"id":"MONDO_0005192","name":"exocrine pancreatic carcinoma","parentIds":["MONDO_0002116","MONDO_0006181"]}
+{"id":"HP_0001392","name":"Abnormality of the liver","parentIds":["HP_0002012"]}
+{"id":"MONDO_0006513","name":"estrogen-receptor negative breast cancer","parentIds":["MONDO_0006116"]}
+{"id":"MONDO_0000616","name":"progesterone-receptor negative breast cancer","parentIds":["MONDO_0006116"]}
+{"id":"MONDO_0000618","name":"Her2-receptor negative breast cancer","parentIds":["MONDO_0006116"]}
+{"id":"MONDO_0004565","name":"intestinal obstruction","parentIds":["MONDO_0005020"]}
+{"id":"MONDO_0024263","name":"neonatal aspiration syndrome","parentIds":["MONDO_0005275"]}
+{"id":"HP_0011458","name":"Abdominal symptom","parentIds":["HP_0025031"]}
+{"id":"HP_0000002","name":"Abnormality of body height","parentIds":["HP_0001507"]}
+{"id":"HP_0001510","name":"Growth delay","parentIds":["HP_0001507"]}
+{"id":"EFO_0003765","name":"sign or symptom","parentIds":["EFO_0000651"]}
+{"id":"MONDO_0005137","name":"nutritional disorder","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0800466","name":"disorder of GNAS inactivation","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0019695","name":"acromelic dysplasia","parentIds":["MONDO_0018230"]}
+{"id":"HP_0000118","name":"Phenotypic abnormality","parentIds":["EFO_0000651"]}
+{"id":"MONDO_0005296","name":"sleep apnea syndrome","parentIds":["HP_0002360","MONDO_0005087","MONDO_0003406"]}
+{"id":"HP_0011014","name":"Abnormal glucose homeostasis","parentIds":["HP_0001939"]}
+{"id":"MONDO_0019216","name":"inborn disorder of amino acid transport","parentIds":["MONDO_0004736","MONDO_0019189"]}
+{"id":"MONDO_0023370","name":"neoplastic disease or syndrome","parentIds":["MONDO_0045024"]}
+{"id":"EFO_0007540","name":"animal viral hepatitis","parentIds":["MONDO_0043424","MONDO_0005108","MONDO_0100329","MONDO_0005154"]}
+{"id":"MONDO_0002269","name":"gastroenteritis","parentIds":["MONDO_0005020"]}
+{"id":"MONDO_0003409","name":"colonic disorder","parentIds":["MONDO_0024634"]}
+{"id":"MONDO_0019118","name":"inherited retinal dystrophy","parentIds":["MONDO_0004580","HP_0000479","MONDO_0100545"]}
+{"id":"Orphanet_98666","name":"Unclassified primitive or secondary maculopathy","parentIds":["Orphanet_98657"]}
+{"id":"MONDO_0005283","name":"retinal disorder","parentIds":["MONDO_0005328","MONDO_0005071"]}
+{"id":"MONDO_0001703","name":"color vision disorder","parentIds":["MONDO_0021084","Orphanet_98657"]}
+{"id":"MONDO_0000591","name":"intrinsic cardiomyopathy","parentIds":["MONDO_0004994"]}
+{"id":"MONDO_0002320","name":"congenital nervous system disorder","parentIds":["MONDO_0005071"]}
+{"id":"Orphanet_98054","name":"Rare genetic cardiac disease","parentIds":["MONDO_0005267","MONDO_0003847"]}
+{"id":"MONDO_0004588","name":"night blindness","parentIds":["MONDO_0005283","MONDO_0001941"]}
+{"id":"MONDO_0018170","name":"idiopathic nephrotic syndrome","parentIds":["MONDO_0005377"]}
+{"id":"MONDO_0044765","name":"steroid-resistant nephrotic syndrome","parentIds":["MONDO_0005377"]}
+{"id":"MONDO_0002350","name":"familial nephrotic syndrome","parentIds":["MONDO_0005377","MONDO_0100191"]}
+{"id":"MONDO_0005308","name":"ciliopathy","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0006025","name":"autosomal recessive disease","parentIds":["MONDO_0000429"]}
+{"id":"MONDO_0037747","name":"spinal injury","parentIds":["MONDO_0000812","MONDO_0021178"]}
+{"id":"MONDO_0002545","name":"spinal cord disorder","parentIds":["MONDO_0002602"]}
+{"id":"HP_0002060","name":"Abnormal cerebral morphology","parentIds":["HP_0012443"]}
+{"id":"MONDO_0003406","name":"sleep-wake disorder","parentIds":["MONDO_0100081"]}
+{"id":"HP_0007663","name":"Reduced visual acuity","parentIds":["HP_0000505"]}
+{"id":"MONDO_0021084","name":"vision disorder","parentIds":["MONDO_0024458"]}
+{"id":"EFO_0002571","name":"medical procedure","parentIds":[]}
+{"id":"MONDO_0020605","name":"X-linked recessive disease","parentIds":["MONDO_0000425"]}
+{"id":"MONDO_0021155","name":"X-linked cone-rod dystrophy","parentIds":["MONDO_0000425","MONDO_0015993"]}
+{"id":"MONDO_0004746","name":"myopathy of extraocular muscle","parentIds":["MONDO_0005336","MONDO_0000462"]}
+{"id":"MONDO_0001584","name":"ocular motility disease","parentIds":["MONDO_0003569"]}
+{"id":"MONDO_0016106","name":"progressive muscular dystrophy","parentIds":["MONDO_0020121"]}
+{"id":"MONDO_0000766","name":"corneal endothelial dystrophy","parentIds":["MONDO_0018102"]}
+{"id":"MONDO_0020214","name":"posterior corneal dystrophy","parentIds":["MONDO_0018102"]}
+{"id":"HP_0012210","name":"Abnormal renal morphology","parentIds":["HP_0000077"]}
+{"id":"MONDO_0005089","name":"sarcoma","parentIds":["MONDO_0004992"]}
+{"id":"MONDO_0017305","name":"syndromic oculocutaneous albinism","parentIds":["MONDO_0100118","MONDO_0019290","MONDO_0018134"]}
+{"id":"MONDO_0017739","name":"disorder of lysosomal-related organelles","parentIds":["MONDO_0019052"]}
+{"id":"MONDO_0021181","name":"inherited blood coagulation disorder","parentIds":["MONDO_0003847","Orphanet_158300","MONDO_0001531"]}
+{"id":"MONDO_0002462","name":"glomerulonephritis","parentIds":["HP_0012211","MONDO_0019722","MONDO_0001166","HP_0011035","HP_0012649"]}
+{"id":"MONDO_0005334","name":"hereditary nephritis","parentIds":["MONDO_0100191","MONDO_0001166"]}
+{"id":"MONDO_0011119","name":"iridogoniodysgenesis","parentIds":["MONDO_0019503"]}
+{"id":"HP_0000616","name":"Miosis","parentIds":["HP_0007686"]}
+{"id":"MONDO_0700328","name":"podocytopathy","parentIds":["MONDO_0019722"]}
+{"id":"MONDO_0000425","name":"X-linked disease","parentIds":["MONDO_0003847"]}
+{"id":"Orphanet_98657","name":"Genetic vitreous-retinal disease","parentIds":["Orphanet_101435"]}
+{"id":"MONDO_0700243","name":"CACNA1F-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0020248","name":"vitreoretinal degeneration","parentIds":["MONDO_0020246","MONDO_0001377"]}
+{"id":"MONDO_0004579","name":"retinoschisis","parentIds":["MONDO_0004580"]}
+{"id":"MONDO_0024237","name":"inherited neurodegenerative disorder","parentIds":["Orphanet_71859","MONDO_0100545","MONDO_0005559"]}
+{"id":"MONDO_0015547","name":"hereditary dementia","parentIds":["MONDO_0003847","MONDO_0001627"]}
+{"id":"MONDO_0000763","name":"epithelial and subepithelial corneal dystrophy","parentIds":["MONDO_0018102"]}
+{"id":"MONDO_0020212","name":"superficial corneal dystrophy","parentIds":["MONDO_0018102"]}
+{"id":"MONDO_0004686","name":"lattice corneal dystrophy","parentIds":["MONDO_0020213"]}
+{"id":"MONDO_0001822","name":"hypolipoproteinemia","parentIds":["MONDO_0002525"]}
+{"id":"Orphanet_182043","name":"Rare constitutional hemolytic anemia","parentIds":["Orphanet_183651"]}
+{"id":"MONDO_0017773","name":"hypoalphalipoproteinemia","parentIds":["MONDO_0005066","HP_0003119"]}
+{"id":"MONDO_0016420","name":"familial flecked retinopathy","parentIds":["MONDO_0020242"]}
+{"id":"MONDO_0044203","name":"foveal hypoplasia","parentIds":["HP_0001103","MONDO_0003847"]}
+{"id":"MONDO_0000721","name":"xanthinuria","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0019236","name":"inborn disorder of purine metabolism","parentIds":["MONDO_0019254","MONDO_0037829"]}
+{"id":"MONDO_0100191","name":"inherited kidney disorder","parentIds":["MONDO_0005240","MONDO_0003847"]}
+{"id":"MONDO_0019722","name":"glomerular disorder","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0020242","name":"hereditary macular dystrophy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0000426","name":"autosomal dominant disease","parentIds":["MONDO_0000429"]}
+{"id":"MONDO_0017624","name":"familial primary hypomagnesemia with hypercalciuria and nephrocalcinosis","parentIds":["MONDO_0018100"]}
+{"id":"MONDO_0003004","name":"macular degeneration","parentIds":["MONDO_0004580","HP_0001103"]}
+{"id":"MONDO_0000608","name":"familial juvenile hyperuricemic nephropathy","parentIds":["MONDO_0100191"]}
+{"id":"MONDO_0015083","name":"nuclear oculomotor paralysis","parentIds":["MONDO_0001309"]}
+{"id":"MONDO_0021259","name":"prostate neoplasm","parentIds":["MONDO_0003105","MONDO_0006054"]}
+{"id":"MONDO_0005836","name":"male reproductive organ cancer","parentIds":["MONDO_0024582","MONDO_0002149"]}
+{"id":"MONDO_0020247","name":"congenital vitreoretinal dysplasia","parentIds":["MONDO_0002320","MONDO_0020246"]}
+{"id":"HP_0004327","name":"Abnormal vitreous humor morphology","parentIds":["HP_0004329"]}
+{"id":"MONDO_0004860","name":"vitreous disorder","parentIds":["MONDO_0044137"]}
+{"id":"MONDO_0002311","name":"retinal vascular disorder","parentIds":["MONDO_0005283","MONDO_0043218","MONDO_0005552"]}
+{"id":"Orphanet_71859","name":"Rare genetic neurological disorder","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0019214","name":"inborn carbohydrate metabolic disorder","parentIds":["MONDO_0037792","MONDO_0019052"]}
+{"id":"HP_0012372","name":"Abnormal eye morphology","parentIds":["HP_0000478"]}
+{"id":"MONDO_0006325","name":"ocular melanoma","parentIds":["MONDO_0005105","MONDO_0002236"]}
+{"id":"MONDO_0002659","name":"uveal cancer","parentIds":["MONDO_0002236","MONDO_0021225"]}
+{"id":"MONDO_0024296","name":"vascular neoplasm","parentIds":["MONDO_0024757"]}
+{"id":"MONDO_0021231","name":"retina neoplasm","parentIds":["MONDO_0021248","MONDO_0021220","MONDO_0005283"]}
+{"id":"MONDO_0035290","name":"atypical hemolytic uremic syndrome with complement gene abnormality","parentIds":["MONDO_0016244"]}
+{"id":"MONDO_0019503","name":"anterior segment dysgenesis","parentIds":["Orphanet_183557","HP_0004328","MONDO_0005328","MONDO_0003847"]}
+{"id":"HP_0000517","name":"Abnormal lens morphology","parentIds":["HP_0004328"]}
+{"id":"MONDO_0001176","name":"lens disorder","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0015369","name":"Joubert syndrome and related disorders","parentIds":["MONDO_0020043"]}
+{"id":"MONDO_0020022","name":"central nervous system malformation","parentIds":["MONDO_0005071","MONDO_0019755"]}
+{"id":"MONDO_0001744","name":"angle-closure glaucoma","parentIds":["MONDO_0005041"]}
+{"id":"MONDO_0100151","name":"nephropathic cystinosis","parentIds":["MONDO_0016239","MONDO_0006025"]}
+{"id":"Orphanet_352312","name":"Disorder of phospholipids, sphingolipids and fatty acids biosynthesis with skeletal muscle predominant involvement","parentIds":["MONDO_0002525"]}
+{"id":"MONDO_0016801","name":"mitochondrial substrate carrier disorder","parentIds":["MONDO_0016800"]}
+{"id":"MONDO_0018117","name":"disorder of phospholipids, sphingolipids and fatty acids biosynthesis","parentIds":["MONDO_0002525"]}
+{"id":"Orphanet_183530","name":"Rare genetic developmental defect during embryogenesis","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0018158","name":"mitochondrial DNA depletion syndrome","parentIds":["MONDO_0016387"]}
+{"id":"MONDO_0019243","name":"inborn disorder of energy metabolism","parentIds":["MONDO_0019052","MONDO_0003847"]}
+{"id":"MONDO_0100547","name":"cardiogenetic disease","parentIds":["MONDO_0005267","MONDO_0003847"]}
+{"id":"Orphanet_217587","name":"Mitochondrial disease with hypertrophic cardiomyopathy","parentIds":["Orphanet_99739"]}
+{"id":"Orphanet_98647","name":"Cardiac disease with cataract","parentIds":["Orphanet_98643"]}
+{"id":"MONDO_0006510","name":"renal tubular transport disease","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0024573","name":"familial hypertrophic cardiomyopathy","parentIds":["MONDO_0005045","MONDO_0005217"]}
+{"id":"MONDO_0018174","name":"hereditary glaucoma","parentIds":["MONDO_0005041","MONDO_0003847"]}
+{"id":"Orphanet_156005","name":"Primary glaucoma","parentIds":["Orphanet_183557"]}
+{"id":"MONDO_0004736","name":"inborn disorder of amino acid metabolism","parentIds":["MONDO_0019189","MONDO_0037871"]}
+{"id":"MONDO_0100444","name":"RLBP1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0002473","name":"cystic kidney disease","parentIds":["MONDO_0005240","HP_0012210"]}
+{"id":"Orphanet_98056","name":"Rare genetic renal disease","parentIds":["MONDO_0003847"]}
+{"id":"HP_0031652","name":"Abnormal aortic valve physiology","parentIds":["HP_0011025"]}
+{"id":"MONDO_0700230","name":"GPR143-related foveal hypoplasia","parentIds":["MONDO_0044203"]}
+{"id":"MONDO_0017304","name":"ocular albinism","parentIds":["MONDO_0018134","MONDO_0024458"]}
+{"id":"MONDO_0043209","name":"albinism","parentIds":["MONDO_0019290","MONDO_0004736","HP_0005599"]}
+{"id":"MONDO_0019050","name":"inherited hemoglobinopathy","parentIds":["MONDO_0044348","MONDO_0003847"]}
+{"id":"MONDO_0100238","name":"inherited Fanconi renotubular syndrome","parentIds":["MONDO_0001083","MONDO_0015962"]}
+{"id":"MONDO_0000390","name":"vitelliform macular dystrophy","parentIds":["MONDO_0003004","MONDO_0020242"]}
+{"id":"MONDO_0017255","name":"panuveitis","parentIds":["MONDO_0020283"]}
+{"id":"HP_0011025","name":"Abnormal cardiovascular system physiology","parentIds":["HP_0001626"]}
+{"id":"MONDO_0000764","name":"epithelial-stromal TGFBI dystrophy","parentIds":["MONDO_0003847","MONDO_0018102"]}
+{"id":"MONDO_0100446","name":"CNGB3-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0800102","name":"CNGA3-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0010643","name":"acute leukemia","parentIds":["MONDO_0005059"]}
+{"id":"MONDO_0004643","name":"myeloid leukemia","parentIds":["EFO_0004251","MONDO_0005059"]}
+{"id":"Orphanet_183557","name":"Genetic developmental defect of the eye","parentIds":["Orphanet_183530","Orphanet_101435"]}
+{"id":"MONDO_0016680","name":"high grade astrocytic tumor","parentIds":["MONDO_0021636","MONDO_0100342"]}
+{"id":"MONDO_1010193","name":"TNNT2-related cardiomyopathy","parentIds":["MONDO_0100547"]}
+{"id":"MONDO_0001554","name":"phacogenic glaucoma","parentIds":["MONDO_0005041"]}
+{"id":"MONDO_0002289","name":"iris disorder","parentIds":["MONDO_0002661"]}
+{"id":"MONDO_0100445","name":"LCA5-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0100437","name":"RPGR-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0001085","name":"interstitial nephritis","parentIds":["MONDO_0001166"]}
+{"id":"MONDO_0021190","name":"DNA repair disease","parentIds":["MONDO_0019052"]}
+{"id":"MONDO_0100442","name":"RP2-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0001898","name":"optic choroid disorder","parentIds":["MONDO_0002661","MONDO_0005552"]}
+{"id":"MONDO_0800101","name":"NMNAT1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0100454","name":"GUCY2D retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0021272","name":"inherited orthostatic hypotension","parentIds":["MONDO_0100545","MONDO_0015914"]}
+{"id":"MONDO_1040063","name":"KCNV2-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_1040064","name":"CRX-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0044749","name":"X-linked congenital stationary night blindness","parentIds":["MONDO_0016293","MONDO_0002320","MONDO_0000425"]}
+{"id":"MONDO_0020642","name":"polycystic kidney disease","parentIds":["MONDO_0019741"]}
+{"id":"MONDO_0019741","name":"familial cystic renal disease","parentIds":["MONDO_0100191","MONDO_0002473"]}
+{"id":"MONDO_0007639","name":"fundus albipunctatus","parentIds":["MONDO_1040055","MONDO_0100443","MONDO_0100444","MONDO_0016420"]}
+{"id":"MONDO_0700463","name":"congenital trochlear nerve palsy","parentIds":["MONDO_0001146"]}
+{"id":"MONDO_0017634","name":"non-infectious anterior uveitis","parentIds":["MONDO_0006651"]}
+{"id":"Orphanet_98638","name":"Rare disease with glaucoma as a major feature","parentIds":["Orphanet_101435"]}
+{"id":"Orphanet_108987","name":"Syndromic developmental defect of the eye","parentIds":["Orphanet_183557"]}
+{"id":"MONDO_0006664","name":"atrial septal defect","parentIds":["MONDO_0002078","MONDO_0100547"]}
+{"id":"MONDO_0800406","name":"ABCA4-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0002175","name":"degeneration of macula and posterior pole","parentIds":["MONDO_0003004"]}
+{"id":"MONDO_0044347","name":"erythrocyte disorder","parentIds":["MONDO_0005570"]}
+{"id":"MONDO_0002428","name":"protozoa infectious disease","parentIds":["MONDO_0005135"]}
+{"id":"MONDO_0100120","name":"vector-borne disease","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0000942","name":"corneal disorder","parentIds":["MONDO_0005328"]}
+{"id":"HP_0000481","name":"Abnormal cornea morphology","parentIds":["HP_0004328"]}
+{"id":"MONDO_1040040","name":"HGSNAT-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0700377","name":"NDP-related vitreoretinopathy","parentIds":["MONDO_0020246"]}
+{"id":"MONDO_0016073","name":"syndromic microphthalmia","parentIds":["MONDO_0021129","MONDO_0003847"]}
+{"id":"MONDO_0005363","name":"inherited focal segmental glomerulosclerosis","parentIds":["MONDO_0100191","MONDO_0100313"]}
+{"id":"MONDO_0022410","name":"retinal ciliopathy","parentIds":["MONDO_0005308","MONDO_0100545","MONDO_0005283"]}
+{"id":"MONDO_1040039","name":"OFD1-related ciliopathy","parentIds":["MONDO_0005308"]}
+{"id":"MONDO_0018795","name":"syndromic constitutional thrombocytopenia","parentIds":["MONDO_0100241"]}
+{"id":"Orphanet_183586","name":"Genetic glomerular disease","parentIds":["Orphanet_98056","MONDO_0019722"]}
+{"id":"Orphanet_220452","name":"Inherited giant platelet disorder","parentIds":["Orphanet_275729"]}
+{"id":"MONDO_0000009","name":"inherited bleeding disorder, platelet-type","parentIds":["MONDO_0003847","MONDO_0002245","MONDO_0002243"]}
+{"id":"MONDO_0000015","name":"classic complement early component deficiency","parentIds":["MONDO_0003832"]}
+{"id":"MONDO_0023865","name":"corneal infection","parentIds":["MONDO_0016047","MONDO_0003085"]}
+{"id":"MONDO_0024315","name":"parasitic endophthalmitis","parentIds":["MONDO_0016047","MONDO_0020947"]}
+{"id":"MONDO_0021747","name":"Acanthamoeba infectious disease","parentIds":["MONDO_0005550"]}
+{"id":"Orphanet_98159","name":"Chromosome X structural anomaly","parentIds":["Orphanet_98157"]}
+{"id":"MONDO_0017007","name":"partial deletion of the long arm of chromosome X","parentIds":["MONDO_0017003"]}
+{"id":"Orphanet_93550","name":"Basement membrane disease","parentIds":["Orphanet_183586"]}
+{"id":"MONDO_0002312","name":"opportunistic mycosis","parentIds":["MONDO_0002041"]}
+{"id":"MONDO_0020119","name":"X-linked syndromic intellectual disability","parentIds":["MONDO_0000508","MONDO_0100284"]}
+{"id":"MONDO_0017004","name":"partial monosomy of the short arm of chromosome X","parentIds":["MONDO_0017003"]}
+{"id":"MONDO_0002331","name":"nephrosis","parentIds":["MONDO_0005240"]}
+{"id":"Orphanet_98577","name":"Kinetic eyelid anomaly","parentIds":["Orphanet_98560"]}
+{"id":"MONDO_0003569","name":"cranial nerve neuropathy","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0003832","name":"complement deficiency","parentIds":["HP_0010978","MONDO_0003778","MONDO_0021094"]}
+{"id":"MONDO_0001567","name":"nephrocalcinosis","parentIds":["EFO_0003837","HP_0012210","MONDO_0005240"]}
+{"id":"MONDO_0017625","name":"familial primary hypomagnesemia with hypocalcuria","parentIds":["MONDO_0018100"]}
+{"id":"MONDO_0019040","name":"chromosomal disorder","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0006949","name":"retinal drusen","parentIds":["MONDO_0002175"]}
+{"id":"MONDO_0043878","name":"hereditary optic atrophy","parentIds":["MONDO_0024237","MONDO_0001084"]}
+{"id":"MONDO_0016387","name":"mitochondrial oxidative phosphorylation disorder","parentIds":["MONDO_0004069"]}
+{"id":"MONDO_0020249","name":"hereditary optic neuropathy","parentIds":["MONDO_0005328","Orphanet_101435"]}
+{"id":"MONDO_0016333","name":"familial dilated cardiomyopathy","parentIds":["MONDO_0005217","MONDO_0005021"]}
+{"id":"MONDO_0016088","name":"hypoxanthine-guanine phosphoribosyltransferase deficiency","parentIds":["MONDO_0019236"]}
+{"id":"MONDO_0100453","name":"GUCY2D-related recessive retinopathy","parentIds":["MONDO_0100454","MONDO_0006025"]}
+{"id":"MONDO_0005712","name":"congenital nystagmus","parentIds":["HP_0000496","MONDO_0004843","MONDO_0002320","MONDO_0100545"]}
+{"id":"MONDO_0005707","name":"coccidiosis","parentIds":["MONDO_0002428"]}
+{"id":"MONDO_0015925","name":"interstitial lung disease","parentIds":["MONDO_0005275","HP_0002088"]}
+{"id":"Orphanet_98712","name":"Metabolic disease with cataract","parentIds":["Orphanet_98710"]}
+{"id":"MONDO_0017356","name":"inborn disorder of ornithine metabolism","parentIds":["MONDO_0004736","MONDO_0019230"]}
+{"id":"HP_0012025","name":"Abnormal circulating ornithine concentration","parentIds":["HP_0004364","HP_0004354"]}
+{"id":"MONDO_0020127","name":"hereditary peripheral neuropathy","parentIds":["MONDO_0100546","EFO_0004149"]}
+{"id":"Orphanet_98713","name":"Metabolic disease with pigmentary retinitis","parentIds":["Orphanet_98710"]}
+{"id":"Orphanet_207018","name":"Rare hereditary metabolic disease with peripheral neuropathy","parentIds":["Orphanet_207015"]}
+{"id":"Orphanet_98662","name":"Unclassified familial retinal dystrophy","parentIds":["Orphanet_98657"]}
+{"id":"MONDO_1040055","name":"PRPH2-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0020381","name":"patterned macular dystrophy","parentIds":["MONDO_0003004","MONDO_0018973"]}
+{"id":"Orphanet_330197","name":"Genetic multiple congenital anomalies/dysmorphic syndrome - variable intellectual disability","parentIds":["Orphanet_183530"]}
+{"id":"Orphanet_269567","name":"Genetic syndrome with a cerebellar malformation as major feature","parentIds":["Orphanet_269564"]}
+{"id":"MONDO_0700240","name":"BEST1-related vitreoretinochoroidopathy","parentIds":["MONDO_0020248"]}
+{"id":"MONDO_0016463","name":"syndromic agammaglobulinemia","parentIds":["MONDO_0015977"]}
+{"id":"MONDO_0009332","name":"congenital hematological disorder","parentIds":["MONDO_0005570"]}
+{"id":"MONDO_0100241","name":"inherited thrombocytopenia","parentIds":["MONDO_0003847","MONDO_0002245"]}
+{"id":"MONDO_1040056","name":"PROM1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0017103","name":"encephaloclastic disorder","parentIds":["MONDO_0005560"]}
+{"id":"MONDO_0800461","name":"COL4A1-related disorder","parentIds":["MONDO_1010150"]}
+{"id":"MONDO_0045048","name":"toxemia of pregnancy","parentIds":["MONDO_0024664"]}
+{"id":"EFO_0007411","name":"Orthomyxoviridae infectious disease","parentIds":["MONDO_0005108","MONDO_0100329","MONDO_0024352"]}
+{"id":"MONDO_0000170","name":"microphthalmia, isolated, with coloboma","parentIds":["MONDO_0000062","MONDO_0001476","MONDO_0016764"]}
+{"id":"MONDO_0015695","name":"combined immunodeficiency due to CRAC channel dysfunction","parentIds":["MONDO_0015131"]}
+{"id":"MONDO_0020250","name":"autosomal dominant optic atrophy","parentIds":["MONDO_0000426","MONDO_0020249","MONDO_0043878"]}
+{"id":"Orphanet_254822","name":"Mitochondrial oxidative phosphorylation disorder with no known mechanism","parentIds":["Orphanet_2443"]}
+{"id":"MONDO_0700244","name":"CACNA2D4-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_1040041","name":"FZD4-related exudative vitreoretinopathy","parentIds":["MONDO_0019516"]}
+{"id":"MONDO_0015762","name":"progressive familial intrahepatic cholestasis","parentIds":["MONDO_0017290","MONDO_0017755"]}
+{"id":"MONDO_0019637","name":"renal hypoplasia","parentIds":["MONDO_0005240"]}
+{"id":"Orphanet_357506","name":"Genetic non-syndromic renal or urinary tract malformation","parentIds":["Orphanet_183539"]}
+{"id":"MONDO_0018102","name":"corneal dystrophy","parentIds":["MONDO_0000942"]}
+{"id":"MONDO_0018559","name":"fetal lower urinary tract obstruction","parentIds":["MONDO_0019356","MONDO_0005240"]}
+{"id":"MONDO_0020213","name":"stromal corneal dystrophy","parentIds":["MONDO_0018102"]}
+{"id":"MONDO_0019751","name":"autoinflammatory syndrome","parentIds":["MONDO_0005554"]}
+{"id":"HP_0000505","name":"Visual impairment","parentIds":["HP_0000504"]}
+{"id":"MONDO_0005149","name":"pulmonary hypertension","parentIds":["MONDO_0005044"]}
+{"id":"MONDO_0019246","name":"inborn disorder of lysosomal amino acid transport","parentIds":["MONDO_0002561"]}
+{"id":"MONDO_1040052","name":"PROM1-related recessive retinopathy","parentIds":["MONDO_1040056","MONDO_0006025"]}
+{"id":"MONDO_0100368","name":"RPE65-related recessive retinopathy","parentIds":["MONDO_0006025","MONDO_0019118"]}
+{"id":"MONDO_0700232","name":"KIZ-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0800153","name":"urea cycle disorder or inherited hyperammonemia","parentIds":["MONDO_0004739"]}
+{"id":"MONDO_0100451","name":"CEP290-related ciliopathy","parentIds":["MONDO_0005308"]}
+{"id":"MONDO_0000732","name":"combined oxidative phosphorylation deficiency","parentIds":["MONDO_0016387"]}
+{"id":"MONDO_0100438","name":"AIPL1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0015531","name":"non-Langerhans cell histiocytosis","parentIds":["MONDO_0005833"]}
+{"id":"MONDO_0100278","name":"alanine glyoxylate aminotransferase deficiency","parentIds":["MONDO_0017703"]}
+{"id":"MONDO_0016602","name":"citrin deficiency","parentIds":["MONDO_0015991","MONDO_0800153"]}
+{"id":"MONDO_0700375","name":"CDHR1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0012033","name":"bradyopsia","parentIds":["MONDO_0005283","MONDO_0100545"]}
+{"id":"MONDO_0017287","name":"immunoglobulin G4-related sclerosing disease","parentIds":["MONDO_0007179"]}
+{"id":"MONDO_0021839","name":"spirochaetales infections","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0000314","name":"primary bacterial infectious disease","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0800391","name":"EYS-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0040653","name":"autosomal recessive ocular albinism","parentIds":["MONDO_0006025","MONDO_0017304"]}
+{"id":"MONDO_0018135","name":"oculocutaneous albinism type 1","parentIds":["MONDO_0017307","MONDO_0018910"]}
+{"id":"MONDO_0018910","name":"oculocutaneous albinism","parentIds":["MONDO_0100118","MONDO_0018134","MONDO_0019290"]}
+{"id":"MONDO_0023258","name":"glycogen storage disease type 1 due to SLC37A4 mutation","parentIds":["MONDO_0002413"]}
+{"id":"MONDO_0002413","name":"glycogen storage disease I","parentIds":["Orphanet_98056","MONDO_0002412","Orphanet_79161","Orphanet_101940"]}
+{"id":"MONDO_0015134","name":"constitutional neutropenia","parentIds":["MONDO_0009332","MONDO_0001475"]}
+{"id":"Orphanet_331184","name":"Constitutional neutropenia with extra-haematopoietic manifestations","parentIds":["Orphanet_101988"]}
+{"id":"Orphanet_98640","name":"Rare cataract","parentIds":["Orphanet_183607"]}
+{"id":"MONDO_0018087","name":"viral hemorrhagic fever","parentIds":["MONDO_0005108","MONDO_0600002"]}
+{"id":"MONDO_0004369","name":"renal infectious disease","parentIds":["MONDO_0005240","MONDO_0100338"]}
+{"id":"MONDO_0005780","name":"hantavirus infectious disease","parentIds":["MONDO_0021641"]}
+{"id":"MONDO_0015159","name":"multiple congenital anomalies/dysmorphic syndrome-intellectual disability","parentIds":["MONDO_0019042"]}
+{"id":"Orphanet_156237","name":"Syndrome or malformation associated with head and neck malformations","parentIds":["Orphanet_96333"]}
+{"id":"Orphanet_183763","name":"Rare genetic intellectual disability with developmental anomaly","parentIds":["Orphanet_183757"]}
+{"id":"MONDO_0009853","name":"Imerslund-Grasbeck syndrome","parentIds":["Orphanet_98396","Orphanet_165655","MONDO_0019220","MONDO_0016624","MONDO_0001700","MONDO_0020598","Orphanet_98056"]}
+{"id":"MONDO_0014720","name":"autosomal dominant optic atrophy plus syndrome","parentIds":["MONDO_0020250","MONDO_0044970"]}
+{"id":"MONDO_0019220","name":"inborn disorder of cobalamin metabolism and transport","parentIds":["MONDO_0005528","MONDO_0020696","MONDO_0017758"]}
+{"id":"Orphanet_98396","name":"Constitutional megaloblastic anemia due to vitamin B12 metabolism disorder","parentIds":["MONDO_0016624"]}
+{"id":"MONDO_0016624","name":"hereditary anemia","parentIds":["MONDO_0003847","MONDO_0001639","Orphanet_183651"]}
+{"id":"MONDO_0006681","name":"Borrelia infectious disease","parentIds":["MONDO_0021839"]}
+{"id":"Orphanet_164001","name":"Rare odontal or periodontal disorder","parentIds":["Orphanet_77830"]}
+{"id":"MONDO_0019507","name":"amelogenesis imperfecta","parentIds":["MONDO_0003847","MONDO_0004038"]}
+{"id":"MONDO_0043768","name":"thrombocytopenic purpura","parentIds":["MONDO_0005046","MONDO_0002610","MONDO_0002245","MONDO_0019737"]}
+{"id":"MONDO_0002305","name":"thrombophilia","parentIds":["MONDO_0001531"]}
+{"id":"MONDO_0000062","name":"isolated microphthalmia","parentIds":["MONDO_0003847","MONDO_0021129"]}
+{"id":"MONDO_0700224","name":"PDE6A-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"HP_0032263","name":"Increased blood pressure","parentIds":["HP_0030972"]}
+{"id":"MONDO_0019225","name":"disorder of gluconeogenesis","parentIds":["MONDO_0019214","MONDO_0002908"]}
+{"id":"MONDO_0800401","name":"CERKL-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0018234","name":"dysostosis","parentIds":["MONDO_0005497"]}
+{"id":"MONDO_0018215","name":"paraneoplastic neurologic syndrome","parentIds":["MONDO_0045054","MONDO_0005071"]}
+{"id":"MONDO_0001868","name":"primary angle-closure glaucoma","parentIds":["MONDO_0001744"]}
+{"id":"EFO_0700119","name":"anophthalmia-microphthalmia syndrome","parentIds":["EFO_0700118"]}
+{"id":"MONDO_0100581","name":"ocular growth disorder","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0700057","name":"neurological pain disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0100337","name":"SEC61A1 deficiency","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0009626","name":"pseudo-TORCH syndrome","parentIds":["MONDO_0006025","Orphanet_71859"]}
+{"id":"MONDO_0013099","name":"combined pituitary hormone deficiencies, genetic form","parentIds":["MONDO_0015770","Orphanet_178025","MONDO_0005152","MONDO_0100545","MONDO_0002320","Orphanet_181390"]}
+{"id":"Orphanet_90642","name":"Syndromic genetic deafness","parentIds":["Orphanet_96210"]}
+{"id":"EFO_0700065","name":"hereditary ATTR amyloidosis","parentIds":["Orphanet_271870","MONDO_0018634","MONDO_0019065","MONDO_0020127"]}
+{"id":"MONDO_1040051","name":"IMPDH1-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0004338","name":"retinal cell cancer","parentIds":["MONDO_0024341","MONDO_0003072"]}
+{"id":"MONDO_0019629","name":"sclerocornea","parentIds":["Orphanet_98632","MONDO_0000942"]}
+{"id":"MONDO_0019052","name":"inborn errors of metabolism","parentIds":["MONDO_0003847","MONDO_0005066"]}
+{"id":"Orphanet_139027","name":"Malformation syndrome with skin/mucosae involvement","parentIds":["Orphanet_183530"]}
+{"id":"MONDO_0018096","name":"Weill-Marchesani syndrome","parentIds":["MONDO_0015161","MONDO_0000429","MONDO_0019695"]}
+{"id":"Orphanet_281244","name":"Autosomal ichthyosis syndrome with other associated signs","parentIds":["Orphanet_183426"]}
+{"id":"MONDO_0001476","name":"coloboma","parentIds":["MONDO_0005328"]}
+{"id":"EFO_0007664","name":"outer ear morphology trait","parentIds":["EFO_0000651"]}
+{"id":"Orphanet_271844","name":"Genetic urogenital tumor","parentIds":["Orphanet_68336","EFO_0003863"]}
+{"id":"MONDO_0006295","name":"malignant urinary system neoplasm","parentIds":["MONDO_0004992","MONDO_0021066"]}
+{"id":"MONDO_0017713","name":"disorder of fatty acid oxidation and ketogenesis","parentIds":["MONDO_0037858","MONDO_0019223"]}
+{"id":"MONDO_0002427","name":"cerebellar disorder","parentIds":["MONDO_0005560"]}
+{"id":"MONDO_0000568","name":"autoimmune disorder of central nervous system","parentIds":["MONDO_0002977","MONDO_0002602"]}
+{"id":"Orphanet_101435","name":"Rare genetic eye disease","parentIds":["MONDO_0003847","MONDO_0005328"]}
+{"id":"MONDO_0019065","name":"amyloidosis","parentIds":["MONDO_0021179"]}
+{"id":"MONDO_0000316","name":"opportunistic bacterial infectious disease","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0017148","name":"heritable pulmonary arterial hypertension","parentIds":["MONDO_0015924","MONDO_0003847"]}
+{"id":"MONDO_0018151","name":"coenzyme Q10 deficiency","parentIds":["MONDO_0020127","MONDO_0016387"]}
+{"id":"MONDO_1060161","name":"inherited distal renal tubular acidosis","parentIds":["MONDO_0015827","MONDO_0100191"]}
+{"id":"MONDO_0700372","name":"AFG3L2-related optic atrophy and/or spastic ataxia spectrum","parentIds":["MONDO_0018158"]}
+{"id":"MONDO_0700115","name":"proliferative vitreoretinopathy","parentIds":["MONDO_0005283"]}
+{"id":"MONDO_0957097","name":"hereditary hemolytic uremic syndrome","parentIds":["MONDO_0001549","MONDO_0021181"]}
+{"id":"MONDO_0019737","name":"thrombotic microangiopathy","parentIds":["MONDO_0001531"]}
+{"id":"MONDO_0008369","name":"proximal renal tubular acidosis","parentIds":["MONDO_0001909"]}
+{"id":"MONDO_0015909","name":"aplastic anemia","parentIds":["MONDO_0002280","EFO_0004272","HP_0001876"]}
+{"id":"MONDO_0024321","name":"disorder of GPI anchor biosynthesis","parentIds":["MONDO_0024322"]}
+{"id":"MONDO_0004139","name":"normocytic anemia","parentIds":["MONDO_0002280"]}
+{"id":"MONDO_0003656","name":"hemoglobinuria","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0006504","name":"acquired metabolic disease","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0700379","name":"SDCCAG8-related ciliopathy","parentIds":["MONDO_0005308"]}
+{"id":"MONDO_0700239","name":"BEST1-related recessive retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0019810","name":"toxic epidermal necrolysis","parentIds":["MONDO_0017396"]}
+{"id":"MONDO_1040037","name":"IMPG1-related recessive retinopathy","parentIds":["MONDO_0006025","MONDO_0019118"]}
+{"id":"MONDO_0003308","name":"pleural mesothelioma","parentIds":["MONDO_0005065","MONDO_0021065"]}
+{"id":"MONDO_0006292","name":"malignant mesothelioma","parentIds":["MONDO_0005065","MONDO_0004992"]}
+{"id":"MONDO_0006294","name":"pleural cancer","parentIds":["MONDO_0000376","MONDO_0021065","MONDO_0003274"]}
+{"id":"MONDO_0003803","name":"aortic valve disorder","parentIds":["MONDO_0002869","MONDO_0005561","MONDO_0045001"]}
+{"id":"MONDO_0018536","name":"adenocarcinoma of gallbladder and extrahepatic biliary tract","parentIds":["MONDO_0002665","MONDO_0018918"]}
+{"id":"MONDO_0024479","name":"epithelial tumor of colon","parentIds":["MONDO_0005626","MONDO_0005401"]}
+{"id":"MONDO_1010150","name":"COL4A1/A2-related disorder","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0005549","name":"renal cell adenocarcinoma","parentIds":["MONDO_0005086"]}
+{"id":"MONDO_0005004","name":"clear cell adenocarcinoma","parentIds":["MONDO_0004970"]}
+{"id":"MONDO_0100192","name":"liver failure","parentIds":["HP_0001410","MONDO_0005154"]}
+{"id":"HP_0002715","name":"Abnormality of the immune system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0024355","name":"respiratory tract infectious disorder","parentIds":["MONDO_0005550","MONDO_0005087"]}
+{"id":"HP_0011947","name":"Respiratory tract infection","parentIds":["HP_0002088"]}
+{"id":"HP_0012649","name":"Increased inflammatory response","parentIds":["HP_0012647"]}
+{"id":"HP_0011446","name":"Abnormality of mental function","parentIds":["HP_0012638"]}
+{"id":"MONDO_0021143","name":"melanocytic neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"HP_0000729","name":"Autistic behavior","parentIds":["HP_0000708"]}
+{"id":"EFO_0022597","name":"aging","parentIds":["GO_0032502"]}
+{"id":"MONDO_0044881","name":"hematopoietic and lymphoid cell neoplasm","parentIds":["MONDO_0002334"]}
+{"id":"HP_0012211","name":"Abnormal renal physiology","parentIds":["HP_0011277","HP_0000077"]}
+{"id":"MONDO_0002516","name":"digestive system cancer","parentIds":["MONDO_0004335","MONDO_0004992","MONDO_0021223"]}
+{"id":"MONDO_0021069","name":"malignant endocrine neoplasm","parentIds":["MONDO_0002082","MONDO_0004992"]}
+{"id":"MONDO_0024477","name":"liver and intrahepatic bile duct neoplasm","parentIds":["MONDO_0005154","MONDO_0002082","MONDO_0002514"]}
+{"id":"MONDO_0000376","name":"respiratory system cancer","parentIds":["MONDO_0004992","MONDO_0005087"]}
+{"id":"OBI_1110122","name":"pathologic process","parentIds":["GO_0008150"]}
+{"id":"MONDO_0004987","name":"urinary bladder neoplasm","parentIds":["MONDO_0006026","MONDO_0021066"]}
+{"id":"MONDO_0017672","name":"focal palmoplantar keratoderma","parentIds":["MONDO_0019272"]}
+{"id":"MONDO_0001493","name":"chronic pulmonary heart disease","parentIds":["MONDO_0004596"]}
+{"id":"HP_0000818","name":"Abnormality of the endocrine system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0002908","name":"glucose metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0001933","name":"endocrine pancreas disorder","parentIds":["MONDO_0002356"]}
+{"id":"MONDO_0021636","name":"astrocytic tumor","parentIds":["MONDO_0021042"]}
+{"id":"HP_0011842","name":"Abnormal skeletal morphology","parentIds":["HP_0000924"]}
+{"id":"MONDO_0002614","name":"bone inflammation disease","parentIds":["MONDO_0005381"]}
+{"id":"MONDO_0006816","name":"arthropathy","parentIds":["HP_0011842","MONDO_0005172"]}
+{"id":"MONDO_0015074","name":"thyroid tumor","parentIds":["MONDO_0002082","MONDO_0003240"]}
+{"id":"MP_0001914","name":"hemorrhage","parentIds":["HP_0001871"]}
+{"id":"HP_0003119","name":"Abnormal circulating lipid concentration","parentIds":["HP_0001939"]}
+{"id":"MONDO_0037748","name":"hyperlipoproteinemia","parentIds":["HP_0003119","MONDO_0005066"]}
+{"id":"MONDO_0001336","name":"familial hyperlipidemia","parentIds":["MONDO_0002525","MONDO_0021187"]}
+{"id":"MONDO_0019056","name":"neuromuscular disease","parentIds":["MONDO_0005071"]}
+{"id":"HP_0000707","name":"Abnormality of the nervous system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0003620","name":"peripheral nervous system disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0021193","name":"neuroepithelial neoplasm","parentIds":["MONDO_0021248"]}
+{"id":"MONDO_0005872","name":"nervous system cancer","parentIds":["MONDO_0021248","MONDO_0004992"]}
+{"id":"MONDO_0006130","name":"central nervous system neoplasm","parentIds":["MONDO_0002602","MONDO_0021248"]}
+{"id":"MONDO_0005335","name":"colorectal neoplasm","parentIds":["MONDO_0024634","MONDO_0021118"]}
+{"id":"MONDO_0040679","name":"urothelial carcinoma","parentIds":["MONDO_0024337","MONDO_0006474","MONDO_0006295"]}
+{"id":"MONDO_0005814","name":"intestinal cancer","parentIds":["MONDO_0021118","MONDO_0002516"]}
+{"id":"MONDO_0015667","name":"acute myeloid leukemia by FAB classification","parentIds":["MONDO_0018874"]}
+{"id":"MONDO_0005618","name":"anxiety disorder","parentIds":["MONDO_0005084"]}
+{"id":"HP_0002088","name":"Abnormal lung morphology","parentIds":["HP_0002086"]}
+{"id":"MONDO_0021350","name":"neoplasm of thorax","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0020641","name":"respiratory tract neoplasm","parentIds":["MONDO_0005087","MONDO_0005070"]}
+{"id":"HP_0100659","name":"Abnormal cerebral vascular morphology","parentIds":["HP_0002597","HP_0030680","HP_0012443"]}
+{"id":"MONDO_0002724","name":"mast cell neoplasm","parentIds":["MONDO_0005170"]}
+{"id":"MONDO_0021148","name":"female reproductive system neoplasm","parentIds":["MONDO_0006054","MONDO_0002263"]}
+{"id":"MONDO_0005558","name":"ovarian disorder","parentIds":["MONDO_0002263","MONDO_0002259"]}
+{"id":"MONDO_0017893","name":"inherited acute myeloid leukemia","parentIds":["MONDO_0023603","MONDO_0018874"]}
+{"id":"MONDO_0019182","name":"inherited obesity","parentIds":["Orphanet_183573","MONDO_0003847","MONDO_0011122","MONDO_0005151","Orphanet_156638"]}
+{"id":"MONDO_0015757","name":"lymphoid hemopathy","parentIds":["MONDO_0002334"]}
+{"id":"MONDO_0005157","name":"lymphoid neoplasm","parentIds":["MONDO_0044881"]}
+{"id":"HP_0004370","name":"Abnormality of temperature regulation","parentIds":["HP_0001939"]}
+{"id":"GO_0006950","name":"response to stress","parentIds":["GO_0050896"]}
+{"id":"MONDO_0000587","name":"autoimmune disease of ear, nose and throat","parentIds":["MONDO_0007179"]}
+{"id":"MONDO_0005113","name":"bacterial infectious disease","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0004522","name":"infectious peritonitis","parentIds":["MONDO_0043424","MONDO_1010128"]}
+{"id":"MONDO_0011989","name":"leishmaniasis","parentIds":["MONDO_0002428","MONDO_0100120"]}
+{"id":"MONDO_0005020","name":"intestinal disorder","parentIds":["MONDO_0004335"]}
+{"id":"HP_0000078","name":"Abnormality of the genital system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0002134","name":"physiological sexual disorder","parentIds":["MONDO_0005039"]}
+{"id":"MONDO_0002036","name":"penile disorder","parentIds":["MONDO_0003150"]}
+{"id":"MONDO_0005379","name":"neurotic disorder","parentIds":["MONDO_0005618"]}
+{"id":"MONDO_0002512","name":"papillary adenocarcinoma","parentIds":["MONDO_0004970","MONDO_0006509"]}
+{"id":"MONDO_0024622","name":"thyroid gland adenocarcinoma","parentIds":["MONDO_0015075","MONDO_0004970"]}
+{"id":"MONDO_0003105","name":"prostate disorder","parentIds":["MONDO_0003150"]}
+{"id":"MONDO_0005043","name":"hyperplasia","parentIds":["MONDO_0045024"]}
+{"id":"MONDO_0006181","name":"digestive system carcinoma","parentIds":["MONDO_0002516","MONDO_0004993"]}
+{"id":"MONDO_0021223","name":"digestive system neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"HP_0001732","name":"Abnormality of the pancreas","parentIds":["HP_0002012"]}
+{"id":"MONDO_0002356","name":"pancreas disorder","parentIds":["MONDO_0005151","MONDO_0004335"]}
+{"id":"HP_0000069","name":"Abnormality of the ureter","parentIds":["HP_0000079"]}
+{"id":"MONDO_1011336","name":"nervous system disorder, non-human animal","parentIds":["MONDO_7770012"]}
+{"id":"MONDO_0005583","name":"non-human animal disease","parentIds":[]}
+{"id":"MONDO_0020804","name":"basal cell carcinoma","parentIds":["MONDO_0020799","MONDO_0004993"]}
+{"id":"MONDO_0002656","name":"skin carcinoma","parentIds":["MONDO_0021634","MONDO_0002898","MONDO_0004993"]}
+{"id":"MONDO_0018364","name":"malignant epithelial tumor of ovary","parentIds":["MONDO_0004993","MONDO_0002229","MONDO_0008170"]}
+{"id":"MONDO_0001416","name":"female reproductive organ cancer","parentIds":["MONDO_0021148","MONDO_0002149"]}
+{"id":"MONDO_0000594","name":"pervasive developmental disorder","parentIds":["MONDO_0005503","MONDO_0100038"]}
+{"id":"MONDO_0002814","name":"adrenal carcinoma","parentIds":["MONDO_0001502","MONDO_0002817"]}
+{"id":"EFO_0003967","name":"vascular sarcoma","parentIds":["MONDO_0005089","MONDO_0002100","MONDO_0021080"]}
+{"id":"MONDO_0021312","name":"malignant tumor of adrenal cortex","parentIds":["MONDO_0002817","MONDO_0036591"]}
+{"id":"MONDO_0005485","name":"psychotic disorder","parentIds":["MONDO_0005084","MONDO_0002039"]}
+{"id":"MONDO_0017343","name":"Epstein-Barr virus-associated lymphoproliferative disorder","parentIds":["MONDO_0017342"]}
+{"id":"HP_0011875","name":"Abnormal platelet morphology","parentIds":["HP_0001871"]}
+{"id":"MONDO_0021096","name":"papillary epithelial neoplasm","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0005206","name":"renal carcinoma","parentIds":["MONDO_0004993","MONDO_0002367"]}
+{"id":"MONDO_0004670","name":"lupus erythematosus","parentIds":["MONDO_0005554","MONDO_0007179"]}
+{"id":"MONDO_0004656","name":"rubella","parentIds":["MONDO_0100329"]}
+{"id":"MONDO_0016511","name":"infectious embryofetopathy","parentIds":["MONDO_0005550","MONDO_0019755"]}
+{"id":"MONDO_0021085","name":"gastric neoplasm","parentIds":["MONDO_0004298","MONDO_0021223"]}
+{"id":"MONDO_0000605","name":"hypersensitivity reaction disease","parentIds":["MONDO_0005046"]}
+{"id":"EFO_0009429","name":"Mycobacterium infection","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0005794","name":"Herpesviridae infectious disease","parentIds":["MONDO_0100329"]}
+{"id":"MONDO_0017595","name":"aggressive B-cell non-Hodgkin lymphoma","parentIds":["MONDO_0015759"]}
+{"id":"HP_0001699","name":"Sudden death","parentIds":["HP_0025142"]}
+{"id":"EFO_0009373","name":"edema","parentIds":["HP_0001939","MONDO_0005093"]}
+{"id":"MONDO_0019755","name":"developmental defect during embryogenesis","parentIds":["OTAR_0000018"]}
+{"id":"HP_0034057","name":"Fetal anomaly","parentIds":["HP_0001197"]}
+{"id":"EFO_0009708","name":"metastasis","parentIds":["OBI_1110122"]}
+{"id":"MONDO_0005564","name":"embryonal neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0006858","name":"mouth disorder","parentIds":["EFO_0010282"]}
+{"id":"HP_0004325","name":"Decreased body weight","parentIds":["HP_0004323"]}
+{"id":"HP_0007185","name":"Loss of consciousness","parentIds":["HP_0004372"]}
+{"id":"HP_0000708","name":"Atypical behavior","parentIds":["HP_0011446"]}
+{"id":"MONDO_0000569","name":"autoimmune disorder of endocrine system","parentIds":["MONDO_0007179","MONDO_0005151"]}
+{"id":"MONDO_0000588","name":"autoimmune disorder of gastrointestinal tract","parentIds":["MONDO_0007179","MONDO_0004335"]}
+{"id":"MONDO_0005626","name":"epithelial neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0002038","name":"head and neck carcinoma","parentIds":["MONDO_0005627","MONDO_0004993"]}
+{"id":"MONDO_0005096","name":"squamous cell carcinoma","parentIds":["MONDO_0002532","MONDO_0004993"]}
+{"id":"MONDO_0005453","name":"congenital heart disease","parentIds":["MONDO_0005267","MONDO_0024239","HP_0030680"]}
+{"id":"EFO_0008513","name":"morphologic finding","parentIds":["EFO_0003765"]}
+{"id":"MONDO_0100087","name":"familial Alzheimer disease","parentIds":["MONDO_0024237","MONDO_0004975","MONDO_0015547"]}
+{"id":"EFO_0002460","name":"hypertrophy","parentIds":["EFO_0000651"]}
+{"id":"MONDO_0003182","name":"anterior horn disorder","parentIds":["MONDO_0002545"]}
+{"id":"MONDO_0020128","name":"motor neuron disorder","parentIds":["MONDO_0019056","MONDO_0005559"]}
+{"id":"HP_0007373","name":"Motor neuron atrophy","parentIds":["HP_0007367"]}
+{"id":"EFO_0009541","name":"disease of peritoneum","parentIds":["MONDO_0004335"]}
+{"id":"HP_0001877","name":"Abnormal erythrocyte morphology","parentIds":["HP_0001871"]}
+{"id":"MONDO_0000931","name":"endometrial disorder","parentIds":["MONDO_0002654"]}
+{"id":"MONDO_0002657","name":"breast disorder","parentIds":["OTAR_0000017"]}
+{"id":"MONDO_0005381","name":"bone disorder","parentIds":["MONDO_0005172"]}
+{"id":"MONDO_0021581","name":"connective tissue neoplasm","parentIds":["MONDO_0005070","MONDO_0003900"]}
+{"id":"MONDO_0002232","name":"nasal cavity disorder","parentIds":["MONDO_0004867"]}
+{"id":"MONDO_0000637","name":"musculoskeletal system cancer","parentIds":["MONDO_0002081","MONDO_0004992"]}
+{"id":"MONDO_0800486","name":"metabolic bone disorder","parentIds":["MONDO_0005381"]}
+{"id":"MONDO_0000837","name":"bone resorption disease","parentIds":["MONDO_0000833"]}
+{"id":"MONDO_0800064","name":"osteogenesis imperfecta and a reduction of bone mineral density.","parentIds":["HP_0004348","MONDO_0019019"]}
+{"id":"MONDO_0018949","name":"distal myopathy","parentIds":["MONDO_0020121"]}
+{"id":"HP_0001939","name":"Abnormality of metabolism/homeostasis","parentIds":["HP_0000118"]}
+{"id":"EFO_0008505","name":"hepatitis virus-related hepatocellular carcinoma","parentIds":["MONDO_0007256"]}
+{"id":"MONDO_0006316","name":"neuroblastic tumor","parentIds":["MONDO_0005462"]}
+{"id":"HP_0011035","name":"Abnormal renal cortex morphology","parentIds":["HP_0012210"]}
+{"id":"HP_0001881","name":"Abnormal leukocyte morphology","parentIds":["HP_0001871","HP_0010987"]}
+{"id":"HP_0011015","name":"Abnormal blood glucose concentration","parentIds":["HP_0011013","HP_0011014"]}
+{"id":"EFO_1001513","name":"liver neoplasm","parentIds":["MONDO_0024477"]}
+{"id":"HP_0000153","name":"Abnormality of the mouth","parentIds":["HP_0000271"]}
+{"id":"MONDO_0001292","name":"autonomic nervous system disorder","parentIds":["MONDO_0003620","MONDO_0002602"]}
+{"id":"MONDO_0020040","name":"46 XY differences of sex development","parentIds":["MONDO_0002145"]}
+{"id":"MONDO_0005586","name":"head and neck neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0044992","name":"mouth mucosa disorder","parentIds":["MONDO_0006858"]}
+{"id":"EFO_1001898","name":"mucositis","parentIds":["MP_0001845"]}
+{"id":"MONDO_0005606","name":"tubular adenocarcinoma","parentIds":["MONDO_0004970"]}
+{"id":"MONDO_0100310","name":"hereditary cerebellar ataxia","parentIds":["MONDO_0000437","MONDO_0024237","MONDO_0100309"]}
+{"id":"Orphanet_98688","name":"Oculomotor apraxia or related oculomotor disease","parentIds":["Orphanet_183616"]}
+{"id":"Orphanet_183422","name":"Polymalformative genetic syndrome with increased risk of developing cancer","parentIds":["MONDO_0015356"]}
+{"id":"Orphanet_98613","name":"Conjunctival telangiectasia","parentIds":["Orphanet_98611"]}
+{"id":"Orphanet_98097","name":"Autosomal recessive cerebellar ataxia due to a DNA repair defect","parentIds":["Orphanet_98539","MONDO_0100309","Orphanet_98693"]}
+{"id":"MONDO_0019852","name":"inherited primary ovarian failure","parentIds":["MONDO_0005558","MONDO_0015514","MONDO_0021124","MONDO_0005387","MONDO_0003847","Orphanet_156638"]}
+{"id":"Orphanet_183478","name":"Genetic skin vascular disorder","parentIds":["MONDO_0019276"]}
+{"id":"Orphanet_169346","name":"DNA repair defect other than combined T-cell and B-cell immunodeficiencies","parentIds":["MONDO_0021094"]}
+{"id":"MONDO_0005211","name":"ovarian serous adenocarcinoma","parentIds":["MONDO_0024885","MONDO_0002752","MONDO_0005278"]}
+{"id":"MONDO_0024621","name":"serous cystadenocarcinoma","parentIds":["MONDO_0005278","MONDO_0005596"]}
+{"id":"MONDO_0002702","name":"ovarian cystadenocarcinoma","parentIds":["MONDO_0005596","MONDO_0002752"]}
+{"id":"MONDO_0018079","name":"thymic epithelial neoplasm","parentIds":["MONDO_0005626","MONDO_0005197"]}
+{"id":"MONDO_0021146","name":"headache disorder","parentIds":["MONDO_0700057"]}
+{"id":"HP_0030956","name":"Abnormality of cardiovascular system electrophysiology","parentIds":["HP_0011025"]}
+{"id":"MONDO_0005217","name":"familial cardiomyopathy","parentIds":["MONDO_0100547","MONDO_0004994"]}
+{"id":"MONDO_0004867","name":"upper respiratory tract disorder","parentIds":["MONDO_0005087"]}
+{"id":"MONDO_0021925","name":"tracheobronchitis","parentIds":["MONDO_0000270"]}
+{"id":"MONDO_0005503","name":"developmental disorder of mental health","parentIds":["MONDO_0005084"]}
+{"id":"HP_0030972","name":"Abnormal systemic blood pressure","parentIds":["HP_0011025"]}
+{"id":"MONDO_0002494","name":"substance-related disorder","parentIds":["MONDO_0002025"]}
+{"id":"HP_0000925","name":"Abnormality of the vertebral column","parentIds":["HP_0011842"]}
+{"id":"MONDO_0005093","name":"skin disorder","parentIds":["MONDO_0002051"]}
+{"id":"HP_0011122","name":"Abnormal skin physiology","parentIds":["HP_0000951"]}
+{"id":"MONDO_0003996","name":"basal ganglia disorder","parentIds":["HP_0002060","MONDO_0005560"]}
+{"id":"MONDO_0024276","name":"glandular cell neoplasm","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0003900","name":"connective tissue disorder","parentIds":["OTAR_0000006"]}
+{"id":"MONDO_0002081","name":"musculoskeletal system disorder","parentIds":["OTAR_0000006"]}
+{"id":"HP_0004323","name":"Abnormality of body weight","parentIds":["HP_0001507"]}
+{"id":"MONDO_0006170","name":"conjunctival disorder","parentIds":["MONDO_0005328","MONDO_0000462"]}
+{"id":"HP_0000271","name":"Abnormality of the face","parentIds":["HP_0000234"]}
+{"id":"MONDO_0000462","name":"eye adnexa disorder","parentIds":["MONDO_0024458"]}
+{"id":"HP_0002093","name":"Respiratory insufficiency","parentIds":["HP_0002086"]}
+{"id":"EFO_0009085","name":"arterial occlusive disease","parentIds":["MONDO_0005385"]}
+{"id":"MONDO_0005108","name":"viral infectious disease","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0004821","name":"nasopharyngeal disorder","parentIds":["MONDO_0020592","MONDO_0004867"]}
+{"id":"MONDO_1040015","name":"infectious disease with sepsis","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0024388","name":"Clostridium infectious disease","parentIds":["MONDO_0021679","MONDO_0024389"]}
+{"id":"MONDO_0024294","name":"skin disorder caused by infection","parentIds":["MONDO_0005550","MONDO_0005093"]}
+{"id":"MONDO_0005392","name":"scoliosis","parentIds":["MONDO_0000836"]}
+{"id":"GO_0032501","name":"multicellular organismal process","parentIds":["GO_0008150"]}
+{"id":"MONDO_0044991","name":"upper digestive tract disorder","parentIds":["MONDO_0004335"]}
+{"id":"MONDO_0004335","name":"digestive system disorder","parentIds":["EFO_0010282"]}
+{"id":"MONDO_0024575","name":"pregnancy disorder","parentIds":["MONDO_0700003"]}
+{"id":"MONDO_0002654","name":"uterine disorder","parentIds":["MONDO_0002263"]}
+{"id":"MONDO_0021568","name":"renal tubule disorder","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0001220","name":"hypoparathyroidism","parentIds":["HP_0000818","MONDO_0001223"]}
+{"id":"MONDO_0004095","name":"B-cell neoplasm","parentIds":["MONDO_0004805","MONDO_0005062"]}
+{"id":"MONDO_0015759","name":"B-cell non-Hodgkin lymphoma","parentIds":["MONDO_0018908","MONDO_0004095"]}
+{"id":"MONDO_0005402","name":"lymphoid leukemia","parentIds":["MONDO_0005157","MONDO_0005059"]}
+{"id":"MONDO_0003538","name":"precursor lymphoblastic lymphoma/leukemia","parentIds":["MONDO_0005157"]}
+{"id":"MONDO_0005168","name":"neoplasm of immature B and T cells","parentIds":["MONDO_0005157"]}
+{"id":"MONDO_0003939","name":"muscle tissue disorder","parentIds":["MONDO_0002081"]}
+{"id":"HP_0000366","name":"Abnormality of the nose","parentIds":["HP_0000271"]}
+{"id":"MONDO_0002661","name":"uveal disorder","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0021113","name":"respiratory failure","parentIds":["MONDO_0005275"]}
+{"id":"MONDO_0005718","name":"Coronaviridae infectious disease","parentIds":["MONDO_0005876"]}
+{"id":"MONDO_0002116","name":"malignant exocrine pancreas neoplasm","parentIds":["MONDO_0009831","MONDO_0021076"]}
+{"id":"HP_0002012","name":"Abnormality of the abdominal organs","parentIds":["HP_0025031"]}
+{"id":"MONDO_0006116","name":"breast carcinoma by gene expression profile","parentIds":["MONDO_0004989"]}
+{"id":"HP_0025031","name":"Abnormality of the digestive system","parentIds":["HP_0000118"]}
+{"id":"HP_0001507","name":"Growth abnormality","parentIds":["HP_0000118"]}
+{"id":"MONDO_0018230","name":"skeletal dysplasia","parentIds":["Orphanet_183524","HP_0011842","MONDO_0003847","MONDO_0005381","Orphanet_404584"]}
+{"id":"HP_0002360","name":"Sleep disturbance","parentIds":["HP_0011446"]}
+{"id":"MONDO_0019189","name":"inborn disorder of amino acid and other organic acid metabolism","parentIds":["MONDO_0019052","MONDO_0003847"]}
+{"id":"MONDO_0043424","name":"digestive system infectious disorder","parentIds":["MONDO_0004335","MONDO_0005550"]}
+{"id":"MONDO_0100329","name":"primary viral infectious disease","parentIds":["MONDO_0005108"]}
+{"id":"MONDO_0024634","name":"large intestine disorder","parentIds":["MONDO_0005020"]}
+{"id":"MONDO_0004580","name":"retinal degeneration","parentIds":["MONDO_0005283"]}
+{"id":"HP_0000479","name":"Abnormal retinal morphology","parentIds":["HP_0004329"]}
+{"id":"MONDO_0001941","name":"blindness (disorder)","parentIds":["MONDO_0021084"]}
+{"id":"MONDO_0000429","name":"autosomal genetic disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0000812","name":"vertebral column disorder","parentIds":["MONDO_0005172"]}
+{"id":"HP_0012443","name":"Abnormal brain morphology","parentIds":["HP_0002011"]}
+{"id":"MONDO_0100081","name":"sleep disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0005336","name":"myopathy","parentIds":["MONDO_0020120","HP_0011805"]}
+{"id":"MONDO_0020121","name":"muscular dystrophy","parentIds":["MONDO_0005336","MONDO_0100546","MONDO_0700223","HP_0011805"]}
+{"id":"HP_0000077","name":"Abnormality of the kidney","parentIds":["HP_0000079"]}
+{"id":"MONDO_0019290","name":"hypopigmentation of the skin","parentIds":["MONDO_0019288","HP_0001000"]}
+{"id":"MONDO_0018134","name":"disorder of melanin metabolism","parentIds":["MONDO_0019189"]}
+{"id":"Orphanet_158300","name":"Rare genetic hematologic disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0001531","name":"blood coagulation disease","parentIds":["MONDO_0005570"]}
+{"id":"MONDO_0001166","name":"nephritis","parentIds":["MONDO_0005240"]}
+{"id":"HP_0007686","name":"Abnormal pupillary function","parentIds":["HP_0000478"]}
+{"id":"MONDO_0020246","name":"inherited vitreoretinopathy","parentIds":["HP_0004327","MONDO_0100545","MONDO_0005283"]}
+{"id":"MONDO_0001377","name":"vitreous syneresis","parentIds":["MONDO_0004860","MONDO_0004884"]}
+{"id":"MONDO_0002525","name":"inherited lipid metabolism disorder","parentIds":["MONDO_0019052","MONDO_0003847"]}
+{"id":"Orphanet_183651","name":"Rare constitutional anemia","parentIds":["Orphanet_158300"]}
+{"id":"HP_0001103","name":"Abnormal macular morphology","parentIds":["HP_0000479"]}
+{"id":"MONDO_0019254","name":"inborn disorder of purine or pyrimidine metabolism","parentIds":["MONDO_0019052","MONDO_0003847"]}
+{"id":"MONDO_0037829","name":"purine metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0018100","name":"familial primary hypomagnesemia","parentIds":["MONDO_0015962","MONDO_0004689","MONDO_0017765"]}
+{"id":"MONDO_0001309","name":"oculomotor nerve paralysis","parentIds":["Orphanet_183616","MONDO_0002782","MONDO_0001835","MONDO_0003546","MONDO_0024458"]}
+{"id":"MONDO_0006054","name":"reproductive system neoplasm","parentIds":["MONDO_0005070","MONDO_0005039"]}
+{"id":"MONDO_0024582","name":"male reproductive system neoplasm","parentIds":["MONDO_0006054","MONDO_0003150"]}
+{"id":"MONDO_0002149","name":"reproductive system cancer","parentIds":["MONDO_0004992","MONDO_0006054"]}
+{"id":"HP_0004329","name":"Abnormal posterior eye segment morphology","parentIds":["HP_0012372"]}
+{"id":"MONDO_0044137","name":"vitreous body disorder","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0005552","name":"ocular vascular disorder","parentIds":["MONDO_0005328","MONDO_0005385"]}
+{"id":"MONDO_0037792","name":"carbohydrate metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"HP_0000478","name":"Abnormality of the eye","parentIds":["HP_0000118"]}
+{"id":"MONDO_0002236","name":"ocular cancer","parentIds":["MONDO_0021220","MONDO_0005627","MONDO_0000649"]}
+{"id":"MONDO_0021225","name":"uvea neoplasm","parentIds":["MONDO_0021220","MONDO_0002661"]}
+{"id":"MONDO_0024757","name":"cardiovascular neoplasm","parentIds":["MONDO_0005070","MONDO_0004995"]}
+{"id":"MONDO_0021248","name":"nervous system neoplasm","parentIds":["MONDO_0005070","MONDO_0005071"]}
+{"id":"MONDO_0021220","name":"eye neoplasm","parentIds":["MONDO_0005328","MONDO_0005586"]}
+{"id":"HP_0004328","name":"Abnormal anterior eye segment morphology","parentIds":["HP_0012372"]}
+{"id":"MONDO_0020043","name":"autosomal recessive congenital cerebellar ataxia","parentIds":["MONDO_0015244"]}
+{"id":"MONDO_0016800","name":"mitochondrial membrane transport disorder","parentIds":["MONDO_0004069"]}
+{"id":"Orphanet_98643","name":"Systemic disease with cataract","parentIds":["Orphanet_98640"]}
+{"id":"MONDO_0037871","name":"amino acid metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"HP_0005599","name":"Hypopigmentation of hair","parentIds":["HP_0001574"]}
+{"id":"MONDO_0044348","name":"hemoglobinopathy","parentIds":["MONDO_0044347"]}
+{"id":"MONDO_0001083","name":"Fanconi renotubular syndrome","parentIds":["MONDO_0006510","MONDO_0021568"]}
+{"id":"EFO_0004251","name":"myeloproliferative disorder","parentIds":["MONDO_0004992","MONDO_0021138","MONDO_0015756","MONDO_0005170","Orphanet_322126"]}
+{"id":"MONDO_0100342","name":"malignant glioma","parentIds":["MONDO_0002714","MONDO_0020665","MONDO_0021042"]}
+{"id":"MONDO_0015914","name":"primary orthostatic hypotension","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0100443","name":"RDH5-related retinopathy","parentIds":["MONDO_0019118"]}
+{"id":"MONDO_0001146","name":"fourth cranial nerve palsy","parentIds":["MONDO_0007002","MONDO_0002782"]}
+{"id":"MONDO_0006651","name":"anterior uveitis","parentIds":["MONDO_0020283"]}
+{"id":"MONDO_0002078","name":"heart septal defect","parentIds":["MONDO_0005453"]}
+{"id":"MONDO_0005135","name":"parasitic infectious disease","parentIds":["MONDO_0005550"]}
+{"id":"Orphanet_275729","name":"Rare hemorrhagic disorder due to a constitutional thrombocytopenia","parentIds":["Orphanet_71202"]}
+{"id":"MONDO_0002245","name":"blood platelet disease","parentIds":["MONDO_0005570"]}
+{"id":"MONDO_0002243","name":"hemorrhagic disease","parentIds":["MONDO_0005570"]}
+{"id":"MONDO_0016047","name":"endophthalmitis","parentIds":["MONDO_0043885"]}
+{"id":"MONDO_0020947","name":"parasitic eye infection","parentIds":["MONDO_0043885","MONDO_0005135"]}
+{"id":"Orphanet_98157","name":"Gonosome structural anomaly","parentIds":["MONDO_0019040"]}
+{"id":"MONDO_0017003","name":"partial deletion of chromosome X","parentIds":["MONDO_0000761","MONDO_0700027"]}
+{"id":"MONDO_0002041","name":"fungal infectious disease","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0000508","name":"syndromic intellectual disability","parentIds":["MONDO_0700092"]}
+{"id":"MONDO_0100284","name":"X-linked intellectual disability","parentIds":["MONDO_0100500","MONDO_0000425"]}
+{"id":"Orphanet_98560","name":"Rare palpebral disease","parentIds":["MONDO_0003382","Orphanet_183598"]}
+{"id":"EFO_0003837","name":"calcification","parentIds":["GO_0008150","MONDO_0005557"]}
+{"id":"MONDO_0001084","name":"primary optic atrophy","parentIds":["MONDO_0003608"]}
+{"id":"MONDO_0004069","name":"inborn mitochondrial metabolism disorder","parentIds":["MONDO_0015327","MONDO_0044970","MONDO_0019243"]}
+{"id":"HP_0000496","name":"Abnormality of eye movement","parentIds":["HP_0000478"]}
+{"id":"MONDO_0004843","name":"pathologic nystagmus","parentIds":["MONDO_0001584"]}
+{"id":"Orphanet_98710","name":"Metabolic disease associated with ocular features","parentIds":["Orphanet_101435"]}
+{"id":"MONDO_0019230","name":"inborn disorder of ornithine or proline metabolism","parentIds":["MONDO_0019189"]}
+{"id":"HP_0004364","name":"Abnormal circulating nitrogen compound concentration","parentIds":["HP_0001939"]}
+{"id":"HP_0004354","name":"Abnormal circulating carboxylic acid concentration","parentIds":["HP_0001939"]}
+{"id":"MONDO_0100546","name":"hereditary neuromuscular disease","parentIds":["MONDO_0019056","MONDO_0100545"]}
+{"id":"Orphanet_207015","name":"Rare hereditary disease with peripheral neuropathy","parentIds":["Orphanet_71859"]}
+{"id":"MONDO_0018973","name":"patterned dystrophy of the retinal pigment epithelium","parentIds":["MONDO_0020242"]}
+{"id":"Orphanet_269564","name":"Genetic syndrome with a central nervous system malformation as major feature","parentIds":["Orphanet_183506"]}
+{"id":"MONDO_0015977","name":"agammaglobulinemia","parentIds":["MONDO_0002211"]}
+{"id":"MONDO_0024664","name":"hypertension, pregnancy-induced","parentIds":["MONDO_0005044","MONDO_0024575"]}
+{"id":"Orphanet_2443","name":"Mitochondrial oxidative phosphorylation disorder due to nuclear DNA anomalies","parentIds":["MONDO_0019243","Orphanet_183530"]}
+{"id":"MONDO_0017290","name":"familial intrahepatic cholestasis","parentIds":["MONDO_0005154","MONDO_0019072","MONDO_0019052"]}
+{"id":"MONDO_0017755","name":"inborn disorder of bilirubin metabolism","parentIds":["MONDO_0024431","MONDO_0017754"]}
+{"id":"Orphanet_183539","name":"Genetic renal or urinary tract malformation","parentIds":["Orphanet_98056","Orphanet_183530"]}
+{"id":"MONDO_0019356","name":"urogenital tract malformation","parentIds":["MONDO_0019755"]}
+{"id":"HP_0000504","name":"Abnormality of vision","parentIds":["HP_0000478"]}
+{"id":"MONDO_0002561","name":"lysosomal storage disease","parentIds":["MONDO_0003847","MONDO_0019052"]}
+{"id":"MONDO_0004739","name":"urea cycle disorder","parentIds":["MONDO_0004736","MONDO_0019189"]}
+{"id":"MONDO_0005833","name":"lymphatic system disorder","parentIds":["MONDO_0005570","MONDO_0044986"]}
+{"id":"MONDO_0017703","name":"disorder of glyoxylate metabolism","parentIds":["MONDO_0100257"]}
+{"id":"MONDO_0015991","name":"citrullinemia","parentIds":["MONDO_0004739"]}
+{"id":"MONDO_0017307","name":"disorder of tyrosine metabolism","parentIds":["MONDO_0019235"]}
+{"id":"MONDO_0002412","name":"disorder of glycogen metabolism","parentIds":["MONDO_0019214","MONDO_0019243"]}
+{"id":"Orphanet_79161","name":"Disorder of carbohydrate metabolism","parentIds":["MONDO_0003847"]}
+{"id":"Orphanet_101940","name":"Rare metabolic liver disease","parentIds":["Orphanet_156601"]}
+{"id":"MONDO_0001475","name":"neutropenia","parentIds":["MONDO_0004805","HP_0001881"]}
+{"id":"Orphanet_101988","name":"Primary immunodeficiency due to a defect in innate immunity","parentIds":["MONDO_0003778"]}
+{"id":"Orphanet_183607","name":"Genetic lens and zonula anomaly","parentIds":["Orphanet_101435"]}
+{"id":"MONDO_0600002","name":"hemorrhagic fever","parentIds":["MONDO_0005550"]}
+{"id":"MONDO_0100338","name":"urinary tract infection","parentIds":["MONDO_0005550","MONDO_0002118"]}
+{"id":"MONDO_0021641","name":"Bunyaviridae infectious disease","parentIds":["MONDO_0100329"]}
+{"id":"MONDO_0019042","name":"multiple congenital anomalies/dysmorphic syndrome","parentIds":["MONDO_0019755"]}
+{"id":"Orphanet_96333","name":"Rare otorhinolaryngological malformation","parentIds":["Orphanet_183530"]}
+{"id":"Orphanet_183757","name":"Rare genetic intellectual disability","parentIds":["Orphanet_71859"]}
+{"id":"Orphanet_165655","name":"Genetic intestinal disease","parentIds":["EFO_0010282","Orphanet_165652"]}
+{"id":"MONDO_0001700","name":"megaloblastic anemia","parentIds":["MONDO_0002281","HP_0010972"]}
+{"id":"MONDO_0020598","name":"malabsorption syndrome","parentIds":["MONDO_0005020"]}
+{"id":"MONDO_0044970","name":"mitochondrial disease","parentIds":["OTAR_0000018"]}
+{"id":"MONDO_0005528","name":"inborn vitamin metabolic disorder","parentIds":["MONDO_0019052","EFO_0005878"]}
+{"id":"MONDO_0020696","name":"vitamin B12 deficiency","parentIds":["MONDO_0042976","HP_0001939","MONDO_0005066"]}
+{"id":"MONDO_0017758","name":"disorder of vitamin and non-protein cofactor absorption and transport","parentIds":["MONDO_0003847","MONDO_0017757"]}
+{"id":"MONDO_0001639","name":"deficiency anemia","parentIds":["MONDO_0002280"]}
+{"id":"Orphanet_77830","name":"Rare genetic odontologic disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0004038","name":"dental enamel hypoplasia","parentIds":["MONDO_0002220","HP_0000682"]}
+{"id":"MONDO_0002610","name":"purpura","parentIds":["HP_0001933","MONDO_0002243"]}
+{"id":"MONDO_0005497","name":"bone development disease","parentIds":["MONDO_0005381"]}
+{"id":"MONDO_0045054","name":"cancer-related condition","parentIds":["MONDO_0045024"]}
+{"id":"EFO_0700118","name":"developmental defect of the eye","parentIds":["MONDO_0019755","MONDO_0005328"]}
+{"id":"MONDO_0015770","name":"congenital hypogonadotropic hypogonadism","parentIds":["MONDO_0019824","MONDO_0018555"]}
+{"id":"Orphanet_178025","name":"Non-acquired combined pituitary hormone deficiencies without extra-pituitary malformations","parentIds":["Orphanet_183628"]}
+{"id":"MONDO_0005152","name":"hypopituitarism","parentIds":["MONDO_0003381"]}
+{"id":"Orphanet_181390","name":"Hypogonadotropic hypogonadism associated with other endocrinopathies","parentIds":["Orphanet_399983","Orphanet_183628","Orphanet_399839","MONDO_0002263"]}
+{"id":"Orphanet_96210","name":"Rare genetic deafness","parentIds":["MONDO_0003847"]}
+{"id":"Orphanet_271870","name":"Rare genetic systemic or rheumatologic disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0018634","name":"hereditary amyloidosis","parentIds":["MONDO_0019052","MONDO_0019065"]}
+{"id":"MONDO_0024341","name":"retinal cell neoplasm","parentIds":["MONDO_0021231"]}
+{"id":"MONDO_0003072","name":"retinal cancer","parentIds":["MONDO_0002236","MONDO_0021231"]}
+{"id":"Orphanet_98632","name":"Glaucoma associated with neural crest cell migration anomaly","parentIds":["Orphanet_183557"]}
+{"id":"MONDO_0015161","name":"multiple congenital anomalies/dysmorphic syndrome without intellectual disability","parentIds":["MONDO_0019042"]}
+{"id":"Orphanet_183426","name":"Genetic epidermal disorder","parentIds":["Orphanet_68346"]}
+{"id":"Orphanet_68336","name":"Rare genetic tumor","parentIds":["MONDO_0003847","MONDO_0005070"]}
+{"id":"EFO_0003863","name":"urogenital neoplasm","parentIds":["MONDO_0021066"]}
+{"id":"MONDO_0021066","name":"urinary system neoplasm","parentIds":["MONDO_0005070","MONDO_0002118"]}
+{"id":"MONDO_0037858","name":"inherited fatty acid metabolism disorder","parentIds":["MONDO_0002525"]}
+{"id":"MONDO_0019223","name":"disorder of fatty acid and ketone body metabolism","parentIds":["MONDO_0019243"]}
+{"id":"MONDO_0002977","name":"autoimmune disorder of the nervous system","parentIds":["MONDO_0005071","MONDO_0007179"]}
+{"id":"MONDO_0021179","name":"proteostasis deficiencies","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0015827","name":"distal renal tubular acidosis","parentIds":["MONDO_0005240"]}
+{"id":"MONDO_0001549","name":"hemolytic-uremic syndrome","parentIds":["MONDO_0001531"]}
+{"id":"MONDO_0001909","name":"renal tubular acidosis","parentIds":["MONDO_0006022","MONDO_0021568","MONDO_0006510"]}
+{"id":"HP_0001876","name":"Pancytopenia","parentIds":["HP_0001871"]}
+{"id":"MONDO_0024322","name":"disorder of glycosylation","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0017396","name":"toxic dermatosis","parentIds":["MONDO_0005093"]}
+{"id":"MONDO_0005065","name":"mesothelioma","parentIds":["MONDO_0006856"]}
+{"id":"MONDO_0021065","name":"pleural neoplasm","parentIds":["MONDO_0002037","MONDO_0020641"]}
+{"id":"MONDO_0002869","name":"heart valve disorder","parentIds":["MONDO_0005267"]}
+{"id":"MONDO_0005561","name":"aortic disorder","parentIds":["MONDO_0000473"]}
+{"id":"MONDO_0045001","name":"cardiac ventricle disorder","parentIds":["MONDO_0005267"]}
+{"id":"MONDO_0002665","name":"extrahepatic bile duct adenocarcinoma","parentIds":["MONDO_0003090","MONDO_0003193"]}
+{"id":"MONDO_0018918","name":"carcinoma of gallbladder and extrahepatic biliary tract","parentIds":["MONDO_0021385"]}
+{"id":"HP_0001410","name":"Decreased liver function","parentIds":["HP_0025031"]}
+{"id":"HP_0012647","name":"Abnormal inflammatory response","parentIds":["HP_0010978"]}
+{"id":"GO_0032502","name":"developmental process","parentIds":["GO_0008150"]}
+{"id":"MONDO_0002334","name":"hematopoietic and lymphoid system neoplasm","parentIds":["MONDO_0005570","MONDO_0005070"]}
+{"id":"HP_0011277","name":"Abnormality of the urinary system physiology","parentIds":["HP_0000079"]}
+{"id":"MONDO_0002082","name":"endocrine gland neoplasm","parentIds":["MONDO_0005151","MONDO_0005070"]}
+{"id":"MONDO_0006026","name":"urinary bladder disorder","parentIds":["MONDO_0002118"]}
+{"id":"MONDO_0019272","name":"hereditary palmoplantar keratoderma","parentIds":["MONDO_0019268","MONDO_0006590","MONDO_0100118"]}
+{"id":"MONDO_0004596","name":"cor pulmonale","parentIds":["MONDO_0005009"]}
+{"id":"HP_0000924","name":"Abnormality of the skeletal system","parentIds":["HP_0033127"]}
+{"id":"MONDO_0005172","name":"skeletal system disorder","parentIds":["MONDO_0002081"]}
+{"id":"MONDO_0003240","name":"thyroid gland disorder","parentIds":["MONDO_0005151"]}
+{"id":"HP_0001871","name":"Abnormality of blood and blood-forming tissues","parentIds":["HP_0000118"]}
+{"id":"MONDO_0021118","name":"intestinal neoplasm","parentIds":["MONDO_0021223","MONDO_0005020"]}
+{"id":"MONDO_0024337","name":"urothelial neoplasm","parentIds":["MONDO_0021066","MONDO_0037254"]}
+{"id":"MONDO_0006474","name":"transitional cell carcinoma","parentIds":["MONDO_0004993"]}
+{"id":"MONDO_0005170","name":"myeloid neoplasm","parentIds":["MONDO_0044881"]}
+{"id":"MONDO_0002263","name":"female reproductive system disorder","parentIds":["MONDO_0005039"]}
+{"id":"MONDO_0002259","name":"gonadal disorder","parentIds":["MONDO_0005151","MONDO_0005039"]}
+{"id":"MONDO_0023603","name":"hereditary disorder of connective tissue","parentIds":["MONDO_0003847","MONDO_0003900"]}
+{"id":"Orphanet_183573","name":"Genetic overgrowth/obesity syndrome","parentIds":["Orphanet_183530"]}
+{"id":"Orphanet_156638","name":"Rare genetic endocrine disease","parentIds":["MONDO_0003847","MONDO_0005151"]}
+{"id":"GO_0050896","name":"response to stimulus","parentIds":["GO_0008150"]}
+{"id":"MONDO_0005039","name":"reproductive system disorder","parentIds":["OTAR_0000017"]}
+{"id":"MONDO_0003150","name":"male reproductive system disorder","parentIds":["MONDO_0005039"]}
+{"id":"HP_0000079","name":"Abnormality of the urinary system","parentIds":["HP_0000118"]}
+{"id":"MONDO_7770012","name":"disease by body system or component, non-human animal","parentIds":["MONDO_0005583"]}
+{"id":"MONDO_0020799","name":"basal cell neoplasm","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0021634","name":"epithelial skin neoplasm","parentIds":["MONDO_0005626","MONDO_0002531"]}
+{"id":"MONDO_0002898","name":"skin cancer","parentIds":["MONDO_0002531","MONDO_0000653"]}
+{"id":"MONDO_0002229","name":"ovarian epithelial tumor","parentIds":["MONDO_0005626","MONDO_0021068"]}
+{"id":"MONDO_0100038","name":"complex neurodevelopmental disorder","parentIds":["MONDO_0700092"]}
+{"id":"MONDO_0001502","name":"retroperitoneum carcinoma","parentIds":["MONDO_0005941","MONDO_0004993"]}
+{"id":"MONDO_0002817","name":"adrenal gland cancer","parentIds":["MONDO_0005941","MONDO_0021069","MONDO_0021227"]}
+{"id":"MONDO_0002100","name":"cardiovascular cancer","parentIds":["MONDO_0024757","MONDO_0004992"]}
+{"id":"MONDO_0021080","name":"blood vessel neoplasm","parentIds":["MONDO_0005385","MONDO_0024296"]}
+{"id":"MONDO_0036591","name":"adrenal cortex neoplasm","parentIds":["MONDO_0021227","MONDO_0002816"]}
+{"id":"MONDO_0017342","name":"Epstein-Barr virus-related tumor","parentIds":["MONDO_0017341"]}
+{"id":"MONDO_0002367","name":"kidney cancer","parentIds":["MONDO_0021163","MONDO_0006295"]}
+{"id":"HP_0001197","name":"Abnormality of prenatal development or birth","parentIds":["HP_0000118"]}
+{"id":"HP_0004372","name":"Reduced consciousness","parentIds":["HP_0011446"]}
+{"id":"MONDO_0002532","name":"squamous cell neoplasm","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0024239","name":"congenital anomaly of cardiovascular system","parentIds":["OTAR_0000018","MONDO_0004995"]}
+{"id":"HP_0007367","name":"Atrophy/Degeneration affecting the central nervous system","parentIds":["HP_0002011"]}
+{"id":"MONDO_0000833","name":"bone remodeling disease","parentIds":["MONDO_0005381"]}
+{"id":"HP_0004348","name":"Abnormality of bone mineral density","parentIds":["HP_0003330"]}
+{"id":"MONDO_0019019","name":"osteogenesis imperfecta","parentIds":["MONDO_0005516"]}
+{"id":"MONDO_0005462","name":"primitive neuroectodermal tumor","parentIds":["MONDO_0021193","MONDO_0005564"]}
+{"id":"HP_0010987","name":"Abnormal cellular immune system morphology","parentIds":["HP_0002715"]}
+{"id":"HP_0011013","name":"Abnormal circulating carbohydrate concentration","parentIds":["HP_0001939"]}
+{"id":"MONDO_0002145","name":"disorder of sexual differentiation","parentIds":["MONDO_0019755","MONDO_0002259"]}
+{"id":"MONDO_0000437","name":"cerebellar ataxia","parentIds":["MONDO_0005395","HP_0011442","MONDO_0100308","MONDO_0022687"]}
+{"id":"MONDO_0100309","name":"hereditary ataxia","parentIds":["MONDO_0100308","Orphanet_71859","MONDO_0100545"]}
+{"id":"Orphanet_183616","name":"Genetic neuro-ophthalmological disease","parentIds":["Orphanet_101435"]}
+{"id":"MONDO_0015356","name":"hereditary neoplastic syndrome","parentIds":["MONDO_0021058","MONDO_0003847"]}
+{"id":"Orphanet_98611","name":"Conjunctival vascular anomaly","parentIds":["Orphanet_98610"]}
+{"id":"Orphanet_98539","name":"Early-onset ataxia with dementia","parentIds":["Orphanet_98538"]}
+{"id":"Orphanet_98693","name":"Spinocerebellar ataxia with oculomotor anomaly","parentIds":["Orphanet_71859"]}
+{"id":"MONDO_0015514","name":"hereditary endocrine growth disease","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0021124","name":"female infertility","parentIds":["MONDO_0002263","MONDO_0005047"]}
+{"id":"MONDO_0005387","name":"primary ovarian failure","parentIds":["MONDO_0001889"]}
+{"id":"MONDO_0019276","name":"inherited epidermolysis bullosa","parentIds":["MONDO_0100118","MONDO_0019268","MONDO_0006541"]}
+{"id":"MONDO_0024885","name":"malignant ovarian serous tumor","parentIds":["MONDO_0037255","MONDO_0018364"]}
+{"id":"MONDO_0002752","name":"ovarian adenocarcinoma","parentIds":["MONDO_0004970","MONDO_0005140"]}
+{"id":"MONDO_0005278","name":"serous adenocarcinoma","parentIds":["MONDO_0004970"]}
+{"id":"MONDO_0005596","name":"cystadenocarcinoma","parentIds":["MONDO_0004970","MONDO_0021077"]}
+{"id":"MONDO_0005197","name":"thymus neoplasm","parentIds":["MONDO_0003393","MONDO_0002082","MONDO_0002334"]}
+{"id":"HP_0000951","name":"Abnormality of the skin","parentIds":["HP_0001574"]}
+{"id":"HP_0000234","name":"Abnormality of the head","parentIds":["HP_0000152"]}
+{"id":"MONDO_0020592","name":"disorder of pharynx","parentIds":["MONDO_0005087"]}
+{"id":"MONDO_0021679","name":"gram-positive bacterial infections","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0024389","name":"anaerobic bacteria infectious disease","parentIds":["MONDO_0005113"]}
+{"id":"MONDO_0000836","name":"disease of bone structure","parentIds":["MONDO_0005381"]}
+{"id":"MONDO_0700003","name":"obstetric disorder","parentIds":["OTAR_0000014"]}
+{"id":"MONDO_0001223","name":"parathyroid gland disorder","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0004805","name":"leukocyte disorder","parentIds":["MONDO_0005570","MONDO_0005046"]}
+{"id":"MONDO_0005876","name":"Nidovirales infectious disease","parentIds":["MONDO_0100329"]}
+{"id":"MONDO_0009831","name":"malignant pancreatic neoplasm","parentIds":["MONDO_0021040","MONDO_0002516"]}
+{"id":"MONDO_0021076","name":"pancreatic exocrine neoplasm","parentIds":["MONDO_0021040"]}
+{"id":"Orphanet_183524","name":"Rare genetic bone disease","parentIds":["MONDO_0005381","MONDO_0003847"]}
+{"id":"Orphanet_404584","name":"Rare genetic bone development disorder","parentIds":["Orphanet_183530"]}
+{"id":"HP_0002011","name":"Morphological central nervous system abnormality","parentIds":["HP_0000707"]}
+{"id":"MONDO_0020120","name":"skeletal muscle disorder","parentIds":["MONDO_0003939"]}
+{"id":"HP_0011805","name":"Abnormal skeletal muscle morphology","parentIds":["HP_0003011"]}
+{"id":"MONDO_0700223","name":"hereditary skeletal muscle disorder","parentIds":["MONDO_0020120","MONDO_0003847"]}
+{"id":"MONDO_0019288","name":"skin pigmentation disorder","parentIds":["MONDO_0005093"]}
+{"id":"HP_0001000","name":"Abnormal skin pigmentation","parentIds":["HP_0011121"]}
+{"id":"MONDO_0004884","name":"eye degenerative disorder","parentIds":["MONDO_0005328"]}
+{"id":"MONDO_0017765","name":"disorder of magnesium transport","parentIds":["MONDO_0017761"]}
+{"id":"MONDO_0002782","name":"cranial nerve palsy","parentIds":["MONDO_0003569"]}
+{"id":"MONDO_0001835","name":"facial paralysis","parentIds":["MONDO_0006496"]}
+{"id":"MONDO_0003546","name":"third cranial nerve disorder","parentIds":["MONDO_0003620","MONDO_0003569"]}
+{"id":"MONDO_0000649","name":"sensory system cancer","parentIds":["MONDO_0005872"]}
+{"id":"MONDO_0015244","name":"autosomal recessive cerebellar ataxia","parentIds":["MONDO_0100310","MONDO_0006025"]}
+{"id":"HP_0001574","name":"Abnormality of the integument","parentIds":["HP_0000118"]}
+{"id":"MONDO_0021138","name":"bone marrow cancer","parentIds":["MONDO_0000621","MONDO_0002129","MONDO_0005374"]}
+{"id":"MONDO_0015756","name":"myeloid hemopathy","parentIds":["MONDO_0002334"]}
+{"id":"Orphanet_322126","name":"Genetic tumor of hematopoietic and lymphoid tissues","parentIds":["Orphanet_68336"]}
+{"id":"MONDO_0020665","name":"high grade malignant neoplasm","parentIds":["MONDO_0004992"]}
+{"id":"MONDO_0007002","name":"trochlear nerve disorder","parentIds":["MONDO_0003569","MONDO_0003620"]}
+{"id":"Orphanet_71202","name":"Rare hemorrhagic disorder due to a constitutional platelet anomaly","parentIds":["MONDO_0021181"]}
+{"id":"MONDO_0043885","name":"eye infectious disorder","parentIds":["MONDO_0005550","MONDO_0005328"]}
+{"id":"MONDO_0000761","name":"syndrome caused by partial chromosomal deletion","parentIds":["MONDO_0019040"]}
+{"id":"MONDO_0700027","name":"chromosome X disorder","parentIds":["MONDO_0020058"]}
+{"id":"MONDO_0700092","name":"neurodevelopmental disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0100500","name":"Mendelian neurodevelopmental disorder","parentIds":["MONDO_0100545","MONDO_0700092"]}
+{"id":"MONDO_0003382","name":"eyelid disorder","parentIds":["MONDO_0005328","MONDO_0000462"]}
+{"id":"Orphanet_183598","name":"Rare genetic palpebral, lacrimal system and conjunctival disease","parentIds":["Orphanet_101435"]}
+{"id":"MONDO_0005557","name":"calcium metabolic disease","parentIds":["MONDO_0000226"]}
+{"id":"MONDO_0003608","name":"optic atrophy","parentIds":["HP_0000587","MONDO_0002135"]}
+{"id":"Orphanet_183506","name":"Genetic central nervous system malformation","parentIds":["Orphanet_183530","Orphanet_71859"]}
+{"id":"MONDO_0002211","name":"B cell deficiency","parentIds":["MONDO_0003778","HP_0001881","MONDO_0021094","MONDO_0004805"]}
+{"id":"MONDO_0019072","name":"intrahepatic cholestasis","parentIds":["MONDO_0001751"]}
+{"id":"MONDO_0024431","name":"bilirubin metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0017754","name":"inborn disorder of porphyrin metabolism","parentIds":["MONDO_0037821","MONDO_0019052","MONDO_0003847"]}
+{"id":"MONDO_0044986","name":"lymphoid system disorder","parentIds":["MONDO_0005046"]}
+{"id":"MONDO_0100257","name":"peroxisomal single enzyme/protein defect","parentIds":["MONDO_0019053"]}
+{"id":"MONDO_0019235","name":"inborn disorder of phenylalanine and tyrosine metabolism","parentIds":["MONDO_0019189","MONDO_0004736"]}
+{"id":"Orphanet_156601","name":"Rare genetic hepatic disease","parentIds":["MONDO_0003847"]}
+{"id":"Orphanet_165652","name":"Rare genetic gastroenterological disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0002281","name":"macrocytic anemia","parentIds":["MONDO_0002280"]}
+{"id":"HP_0010972","name":"Anemia of inadequate production","parentIds":["EFO_0004272","MONDO_0002280"]}
+{"id":"EFO_0005878","name":"vitamin deficiency","parentIds":["HP_0100508","EFO_0008572"]}
+{"id":"MONDO_0042976","name":"vitamin B deficiency","parentIds":["EFO_0005878"]}
+{"id":"MONDO_0017757","name":"disorder of metabolite absorption and transport","parentIds":["MONDO_0019052"]}
+{"id":"MONDO_0002220","name":"tooth hard tissue disease","parentIds":["MONDO_0006999"]}
+{"id":"HP_0000682","name":"Abnormal dental enamel morphology","parentIds":["HP_0000164","HP_0000924","HP_0003549"]}
+{"id":"HP_0001933","name":"Subcutaneous hemorrhage","parentIds":["HP_0011276","HP_0001892"]}
+{"id":"MONDO_0019824","name":"non-acquired pituitary hormone deficiency","parentIds":["MONDO_0015514","MONDO_0015127"]}
+{"id":"MONDO_0018555","name":"hypogonadotropic hypogonadism","parentIds":["HP_0000818","MONDO_0003847","MONDO_0002146","HP_0000078"]}
+{"id":"Orphanet_183628","name":"Rare genetic hypothalamic or pituitary disease","parentIds":["Orphanet_156638"]}
+{"id":"MONDO_0003381","name":"pituitary gland disorder","parentIds":["MONDO_0005151","MONDO_0005560","MONDO_0005039"]}
+{"id":"Orphanet_399983","name":"Rare male infertility due to hypothalamic-pituitary-gonadal axis disorder of genetic origin","parentIds":["Orphanet_399980"]}
+{"id":"Orphanet_399839","name":"Rare female infertility due to a congenital hypogonadotropic hypogonadism","parentIds":["Orphanet_400011"]}
+{"id":"Orphanet_68346","name":"Rare genetic skin disease","parentIds":["MONDO_0003847"]}
+{"id":"MONDO_0006022","name":"acidosis disorder","parentIds":["HP_0004360","MONDO_0041261"]}
+{"id":"MONDO_0006856","name":"mesothelial neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0002037","name":"pleural disorder","parentIds":["MONDO_0000270"]}
+{"id":"MONDO_0003090","name":"extrahepatic bile duct carcinoma","parentIds":["MONDO_0021321","MONDO_0005496"]}
+{"id":"MONDO_0003193","name":"bile duct adenocarcinoma","parentIds":["MONDO_0004970","MONDO_0005496"]}
+{"id":"MONDO_0021385","name":"extrahepatic bile duct neoplasm","parentIds":["MONDO_0021662"]}
+{"id":"MONDO_0019268","name":"epidermal disease","parentIds":["MONDO_0005093"]}
+{"id":"MONDO_0006590","name":"palmoplantar keratosis","parentIds":["MONDO_0006566"]}
+{"id":"HP_0033127","name":"Abnormality of the musculoskeletal system","parentIds":["HP_0000118"]}
+{"id":"MONDO_0037254","name":"transitional cell neoplasm","parentIds":["MONDO_0005626"]}
+{"id":"MONDO_0002531","name":"skin neoplasm","parentIds":["MONDO_0005093","MONDO_0005070"]}
+{"id":"MONDO_0000653","name":"integumentary system cancer","parentIds":["MONDO_0002051","MONDO_0004992"]}
+{"id":"MONDO_0005941","name":"retroperitoneal cancer","parentIds":["MONDO_0004992","MONDO_0024645"]}
+{"id":"MONDO_0021227","name":"adrenal gland neoplasm","parentIds":["MONDO_0002082","MONDO_0005495"]}
+{"id":"MONDO_0002816","name":"adrenal cortex disorder","parentIds":["MONDO_0005495"]}
+{"id":"MONDO_0017341","name":"virus associated tumor","parentIds":["MONDO_0021669","MONDO_0005070"]}
+{"id":"MONDO_0021163","name":"kidney neoplasm","parentIds":["HP_0000077","MONDO_0005240","MONDO_0021066"]}
+{"id":"HP_0003330","name":"Abnormal bone structure","parentIds":["HP_0011842"]}
+{"id":"MONDO_0005516","name":"osteochondrodysplasia","parentIds":["MONDO_0005497","MONDO_0018230"]}
+{"id":"HP_0011442","name":"Abnormal central motor function","parentIds":["HP_0012638"]}
+{"id":"MONDO_0100308","name":"atactic disorder","parentIds":["MONDO_0005071"]}
+{"id":"MONDO_0022687","name":"cerebellar degeneration","parentIds":["MONDO_0002427","MONDO_0005559"]}
+{"id":"MONDO_0021058","name":"neoplastic syndrome","parentIds":["MONDO_0023370"]}
+{"id":"Orphanet_98610","name":"Rare conjunctival disease","parentIds":["Orphanet_183598"]}
+{"id":"Orphanet_98538","name":"Ataxia with dementia","parentIds":["Orphanet_276058"]}
+{"id":"MONDO_0005047","name":"infertility disorder","parentIds":["MONDO_0005039"]}
+{"id":"MONDO_0001889","name":"ovarian dysfunction","parentIds":["MONDO_0005558"]}
+{"id":"MONDO_0006541","name":"epidermolysis bullosa","parentIds":["MONDO_0006617"]}
+{"id":"MONDO_0037255","name":"ovarian serous tumor","parentIds":["MONDO_0037256","MONDO_0002229"]}
+{"id":"MONDO_0021077","name":"cystic neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0003393","name":"thymus gland disorder","parentIds":["MONDO_0005046","MONDO_0005151","MONDO_0005570"]}
+{"id":"HP_0000152","name":"Abnormality of head or neck","parentIds":["HP_0000118"]}
+{"id":"HP_0003011","name":"Abnormality of the musculature","parentIds":["HP_0033127"]}
+{"id":"HP_0011121","name":"Abnormal skin morphology","parentIds":["HP_0000951"]}
+{"id":"MONDO_0017761","name":"disorder of mineral absorption and transport","parentIds":["MONDO_0017757"]}
+{"id":"MONDO_0000621","name":"immune system cancer","parentIds":["MONDO_0005046","MONDO_0004992"]}
+{"id":"MONDO_0005374","name":"bone marrow neoplasm","parentIds":["MONDO_0002334","MONDO_0003225"]}
+{"id":"MONDO_0020058","name":"gonosome anomaly","parentIds":["MONDO_0019040"]}
+{"id":"MONDO_0000226","name":"mineral metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"HP_0000587","name":"Abnormal optic nerve morphology","parentIds":["HP_0004329"]}
+{"id":"MONDO_0002135","name":"optic nerve disorder","parentIds":["MONDO_0002602","MONDO_0024458","MONDO_0003569"]}
+{"id":"MONDO_0001751","name":"cholestasis","parentIds":["HP_0001392","MONDO_0002887"]}
+{"id":"MONDO_0037821","name":"porphyrin metabolism disease","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0019053","name":"peroxisomal disease","parentIds":["MONDO_0019052"]}
+{"id":"HP_0100508","name":"Abnormality of vitamin metabolism","parentIds":["HP_0001939"]}
+{"id":"MONDO_0006999","name":"tooth disorder","parentIds":["MONDO_0006858","MONDO_0005172"]}
+{"id":"HP_0000164","name":"Abnormality of the dentition","parentIds":["HP_0000153"]}
+{"id":"HP_0003549","name":"Abnormality of connective tissue","parentIds":["HP_0033127"]}
+{"id":"HP_0011276","name":"Vascular skin abnormality","parentIds":["HP_0011121","HP_0002597"]}
+{"id":"HP_0001892","name":"Abnormal bleeding","parentIds":["HP_0001871"]}
+{"id":"MONDO_0015127","name":"pituitary deficiency","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0002146","name":"hypogonadism","parentIds":["MONDO_0002259"]}
+{"id":"Orphanet_399980","name":"Rare genetic male infertility","parentIds":["MONDO_0003847","MONDO_0005039"]}
+{"id":"Orphanet_400011","name":"Rare female infertility due to hypothalamic-pituitary-gonadal axis disorder of genetic origin","parentIds":["Orphanet_400008"]}
+{"id":"HP_0004360","name":"Abnormality of acid-base homeostasis","parentIds":["HP_0001939"]}
+{"id":"MONDO_0041261","name":"disorder of acid-base balance","parentIds":["MONDO_0005066"]}
+{"id":"MONDO_0021321","name":"malignant tumor of extrahepatic bile duct","parentIds":["MONDO_0003059","MONDO_0021385"]}
+{"id":"MONDO_0005496","name":"bile duct carcinoma","parentIds":["MONDO_0003059","MONDO_0018531"]}
+{"id":"MONDO_0021662","name":"bile duct neoplasm","parentIds":["MONDO_0002887","MONDO_0005304"]}
+{"id":"MONDO_0006566","name":"keratosis","parentIds":["MONDO_0045011","MONDO_0005093"]}
+{"id":"MONDO_0024645","name":"retroperitoneal neoplasm","parentIds":["MONDO_0005070"]}
+{"id":"MONDO_0005495","name":"adrenal gland disorder","parentIds":["MONDO_0005151"]}
+{"id":"MONDO_0021669","name":"post-infectious disorder","parentIds":["MONDO_0005550"]}
+{"id":"Orphanet_276058","name":"Genetic neurodegenerative disease with dementia","parentIds":["MONDO_0024237"]}
+{"id":"MONDO_0037256","name":"serous neoplasm","parentIds":["MONDO_0024276"]}
+{"id":"MONDO_0003225","name":"bone marrow disorder","parentIds":["MONDO_0005172","MONDO_0005570","MONDO_0005046"]}
+{"id":"MONDO_0002887","name":"bile duct disorder","parentIds":["MONDO_0004868"]}
+{"id":"Orphanet_400008","name":"Rare genetic female infertility","parentIds":["MONDO_0003847","MONDO_0005039"]}
+{"id":"MONDO_0003059","name":"bile duct cancer","parentIds":["MONDO_0021662","MONDO_0003060"]}
+{"id":"MONDO_0005304","name":"biliary tract neoplasm","parentIds":["MONDO_0004868","MONDO_0024477"]}
+{"id":"MONDO_0045011","name":"keratinization disease","parentIds":["MONDO_0002051"]}
+{"id":"MONDO_0004868","name":"biliary tract disorder","parentIds":["MONDO_0002515"]}
+{"id":"MONDO_0003060","name":"biliary tract cancer","parentIds":["MONDO_0002691","MONDO_0005304"]}
