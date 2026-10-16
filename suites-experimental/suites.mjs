@@ -632,12 +632,12 @@ export const ExperimentalSuites = freezeSuites([
             // Raising the minimum score drops associations, so every move
             // re-packs a smaller layout and unmounts bubbles.
             new BenchmarkTestStep("DragMinScoreUp", async (page) => {
-                await dragRangeInput(page, page.querySelector("input.slider"), 0.1, 1, 90);
+                await dragRangeInput(page, page.querySelector("input.slider"), 0, 0.05, 5);
             }),
             // Lowering it back to 0 brings every association back, mounting
             // bubbles on each move.
             new BenchmarkTestStep("DragMinScoreDown", async (page) => {
-                await dragRangeInput(page, page.querySelector("input.slider"), 1, 0, 100);
+                await dragRangeInput(page, page.querySelector("input.slider"), 0.05, 0, 5);
             }),
         ],
     },

@@ -17,12 +17,12 @@ Append `?latency=<ms>` to delay the fake API responses (default 0, always async)
 
 Run in the harness as `AssociationsBubbles-Svelte`
 (`/?developerMode&suites=AssociationsBubbles-Svelte`). Both steps move the
-"Minimum Score" slider one 0.01 step at a time, setting its value and firing an
+"Minimum Score" slider, setting its value and firing an
 `input` event per step. Each step re-filters the associations, re-runs
 `d3.pack` and re-renders the SVG (Svelte flushes in a microtask, which the step
 awaits before forcing layout):
 
-- `DragMinScoreUp` goes from the initial 0.1 up to 1, removing bubbles.
-- `DragMinScoreDown` goes from 1 down to 0, adding every association back.
+- `DragMinScoreUp` goes from 0 up to 0.05 in 5 steps.
+- `DragMinScoreDown` goes from 0.05 back down to 0 in 5 steps.
 
 `npm run build` regenerates the committed `dist/` and its `resources.txt`.
