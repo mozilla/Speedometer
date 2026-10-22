@@ -137,8 +137,8 @@ assets/core-f6293fd112032434.js.map
 assets/polyfills-f01a3f8681929f85.js
 assets/runtime-260762217433a1e3.js
 assets/runtime-260762217433a1e3.js.map
-assets/vendor-c09dcd262cbc5ef0.js
-assets/vendor-c09dcd262cbc5ef0.js.map
+assets/vendor-2a94a5a7fd9b10bf.js
+assets/vendor-2a94a5a7fd9b10bf.js.map
 data/assets/avatars/aelnov/150.png
 data/assets/avatars/aelnov/300.png
 data/assets/avatars/aelnov/50.png
