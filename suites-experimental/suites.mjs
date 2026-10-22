@@ -230,6 +230,17 @@ export const ExperimentalSuites = freezeSuites([
         type: "remote",
     },
     {
+        name: "StreamingSite-React",
+        url: "suites-experimental/streamingsite-react/dist/index.html",
+        resources: "suites-experimental/streamingsite-react/dist/resources.txt",
+        tags: ["sp4", "experimental", "react"],
+        // The same viewport as the VideoSite suites: a desktop layout with the
+        // chat column next to the player, scaled into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
