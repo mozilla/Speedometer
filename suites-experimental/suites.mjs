@@ -241,6 +241,17 @@ export const ExperimentalSuites = freezeSuites([
         type: "remote",
     },
     {
+        name: "Forum-Lit",
+        url: "suites-experimental/forum-lit/dist/index.html",
+        resources: "suites-experimental/forum-lit/dist/resources.txt",
+        tags: ["sp4", "experimental", "webcomponents", "lit"],
+        // A desktop layout with the left navigation and the right rail, scaled
+        // into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
