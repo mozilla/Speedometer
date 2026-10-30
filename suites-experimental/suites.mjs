@@ -263,6 +263,17 @@ export const ExperimentalSuites = freezeSuites([
         type: "remote",
     },
     {
+        name: "SocialFeed-React",
+        url: "suites-experimental/socialfeed-react/dist/index.html",
+        resources: "suites-experimental/socialfeed-react/dist/resources.txt",
+        tags: ["sp4", "experimental", "react"],
+        // A desktop layout with the left and right rails next to the feed,
+        // scaled into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
