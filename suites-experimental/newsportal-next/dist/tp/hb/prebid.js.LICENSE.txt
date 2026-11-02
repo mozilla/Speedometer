@@ -1,0 +1,7 @@
+/*
+* @license MIT
+* Fun Hooks v1.1.0
+* (c) @snapwich
+*/
+
+/*! Prebid.js 11.46.0 | Apache-2.0, see LICENSE.prebid.txt | https://github.com/prebid/Prebid.js | bundled with local mock bidder adapters */

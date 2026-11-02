@@ -1,0 +1,10 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<script>
+    (function () {
+        try {
+            parent.postMessage({ type: "sync-ready", query: location.search.slice(1) }, "*");
+        } catch (e) {}
+    })();
+</script>

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[27],{2027:(e,a,s)=>{s.r(a),s.d(a,{default:()=>r});var l=s(7876),t=s(1614);function r({stage:e}){return(0,l.jsx)(t.UT,{stage:e,label:"Videos aus aller Welt",children:(0,l.jsx)("div",{className:"grid aspect-[3/1] place-items-center rounded-teaser bg-ink-100 text-sm text-ink-500 dark:bg-ink-800","data-video-carousel":"placeholder",children:"Videos aus aller Welt"})})}}}]);
+//# sourceMappingURL=27.862f70007ef8714a.js.map

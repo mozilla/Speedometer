@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[315],{7315:(t,e,n)=>{n.r(e),n.d(e,{default:()=>a});var s=n(7876);function a(){return(0,s.jsx)("button",{type:"button",onClick:()=>window.__tcfapi?.("displayConsentUi",2,()=>{}),className:"fixed bottom-2 left-2 z-(--z-popover) rounded-sm bg-paper/90 px-2 py-1 text-2xs text-ink-500 shadow-card hover:text-brand-600",children:"Datenschutz-Einstellungen"})}}}]);
+//# sourceMappingURL=315.0af0cfc97aa317bd.js.map

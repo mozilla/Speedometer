@@ -274,6 +274,17 @@ export const ExperimentalSuites = freezeSuites([
         type: "remote",
     },
     {
+        name: "NewsPortal-Next",
+        url: "suites-experimental/newsportal-next/dist/index.html",
+        resources: "suites-experimental/newsportal-next/dist/resources.txt",
+        tags: ["sp4", "experimental", "react", "preact"],
+        // The desktop layout with the ad column next to the content, scaled
+        // into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
