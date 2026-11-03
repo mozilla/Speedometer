@@ -1,0 +1,10 @@
+{
+ "pages": {
+  "home": "pages/home.html"
+ },
+ "streams": [
+  "data/turn-0.ndjson",
+  "data/turn-1.ndjson"
+ ],
+ "responses": []
+}

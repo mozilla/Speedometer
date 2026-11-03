@@ -285,6 +285,17 @@ export const ExperimentalSuites = freezeSuites([
         type: "remote",
     },
     {
+        name: "AssistantChat-Octane",
+        url: "suites-experimental/assistantchat-octane/dist/index.html",
+        resources: "suites-experimental/assistantchat-octane/dist/resources.txt",
+        tags: ["sp4", "experimental", "octane"],
+        // The desktop layout with the sidebar open next to the conversation,
+        // scaled into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
