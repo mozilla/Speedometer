@@ -341,9 +341,11 @@ index.html
 pages/article.html
 pages/home.html
 pages/sport.html
-s/paper/_next/data/wlDO_MFGWpTHSIurk6Ai2/article/story.json
-s/paper/_next/data/wlDO_MFGWpTHSIurk6Ai2/section/home.json
-s/paper/_next/data/wlDO_MFGWpTHSIurk6Ai2/section/sport.json
+s/paper/_next/data/build/article/story.json
+s/paper/_next/data/build/section/home.json
+s/paper/_next/data/build/section/sport.json
+s/paper/_next/static/build/_buildManifest.js
+s/paper/_next/static/build/_ssgManifest.js
 s/paper/_next/static/chunks/126.4df405d03d1f3bc8.js
 s/paper/_next/static/chunks/144.61ac22e9d10852f9.js
 s/paper/_next/static/chunks/175-d7369aad71217ca3.js
@@ -369,8 +371,6 @@ s/paper/_next/static/chunks/pages/section/[id]-51b0a872032109ad.js
 s/paper/_next/static/chunks/polyfills-42372ed130431b0a.js
 s/paper/_next/static/chunks/webpack-7c6e93c7cb67ecac.js
 s/paper/_next/static/css/033fc44487ab6d6c.css
-s/paper/_next/static/wlDO_MFGWpTHSIurk6Ai2/_buildManifest.js
-s/paper/_next/static/wlDO_MFGWpTHSIurk6Ai2/_ssgManifest.js
 speedometer-utils/benchmark.mjs
 speedometer-utils/helpers.mjs
 speedometer-utils/params.mjs
