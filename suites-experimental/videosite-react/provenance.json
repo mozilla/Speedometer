@@ -1,7 +1,7 @@
 {
     "workload": "videosite-react",
-    "commit": "5a2a1b50d3a83de940275bc131f2d99e659e6d26",
+    "commit": "05964baa5d8cfee0f5caf210ed387878380e9bae",
     "dirty": [],
-    "built": false,
+    "built": true,
     "dist": "workloads/videosite-react/app/dist"
 }
