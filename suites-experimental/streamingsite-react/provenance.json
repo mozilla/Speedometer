@@ -1,7 +1,7 @@
 {
     "workload": "streamingsite-react",
-    "commit": "5a2a1b50d3a83de940275bc131f2d99e659e6d26",
+    "commit": "b8a75e04bb161605a8b9f3e4c73aecb0155a5979",
     "dirty": [],
-    "built": false,
+    "built": true,
     "dist": "workloads/streamingsite-react/app/dist"
 }

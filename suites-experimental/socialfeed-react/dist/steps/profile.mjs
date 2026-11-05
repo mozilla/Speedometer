@@ -1,5 +1,5 @@
 // Navigating to the viewer's profile and back to the home feed.
-import { find, click } from "./helpers.mjs";
+import { find, click, settleFeed } from "./helpers.mjs";
 
 export const profileSteps = [
     {
@@ -18,6 +18,7 @@ export const profileSteps = [
             history.back();
             await done;
             await w.whenIdle();
+            await settleFeed(w);
             if (!document.querySelector('[data-testid="feed-story"]'))
                 throw new Error("The home feed shows no stories after going back");
         },

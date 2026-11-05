@@ -45,6 +45,14 @@ export function pressKey(element, key) {
     element.dispatchEvent(new KeyboardEvent("keydown", { key, code: key, bubbles: true, cancelable: true }));
 }
 
+// Has the feed collapse and mount its units for the current scroll position
+// now, rather than when its IntersectionObserver reports, which can be before
+// or after the step ends.
+export async function settleFeed(w) {
+    w.refreshFeedVirtualization();
+    await w.whenIdle();
+}
+
 // Scrolls a feed unit into view and has the feed mount it right away.
 export async function scrollToFeedUnit(w, position) {
     const unit = find(`[data-feed-position="${position}"]`);

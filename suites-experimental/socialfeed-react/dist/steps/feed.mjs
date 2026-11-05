@@ -1,6 +1,6 @@
 // The feed: render the home page, load more stories, expand story texts.
 import { FEED_PAGES, SEE_MORE_POSITIONS } from "../journey.mjs";
-import { click, find, hover, scrollToFeedUnit, unhover } from "./helpers.mjs";
+import { click, find, hover, scrollToFeedUnit, settleFeed, unhover } from "./helpers.mjs";
 
 export const feedSteps = [
     {
@@ -10,6 +10,7 @@ export const feedSteps = [
             w.render();
             await done;
             await w.whenIdle();
+            await settleFeed(w);
         },
     },
     {
@@ -20,6 +21,7 @@ export const feedSteps = [
                 find('[data-testid="feed-sentinel"]').scrollIntoView({ block: "end" });
                 await done;
                 await w.whenIdle();
+                await settleFeed(w);
             }
         },
     },
