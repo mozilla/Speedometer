@@ -27,9 +27,9 @@ load('shell-polyfill-hack.js')
 performance.measure = function() {}
 document.body.appendChild(document.createElement("app-root"));
 
-load("dist/runtime.e42baa953544dd4f.js")// type="module"></script>
-load("dist/polyfills.e666e00fbdd942b1.js")// type="module"></script>
-load("dist/main.03896c19beb31b06.js")// type="module"></script>
+load("dist/runtime.9ec1fa8301212f25.js")// type="module"></script>
+load("dist/polyfills.741f4dab8864d5c1.js")// type="module"></script>
+load("dist/main.25fdf8749514d0d8.js")// type="module"></script>
 
 drainJobQueue()        
 
