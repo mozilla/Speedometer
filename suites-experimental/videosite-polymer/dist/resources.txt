@@ -119,6 +119,9 @@ gen-7.css
 gen-8.css
 gen-9.css
 index.html
+inside-out-hooks.mjs
+inside-out-runner.js
+runner.html
 speedometer-utils/benchmark.mjs
 speedometer-utils/helpers.mjs
 speedometer-utils/params.mjs

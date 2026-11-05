@@ -1,0 +1,7 @@
+{
+    "workload": "videosite-polymer",
+    "commit": "c3237a8b0860babbafc41282eca9695e4ed096f3",
+    "dirty": [],
+    "built": false,
+    "dist": "workloads/videosite-polymer/build/dist"
+}
