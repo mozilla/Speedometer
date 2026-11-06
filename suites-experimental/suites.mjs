@@ -213,7 +213,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "VideoSite-Polymer",
         url: "suites-experimental/videosite-polymer/dist/index.html",
         resources: "suites-experimental/videosite-polymer/dist/resources.txt",
-        tags: ["sp4", "experimental", "webcomponents"],
+        tags: ["topsitebench", "experimental", "webcomponents"],
         // The reference recordings of youtube.com used a 1440x815 viewport.
         viewport: { width: 1440, height: 815 },
         async prepare() {},
@@ -223,7 +223,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "VideoSite-React",
         url: "suites-experimental/videosite-react/dist/index.html",
         resources: "suites-experimental/videosite-react/dist/resources.txt",
-        tags: ["sp4", "experimental", "react"],
+        tags: ["topsitebench", "experimental", "react"],
         // The same viewport as VideoSite-Polymer, so that both lay out the same.
         viewport: { width: 1440, height: 815 },
         async prepare() {},
@@ -233,7 +233,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "StreamingSite-React",
         url: "suites-experimental/streamingsite-react/dist/index.html",
         resources: "suites-experimental/streamingsite-react/dist/resources.txt",
-        tags: ["sp4", "experimental", "react"],
+        tags: ["topsitebench", "experimental", "react"],
         // The same viewport as the VideoSite suites: a desktop layout with the
         // chat column next to the player, scaled into the frame.
         viewport: { width: 1440, height: 815 },
@@ -244,7 +244,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Forum-Lit",
         url: "suites-experimental/forum-lit/dist/index.html",
         resources: "suites-experimental/forum-lit/dist/resources.txt",
-        tags: ["sp4", "experimental", "webcomponents", "lit"],
+        tags: ["topsitebench", "experimental", "webcomponents", "lit"],
         // A desktop layout with the left navigation and the right rail, scaled
         // into the frame.
         viewport: { width: 1440, height: 815 },
@@ -255,7 +255,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "TravelSite-React",
         url: "suites-experimental/travelsite-react/dist/index.html",
         resources: "suites-experimental/travelsite-react/dist/resources.txt",
-        tags: ["sp4", "experimental", "react"],
+        tags: ["topsitebench", "experimental", "react"],
         // A desktop layout with the filter column next to the result list,
         // scaled into the frame.
         viewport: { width: 1440, height: 815 },
@@ -266,7 +266,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "SocialFeed-React",
         url: "suites-experimental/socialfeed-react/dist/index.html",
         resources: "suites-experimental/socialfeed-react/dist/resources.txt",
-        tags: ["sp4", "experimental", "react"],
+        tags: ["topsitebench", "experimental", "react"],
         // A desktop layout with the left and right rails next to the feed,
         // scaled into the frame.
         viewport: { width: 1440, height: 815 },
@@ -277,7 +277,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "NewsPortal-Next",
         url: "suites-experimental/newsportal-next/dist/index.html",
         resources: "suites-experimental/newsportal-next/dist/resources.txt",
-        tags: ["sp4", "experimental", "react", "preact"],
+        tags: ["topsitebench", "experimental", "react", "preact"],
         // The desktop layout with the ad column next to the content, scaled
         // into the frame.
         viewport: { width: 1440, height: 815 },
@@ -288,7 +288,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "AssistantChat-Octane",
         url: "suites-experimental/assistantchat-octane/dist/index.html",
         resources: "suites-experimental/assistantchat-octane/dist/resources.txt",
-        tags: ["sp4", "experimental", "octane"],
+        tags: ["topsitebench", "experimental", "octane"],
         // The desktop layout with the sidebar open next to the conversation,
         // scaled into the frame.
         viewport: { width: 1440, height: 815 },
