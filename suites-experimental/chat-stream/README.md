@@ -16,8 +16,11 @@ highlighting and scroll pinning added.
     the blocks that grew.
 -   Code blocks highlighted into one span per token, the way chat UIs' regex
     highlighters produce them.
--   Scroll pinning: a layout effect keeps the newest text in view after every
-    commit, which reads layout.
+-   Scroll pinning with CSS scroll anchoring: an anchor element after the
+    messages (the list's only `overflow-anchor: auto` candidate) keeps the
+    newest text in view as replies grow and conversations switch. The browser
+    adjusts the scroll position during its own layout, so no script reads
+    layout after a commit.
 -   Mounting and unmounting whole conversations, up to 200 messages.
 -   A controlled composer updated on every keystroke.
 

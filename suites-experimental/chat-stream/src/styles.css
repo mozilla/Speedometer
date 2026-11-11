@@ -122,6 +122,13 @@ button {
     max-width: 760px;
     margin: 0 auto;
     padding: 16px 24px 32px;
+    /* Only .scroll-anchor may anchor the list's scroll position. */
+    overflow-anchor: none;
+}
+
+.scroll-anchor {
+    height: 1px;
+    overflow-anchor: auto;
 }
 
 .message {

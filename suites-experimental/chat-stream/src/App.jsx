@@ -95,13 +95,18 @@ const ConversationItem = memo(function ConversationItem({ id, title, active, onS
     );
 });
 
-// Keeps the newest message in view as messages arrive and replies grow.
+// Keeps the newest message in view with CSS scroll anchoring rather than
+// script: .scroll-anchor is the list's only anchor candidate, so once the list
+// is at the bottom, the browser keeps it there as messages arrive, replies
+// grow and conversations switch, adjusting the scroll position during its own
+// layout instead of a layout forced by reading scrollHeight after every
+// commit. Only the first position is set by script, once, on mount.
 function MessageList({ messages, streamingId }) {
     const scroller = useRef(null);
     useLayoutEffect(() => {
         const element = scroller.current;
         element.scrollTop = element.scrollHeight;
-    }, [messages]);
+    }, []);
     return (
         <div className="messages" ref={scroller}>
             <div className="messages-inner">
@@ -109,6 +114,7 @@ function MessageList({ messages, streamingId }) {
                     <Message key={message.id} message={message} streaming={message.id === streamingId} />
                 )}
             </div>
+            <div className="scroll-anchor" />
         </div>
     );
 }
