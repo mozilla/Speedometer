@@ -15,6 +15,7 @@ export class Harness {
     #responses = new Map();
     #waiters = [];
     #frame = null;
+    #leaving = new WeakSet();
 
     constructor(container = document.body) {
         this.container = container;
@@ -47,6 +48,7 @@ export class Harness {
             await this.navigate(name);
         await new Promise((resolve) => {
             frame.addEventListener("load", resolve, { once: true });
+            this.#leave();
             frame.contentWindow.location.replace("about:blank");
         });
     }
@@ -56,11 +58,17 @@ export class Harness {
     }
 
     // A "page-error" (a resource that didn't load) rejects every pending
-    // wait, so the step fails instead of waiting forever.
+    // wait, so the step fails instead of waiting forever. Errors from a page
+    // the frame is navigating away from don't count: the navigation cancels
+    // the page's loads that are still running (the article's placement
+    // script, which nothing waits for, often is), and the cancelled loads
+    // fire error events.
     onSignal(name, detail, source) {
         if (source !== this.window)
             return;
         if (name === "page-error") {
+            if (this.#leaving.has(source.document))
+                return;
             this.#fail(detail.message);
             return;
         }
@@ -93,8 +101,16 @@ export class Harness {
         if (!url)
             throw new Error(`Unknown page: ${name}`);
         const ready = this.nextSignal("page-ready");
+        this.#leave();
         this.window.location.replace(url);
         return ready;
+    }
+
+    // By document, not window: navigating away from the frame's initial
+    // about:blank reuses its window for the new page.
+    #leave() {
+        if (this.document)
+            this.#leaving.add(this.document);
     }
 
     // A forced layout of the page's document: the step runner's layout flush
