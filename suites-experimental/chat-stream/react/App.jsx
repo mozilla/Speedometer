@@ -1,8 +1,8 @@
 import { memo, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
-import { initialConversations, nextReply, userMessage } from "./corpus.js";
-import { parseMarkdown } from "./markdown.js";
-import { streamReply } from "./network.js";
+import { initialConversations, nextReply, userMessage } from "../shared/corpus.js";
+import { parseMarkdown } from "../shared/markdown.js";
+import { streamReply } from "../shared/network.js";
 
 // Replaces one message of one conversation, sharing everything else.
 function updateMessage(conversations, conversationId, messageId, update) {

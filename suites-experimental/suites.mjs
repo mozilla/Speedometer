@@ -300,11 +300,12 @@ function chatStreamHelpers({ hasFlush }) {
 
 const CHAT_STREAM_PROMPTS = ["How do I stream a response and render it as it arrives?", "Can you show the same thing with cancellation?", "What should I watch out for with long replies?"];
 
-// ChatStream: the larger Speedometer chat app in chat-stream/. Like the
-// React fixture of ChatStreamUpstream, it renders each chunk synchronously
-// with flushSync, so it has no __benchFlush.
-function chatStreamTests() {
-    const { flush, typeInto, sendPrompt, drain } = chatStreamHelpers({ hasFlush: false });
+// ChatStream: the larger Speedometer chat app in chat-stream/, in React and
+// Octane. Each commits like the matching ChatStreamUpstream fixture: the
+// React app with flushSync in its handlers (no __benchFlush), the Octane app
+// through __benchFlush; both render each chunk synchronously with flushSync.
+function chatStreamTests({ hasFlush }) {
+    const { flush, typeInto, sendPrompt, drain } = chatStreamHelpers({ hasFlush });
     return [
         ...CHAT_STREAM_PROMPTS.map(
             (text, i) =>
@@ -1029,14 +1030,25 @@ export const ExperimentalSuites = freezeSuites([
     },
     {
         name: "ChatStream-React",
-        url: "suites-experimental/chat-stream/dist/index.html",
-        resources: "suites-experimental/chat-stream/dist/resources.txt",
+        url: "suites-experimental/chat-stream/dist/react/index.html",
+        resources: "suites-experimental/chat-stream/dist/react/resources.txt",
         tags: ["experimental", "react", "chat-stream"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".conversation-item");
         },
-        tests: chatStreamTests(),
+        tests: chatStreamTests({ hasFlush: false }),
+    },
+    {
+        name: "ChatStream-Octane",
+        url: "suites-experimental/chat-stream/dist/octane/index.html",
+        resources: "suites-experimental/chat-stream/dist/octane/resources.txt",
+        tags: ["experimental", "octane", "chat-stream"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".conversation-item");
+        },
+        tests: chatStreamTests({ hasFlush: true }),
     },
     {
         name: "ChatStreamUpstream-React",

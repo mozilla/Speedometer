@@ -4,16 +4,19 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
+        "build": "vite build react && vite build octane",
+        "dev:react": "vite react",
+        "dev:octane": "vite octane"
     },
     "dependencies": {
+        "octane": "0.16.7",
         "react": "^19.2.0",
         "react-dom": "^19.2.0"
     },
     "devDependencies": {
+        "@tsrx/oxc": "0.23.0",
         "@vitejs/plugin-react": "^6.0.0",
+        "typescript": "^5.9.3",
         "vite": "^8.0.16"
     }
 }
