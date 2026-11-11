@@ -350,7 +350,7 @@ tp/adserver/tag.js
 tp/adtag/core.js
 tp/adtag/engine.js
 tp/hb/LICENSE.prebid.txt
-tp/hb/prebid.js
+tp/hb/hb.js
 widgets/scores-overview/runtime.64f8dc44.js
 widgets/scores-overview/scores-overview.9b6e3cda.css
 widgets/scores-overview/scores-overview.d85e84f6.js
