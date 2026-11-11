@@ -1,0 +1,1 @@
+import{BenchmarkConnector as e}from"./speedometer-utils/benchmark.mjs";import o,{appName as n,appVersion as t}from"./workload-test.mjs";function r(){new e(o,n,t).connect()}"loading"!==document.readyState&&window.ssrReady?r():window.addEventListener("ssr-ready",r,{once:!0});

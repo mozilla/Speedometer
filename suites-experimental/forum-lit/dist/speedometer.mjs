@@ -1,0 +1,1 @@
+import{i as e,n as t,r as n,t as r}from"./workload-test-shared.mjs";import{BenchmarkConnector as i}from"./speedometer-utils/benchmark.mjs";const{core:a}=await window.SML.ready;window.top===window&&!new URLSearchParams(location.search).has(`benchmark`)?document.querySelector(`forum-app`).renderCurrentPage():(await a.preload(e),new i(n,r,t).connect());

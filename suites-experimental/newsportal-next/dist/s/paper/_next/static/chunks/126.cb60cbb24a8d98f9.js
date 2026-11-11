@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[126],{9126:(e,s,a)=>{a.r(s),a.d(s,{ExclusiveStage:()=>n});var l=a(7876),r=a(2362),d=a(8135),i=a(1614);function n({stage:e}){return(0,l.jsxs)(i.UT,{stage:e,label:e.header.title.label,className:"rounded-teaser bg-brand-50 px-5 pb-5 dark:bg-brand-900",children:[(0,l.jsx)(i.uM,{header:e.header}),(0,l.jsx)(r.A,{name:"Exklusiv",label:"Exklusive Geschichten",slideClassName:"basis-1/4",children:e.slider.map(e=>(0,l.jsx)(d.fj,{teaser:e},e.id))})]})}}}]);
+//# sourceMappingURL=126.cb60cbb24a8d98f9.js.map
