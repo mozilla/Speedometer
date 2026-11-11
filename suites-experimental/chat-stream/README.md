@@ -29,21 +29,18 @@ conversations and streams the same replies.
 
 `src/network.js` stands in for a streaming fetch. Each `window.deliverChunk()`
 call hands the open reply its next four tokens, so chunk arrival is
-deterministic and needs no timers. While a reply is streaming, the stub marks
-`<html data-stream-open>`, which tells a step when the reply is exhausted
-before React has rendered it.
+deterministic and needs no timers.
 
-Like a synchronous step, each step hands control back to the event loop once,
-at its end, so every browser paints once per step. Between interactions the
-steps only drain microtasks, which commits each click, keydown and input.
-React renders an update that arrives outside an event (a chunk) in a later
-task, so it renders a step's chunks together, after the step, in the part of
-the step the harness measures as async.
+Like the React fixture of the ChatStreamUpstream suites (the chat-stream
+benchmark in the Octane repository), the app commits every update with
+`flushSync`: each send, chunk, conversation click and keystroke is on screen
+before the step's next interaction. Both suites share the same step helpers
+(`chatStreamHelpers` in `suites-experimental/suites.mjs`), and a step stops
+delivering chunks once the reply loses its `streaming` class. No step yields
+to the event loop before it ends, so every browser paints once per step.
 
 -   `StreamReply1`, `StreamReply2`, `StreamReply3`: each sends a prompt in the
-    first conversation and streams the reply to completion. One reply per
-    step, because the app accepts the next prompt only once the previous
-    reply's end has rendered.
+    first conversation and streams the reply to completion.
 -   `SwitchConversations`: clicks every conversation in the sidebar, then returns
     to the first.
 -   `StreamIntoLongConversation`: streams one reply at the end of the

@@ -256,91 +256,13 @@ function stormboxTests() {
     ];
 }
 
-// The ChatStream helpers follow run.mjs in the Octane repository's
-// chat-stream benchmark: flush after every interaction, sendPrompt types a
-// prompt and clicks Send, and drain delivers a reply chunk by chunk.
-//
-// Like a synchronous step, a ChatStream step never yields to the event loop
-// until it ends, so every browser paints the same number of times. flush only
-// drains microtasks, which commits discrete events (click, input). A streamed
-// chunk arrives outside any event, so React renders a step's chunks together
-// in a later task, which the harness's async phase measures.
-async function chatStreamFlush() {
-    await Promise.resolve();
-}
-
-async function chatStreamTypeInto(prompt, text) {
-    prompt.setValue(text);
-    prompt.dispatchEvent("input");
-    await chatStreamFlush();
-}
-
-async function chatStreamSendPrompt(page, text) {
-    await chatStreamTypeInto(page.querySelector(".prompt"), text);
-    page.querySelector(".send").click();
-    await chatStreamFlush();
-}
-
-// Delivers chunks until the reply is exhausted. The network stub marks <html>
-// while a reply is open, because React has not rendered the chunks yet.
-async function chatStreamDrain(page) {
-    let guard = 0;
-    while (page.querySelector("html[data-stream-open]")) {
-        page.call("deliverChunk");
-        await chatStreamFlush();
-        if (++guard > 10000)
-            throw new Error("drain never settled");
-    }
-    await chatStreamFlush();
-}
-
-const CHAT_STREAM_PROMPTS = ["How do I stream a response and render it as it arrives?", "Can you show the same thing with cancellation?", "What should I watch out for with long replies?"];
-
-function chatStreamTests() {
-    return [
-        // One reply per step: the app accepts the next prompt only once the
-        // previous reply's end has rendered, which React does after the step.
-        ...CHAT_STREAM_PROMPTS.map(
-            (text, i) =>
-                new BenchmarkTestStep(`StreamReply${i + 1}`, async (page) => {
-                    await chatStreamSendPrompt(page, text);
-                    await chatStreamDrain(page);
-                })
-        ),
-        // Every conversation in turn, then back to the first: each switch
-        // unmounts one conversation and mounts and parses the next, up to the
-        // 200-message one.
-        new BenchmarkTestStep("SwitchConversations", async (page) => {
-            const items = page.querySelectorAll(".conversation-item");
-            for (let i = 1; i <= items.length; i++) {
-                items[i % items.length].click();
-                await chatStreamFlush();
-            }
-        }),
-        // A reply streamed at the end of the 200-message conversation.
-        new BenchmarkTestStep("StreamIntoLongConversation", async (page) => {
-            page.querySelector('.conversation-item[data-conversation="3"]').click();
-            await chatStreamFlush();
-            await chatStreamSendPrompt(page, "Summarize this conversation.");
-            await chatStreamDrain(page);
-        }),
-        // Types a prompt into the controlled composer a character at a time.
-        new BenchmarkTestStep("TypePrompt", async (page) => {
-            const prompt = page.querySelector(".prompt");
-            const text = "Write a function that splits streamed text into Markdown blocks and memoizes each block by its source, then explain how it behaves when a code fence is still open.";
-            for (let i = 1; i <= text.length; i++)
-                await chatStreamTypeInto(prompt, text.slice(0, i));
-        }),
-    ];
-}
-
-// ChatStreamUpstream: the chat-stream benchmark from the Octane repository
-// (benchmarks/chat-stream), with its React and Octane fixtures ported
-// verbatim. The helpers and steps below follow its run.mjs. `hasFlush` is
-// whether the fixture exposes window.__benchFlush (Octane does; React commits
-// with flushSync inside its handlers), awaited after every interaction as
-// run.mjs does.
-function chatStreamUpstreamTests({ hasFlush }) {
+// Helpers for the ChatStream suites, following run.mjs in the Octane
+// repository's chat-stream benchmark. `hasFlush` is whether the app exposes
+// window.__benchFlush (Octane does; the React apps commit with flushSync
+// inside their handlers), awaited after every interaction as run.mjs does.
+// No step yields to the event loop before it ends, so every browser paints the
+// same number of times.
+function chatStreamHelpers({ hasFlush }) {
     const flush = async (page) => {
         if (!hasFlush)
             return;
@@ -357,13 +279,14 @@ function chatStreamUpstreamTests({ hasFlush }) {
         page.querySelector(".send").click();
         await flush(page);
     };
+    // Calls the app's no-argument chunk hook until the reply is complete.
     // run.mjs loops while window.__pump(batch) returns a positive remaining
     // count. page.call drops return values, so this checks the DOM instead:
-    // the reply loses .streaming in the commit where __pump would return 0.
-    const drain = async (page, batch) => {
+    // the reply loses .streaming in the synchronous commit of its last chunk.
+    const drain = async (page, pump) => {
         let guard = 0;
         for (;;) {
-            page.call(`__pump${batch}`);
+            page.call(pump);
             if (!page.querySelector(".streaming"))
                 break;
             await flush(page);
@@ -372,6 +295,59 @@ function chatStreamUpstreamTests({ hasFlush }) {
         }
         await flush(page);
     };
+    return { flush, typeInto, sendPrompt, drain };
+}
+
+const CHAT_STREAM_PROMPTS = ["How do I stream a response and render it as it arrives?", "Can you show the same thing with cancellation?", "What should I watch out for with long replies?"];
+
+// ChatStream: the larger Speedometer chat app in chat-stream/. Like the
+// React fixture of ChatStreamUpstream, it renders each chunk synchronously
+// with flushSync, so it has no __benchFlush.
+function chatStreamTests() {
+    const { flush, typeInto, sendPrompt, drain } = chatStreamHelpers({ hasFlush: false });
+    return [
+        ...CHAT_STREAM_PROMPTS.map(
+            (text, i) =>
+                new BenchmarkTestStep(`StreamReply${i + 1}`, async (page) => {
+                    await sendPrompt(page, text);
+                    await drain(page, "deliverChunk");
+                })
+        ),
+        // Every conversation in turn, then back to the first: each switch
+        // unmounts one conversation and mounts and parses the next, up to the
+        // 200-message one.
+        new BenchmarkTestStep("SwitchConversations", async (page) => {
+            const items = page.querySelectorAll(".conversation-item");
+            for (let i = 1; i <= items.length; i++) {
+                items[i % items.length].click();
+                await flush(page);
+            }
+        }),
+        // A reply streamed at the end of the 200-message conversation.
+        new BenchmarkTestStep("StreamIntoLongConversation", async (page) => {
+            page.querySelector('.conversation-item[data-conversation="3"]').click();
+            await flush(page);
+            await sendPrompt(page, "Summarize this conversation.");
+            await drain(page, "deliverChunk");
+        }),
+        // Types a prompt into the controlled composer a character at a time.
+        new BenchmarkTestStep("TypePrompt", async (page) => {
+            const prompt = page.querySelector(".prompt");
+            const text = "Write a function that splits streamed text into Markdown blocks and memoizes each block by its source, then explain how it behaves when a code fence is still open.";
+            for (let i = 1; i <= text.length; i++) {
+                typeInto(prompt, text.slice(0, i));
+                await flush(page);
+            }
+        }),
+    ];
+}
+
+// ChatStreamUpstream: the chat-stream benchmark from the Octane repository
+// (benchmarks/chat-stream), with its React and Octane fixtures ported
+// verbatim. Its steps follow run.mjs's operations.
+function chatStreamUpstreamTests({ hasFlush }) {
+    const { flush, typeInto, sendPrompt, drain: drainWith } = chatStreamHelpers({ hasFlush });
+    const drain = (page, batch) => drainWith(page, `__pump${batch}`);
     // run.mjs resets the corpus before each op; here that setup is its own
     // step, so each op step starts from the same state as in run.mjs and its
     // time stays separate.
