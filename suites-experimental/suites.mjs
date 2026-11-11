@@ -334,6 +334,105 @@ function chatStreamTests() {
     ];
 }
 
+// ChatStreamUpstream: the chat-stream benchmark from the Octane repository
+// (benchmarks/chat-stream), with its React and Octane fixtures ported
+// verbatim. The helpers and steps below follow its run.mjs. `hasFlush` is
+// whether the fixture exposes window.__benchFlush (Octane does; React commits
+// with flushSync inside its handlers), awaited after every interaction as
+// run.mjs does.
+function chatStreamUpstreamTests({ hasFlush }) {
+    const flush = async (page) => {
+        if (!hasFlush)
+            return;
+        page.call("__benchFlush");
+        await null;
+    };
+    const typeInto = (element, text) => {
+        element.setValue(text);
+        element.dispatchEvent("input");
+    };
+    const sendPrompt = async (page, text) => {
+        typeInto(page.querySelector(".prompt"), text);
+        await flush(page);
+        page.querySelector(".send").click();
+        await flush(page);
+    };
+    // run.mjs loops while window.__pump(batch) returns a positive remaining
+    // count. page.call drops return values, so this checks the DOM instead:
+    // the reply loses .streaming in the commit where __pump would return 0.
+    const drain = async (page, batch) => {
+        let guard = 0;
+        for (;;) {
+            page.call(`__pump${batch}`);
+            if (!page.querySelector(".streaming"))
+                break;
+            await flush(page);
+            if (++guard > 10000)
+                throw new Error("drain never settled");
+        }
+        await flush(page);
+    };
+    // run.mjs resets the corpus before each op; here that setup is its own
+    // step, so each op step starts from the same state as in run.mjs and its
+    // time stays separate.
+    const reset = async (page) => {
+        page.call("__reset");
+        await flush(page);
+    };
+
+    return [
+        // Four scripted replies drained in 8-token batches.
+        new BenchmarkTestStep("streamFine", async (page) => {
+            for (let i = 0; i < 4; i++) {
+                await sendPrompt(page, `Benchmark: stream reply ${i}`);
+                await drain(page, 8);
+            }
+        }),
+        new BenchmarkTestStep("resetForStreamCoarse", reset),
+        // The same four replies in 64-token batches.
+        new BenchmarkTestStep("streamCoarse", async (page) => {
+            for (let i = 0; i < 4; i++) {
+                await sendPrompt(page, `Benchmark: stream reply ${i}`);
+                await drain(page, 64);
+            }
+        }),
+        new BenchmarkTestStep("openLongHistory", async (page) => {
+            await reset(page);
+            page.querySelector('.conv-tab[data-conv="1"]').click();
+            await flush(page);
+        }),
+        // Two replies streamed into the 200-message history.
+        new BenchmarkTestStep("appendHistory", async (page) => {
+            for (let i = 0; i < 2; i++) {
+                await sendPrompt(page, `Benchmark: append to long history ${i}`);
+                await drain(page, 16);
+            }
+        }),
+        new BenchmarkTestStep("resetForSwitchConv", reset),
+        // Five round trips between the 10- and 200-message conversations.
+        new BenchmarkTestStep("switchConv", async (page) => {
+            for (let i = 0; i < 5; i++) {
+                page.querySelector('.conv-tab[data-conv="1"]').click();
+                await flush(page);
+                page.querySelector('.conv-tab[data-conv="0"]').click();
+                await flush(page);
+            }
+        }),
+        // 160 keystrokes through the controlled composer. switchConv leaves the
+        // corpus as a reset does, so this needs no setup step.
+        new BenchmarkTestStep("type160", async (page) => {
+            const prompt = page.querySelector(".prompt");
+            const text = "the quick brown fox jumps over the lazy dog";
+            for (let pass = 0; pass < 4; pass++) {
+                for (let i = 1; i <= 40; i++) {
+                    typeInto(prompt, text.slice(0, i));
+                    await flush(page);
+                }
+            }
+        }),
+    ];
+}
+
 export const ExperimentalSuites = freezeSuites([
     {
         name: "TodoMVC-LocalStorage",
@@ -962,6 +1061,28 @@ export const ExperimentalSuites = freezeSuites([
             await page.waitForElement(".conversation-item");
         },
         tests: chatStreamTests(),
+    },
+    {
+        name: "ChatStreamUpstream-React",
+        url: "suites-experimental/chat-stream-upstream/dist/react/index.html",
+        resources: "suites-experimental/chat-stream-upstream/dist/react/resources.txt",
+        tags: ["experimental", "react", "chat-stream"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".conv-tab");
+        },
+        tests: chatStreamUpstreamTests({ hasFlush: false }),
+    },
+    {
+        name: "ChatStreamUpstream-Octane",
+        url: "suites-experimental/chat-stream-upstream/dist/octane-tsrx/index.html",
+        resources: "suites-experimental/chat-stream-upstream/dist/octane-tsrx/resources.txt",
+        tags: ["experimental", "octane", "chat-stream"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".conv-tab");
+        },
+        tests: chatStreamUpstreamTests({ hasFlush: true }),
     },
     {
         name: "Media-Streaming",

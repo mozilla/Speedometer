@@ -1,0 +1,191 @@
+/*
+ * Speedometer addition: the upstream fixtures ship no CSS. This styles their
+ * shared markup as a typical chat UI, so the layout Speedometer times at the
+ * end of each step is the layout of a styled app. It changes no markup and
+ * no behavior; both fixtures load it from index.html.
+ */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #1d2125;
+    background-color: #fff;
+}
+
+button,
+input {
+    font: inherit;
+    color: inherit;
+}
+
+#main,
+.chatapp {
+    height: 100%;
+}
+
+.chatapp {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header and conversation tabs */
+.topbar {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 16px;
+    align-items: center;
+    height: 52px;
+    padding: 0 20px;
+    border-bottom: 1px solid #e4e7eb;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
+    min-width: 0;
+    overflow-x: auto;
+}
+
+.conv-tab {
+    padding: 6px 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    background: none;
+    border: 0;
+    border-radius: 6px;
+}
+
+.conv-tab:hover {
+    background-color: #eef0f3;
+}
+
+.conv-tab.active {
+    font-weight: 600;
+    background-color: #e1e5eb;
+}
+
+/* Message list */
+.messages {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    padding: 20px max(20px, calc((100% - 760px) / 2));
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.bubble {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.message.user .bubble {
+    max-width: 75%;
+    padding: 8px 14px;
+    background-color: #eef1f5;
+    border-radius: 16px 16px 4px 16px;
+}
+
+.message.assistant .bubble {
+    flex: 1 1 auto;
+}
+
+.text {
+    margin: 0 0 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.message.user .text {
+    margin: 0;
+}
+
+/* Segments not revealed yet render as empty paragraphs. */
+.text:empty {
+    display: none;
+}
+
+.code {
+    margin: 0 0 10px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    tab-size: 4;
+    color: #e6e9ee;
+    background-color: #1f2329;
+    border-radius: 8px;
+}
+
+/* A cursor after the streaming reply's text. */
+.message.streaming .bubble::after {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    vertical-align: text-bottom;
+    content: "";
+    background-color: currentColor;
+}
+
+/* Composer */
+.composer {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 8px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 12px 20px 20px;
+}
+
+.prompt {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 14px;
+    border: 1px solid #d8dde3;
+    border-radius: 12px;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.prompt:focus {
+    border-color: #9aa6b5;
+}
+
+.send {
+    flex: 0 0 auto;
+    padding: 0 18px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    background-color: #c2662d;
+    border: 0;
+    border-radius: 12px;
+}

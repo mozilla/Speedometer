@@ -48,3 +48,8 @@ package-lock.json
 /suites/react-stockcharts
 
 /suites-experimental/responsive-design/build-dev/
+
+# Ported verbatim from the Octane repository; kept in its style so it diffs cleanly against upstream.
+/suites-experimental/chat-stream-upstream/react
+/suites-experimental/chat-stream-upstream/octane-tsrx
+/suites-experimental/chat-stream-upstream/react-compiler.mjs
