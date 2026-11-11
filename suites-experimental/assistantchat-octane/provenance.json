@@ -1,6 +1,6 @@
 {
     "workload": "assistantchat-octane",
-    "commit": "f916c73b82e858aec174eed241bf7dc1f950ae20",
+    "commit": "cba0bc51d0faccdc8919f6b93bc8752ced393d1a",
     "dirty": [],
     "built": true,
     "dist": "workloads/assistantchat-octane/dist"

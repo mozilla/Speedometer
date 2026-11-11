@@ -55,9 +55,15 @@ export class Harness {
         return this.#responses.get(url);
     }
 
+    // A "page-error" (a resource that didn't load) rejects every pending
+    // wait, so the step fails instead of waiting forever.
     onSignal(name, detail, source) {
         if (source !== this.window)
             return;
+        if (name === "page-error") {
+            this.#fail(detail.message);
+            return;
+        }
         this.#waiters = this.#waiters.filter((waiter) => {
             if (waiter.name !== name)
                 return true;
@@ -67,7 +73,19 @@ export class Harness {
     }
 
     nextSignal(name) {
-        return new Promise((resolve) => this.#waiters.push({ name, resolve }));
+        return new Promise((resolve, reject) => this.#waiters.push({ name, resolve, reject }));
+    }
+
+    #fail(message) {
+        console.error(message);
+        const notice = document.createElement("p");
+        notice.setAttribute("role", "alert");
+        notice.textContent = message;
+        this.container.prepend(notice);
+        const waiters = this.#waiters;
+        this.#waiters = [];
+        for (const waiter of waiters)
+            waiter.reject(new Error(message));
     }
 
     navigate(name) {

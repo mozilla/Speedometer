@@ -10,11 +10,7 @@ api/08.json
 api/09.json
 api/manifest.json
 assets/index-BhVJ9UFa.css
-assets/index-hQeOWmIs.js
-img/ad/00.png
-img/ad/01.png
-img/ad/02.png
-img/ad/03.png
+assets/index-BoYpkv-O.js
 img/avatar/00.png
 img/avatar/01.png
 img/avatar/02.png
@@ -61,6 +57,10 @@ img/banner/02.png
 img/banner/03.png
 img/banner/04.png
 img/banner/05.png
+img/promo/00.png
+img/promo/01.png
+img/promo/02.png
+img/promo/03.png
 img/thumb/00.png
 img/thumb/01.png
 img/thumb/02.png
