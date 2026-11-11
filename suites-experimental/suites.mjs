@@ -210,6 +210,71 @@ export const ExperimentalSuites = freezeSuites([
         }, */
     },
     {
+        name: "VideoSite-React",
+        url: "suites-experimental/videosite-react/dist/index.html",
+        resources: "suites-experimental/videosite-react/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "react"],
+        // The reference recordings of the video site used a 1440x815 viewport.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
+        name: "StreamingSite-React",
+        url: "suites-experimental/streamingsite-react/dist/index.html",
+        resources: "suites-experimental/streamingsite-react/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "react"],
+        // A desktop layout with the chat column next to the player, scaled
+        // into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
+        name: "Forum-Lit",
+        url: "suites-experimental/forum-lit/dist/index.html",
+        resources: "suites-experimental/forum-lit/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "webcomponents", "lit"],
+        // A desktop layout with the left navigation and the right rail, scaled
+        // into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
+        name: "TravelSite-React",
+        url: "suites-experimental/travelsite-react/dist/index.html",
+        resources: "suites-experimental/travelsite-react/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "react"],
+        // A desktop layout with the filter column next to the result list,
+        // scaled into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
+        name: "NewsPortal-Next",
+        url: "suites-experimental/newsportal-next/dist/index.html",
+        resources: "suites-experimental/newsportal-next/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "react", "preact"],
+        // The desktop layout with the ad column next to the content, scaled
+        // into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
+        name: "AssistantChat-Octane",
+        url: "suites-experimental/assistantchat-octane/dist/index.html",
+        resources: "suites-experimental/assistantchat-octane/dist/resources.txt",
+        tags: ["topsitebench-lite", "experimental", "octane"],
+        // The desktop layout with the sidebar open next to the conversation,
+        // scaled into the frame.
+        viewport: { width: 1440, height: 815 },
+        async prepare() {},
+        type: "remote",
+    },
+    {
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",

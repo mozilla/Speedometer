@@ -1,0 +1,1 @@
+export{t as appName,n as appVersion,r as default}from"./workload-test-shared.mjs";

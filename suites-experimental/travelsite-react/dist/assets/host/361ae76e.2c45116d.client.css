@@ -1,0 +1,7 @@
+.bd21b8fe51 { width: 720px; max-width: calc(100vw - var(--tk-spacing-8x)); }
+.be644ad7e1 { padding: var(--tk-spacing-3x) var(--tk-spacing-4x) 0; border-block-start: var(--tk-border-width-100) solid var(--tk-color-border-alt); }
+.e82e198589 { padding: 0; border: 0; background: transparent; cursor: pointer; }
+.bd21b8fe51:has([aria-pressed="true"]) .be644ad7e1 { align-items: center; }
+
+
+/*# sourceMappingURL=361ae76e.2c45116d.client.css.map*/

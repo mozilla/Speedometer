@@ -1,0 +1,12 @@
+{
+ "config": "api/00.json",
+ "home": "api/01.json",
+ "suggest?q=night%20train": "api/02.json",
+ "search?q=night%20train&page=0": "api/03.json",
+ "search?q=night%20train&page=1": "api/04.json",
+ "videos/3441ppbvukz": "api/05.json",
+ "videos/3441ppbvukz/comments?sort=top&page=0": "api/06.json",
+ "channels/@EvreuilArchive721": "api/07.json",
+ "channels/@EvreuilArchive721/videos?sort=latest&page=0": "api/08.json",
+ "channels/@EvreuilArchive721/videos?sort=popular&page=0": "api/09.json"
+}
