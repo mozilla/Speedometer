@@ -2,11 +2,23 @@
 
 An LLM chat client: a sidebar of conversations, a message list, and a
 composer, with assistant replies streamed in a few tokens at a time and
-rendered as Markdown. It is written twice, in React (`react/App.jsx`,
-ChatStream-React) and in Octane (`octane/App.tsrx`, ChatStream-Octane), with
-the same components, memo boundaries, effects and state. Both render
-identical markup after every step. They share the corpus, Markdown parser,
-network stub and stylesheet in `shared/`.
+rendered as Markdown. It is written twice, in React (`react/App.jsx`) and in
+Octane (`octane/App.tsrx`), with the same components, memo boundaries, effects
+and state, and built three ways:
+
+-   ChatStream-React: the React app.
+-   ChatStream-ReactCompiler: the same React app compiled with React Compiler
+    (`react/vite.config.compiler.js`, Vite's compiler preset).
+-   ChatStream-Octane: the Octane app.
+
+All three render identical markup after every step. They share the corpus,
+Markdown parser, network stub and stylesheet in `shared/`.
+
+React Compiler compiles every component except `Markdown`, which it skips
+because it reads and writes a ref during render (the ref holds the previous
+parse, so unchanged blocks are reused), and `Inlines`, which returns an array
+and is not recognized as a component. Both run uncompiled.
+`CHAT_STREAM_COMPILER_LOG=1 npm run build` prints what it compiled.
 
 It is an original app and ships no third-party assets. It is adapted from the
 `chat-stream` benchmark in the Octane repository, with Markdown replies, code
@@ -65,9 +77,10 @@ script, like the benchmark, set the value.
 ## Developer Documentation
 
 The apps are built with Vite. They can be previewed during development with
-`npm run dev:react` or `npm run dev:octane`. To update the files run in the
-harness, run `npm run build`, which regenerates the committed `dist/react` and
-`dist/octane` directories and their `resources.txt`.
+`npm run dev:react`, `npm run dev:react-compiler` or `npm run dev:octane`. To
+update the files run in the harness, run `npm run build`, which regenerates
+the committed `dist/react`, `dist/react-compiler` and `dist/octane`
+directories and their `resources.txt`.
 
 The built workloads can be loaded within the harness at e.g.
-`http://localhost:8080/?developerMode&suites=ChatStream-React,ChatStream-Octane`.
+`http://localhost:8080/?developerMode&suites=ChatStream-React,ChatStream-ReactCompiler,ChatStream-Octane`.

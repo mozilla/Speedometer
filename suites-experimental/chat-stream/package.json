@@ -4,8 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "build": "vite build react && vite build octane",
+        "build": "vite build react && vite build react --config react/vite.config.compiler.js && vite build octane",
         "dev:react": "vite react",
+        "dev:react-compiler": "vite react --config react/vite.config.compiler.js",
         "dev:octane": "vite octane"
     },
     "dependencies": {
@@ -14,8 +15,11 @@
         "react-dom": "^19.2.0"
     },
     "devDependencies": {
+        "@babel/core": "7.29.7",
+        "@rolldown/plugin-babel": "0.2.3",
         "@tsrx/oxc": "0.23.0",
         "@vitejs/plugin-react": "^6.0.0",
+        "babel-plugin-react-compiler": "1.0.0",
         "typescript": "^5.9.3",
         "vite": "^8.0.16"
     }

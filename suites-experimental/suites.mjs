@@ -1040,6 +1040,18 @@ export const ExperimentalSuites = freezeSuites([
         tests: chatStreamTests({ hasFlush: false }),
     },
     {
+        name: "ChatStream-ReactCompiler",
+        // The same React app as ChatStream-React, compiled with React Compiler.
+        url: "suites-experimental/chat-stream/dist/react-compiler/index.html",
+        resources: "suites-experimental/chat-stream/dist/react-compiler/resources.txt",
+        tags: ["experimental", "react", "chat-stream"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".conversation-item");
+        },
+        tests: chatStreamTests({ hasFlush: false }),
+    },
+    {
         name: "ChatStream-Octane",
         url: "suites-experimental/chat-stream/dist/octane/index.html",
         resources: "suites-experimental/chat-stream/dist/octane/resources.txt",
