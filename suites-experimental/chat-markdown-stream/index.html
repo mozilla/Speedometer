@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <style>
+      :root {
+        --sidebar: #f7f7f8;
+        --border: #e3e3e6;
+        --text: #1f2328;
+        --muted: #6e7781;
+        --accent: #10a37f;
+        --code-bg: #f6f8fa;
+        font-family: system-ui, sans-serif;
+        color: var(--text);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 16rem 1fr;
+      }
+
+      nav {
+        background: var(--sidebar);
+        border-inline-end: 1px solid var(--border);
+        overflow-y: auto;
+        padding: 0.75rem;
+      }
+
+      nav h2 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0.5rem 0.5rem 0.25rem;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      nav button {
+        all: unset;
+        display: block;
+        width: 100%;
+        padding: 0.45rem 0.5rem;
+        border-radius: 0.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+
+      nav button:hover,
+      nav button[aria-current="page"] {
+        background: #ececf1;
+      }
+
+      main {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        min-height: 0;
+      }
+
+      #scroller {
+        overflow-y: auto;
+      }
+
+      #messages {
+        max-width: 48rem;
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .message {
+        display: grid;
+        grid-template-columns: 2.25rem 1fr;
+        gap: 0.75rem;
+        padding: 1rem 0;
+      }
+
+      .avatar {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: white;
+        background: var(--accent);
+      }
+
+      .message.user .avatar {
+        background: #8e8ea0;
+      }
+
+      .message.user .body {
+        background: #f4f4f5;
+        border-radius: 1rem;
+        padding: 0.6rem 1rem;
+        justify-self: start;
+        white-space: pre-wrap;
+      }
+
+      .body {
+        line-height: 1.6;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .body > :first-child {
+        margin-top: 0;
+      }
+
+      .body :not(pre) > code {
+        background: var(--code-bg);
+        border-radius: 0.3rem;
+        padding: 0.1em 0.35em;
+        font-size: 0.875em;
+      }
+
+      .body pre {
+        margin: 0 0 1rem;
+        padding: 0.75rem 1rem;
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-top: 0;
+        border-radius: 0 0 0.5rem 0.5rem;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        line-height: 1.45;
+      }
+
+      .code-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding: 0.3rem 0.75rem;
+        background: #eaeef2;
+        border: 1px solid var(--border);
+        border-radius: 0.5rem 0.5rem 0 0;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .code-header button,
+      .actions button {
+        all: unset;
+        cursor: pointer;
+        font-size: 0.75rem;
+        color: var(--muted);
+      }
+
+      .body table {
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+
+      .body th,
+      .body td {
+        border: 1px solid var(--border);
+        padding: 0.35rem 0.6rem;
+        text-align: start;
+      }
+
+      .body blockquote {
+        margin: 1rem 0;
+        padding: 0.25rem 1rem;
+        border-inline-start: 4px solid var(--accent);
+        color: var(--muted);
+      }
+
+      .body kbd {
+        border: 1px solid var(--border);
+        border-bottom-width: 2px;
+        border-radius: 0.25rem;
+        padding: 0 0.3em;
+        font-size: 0.85em;
+      }
+
+      .message.streaming .body::after {
+        content: "";
+        display: inline-block;
+        width: 0.6em;
+        height: 1em;
+        vertical-align: text-bottom;
+        background: currentColor;
+        animation: blink 1s steps(1) infinite;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .actions {
+        grid-column: 2;
+        display: flex;
+        gap: 1rem;
+      }
+
+      form {
+        max-width: 48rem;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0.75rem 1rem 1rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: end;
+      }
+
+      textarea {
+        flex: 1;
+        resize: none;
+        max-height: 12rem;
+        padding: 0.7rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 1.25rem;
+        font: inherit;
+      }
+
+      #send {
+        border: 0;
+        border-radius: 50%;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--text);
+        color: white;
+        cursor: pointer;
+      }
+
+      #send:disabled {
+        opacity: 0.3;
+      }
+
+      /* Prism's default theme, for the token classes it emits. */
+      .token.comment,
+      .token.prolog,
+      .token.doctype,
+      .token.cdata {
+        color: slategray;
+      }
+      .token.punctuation {
+        color: #999;
+      }
+      .token.property,
+      .token.tag,
+      .token.boolean,
+      .token.number,
+      .token.constant,
+      .token.symbol,
+      .token.deleted {
+        color: #905;
+      }
+      .token.selector,
+      .token.attr-name,
+      .token.string,
+      .token.char,
+      .token.builtin,
+      .token.inserted {
+        color: #690;
+      }
+      .token.operator,
+      .token.entity,
+      .token.url {
+        color: #9a6e3a;
+      }
+      .token.atrule,
+      .token.attr-value,
+      .token.keyword {
+        color: #07a;
+      }
+      .token.function,
+      .token.class-name {
+        color: #dd4a68;
+      }
+      .token.regex,
+      .token.important,
+      .token.variable {
+        color: #e90;
+      }
+    </style>
+    <script src="lib/marked.umd.js"></script>
+    <script src="lib/purify.min.js"></script>
+    <script src="lib/prism.js" data-manual></script>
+    <script type="module" src="chat.mjs"></script>
+  </head>
+  <body>
+    <nav>
+      <h2>Chats</h2>
+      <ul id="conversations"></ul>
+    </nav>
+    <main>
+      <div id="scroller">
+        <div id="messages"></div>
+      </div>
+      <form id="composer">
+        <textarea id="prompt" rows="1" placeholder="Message" aria-label="Message"></textarea>
+        <button id="send" type="submit" aria-label="Send">&#x2191;</button>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northwind Console</title>
+    <link rel="stylesheet" href="lib/bootstrap.min.css" />
+    <style>
+      /* Derive the accent shades from --bs-primary, so changing it at runtime
+         re-themes everything. */
+      :root,
+      [data-bs-theme] {
+        --bs-primary-bg-subtle: color-mix(in srgb, var(--bs-primary) 15%, var(--bs-body-bg));
+        --bs-primary-border-subtle: color-mix(in srgb, var(--bs-primary) 40%, var(--bs-body-bg));
+        --bs-primary-text-emphasis: color-mix(in srgb, var(--bs-primary) 70%, var(--bs-emphasis-color));
+        --app-gap: 1rem;
+        --app-cell-padding: 0.5rem;
+        --app-sidebar-width: 15rem;
+      }
+
+      .btn-primary,
+      .btn-outline-primary {
+        --bs-btn-border-color: var(--bs-primary);
+        --bs-btn-hover-bg: color-mix(in srgb, var(--bs-primary) 85%, black);
+        --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-primary) 85%, black);
+        --bs-btn-active-bg: color-mix(in srgb, var(--bs-primary) 80%, black);
+        --bs-btn-active-border-color: color-mix(in srgb, var(--bs-primary) 80%, black);
+        --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+      }
+
+      .btn-primary {
+        --bs-btn-bg: var(--bs-primary);
+      }
+
+      .btn-outline-primary {
+        --bs-btn-color: var(--bs-primary);
+        --bs-btn-hover-color: #fff;
+        --bs-btn-active-color: #fff;
+      }
+
+      .nav-pills {
+        --bs-nav-pills-link-active-bg: var(--bs-primary);
+      }
+
+      .progress {
+        --bs-progress-bar-bg: var(--bs-primary);
+      }
+
+      .form-check-input:checked {
+        background-color: var(--bs-primary);
+        border-color: var(--bs-primary);
+      }
+
+      body:has(#density-compact:checked) {
+        --app-gap: 0.5rem;
+        --app-cell-padding: 0.2rem;
+        --app-sidebar-width: 12rem;
+        font-size: 0.875rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: var(--app-sidebar-width) minmax(0, 1fr);
+        min-height: calc(100vh - 3.5rem);
+      }
+
+      body.sidebar-collapsed {
+        --app-sidebar-width: 3.5rem;
+      }
+
+      body.sidebar-collapsed .nav-label {
+        display: none;
+      }
+
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        white-space: nowrap;
+      }
+
+      .nav-icon {
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 0.3rem;
+        background: var(--bs-secondary-bg);
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .nav-link.active .nav-icon {
+        background: rgb(255 255 255 / 0.25);
+      }
+
+      .search {
+        max-width: 24rem;
+      }
+
+      main .row {
+        --bs-gutter-x: var(--app-gap);
+        --bs-gutter-y: var(--app-gap);
+      }
+
+      main > .card {
+        margin-bottom: var(--app-gap) !important;
+      }
+
+      .card-body {
+        padding: var(--app-gap);
+      }
+
+      .avatar {
+        display: inline-grid;
+        place-items: center;
+        flex: none;
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .projects {
+        container-type: inline-size;
+      }
+
+      .project-grid {
+        display: grid;
+        gap: var(--app-gap);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      @container (width > 40rem) {
+        .project-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @container (width > 60rem) {
+        .project-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+
+      .project-card {
+        container-type: inline-size;
+      }
+
+      .project-card:has(.pin:checked) {
+        border-color: var(--bs-primary);
+        background: var(--bs-primary-bg-subtle);
+      }
+
+      @container (width < 15rem) {
+        .project-meta a {
+          display: none;
+        }
+      }
+
+      .orders .table > :not(caption) > * > * {
+        padding: var(--app-cell-padding);
+      }
+
+      .orders tbody tr:has(.select:checked) > * {
+        --bs-table-bg-state: var(--bs-primary-bg-subtle);
+      }
+
+      .bulk-actions {
+        display: none;
+      }
+
+      .orders:has(tbody .select:checked) .bulk-actions {
+        display: flex;
+      }
+
+      .orders:has(#filter-paid:checked) tbody tr:not([data-status="paid"]),
+      .orders:has(#filter-shipped:checked) tbody tr:not([data-status="shipped"]),
+      .orders:has(#filter-pending:checked) tbody tr:not([data-status="pending"]),
+      .orders:has(#filter-refunded:checked) tbody tr:not([data-status="refunded"]),
+      .orders:has(#filter-failed:checked) tbody tr:not([data-status="failed"]) {
+        display: none;
+      }
+
+      body:has(#density-compact:checked) .customer .small {
+        display: none;
+      }
+
+      .swatch {
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 50%;
+        background: var(--swatch);
+      }
+
+      .btn-check:checked + .swatch {
+        outline: 2px solid var(--bs-emphasis-color);
+        outline-offset: 2px;
+      }
+    </style>
+    <script type="module" src="dashboard.mjs"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>

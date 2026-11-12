@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Syntax highlighting with Prism and the CSS Custom Highlight API</title>
+<script src="lib/prism.js" data-manual></script>
+<style>
+:root {
+	font-family: system-ui, sans-serif;
+	color-scheme: light;
+}
+
+body {
+	margin: 0;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	height: 100vh;
+}
+
+header {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em 1em;
+	align-items: center;
+	padding: 0.5em 1em;
+	border-bottom: 1px solid #ccc;
+	background: #f5f5f5;
+}
+
+header h1 {
+	font-size: 1rem;
+	margin: 0;
+}
+
+#timings {
+	font-family: monospace;
+	font-size: 0.85rem;
+}
+
+pre {
+	margin: 0;
+	padding: 1em;
+	overflow: auto;
+	tab-size: 4;
+	font-size: 0.85rem;
+	background: #fdfdfd;
+	color: #1a1a1a;
+}
+
+::highlight(comment), ::highlight(prolog), ::highlight(doctype), ::highlight(cdata) {
+	color: slategray;
+}
+
+::highlight(punctuation) {
+	color: #999;
+}
+
+::highlight(property), ::highlight(tag), ::highlight(boolean), ::highlight(number), ::highlight(constant), ::highlight(symbol), ::highlight(deleted), ::highlight(class-name) {
+	color: #905;
+}
+
+::highlight(selector), ::highlight(attr-name), ::highlight(string), ::highlight(char), ::highlight(builtin), ::highlight(inserted) {
+	color: #690;
+}
+
+::highlight(operator), ::highlight(entity), ::highlight(url) {
+	color: #a67f59;
+	background: hsla(0, 0%, 100%, 0.5);
+}
+
+::highlight(atrule), ::highlight(attr-value), ::highlight(keyword) {
+	color: #07a;
+}
+
+::highlight(function) {
+	color: #dd4a68;
+}
+
+::highlight(regex), ::highlight(important), ::highlight(variable) {
+	color: #e90;
+}
+
+::highlight(important), ::highlight(bold) {
+	font-weight: bold;
+}
+
+::highlight(italic) {
+	font-style: italic;
+}
+</style>
+</head>
+<body>
+<header>
+	<h1>Prism + CSS Custom Highlight API</h1>
+	<label>
+		Sample
+		<select id="sample">
+			<option value="inline:js">Inline snippet (JS, &lt;1 KB)</option>
+			<option value="inline:css">Inline snippet (CSS, &lt;1 KB)</option>
+			<option value="samples/normalize-8.0.1.css">normalize.css 8.0.1 (6 KB)</option>
+			<option value="samples/preact-10.24.3-diff.js">Preact 10.24.3 src/diff/index.js (18 KB)</option>
+			<option value="samples/underscore-1.13.7.js">Underscore 1.13.7 (69 KB)</option>
+			<option value="samples/bootstrap-5.3.3.css">Bootstrap 5.3.3 CSS (281 KB)</option>
+			<option value="samples/jquery-3.7.1.js">jQuery 3.7.1 (285 KB)</option>
+			<option value="samples/d3-7.9.0.js">D3 7.9.0 (587 KB)</option>
+		</select>
+	</label>
+	<label title="Add highlights in the same task that inserts the text, so the first layout of the text already sees all ranges">
+		<input type="checkbox" id="highlight-before-layout">
+		Highlight before first layout
+	</label>
+	<button id="insert">Insert</button>
+	<button id="rehighlight">Re-highlight</button>
+	<span id="timings"></span>
+</header>
+<pre id="code" contenteditable="plaintext-only" spellcheck="false"></pre>
+
+<script type="text/plain" id="inline-js">
+// Fibonacci with memoization.
+const memo = new Map();
+
+function fib(n) {
+	if (n < 2) {
+		return n;
+	}
+	if (!memo.has(n)) {
+		memo.set(n, fib(n - 1) + fib(n - 2));
+	}
+	return memo.get(n);
+}
+
+const results = Array.from({ length: 20 }, (_, i) => fib(i));
+console.log(`fib(0..19) = ${results.join(", ")}`, /\d+/g.test("42"));
+</script>
+
+<script type="text/plain" id="inline-css">
+/* A small stylesheet. */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #111;
+	}
+}
+
+.card > h2::before {
+	content: "\2192";
+	color: rgb(200 50 50 / 0.8) !important;
+	background: url("arrow.svg") no-repeat;
+}
+</script>
+
+<script>
+const tokenTypes = [ 'comment', 'prolog', 'doctype', 'cdata', 'punctuation', 'namespace',
+	'property', 'tag', 'boolean', 'number', 'constant', 'symbol', 'deleted',
+	'selector', 'attr', 'string', 'char', 'builtin', 'inserted', 'operator',
+	'entity', 'url', 'string', 'atrule', 'attr', 'keyword', 'function', 'class',
+	'regex', 'important', 'variable', 'important', 'bold', 'italic', 'entity',
+	'parameter', 'class-name'];
+
+tokenTypes.forEach(tokenType => {
+	CSS.highlights.set(tokenType, new Highlight());
+});
+
+const codeBlock = document.getElementById('code');
+const timings = document.getElementById('timings');
+let currentLang = Prism.languages.javascript;
+
+if (codeBlock.contentEditable != 'plaintext-only') {
+	codeBlock.setAttribute('contenteditable', 'true');
+}
+
+codeBlock.addEventListener('keydown', e => {
+	if (e.key == 'Tab') {
+		document.execCommand('insertText', false, '\t');
+		e.preventDefault();
+	}
+});
+
+// Adds one Range per token to the matching Highlight. Recurses into nested
+// tokens (e.g. template string interpolations) so they get painted too.
+// Returns the position after the last token and the number of ranges added.
+const paintTokenHighlights = (textNode, tokens, pos = 0) => {
+	let count = 0;
+	for (const token of tokens) {
+		if (typeof token != 'string') {
+			const highlight = CSS.highlights.get(token.alias ?? token.type);
+			if (highlight) {
+				const range = new Range();
+				range.setStart(textNode, pos);
+				range.setEnd(textNode, pos + token.length);
+				highlight.add(range);
+				count++;
+			}
+			if (Array.isArray(token.content)) {
+				count += paintTokenHighlights(textNode, token.content, pos).count;
+			}
+		}
+		pos += token.length;
+	}
+	return { pos, count };
+};
+
+const nextPaint = () => new Promise(resolve => {
+	requestAnimationFrame(() => setTimeout(resolve, 0));
+});
+
+const highlight = async (layoutTiming = '') => {
+	codeBlock.normalize();
+	const text = codeBlock.textContent;
+
+	const t0 = performance.now();
+	const tokens = Prism.tokenize(text, currentLang);
+	const t1 = performance.now();
+
+	tokenTypes.forEach(tokenType => {
+		CSS.highlights.get(tokenType).clear();
+	});
+	const { count } = codeBlock.firstChild
+		? paintTokenHighlights(codeBlock.firstChild, tokens)
+		: { count: 0 };
+	const t2 = performance.now();
+
+	await nextPaint();
+	const t3 = performance.now();
+
+	timings.textContent =
+		`${text.length.toLocaleString()} chars, ${count.toLocaleString()} ranges | ` +
+		layoutTiming +
+		`tokenize ${(t1 - t0).toFixed(1)} ms, ` +
+		`highlight ${(t2 - t1).toFixed(1)} ms, ` +
+		`paint ${(t3 - t2).toFixed(1)} ms`;
+};
+
+const samples = new Map();
+
+const loadSample = value => {
+	if (!samples.has(value)) {
+		samples.set(value, (async () => {
+			if (value.startsWith('inline:')) {
+				const lang = value.slice('inline:'.length);
+				return { lang, source: document.getElementById(`inline-${lang}`).textContent.trimStart() };
+			}
+			const response = await fetch(value);
+			if (!response.ok) {
+				throw new Error(`Failed to load ${value}: ${response.status}`);
+			}
+			return { lang: value.endsWith('.css') ? 'css' : 'js', source: await response.text() };
+		})());
+		samples.get(value).catch(() => samples.delete(value));
+	}
+	return samples.get(value);
+};
+
+const insert = async () => {
+	const value = document.getElementById('sample').value;
+	timings.textContent = `Loading ${value}…`;
+	let sample;
+	try {
+		sample = await loadSample(value);
+	} catch (e) {
+		timings.textContent = location.protocol == 'file:'
+			? `${e}. Serve this page over HTTP (python3 -m http.server).`
+			: String(e);
+		return;
+	}
+	timings.textContent = `Highlighting ${sample.source.length.toLocaleString()} chars…`;
+	currentLang = sample.lang == 'css' ? Prism.languages.css : Prism.languages.javascript;
+	codeBlock.textContent = sample.source;
+	typedCharacters = 0;
+	if (document.getElementById('highlight-before-layout').checked) {
+		await highlight();
+		return;
+	}
+	const t0 = performance.now();
+	await nextPaint();
+	await highlight(`layout ${(performance.now() - t0).toFixed(1)} ms, `);
+};
+
+// The most recent insert, highlight or scroll; the runner waits for it.
+let currentOperation = Promise.resolve();
+const track = operation => (currentOperation = operation);
+
+document.getElementById('insert').addEventListener('click', () => track(insert()));
+document.getElementById('rehighlight').addEventListener('click', () => track(highlight()));
+codeBlock.addEventListener('input', () => track(highlight()));
+
+// Functions for the benchmark steps (see tests.mjs).
+const typedText = 'const ';
+let typedCharacters = 0;
+
+window.preloadSamples = () => Promise.all(
+	[...document.getElementById('sample').options].map(option => loadSample(option.value)));
+
+window.whenIdle = () => currentOperation;
+
+// Types the next character of `typedText` at the start of the code, through
+// the editing command, so the regular input handler re-highlights.
+window.typeCharacter = () => {
+	codeBlock.focus();
+	getSelection().collapse(codeBlock.firstChild, typedCharacters);
+	document.execCommand('insertText', false, typedText[typedCharacters % typedText.length]);
+	typedCharacters++;
+	return currentOperation;
+};
+
+window.scrollToEnd = () => {
+	codeBlock.scrollTop = codeBlock.scrollHeight;
+	return track(nextPaint());
+};
+
+track(insert());
+</script>
+</body>
+</html>

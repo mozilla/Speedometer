@@ -11,6 +11,38 @@ function reportRecipeCarouselResizeEvents(stepName, resizeEvents) {
         console.warn(`${stepName}: recipe-carousel ResizeObserver reported 0 width changes; expected width changes during iframe resize.`);
 }
 
+// Helpers for the workloads moved over from the sp4-ideas repository.
+function repeatSteps(count, name, makeStep) {
+    return Array.from({ length: count }, (_, i) => new BenchmarkTestStep(`${name}${i + 1}`, makeStep(i + 1)));
+}
+
+// Editor-HighlightAPI: every step waits until the editor has highlighted and painted.
+const editorOpen = (sample) => (page) => {
+    page.querySelector("#sample").setValue(sample);
+    page.querySelector("#insert").click();
+    return page.call("whenIdle");
+};
+
+// Shop-LitFluent: every step waits for Fluent to finish translating what the step rendered.
+const SHOP_APP = ["shop-app"];
+const shopWhenTranslated = (page) => page.call("whenTranslated");
+function shopClick(selector, path = SHOP_APP) {
+    return (page) => {
+        page.querySelector(selector, path).click();
+        return shopWhenTranslated(page);
+    };
+}
+const shopSelect = (selector, value) => (page) => {
+    const element = page.querySelector(selector, SHOP_APP);
+    element.setValue(value);
+    element.dispatchEvent("change");
+    return shopWhenTranslated(page);
+};
+
+const markdownOpenConversation = (index) => (page) => page.querySelector(`#conversations button[data-index="${index}"]`).click();
+
+const dashboardClick = (selector) => (page) => page.querySelector(selector).click();
+
 export const ExperimentalSuites = freezeSuites([
     {
         name: "TodoMVC-LocalStorage",
@@ -302,6 +334,83 @@ export const ExperimentalSuites = freezeSuites([
                 await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
                 reportRecipeCarouselResizeEvents("IncreaseWidthIn5Steps", carouselResizeEvents);
             }),
+        ],
+    },
+    {
+        name: "Editor-HighlightAPI",
+        url: "suites-experimental/editor-highlight-api/index.html",
+        tags: ["experimental"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#code");
+            await page.call("preloadSamples");
+            await page.call("whenIdle");
+        },
+        tests: [
+            new BenchmarkTestStep("OpenJQuery", editorOpen("samples/jquery-3.7.1.js")),
+            ...repeatSteps(5, "TypeCharacter", () => (page) => page.call("typeCharacter")),
+            new BenchmarkTestStep("ScrollToEnd", (page) => page.call("scrollToEnd")),
+            new BenchmarkTestStep("OpenBootstrap", editorOpen("samples/bootstrap-5.3.3.css")),
+        ],
+    },
+    {
+        name: "Shop-LitFluent",
+        url: "suites-experimental/shop-lit-fluent/index.html",
+        tags: ["experimental", "webcomponents"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("shop-app");
+            await shopWhenTranslated(page);
+        },
+        tests: [
+            ...repeatSteps(10, "LoadMore", () => shopClick("#show-more")),
+            new BenchmarkTestStep("SwitchCurrency", shopSelect("#currency", "USD")),
+            new BenchmarkTestStep("FilterKitchen", shopClick('[data-category="kitchen"]')),
+            new BenchmarkTestStep("ClearFilter", shopClick('[data-category="all"]')),
+            new BenchmarkTestStep("SortByPrice", shopSelect("#sort", "price")),
+            ...repeatSteps(5, "AddToCart", (n) => shopClick("button", [...SHOP_APP, `product-card:nth-child(${n} of [in-stock])`])),
+            new BenchmarkTestStep("SwitchLanguage", shopSelect("#language", "de")),
+        ],
+    },
+    {
+        name: "Chat-MarkdownStream",
+        url: "suites-experimental/chat-markdown-stream/index.html",
+        tags: ["experimental"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#conversations button");
+            await page.call("whenReady");
+        },
+        tests: [
+            new BenchmarkTestStep("OpenConversation", markdownOpenConversation(0)),
+            new BenchmarkTestStep("TypePrompt", (page) => page.call("typePrompt")),
+            new BenchmarkTestStep("SendPrompt", (page) => page.querySelector("#send").click()),
+            ...repeatSteps(30, "ReceiveChunk", () => (page) => page.call("receiveChunk")),
+            new BenchmarkTestStep("FinishResponse", (page) => page.call("finishResponse")),
+            new BenchmarkTestStep("ScrollToTop", (page) => page.call("scrollToTop")),
+            new BenchmarkTestStep("OpenOtherConversation", markdownOpenConversation(1)),
+        ],
+    },
+    {
+        name: "Dashboard-BootstrapTheme",
+        url: "suites-experimental/dashboard-bootstrap-theme/index.html",
+        tags: ["experimental"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#theme-toggle");
+        },
+        tests: [
+            new BenchmarkTestStep("SwitchToDarkTheme", dashboardClick("#theme-toggle")),
+            ...repeatSteps(5, "SelectOrder", (n) => dashboardClick(`tbody tr:nth-child(${n * 7}) .select`)),
+            new BenchmarkTestStep("SelectAllOrders", dashboardClick("#select-all")),
+            new BenchmarkTestStep("ClearSelection", dashboardClick("#clear-selection")),
+            new BenchmarkTestStep("FilterPending", dashboardClick("#filter-pending")),
+            new BenchmarkTestStep("ShowAllOrders", dashboardClick("#filter-all")),
+            ...repeatSteps(3, "PinProject", (n) => dashboardClick(`#pin-${n * 5}`)),
+            new BenchmarkTestStep("ChangeAccentColor", dashboardClick("#accent-purple")),
+            new BenchmarkTestStep("CollapseSidebar", dashboardClick("#sidebar-toggle")),
+            new BenchmarkTestStep("CompactDensity", dashboardClick("#density-compact")),
+            new BenchmarkTestStep("SwitchToLightTheme", dashboardClick("#theme-toggle")),
         ],
     },
 ]);
