@@ -1,4 +1,4 @@
-assets/index-158fa97f.css
-assets/index-381effb6.js
-assets/index-381effb6.js.map
+assets/index.css
+assets/index.js
+assets/index.js.map
 index.html
