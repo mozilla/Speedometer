@@ -320,7 +320,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "PDFViewer-PDFjs",
         url: "suites-experimental/pdf-viewer/dist/index.html",
         resources: "suites-experimental/pdf-viewer/dist/resources.txt",
-        tags: ["pdf", "experimental"],
+        tags: ["sp4", "pdf", "experimental"],
         async prepare() {},
         type: "remote",
     },
@@ -663,7 +663,7 @@ export const ExperimentalSuites = freezeSuites([
         // a message hides the folder list, closing it brings it back.
         url: "suites-experimental/stormbox-react/dist/index.html?animations=off",
         resources: "suites-experimental/stormbox-react/dist/resources.txt",
-        tags: ["experimental", "react", "webmail"],
+        tags: ["sp4", "experimental", "react", "webmail"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".msg-list__items li");
@@ -859,7 +859,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "SocialNetwork-React",
         url: "suites-experimental/social-network/dist/index.html",
         resources: "suites-experimental/social-network/dist/resources.txt",
-        tags: ["social-network", "experimental"],
+        tags: ["sp4", "social-network", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement('.home[data-feed-status="ready"]');
@@ -1000,7 +1000,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "ChatRoom-Svelte",
         url: "suites-experimental/chat-room-svelte/dist/index.html",
         resources: "suites-experimental/chat-room-svelte/dist/resources.txt",
-        tags: ["chat-room", "experimental"],
+        tags: ["sp4", "chat-room", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".room-list-item");
@@ -1011,7 +1011,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "ChatRoom-Angular",
         url: "suites-experimental/chat-room-angular/dist/index.html",
         resources: "suites-experimental/chat-room-angular/dist/resources.txt",
-        tags: ["chat-room", "experimental"],
+        tags: ["sp4", "chat-room", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".room-list-item");
