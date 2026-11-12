@@ -3,6 +3,25 @@ import { getTodoText } from "../resources/shared/translations.mjs";
 import { getNumberOfItemsToAdd } from "../resources/shared/todomvc-utils.mjs";
 import { freezeSuites } from "../resources/suites-helper.mjs";
 
+// Yield a task so React's concurrent scheduler lands the pending update before
+// the next interaction. A MessageChannel round-trip rather than setTimeout(0):
+// an async step is awaited inside the measured window (see
+// resources/shared/step-runner.mjs), so the timer clamp would be reported as
+// workload time.
+//
+// Closed at both ends because an entangled port is a cycle collector root.
+function yieldTask() {
+    return new Promise((resolve) => {
+        const channel = new MessageChannel();
+        channel.port1.onmessage = () => {
+            channel.port1.close();
+            channel.port2.close();
+            resolve();
+        };
+        channel.port2.postMessage(0);
+    });
+}
+
 function reportRecipeCarouselResizeEvents(stepName, resizeEvents) {
     const count = resizeEvents.stop();
     if (count)
@@ -194,7 +213,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Responsive-Design",
         url: "suites-experimental/responsive-design/dist/index.html",
         resources: "suites-experimental/responsive-design/dist/resources.txt",
-        tags: ["responsive-design", "webcomponents", "experimental"],
+        tags: ["sp4", "responsive-design", "webcomponents", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("cooking-app");
@@ -301,6 +320,282 @@ export const ExperimentalSuites = freezeSuites([
 
                 await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
                 reportRecipeCarouselResizeEvents("IncreaseWidthIn5Steps", carouselResizeEvents);
+            }),
+        ],
+    },
+    {
+        name: "Terminal-Xterm",
+        url: "suites-experimental/terminal-xterm/dist/index.html",
+        tags: ["sp4", "terminal", "xterm", "experimental"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#terminal-container");
+        },
+        tests: [
+            new BenchmarkTestStep("DumpAndScrollOutput", async (page) => {
+                const stepComplete = new Promise((resolve) => {
+                    page.addEventListener("step-complete", resolve, { once: true });
+                });
+                page.querySelector("#btn-dump-scroll").click();
+                await stepComplete;
+            }),
+            new BenchmarkTestStep("ParseAndHoverInlineLinks", async (page) => {
+                const stepComplete = new Promise((resolve) => {
+                    page.addEventListener("step-complete", resolve, { once: true });
+                });
+                page.querySelector("#btn-hover-links").click();
+                await stepComplete;
+            }),
+            new BenchmarkTestStep("NcursesColorUI", async (page) => {
+                const stepComplete = new Promise((resolve) => {
+                    page.addEventListener("step-complete", resolve, { once: true });
+                });
+                page.querySelector("#btn-ncurses").click();
+                await stepComplete;
+            }),
+            new BenchmarkTestStep("SwitchTabsAndResize", async (page) => {
+                const stepComplete = new Promise((resolve) => {
+                    page.addEventListener("step-complete", resolve, { once: true });
+                });
+                page.querySelector("#btn-switch-tabs").click();
+                await stepComplete;
+            }),
+        ],
+    },
+    {
+        name: "Scrollytelling-Scrollama",
+        url: "suites-experimental/scrollytelling/dist/index.html?engine=scrollama",
+        tags: ["sp4", "experimental", "scrollytelling"],
+        async prepare(page) {
+            await page.waitForElement(".scrolly-container");
+            page.call("serviceRAF");
+        },
+        tests: [
+            new BenchmarkTestStep("DiscreteStepTransitions", (page) => {
+                for (let i = 0; i < 8; i++) {
+                    page.call(`stepTo${i}`);
+                    page.call("serviceRAF");
+                    page.layout();
+                }
+                for (let i = 6; i >= 0; i--) {
+                    page.call(`stepTo${i}`);
+                    page.call("serviceRAF");
+                    page.layout();
+                }
+            }),
+            new BenchmarkTestStep("ContinuousScrollScrubbing", (page) => {
+                page.call("resetScrub");
+                page.call("serviceRAF");
+                page.layout();
+                for (let i = 0; i < 30; i++) {
+                    page.call("scrubForward");
+                    page.call("serviceRAF");
+                    page.layout();
+                }
+                for (let i = 0; i < 30; i++) {
+                    page.call("scrubBackward");
+                    page.call("serviceRAF");
+                    page.layout();
+                }
+            }),
+            new BenchmarkTestStep("RapidStepJumps", (page) => {
+                const jumpTargets = [7, 1, 6, 2, 5, 0, 4, 3];
+                for (const target of jumpTargets) {
+                    page.call(`stepTo${target}`);
+                    page.call("serviceRAF");
+                    page.layout();
+                }
+           }),
+       ],
+   },
+   {
+        name: "Media-Conferencing",
+        url: "suites-experimental/media-performance/conferencing.html",
+        tags: ["experimental", "media"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#video-benchmark");
+        },
+        tests: [
+            new BenchmarkTestStep("VideoChat", async (page) => {
+                page.querySelector("#video-benchmark").click();
+                await page.waitForElement("#video-benchmark.completed");
+            }),
+            new BenchmarkTestStep("VoiceChat", async (page) => {
+                page.querySelector("#voice-benchmark").click();
+                await page.waitForElement("#voice-benchmark.completed");
+            }),
+        ],
+    },
+    {
+        name: "Timeline-Mithril",
+        url: "suites-experimental/timeline/dist/index.html",
+        tags: ["sp4", "experimental", "timeline", "mithril"],
+        async prepare(page) {
+            await page.waitForElement("#app-container");
+        },
+        tests: [
+            new BenchmarkTestStep("Start", (page) => {
+                const btn = page.querySelector("#btn-explore");
+                if (btn) {
+                    btn.click();
+                    page.layout();
+                }
+            }),
+            new BenchmarkTestStep("SearchTimeline", (page) => {
+                const btn = page.querySelector("#btn-explore");
+                if (btn) {
+                    btn.click();
+                    page.layout();
+                }
+                const searchInput = page.querySelector("input.search-input");
+                if (!searchInput)
+                    return;
+                const queries = ["C", "Co", "Com", "Comp", "Compu", "Comput", "Compute", "Computer", "", "I", "In", "Int", "Inte", "Intel", "", "A", "Ap", "App", "Appl", "Apple", ""];
+                for (let round = 0; round < 4; round++) {
+                    for (const q of queries) {
+                        searchInput.setValue(q);
+                        searchInput.dispatchEvent("input");
+                        page.layout();
+                    }
+                }
+            }),
+            new BenchmarkTestStep("FilterByCategory", (page) => {
+                const btn = page.querySelector("#btn-explore");
+                if (btn) {
+                    btn.click();
+                    page.layout();
+                }
+                const filterPills = page.querySelectorAll(".filter-pill");
+                if (!filterPills || filterPills.length === 0)
+                    return;
+                const count = Math.min(filterPills.length, 10);
+                for (let round = 0; round < 18; round++) {
+                    for (let i = 0; i < count; i++) {
+                        filterPills[i].click();
+                        page.layout();
+                    }
+                }
+            }),
+            new BenchmarkTestStep("SwitchLanguage", (page) => {
+                const btn = page.querySelector("#btn-explore");
+                if (btn) {
+                    btn.click();
+                    page.layout();
+                }
+                const langButtons = page.querySelectorAll(".lang-selector button.lang-btn");
+                if (langButtons && langButtons.length > 2) {
+                    for (let round = 0; round < 18; round++) {
+                        langButtons[1].click();
+                        page.layout();
+                        langButtons[2].click();
+                        page.layout();
+                        langButtons[0].click();
+                        page.layout();
+                    }
+                }
+            }),
+            new BenchmarkTestStep("ScrollTimeline", (page) => {
+                const btn = page.querySelector("#btn-explore");
+                if (btn) {
+                    btn.click();
+                    page.layout();
+                }
+                for (let i = 0; i < 2; i++) {
+                    page.call("stepScrollTimeline");
+                    page.layout();
+                }
+            }),
+        ],
+    },
+    {
+        name: "ChatRoom-React",
+        url: "suites-experimental/chat-room/dist/index.html",
+        resources: "suites-experimental/chat-room/dist/resources.txt",
+        tags: ["sp4", "chat-room", "experimental"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement(".room-list-item");
+        },
+        tests: [
+            // Each offset mounts a fresh set of rows, measures them, and corrects
+            // the scroll position against what they measured. The scroll event is
+            // dispatched by hand because waiting for the browser's would put a
+            // frame inside the measured window.
+            new BenchmarkTestStep("ScrollTimeline", async (page) => {
+                const timeline = page.querySelector("#timeline");
+                const viewportHeight = timeline.clientHeight;
+
+                const scrollTo = async (offset) => {
+                    timeline.scrollTop = offset;
+                    timeline.dispatchEvent("scroll");
+                    await yieldTask();
+                    page.layout();
+                };
+
+                // A viewport at a time, from the newest message: the windows
+                // overlap, so rows are recycled and measured heights reused.
+                // Relative to the current offset rather than to scrollHeight,
+                // because the total height moves as rows are measured.
+                const pages = 10;
+                for (let i = 0; i < pages; i++)
+                    await scrollTo(timeline.scrollTop - viewportHeight);
+
+                // Then long strides, the way dragging the scrollbar does: every
+                // stride lands on rows that have only ever been estimated, so the
+                // window is replaced outright. Stops one stride short of the top,
+                // so it does not trip the prefetch LoadOlderMessages measures.
+                const strides = 10;
+                for (let i = strides - 1; i >= 1; i--)
+                    await scrollTo(((timeline.scrollHeight - viewportHeight) * i) / (strides - 1));
+
+                // Back to the newest message, where the next step expects to start.
+                await scrollTo(timeline.scrollHeight);
+            }),
+            new BenchmarkTestStep("SwitchRooms", async (page) => {
+                const rooms = page.querySelectorAll(".room-list-item");
+                const iterations = 20;
+                // Starts past room 0, which is already open: clicking it commits nothing.
+                for (let i = 1; i <= iterations; i++) {
+                    rooms[i % rooms.length].click();
+                    await yieldTask();
+                    page.layout();
+                }
+            }),
+            // Reading past the start of the loaded history inserts a page *above*
+            // the viewport, the case browsers ship scroll anchoring for. The
+            // timeline anchors by hand instead, so overflow-anchor is off. Each
+            // iteration also crosses the page the previous one prepended.
+            new BenchmarkTestStep("LoadOlderMessages", async (page) => {
+                const timeline = page.querySelector("#timeline");
+                const pages = 5;
+                for (let i = 0; i < pages; i++) {
+                    timeline.scrollTop = 0;
+                    timeline.dispatchEvent("scroll");
+                    await yieldTask();
+                    page.layout();
+                }
+            }),
+        ],
+    },
+    {
+        name: "Media-Streaming",
+        url: "suites-experimental/media-performance/streaming.html",
+        tags: ["experimental", "media"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#initial-playback");
+            page.call("prefetchVideo");
+            await page.waitForElement("body[data-prefetch-ready='1']");
+        },
+        tests: [
+            new BenchmarkTestStep("InitialPlayback", async (page) => {
+                page.querySelector("#initial-playback").click();
+                await page.waitForElement("#initial-playback.completed");
+            }),
+            new BenchmarkTestStep("Seek", async (page) => {
+                page.querySelector("#seek").click();
+                await page.waitForElement("#seek.completed");
             }),
         ],
     },
