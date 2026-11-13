@@ -445,6 +445,7 @@ export const ExperimentalSuites = freezeSuites([
     {
         name: "Terminal-Xterm",
         url: "suites-experimental/terminal-xterm/dist/index.html",
+        resources: "suites-experimental/terminal-xterm/dist/resources.txt",
         tags: ["sp4", "terminal", "xterm", "experimental"],
         type: "async",
         async prepare(page) {
