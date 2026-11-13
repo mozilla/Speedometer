@@ -463,9 +463,15 @@ function drawFrontPage(doc, images, random) {
         { alt: PHOTOS.spring.alt }
     );
 
+    // A near-black overlay at alpha a leaves photo * (1 - a), which an opaque gray multiply
+    // reproduces. Stop opacities would make PDFKit emit a luminosity soft mask, and without
+    // CanvasRenderingContext2D.filter (WebKit) pdf.js reads that back with getImageData.
     const scrim = doc.linearGradient(0, 0, 0, mastheadHeight);
-    scrim.stop(0, "#04070c", 0.15).stop(0.5, "#04070c", 0.62).stop(1, "#04070c", 0.92);
+    scrim.stop(0, "#d9d9d9").stop(0.5, "#616161").stop(1, "#141414");
+    doc.save();
+    setBlendMode(doc, "Multiply");
     doc.rect(0, 0, PAGE.width, mastheadHeight).fill(scrim);
+    doc.restore();
 
     tagged(doc, section, "H1", () => {
         doc.font("Mono").fontSize(8.5).fillColor("#8fd0e4").text("OBSERVING SYSTEMS DIVISION — VOLUME 24", MARGIN, 108, { characterSpacing: 1.6, lineBreak: false });
