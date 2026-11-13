@@ -1132,7 +1132,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Tools-GPS-Tracks-Angular",
         url: "suites-experimental/tools-gps-tracks-angular/dist/index.html",
         resources: "suites-experimental/tools-gps-tracks-angular/dist/resources.txt",
-        tags: ["experimental", "charts", "gpx"],
+        tags: ["sp4", "experimental", "charts", "gpx"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#app-is-ready");
@@ -1200,7 +1200,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "ChatStream-Octane",
         url: "suites-experimental/chat-stream/dist/octane/index.html",
         resources: "suites-experimental/chat-stream/dist/octane/resources.txt",
-        tags: ["experimental", "octane", "chat-stream"],
+        tags: ["sp4", "experimental", "octane", "chat-stream"],
         type: "async",
         async prepare(page) {
             await page.waitForElement(".conversation-item");
