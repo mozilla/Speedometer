@@ -448,9 +448,16 @@ export const ExperimentalSuites = freezeSuites([
         tags: ["sp4", "terminal", "xterm", "experimental"],
         type: "async",
         async prepare(page) {
-            await page.waitForElement("#terminal-container");
+            await page.waitForElement('#terminal-container[data-fonts-ready="true"]');
         },
         tests: [
+            new BenchmarkTestStep("InitTerminals", async (page) => {
+                const stepComplete = new Promise((resolve) => {
+                    page.addEventListener("step-complete", resolve, { once: true });
+                });
+                page.querySelector("#btn-init").click();
+                await stepComplete;
+            }),
             new BenchmarkTestStep("DumpAndScrollOutput", async (page) => {
                 const stepComplete = new Promise((resolve) => {
                     page.addEventListener("step-complete", resolve, { once: true });
