@@ -331,7 +331,7 @@ s/paper/_next/static/chunks/427.de307fba98fb7250.js
 s/paper/_next/static/chunks/886.73b01d464ac17dee.js
 s/paper/_next/static/chunks/963.89d4ac74dddce0b9.js
 s/paper/_next/static/chunks/992.a261cab10eeac8a3.js
-s/paper/_next/static/chunks/framework-ac5bc29e4d22a483.js
+s/paper/_next/static/chunks/framework-d846c512320b7627.js
 s/paper/_next/static/chunks/main-128b816af9c78801.js
 s/paper/_next/static/chunks/pages/_app-4b0113319eea7055.js
 s/paper/_next/static/chunks/pages/_error-fd502ba0a6d3aa6e.js
