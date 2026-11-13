@@ -1022,7 +1022,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Tools-GPS-Tracks",
         url: "suites-experimental/tools-gps-tracks/dist/index.html",
         resources: "suites-experimental/tools-gps-tracks/dist/resources.txt",
-        tags: ["experimental", "charts", "gpx"],
+        tags: ["sp4", "experimental", "charts", "gpx"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("#app-is-ready");
