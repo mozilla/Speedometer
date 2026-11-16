@@ -1161,7 +1161,7 @@ export const ExperimentalSuites = freezeSuites([
         name: "Finance-SvelteKit",
         url: "suites-experimental/finance/dist/index.html",
         resources: "suites-experimental/finance/dist/resources.txt",
-        tags: ["finance", "svelte", "experimental"],
+        tags: ["sp4", "finance", "svelte", "experimental"],
         type: "async",
         async prepare(page) {
             await page.waitForElement("html[data-ready-page='home']");
