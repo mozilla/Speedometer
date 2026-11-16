@@ -9,13 +9,24 @@ on:
     # Allows you to run this workflow manually from the Actions tab
     workflow_dispatch:
 
+permissions:
+    contents: read
+
+env:
+    NPM_CONFIG_IGNORE_SCRIPTS: "true"
+    NPM_CONFIG_AUDIT: "false"
+    NPM_CONFIG_FUND: "false"
+
 jobs:
     linters:
         name: Linters
-        runs-on: macos-latest
+        runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout Branch
               uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
 
             - name: Setup Node
               uses: actions/setup-node@v4
@@ -24,7 +35,7 @@ jobs:
                   cache: "npm"
 
             - name: Install Node Packages
-              run: npm ci
+              run: npm ci --ignore-scripts
 
             - name: Run package.json linter
               run: npm run lint:pkg
@@ -38,7 +49,7 @@ jobs:
                   if [ -n "$git_status" ]; then
                       printf "Some file(s) changed as the result of formatting, this means that you need to run the formatter on your patch.\n"
                       printf "Here is what changed:\n"
-                      printf -- "$git_status\n\n"
+                      printf "%s\n\n" "$git_status"
                       printf "And here is the diff:\n"
                       git diff -U8
                       exit 1
@@ -47,9 +58,12 @@ jobs:
     test-node:
         name: Node Unit Tests
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout Branch
               uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
 
             - name: Setup Node
               uses: actions/setup-node@v4
@@ -58,24 +72,44 @@ jobs:
                   cache: "npm"
 
             - name: Install Node Packages
-              run: npm ci
+              run: npm ci --ignore-scripts
 
             - name: Run Node Unit Tests
               run: npm test
 
     build:
         name: Build
-        runs-on: macos-latest
+        runs-on: ${{ matrix.os }}
+        timeout-minutes: 30
         strategy:
             matrix:
-                browser: [chrome, firefox, safari]
+                include:
+                    - browser: chrome
+                      os: ubuntu-latest
+                    - browser: firefox
+                      os: ubuntu-latest
+                    - browser: safari
+                      os: macos-latest
+        env:
+            BROWSER: ${{ matrix.browser }}
+            SAFARI_TECHNOLOGY_PREVIEW: "1"
         steps:
-            - name: Install Firefox
-              if: ${{ matrix.browser == 'firefox' }}
-              run: brew install --cask firefox
+            # The Safari that ships on GitHub's Apple silicon macOS images (27.2 at the time of
+            # writing) throws InvalidStateError on any pixel readback from a hardware-accelerated
+            # 2D canvas inside the virtual machine, which hangs PDFViewer-PDFjs in the e2e test.
+            # WebKit trunk no longer does, so drive Safari Technology Preview instead. Drop this
+            # step and SAFARI_TECHNOLOGY_PREVIEW once the image ships a Safari whose e2e run passes.
+            - name: Install Safari Technology Preview
+              if: ${{ matrix.browser == 'safari' }}
+              run: |
+                  brew install --cask safari-technology-preview
+                  sudo "/Applications/Safari Technology Preview.app/Contents/MacOS/safaridriver" --enable
+                  "/Applications/Safari Technology Preview.app/Contents/MacOS/safaridriver" --version
 
             - name: Checkout Branch
               uses: actions/checkout@v4
+              with:
+                  persist-credentials: false
 
             - name: Setup Node
               uses: actions/setup-node@v4
@@ -84,14 +118,14 @@ jobs:
                   cache: "npm"
 
             - name: Install Node Packages
-              run: npm ci
+              run: npm ci --ignore-scripts
 
             - name: Run Unit Tests
               run: |
                   echo "Running in $BROWSER"
-                  npm run test:${{ matrix.browser }}
+                  npm run "test:$BROWSER"
 
             - name: Run end2end Tests
               run: |
                   echo "Running in $BROWSER"
-                  npm run test-e2e:${{ matrix.browser }}
+                  npm run "test-e2e:$BROWSER"
