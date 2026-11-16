@@ -1,6 +1,6 @@
 {
     "workload": "newsportal-next",
-    "commit": "1160db8d3520ce67d96b91c267cac8f13d1e9d36",
+    "commit": "cf5403b54499d99b48cbd4ae2aaf05326f64fdc5",
     "dirty": [],
     "built": true,
     "dist": "workloads/newsportal-next/dist"
