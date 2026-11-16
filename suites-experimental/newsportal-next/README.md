@@ -53,6 +53,10 @@ What the page loads don't measure, compared with a navigation: the network, the 
 
 Before 2026-11-09 the full workload wrote each page into a fresh frame with `document.write`. Neither reference site does that for its own pages (STATUS.md, issue 5); the write went through the script-created parser.
 
+## Task tracking (prototype)
+
+With `?trackTasks` on the suite's URL, the connector uses the task-tracking step scheduler (`docs/measurement.md` at the repository root, "Task tracking"), which measures a step until no task it queued is left, and the page yields to tasks where the site does: React's scheduler keeps its MessageChannel (the loader's `setImmediate` stands back when `window.__portalTaskYields` is set), the page runtime answers requests in a task, the ad tag's `nextYield()` posts a message, and Prebid yields as it does by default. The page runtime calls the harness's `trackRealm()` first, so that the page's channels are counted. The page loads stay synchronous steps; their Async windows now hold the page's task chain and the rendering updates between its tasks. Measured on 2026-11-16: about 9.5 ms more per iteration in Firefox and 4 ms more in Chrome, CPU rather than waiting.
+
 ## How it models the reference site
 
 The facts come from the full workload's observations of the reference site (Firefox Nightly, macOS, 1440×815, consent accepted, 2026-11-02); see its README.

@@ -18,6 +18,9 @@
 // runtime, src/runtime/page-runtime.js): it answers the page's fetches from
 // the preloaded responses and receives the page's signals.
 import { click } from "./interact.mjs";
+import { trackRealm } from "../speedometer-utils/task-tracker.mjs";
+
+const search = new URLSearchParams(location.search);
 
 export class Harness {
     #pages = new Map();
@@ -29,9 +32,23 @@ export class Harness {
     #error = null;
     #leaving = new WeakSet();
 
+    // With the task-tracking step scheduler (?trackTasks), which measures
+    // chains of tasks, the page yields to the event loop where the site does
+    // (React's scheduler, the responses, the ad stack) instead of staying in
+    // microtasks.
+    taskYields = search.has("trackTasks");
+
     constructor(container = document.body) {
         this.container = container;
         window.__portalHarness = this;
+    }
+
+    // The page runtime calls this first, before the page creates its
+    // MessageChannels, so that the task-tracking step scheduler counts the
+    // page's tasks.
+    trackRealm(win) {
+        if (search.has("trackTasks"))
+            trackRealm(win);
     }
 
     get window() {

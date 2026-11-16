@@ -16,6 +16,9 @@ export class Params {
     useWarmupSuite = false;
     // toggle async type vs default raf type.
     useAsyncSteps = false;
+    // Not in upstream Speedometer: end each step's async window once no task
+    // the step queued is left (task-tracker.mjs).
+    trackTasks = false;
     // Change how a test measurement is triggered and async time is measured:
     // "timer": The classic (as in Speedometer 2.x) way using setTimeout
     // "raf":   Using rAF callbacks, both for triggering the sync part and for measuring async time.
@@ -78,6 +81,7 @@ export class Params {
         this.developerMode = this._parseBooleanParam(searchParams, "developerMode");
         this.useWarmupSuite = this._parseBooleanParam(searchParams, "useWarmupSuite");
         this.useAsyncSteps = this._parseBooleanParam(searchParams, "useAsyncSteps");
+        this.trackTasks = this._parseBooleanParam(searchParams, "trackTasks");
         this.waitAfterSetup = this._parseIntParam(searchParams, "waitAfterSetup", 0);
         this.waitBeforeSync = this._parseIntParam(searchParams, "waitBeforeSync", 0);
         this.waitAfterSuite = this._parseIntParam(searchParams, "waitAfterSuite", 0);

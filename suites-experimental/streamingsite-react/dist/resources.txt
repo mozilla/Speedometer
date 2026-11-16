@@ -669,6 +669,7 @@ speedometer-utils/helpers.mjs
 speedometer-utils/params.mjs
 speedometer-utils/step-runner.mjs
 speedometer-utils/step-scheduler.mjs
+speedometer-utils/task-tracker.mjs
 speedometer.mjs
 steps.mjs
 workload-test.mjs

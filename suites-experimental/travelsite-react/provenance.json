@@ -1,6 +1,6 @@
 {
     "workload": "travelsite-react",
-    "commit": "cf5403b54499d99b48cbd4ae2aaf05326f64fdc5",
+    "commit": "650a2e9797fc157cefbe8976fec5f4d41cab01a1",
     "dirty": [],
     "built": true,
     "dist": "workloads/travelsite-react/dist"

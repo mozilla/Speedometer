@@ -1,3 +1,5 @@
+import { startTracking, stopTracking, trackRealm, whenIdle } from "./task-tracker.mjs";
+
 class StepScheduler {
     constructor(syncCallback, asyncCallback, params) {
         this._syncCallback = syncCallback;
@@ -70,8 +72,48 @@ class AsyncRAFStepScheduler extends StepScheduler {
     }
 }
 
+// Not in upstream Speedometer (task-tracker.mjs): like AsyncRAFStepScheduler,
+// but the async window also lasts until no task that the step queued, or
+// that those tasks queued, is left. Rendering updates between those tasks
+// are measured too.
+class TaskTrackingStepScheduler extends StepScheduler {
+    constructor(syncCallback, asyncCallback, params) {
+        super(syncCallback, asyncCallback, params);
+        trackRealm(window);
+    }
+
+    _scheduleCallbacks(resolve) {
+        let gotTimer = false;
+        let gotPromise = false;
+
+        const tryTriggerAsyncCallback = async () => {
+            if (!gotTimer || !gotPromise)
+                return;
+            await whenIdle();
+            stopTracking();
+            this._asyncCallback();
+            setTimeout(resolve, 0);
+        };
+
+        requestAnimationFrame(async () => {
+            startTracking();
+            await this._syncCallback();
+            gotPromise = true;
+            tryTriggerAsyncCallback();
+        });
+
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                gotTimer = true;
+                tryTriggerAsyncCallback();
+            }, 0);
+        });
+    }
+}
+
 export const STEP_SCHEDULER_LOOKUP = {
     __proto__: null,
     raf: RAFStepScheduler,
     async: AsyncRAFStepScheduler,
+    tasks: TaskTrackingStepScheduler,
 };

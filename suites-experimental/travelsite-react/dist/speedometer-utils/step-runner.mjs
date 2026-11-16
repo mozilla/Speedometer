@@ -87,7 +87,7 @@ export class StepRunner {
             performance.measure(`${suiteName}.${stepName}-async`, syncEndLabel, asyncEndLabel);
         };
 
-        const schedulerType = this.#suite.type === "async" || this.#params.useAsyncSteps ? "async" : this.#params.measurementMethod;
+        const schedulerType = this.#params.trackTasks ? "tasks" : this.#suite.type === "async" || this.#params.useAsyncSteps ? "async" : this.#params.measurementMethod;
         const schedulerClass = STEP_SCHEDULER_LOOKUP[schedulerType];
         const scheduler = new schedulerClass(runSync, measureAsync, this.#params);
         await scheduler.start();
